@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MonoGame.Forms.DX.Properties
+namespace Railgun.Editor.Properties
 {
 
 

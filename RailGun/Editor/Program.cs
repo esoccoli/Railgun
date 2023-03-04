@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MonoGame.Forms.DX
+namespace Railgun.Editor
 {
     internal static class Program
     {

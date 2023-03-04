@@ -1,4 +1,4 @@
-﻿namespace MonoGame.Forms.DX
+﻿namespace Railgun.Editor
 {
     partial class Form1
     {
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.sampleControl = new MonoGame.Forms.DX.Controls.SampleControl();
+            this.sampleControl = new Controls.SampleControl();
             this.SuspendLayout();
             // 
             // sampleControl
