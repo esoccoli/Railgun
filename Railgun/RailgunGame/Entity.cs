@@ -7,9 +7,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+//Nathan McAndrew
+//Generic entity with a hitbox and texture
 namespace Railgun.RailgunGame
 { 
-    internal class Entity
+    internal abstract class Entity
     {
         /// <summary>
         /// entity's location and hitbox
@@ -30,5 +32,21 @@ namespace Railgun.RailgunGame
             Hitbox = hitbox;
             Texture = texture;
         }
+
+        /// <summary>
+        /// updates the status of the entity
+        /// </summary>
+        /// <param name="gameTime">time of the game</param>
+        public virtual void Update(GameTime gameTime) { }
+
+        /// <summary>
+        /// draws the object
+        /// </summary>
+        /// <param name="sb">_spritebatch</param>
+        public virtual void Draw(SpriteBatch sb)
+        {
+            sb.Draw(Texture, Hitbox, Color.White);
+        }
     }
+
 }
