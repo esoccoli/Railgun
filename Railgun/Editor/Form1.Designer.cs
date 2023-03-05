@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.sampleControl = new Controls.SampleControl();
+            this.sampleControl = new Railgun.Editor.Controls.SampleControl();
             this.SuspendLayout();
             // 
             // sampleControl
@@ -56,7 +56,7 @@
 
         #endregion
 
-        private Controls.SampleControl sampleControl;
+        private Railgun.Editor.Controls.SampleControl sampleControl;
     }
 }
 
