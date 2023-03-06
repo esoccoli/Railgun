@@ -13,6 +13,8 @@ namespace Railgun.RailgunGame
 {
     internal class Projectile : Entity
     {
+
+
         /// <summary>
         /// speed at which projectile's x value updates
         /// </summary>
@@ -36,6 +38,7 @@ namespace Railgun.RailgunGame
         public Projectile(Rectangle hitbox, Texture2D texture, float xVelocity, float yVelocity)
             : base(hitbox, texture) 
         {
+
             XVelocity = xVelocity;
             YVelocity = yVelocity;
 
@@ -60,6 +63,9 @@ namespace Railgun.RailgunGame
             if (check.Hitbox.Intersects(this.Hitbox))
             {
                 IsActive = false;
+                //switch from active animation to collided animation
+                //_hasHit = true;
+                //_currentFrame = 0;
                 return true;
             }
 
