@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+//Nathan McAndrew
+//Class for all projectiles in the game
 namespace Railgun.RailgunGame
 {
     internal class Projectile : Entity
@@ -20,6 +22,11 @@ namespace Railgun.RailgunGame
         /// speed at which projectile's y value updates
         /// </summary>
         public float YVelocity { get; set; }
+
+        /// <summary>
+        /// determines if a projectile is activre or not
+        /// </summary>
+        public bool IsActive { get;  protected set; }
         
         /// <summary>
         /// instantiates a projectile
@@ -31,8 +38,11 @@ namespace Railgun.RailgunGame
         {
             XVelocity = xVelocity;
             YVelocity = yVelocity;
+
+            //should change when it intersects
+            IsActive = true;
         }
 
-
+        
     }
 }
