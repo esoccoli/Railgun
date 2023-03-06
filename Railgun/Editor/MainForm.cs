@@ -7,14 +7,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Railgun.Editor.Controls;
 
 namespace Railgun.Editor
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+
+        //Try adding it from here
+        MainEditorPanel editorPanel = new MainEditorPanel();
+
+
+        public MainForm()
         {
             InitializeComponent();
+        }
+
+        private void newMap_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
