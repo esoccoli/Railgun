@@ -23,10 +23,8 @@ namespace Railgun.Editor
             InitializeComponent();
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        private void newMap_Click(object sender, EventArgs e)
         {
-            editorPanel.Size = new Size(100, 100);
-            Controls.Add(editorPanel);
 
         }
     }
