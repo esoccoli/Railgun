@@ -1,6 +1,6 @@
 ﻿namespace Railgun.Editor
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Erforderliche Designervariable.
@@ -28,27 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.sampleControl = new Railgun.Editor.Controls.SampleControl();
+            this.mainEditorPanel1 = new Railgun.Editor.Controls.MainEditorPanel();
             this.SuspendLayout();
             // 
-            // sampleControl
+            // mainEditorPanel1
             // 
-            this.sampleControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sampleControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sampleControl.Location = new System.Drawing.Point(0, 0);
-            this.sampleControl.MouseHoverUpdatesOnly = false;
-            this.sampleControl.Name = "sampleControl";
-            this.sampleControl.Size = new System.Drawing.Size(582, 353);
-            this.sampleControl.TabIndex = 0;
-            this.sampleControl.Text = "Sample Control";
+            this.mainEditorPanel1.Location = new System.Drawing.Point(328, 74);
+            this.mainEditorPanel1.MouseHoverUpdatesOnly = false;
+            this.mainEditorPanel1.Name = "mainEditorPanel1";
+            this.mainEditorPanel1.Size = new System.Drawing.Size(390, 394);
+            this.mainEditorPanel1.TabIndex = 0;
+            this.mainEditorPanel1.Text = "mainEditorPanel1";
             // 
-            // Form1
+            // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(582, 353);
-            this.Controls.Add(this.sampleControl);
-            this.Name = "Form1";
+            this.ClientSize = new System.Drawing.Size(800, 549);
+            this.Controls.Add(this.mainEditorPanel1);
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Name = "MainForm";
             this.Text = "Form1";
             this.ResumeLayout(false);
 
@@ -56,7 +55,6 @@
 
         #endregion
 
-        private Railgun.Editor.Controls.SampleControl sampleControl;
+        private Controls.MainEditorPanel mainEditorPanel1;
     }
 }
-
