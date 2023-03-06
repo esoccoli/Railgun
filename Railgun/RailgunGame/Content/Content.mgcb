@@ -13,3 +13,13 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Mynerve-Regular.ttf
+/copy:Mynerve-Regular.ttf
+
+#begin Mynerve24.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Mynerve24.spritefont
+
