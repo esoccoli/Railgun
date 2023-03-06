@@ -43,6 +43,27 @@ namespace Railgun.RailgunGame
             IsActive = true;
         }
 
-        
+        /// <summary>
+        /// checks if a projectile has collided with an entity
+        /// </summary>
+        /// <param name="check">entity to check collision with</param>
+        /// <returns>whether or not the projectile has collided</returns>
+        public bool CheckCollision(Entity check)
+        {
+            //projectile is still in a data structure but inactive
+            if (!IsActive)
+            {
+                return false;
+            }
+
+            //has hit an entity
+            if (check.Hitbox.Intersects(this.Hitbox))
+            {
+                IsActive = false;
+                return true;
+            }
+
+            return false;
+        }
     }
 }
