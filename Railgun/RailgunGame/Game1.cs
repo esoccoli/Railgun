@@ -9,6 +9,12 @@ namespace Railgun.RailgunGame
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        private Texture2D backgroundHealthUI;
+        private Texture2D foregroundHealthUI;
+
+
+        private UI userInterface;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -20,6 +26,11 @@ namespace Railgun.RailgunGame
         {
             // TODO: Add your initialization logic here
 
+            //UI Stuff
+            backgroundHealthUI = Content.Load<Texture2D>("WhiteHealthSquare");
+            foregroundHealthUI = Content.Load<Texture2D>("RedHealthSquare");
+
+            userInterface = new UI(backgroundHealthUI, foregroundHealthUI, false, 100, 100, null, 12, 12); //Creates a UI object. Values to be updated later. Null values need to be replaced (obviously)
             base.Initialize();
         }
 
@@ -35,8 +46,11 @@ namespace Railgun.RailgunGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+
+
             // TODO: Add your update logic here
 
+            userInterface.Update(90, 10); //Updates the UI. Values to be updated later
             base.Update(gameTime);
         }
 
@@ -46,6 +60,7 @@ namespace Railgun.RailgunGame
 
             // TODO: Add your drawing code here
 
+            userInterface.Draw(_spriteBatch); //Draws UI
             base.Draw(gameTime);
         }
     }
