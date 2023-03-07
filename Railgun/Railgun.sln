@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor", "Editor\Editor.csproj", "{A9C0CB47-8CB6-4F7E-93AA-AF9AD9F781AE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{87B653CE-F06E-430A-9972-639F4025A37F} = {87B653CE-F06E-430A-9972-639F4025A37F}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RailgunGame", "RailgunGame\RailgunGame.csproj", "{87B653CE-F06E-430A-9972-639F4025A37F}"
 EndProject
