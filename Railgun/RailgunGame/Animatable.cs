@@ -21,17 +21,18 @@ namespace Railgun.RailgunGame
         public int CurrentFrame { get; set; }
 
         /// <summary>
-        /// how many frames one image lasts for
+        /// interval that frames are displayed at
         /// </summary>
         public double FPS { get; set; }
 
         /// <summary>
-        /// time of last elapsed frame
+        /// amount of time one frame should last for
         /// </summary>
         public double SecondsPerFrame { get; set; }
 
         /// <summary>
         /// time since image was changed
+        /// aka "delta time"
         /// </summary>
         public double TimeCounter { get; set; }
 
@@ -76,9 +77,9 @@ namespace Railgun.RailgunGame
         public SpriteEffects SpriteEffect { get; set; }
 
 
-        /// <summary>
-        /// will ask chris what this does, 
+        /// <summary> 
         /// if set to 1 objects will be drawn in order
+        /// depending on overload of draw, it is possible to sort what is drawn
         /// </summary>
         public float LayerDepth { get; set; }
 
@@ -87,20 +88,14 @@ namespace Railgun.RailgunGame
         /// </summary>
         /// <param name="hitbox">hitbox and location</param>
         /// <param name="texture">texture of the entity</param>
-        /// <param name="currentFrame">current frame the animation is on</param>
         /// <param name="fPS">how many frames one image lasts for</param>
-        /// <param name="secondsPerFrame">how many seconds were elapsed last frame</param>
-        /// <param name="timeCounter">time since image was last changed</param>
         /// <param name="sourceRectangle">source rectangle on sprite sheet</param>
         /// <param name="color">color of the sprite to be drawn</param>
         /// <param name="rotation">rotation of the sprite</param>
         /// <param name="sourceOrigin">location of origin for source rectangle</param>
         /// <param name="scale">scale of the sprite</param>
-        /// <param name="spriteEffect">sprite effect placed on the sprite</param>
-        /// <param name="layerDepth">unknown until office hours</param>
         public Animatable(Rectangle hitbox, Texture2D texture, 
-                          double fPS, 
-                          double secondsPerFrame, 
+                          double fPS,  
                           Rectangle sourceRectangle, 
                           Color color, float rotation, 
                           Vector2 sourceOrigin, 
@@ -111,7 +106,7 @@ namespace Railgun.RailgunGame
         {
             CurrentFrame = 0;
             FPS = fPS;
-            SecondsPerFrame = secondsPerFrame;
+            SecondsPerFrame = 1.0f / FPS;
             TimeCounter = 0;
             SourceRectangle = sourceRectangle;
             Color = color;
@@ -119,7 +114,7 @@ namespace Railgun.RailgunGame
             SourceOrigin = sourceOrigin;
             Scale = scale;
             SpriteEffect = SpriteEffects.None;
-            LayerDepth = layerDepth;
+            LayerDepth = 1.0f;
         }
 
 
