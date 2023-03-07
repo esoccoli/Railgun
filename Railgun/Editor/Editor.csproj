@@ -21,7 +21,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>$(SolutionName.Replace(" ", "_")).$(MSBuildProjectName.Replace(" ","_"))</RootNamespace>
-    <AssemblyName>Editor</AssemblyName>
+    <AssemblyName>Railgun Editor</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -44,6 +44,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Railgun.Editor.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Forms.DX, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
