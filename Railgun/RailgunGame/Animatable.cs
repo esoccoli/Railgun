@@ -150,7 +150,7 @@ namespace Railgun.RailgunGame
             TimeCounter += gameTime.ElapsedGameTime.TotalSeconds;
 
             // Has enough time gone by to actually flip frames?
-            if (TimeCounter >= TimeCounter)
+            if (TimeCounter >= SecondsPerFrame)
             {
                 // Update the frame and wrap
                 CurrentFrame++;
