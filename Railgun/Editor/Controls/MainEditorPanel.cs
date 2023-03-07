@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Forms.Controls;
+using Railgun.Editor.Util;
 
 namespace Railgun.Editor.Controls
 {
@@ -32,18 +33,26 @@ namespace Railgun.Editor.Controls
         private SpriteFont _consolas20;
         private Vector2 _changed;
 
-        //Useful information
-        public Point PrevMousePosition { get; protected set; }
         /// <summary>
         /// Called every update cycle of this panel
         /// </summary>
         public event UpdateDelegate OnUpdate;
 
+        /// <summary>
+        /// The current state of this editor (how you are interacting with it)
+        /// </summary>
+        private EditorState _currentState;
+
+        /// <summary>
+        /// The input manager as a field (much less to type)
+        /// </summary>
+        private InputManager _input;
+
         protected override void Initialize()
         {
             //Initialization
 
-
+            _input = InputManager.Instance;
 
             ////
             base.Initialize();
@@ -56,33 +65,70 @@ namespace Railgun.Editor.Controls
 
         protected override void Update(GameTime gameTime)
         {
-            //Input
-            KeyboardState ks = Keyboard.GetState();
-            MouseState ms = Mouse.GetState();
-
-
             //Plan: right click+drag to select, middle or alt+drag to pan, left to place
 
+            //Maybe don't do FSM
+            //Maybe make method: transition
 
-            //Check if dragging (alt + left or middle
-            if(ms.MiddleButton == ButtonState.Pressed ||
-                (ks.IsKeyDown(Keys.LeftAlt)&&ms.LeftButton
-                == ButtonState.Pressed))
+            //States of the editor (dragging, placing, selecting)
+            switch(_currentState)
             {
-                //Set mouse cursor to hand (using this to not be ambiguous)
-                Cursor = System.Windows.Forms.Cursors.Hand;
-                //Move build in camera by mouse change amount
-                Editor.Cam.Move((PrevMousePosition - ms.Position).ToVector2());
-                _changed = (ms.Position - PrevMousePosition).ToVector2();
-            }
-            else
-            {
-                //Set mouse cursor to hand (using this to not be ambiguous)
-                Cursor = System.Windows.Forms.Cursors.Cross;
-            }
+                case EditorState.Placing:
 
-            //Set previous info
-            PrevMousePosition = ms.Position;
+
+
+                    ////Transition
+                    
+                    //If middle pressed or alt pressed, switch to dragging
+                    if(_input.JustPressed(MouseButtonTypes.Middle)
+                        || _input.JustPressed(Keys.LeftAlt))
+                    {
+                        //Set mouse cursor to hand (using explicit path
+                        //to class to not be ambiguous)
+                        Cursor = System.Windows.Forms.Cursors.Hand;
+                        //Change state
+                        _currentState = EditorState.Dragging;
+                    }
+                    break;
+                case EditorState.Dragging:
+
+                    //If middle is down or alt-dragging
+                    if(_input.IsDown(MouseButtonTypes.Middle)
+                        || _input.IsDown(Keys.LeftAlt) && _input.IsDown(MouseButtonTypes.Left))
+
+                    //Move build in camera by mouse change amount
+                    Editor.Cam.Move(
+                        (_input.PrevMouseState.Position - 
+                        _input.CurrentMouseState.Position)
+                        .ToVector2());
+
+
+                    ////Transition
+
+                    //If middle not down and alt not pressed, switch to something
+                    if (!_input.IsDown(MouseButtonTypes.Middle)
+                        && !_input.IsDown(Keys.LeftAlt))
+                    {
+                        //If selecting
+                        if(_input.IsDown(MouseButtonTypes.Right))
+                        {
+                            _currentState = EditorState.Selecting;
+                        }
+                        else//If not that, then go back to placing
+                        {
+                            //Set mouse cursor to crosshair
+                            Cursor = System.Windows.Forms.Cursors.Cross;
+                            //Change state
+                            _currentState = EditorState.Placing;
+                        }
+                    }
+                    break;
+                case EditorState.Selecting:
+
+                    ////Transition
+
+                    break;
+            }
 
             ////
             OnUpdate();//Invoke update event

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Railgun.Editor.Controls;
+using Railgun.Editor.Util;
 
 namespace Railgun.Editor
 {
@@ -28,7 +29,10 @@ namespace Railgun.Editor
         /// </summary>
         private void MainForm_Load(object sender, EventArgs e)
         {
-            //Add update status to update event in main editor control
+            //Subscribe input update to main editor update event
+            mainEditorPanel.OnUpdate += InputManager.Instance.Update;
+
+            //Subscribe update status to update event in main editor control
             mainEditorPanel.OnUpdate += UpdateStatus;
         }
 
@@ -44,9 +48,11 @@ namespace Railgun.Editor
         {
             //Set positions with these digits
             mouseXStatus.Text = "X: " + 
-                mainEditorPanel.PrevMousePosition.X.ToString("##000.00");
-            mouseYStatus.Text = "Y: " + 
-                mainEditorPanel.PrevMousePosition.Y.ToString("##000.00");
+                InputManager.Instance.CurrentMouseState
+                .Position.X.ToString("##000.00");
+            mouseYStatus.Text = "Y: " +
+                InputManager.Instance.CurrentMouseState
+                .Position.Y.ToString("##000.00");
         }
     }
 }
