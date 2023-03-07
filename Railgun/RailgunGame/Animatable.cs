@@ -36,7 +36,10 @@ namespace Railgun.RailgunGame
         /// </summary>
         public double TimeCounter { get; set; }
 
-        
+        /// <summary>
+        /// total numeber of frames for animation
+        /// </summary>
+        public int TotalFrames { get; set; }
         
         //This overload of Draw needs:
         //texture, position, source rectangle,
@@ -94,7 +97,9 @@ namespace Railgun.RailgunGame
         /// <param name="rotation">rotation of the sprite</param>
         /// <param name="sourceOrigin">location of origin for source rectangle</param>
         /// <param name="scale">scale of the sprite</param>
-        public Animatable(Rectangle hitbox, Texture2D texture, 
+        public Animatable(Rectangle hitbox, 
+                          Texture2D texture, 
+                          GameTime gameTime,
                           double fPS,  
                           Rectangle sourceRectangle, 
                           Color color, float rotation, 
@@ -102,12 +107,14 @@ namespace Railgun.RailgunGame
                           float scale,
                           float layerDepth)
 
-        :base(hitbox, texture)
+        :base(hitbox, texture, gameTime)
         {
             CurrentFrame = 0;
             FPS = fPS;
             SecondsPerFrame = 1.0f / FPS;
             TimeCounter = 0;
+            TotalFrames = 1;
+
             SourceRectangle = sourceRectangle;
             Color = color;
             Rotation = rotation;
@@ -117,8 +124,19 @@ namespace Railgun.RailgunGame
             LayerDepth = 1.0f;
         }
 
-
-
+        /// <summary>
+        /// draws the sprite with specified properties
+        /// </summary>
+        /// <param name="sb">_spritebatch</param>
+        public override void Draw(SpriteBatch sb)
+        {
+            sb.Draw(Texture, new Vector2(Hitbox.X, Hitbox.Y), 
+                                         SourceRectangle, Color, 
+                                         Rotation, 
+                                         SourceOrigin, Scale, 
+                                         SpriteEffect, LayerDepth);
+            UpdateAnimation(GameTime);
+        }
 
 
 
@@ -136,12 +154,11 @@ namespace Railgun.RailgunGame
             {
                 // Update the frame and wrap
                 CurrentFrame++;
-                if (CurrentFrame >= 4) CurrentFrame = 1;
+                if (CurrentFrame >= TotalFrames) CurrentFrame = 1;
 
                 // Remove one "frame" worth of time
                 TimeCounter -= SecondsPerFrame;
             }
-
         }
     }
 }
