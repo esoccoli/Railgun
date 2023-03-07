@@ -21,17 +21,19 @@ namespace Railgun.RailgunGame
         public int CurrentFrame { get; set; }
 
         /// <summary>
-        /// how many frames one image lasts for
+        /// interval that frames are displayed at
+        /// 10 ps 1 frame lasts 1 frame per second
         /// </summary>
         public double FPS { get; set; }
 
         /// <summary>
-        /// time of last elapsed frame
+        /// amount of time one frame should last for
         /// </summary>
         public double SecondsPerFrame { get; set; }
 
         /// <summary>
         /// time since image was changed
+        /// aka "delta time"
         /// </summary>
         public double TimeCounter { get; set; }
 
@@ -76,9 +78,9 @@ namespace Railgun.RailgunGame
         public SpriteEffects SpriteEffect { get; set; }
 
 
-        /// <summary>
-        /// will ask chris what this does, 
+        /// <summary> 
         /// if set to 1 objects will be drawn in order
+        /// depending on overload of draw, it is possible to sort what is drawn
         /// </summary>
         public float LayerDepth { get; set; }
 
