@@ -81,6 +81,7 @@ namespace Railgun.RailgunGame
             if (check.Hitbox.Intersects(this.Hitbox))
             {
                 CurrentState = ProjectileStates.HasCollided;
+                CurrentFrame = 1;
             }
         }
 
