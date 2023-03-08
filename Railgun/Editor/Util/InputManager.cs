@@ -24,7 +24,7 @@ namespace Railgun.Editor.Util
     /// </summary>
     internal class InputManager
     {
-        private static InputManager _instance;
+        private static InputManager instance;
         /// <summary>
         /// The singleton instance of this InputManager
         /// </summary>
@@ -32,11 +32,11 @@ namespace Railgun.Editor.Util
         {
             get
             {
-                if( _instance == null )
+                if( instance == null )
                 {
-                    _instance = new InputManager();
+                    instance = new InputManager();
                 }
-                return _instance;
+                return instance;
             }
         }
 

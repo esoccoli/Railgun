@@ -30,9 +30,10 @@ namespace Railgun.Editor.Controls
     public class MainEditorPanel : MonoGameControl
     {
         //DEBUG
-        private Texture2D _test;
-        private SpriteFont _consolas20;
-        private Vector2 _changed;
+        private Texture2D test;
+        private SpriteFont consolas20;
+
+        //Bigger managing classes
 
         /// <summary>
         /// Called every update cycle of this panel
@@ -47,20 +48,48 @@ namespace Railgun.Editor.Controls
         /// <summary>
         /// The input manager as a field (much less to type)
         /// </summary>
-        private InputManager _input;
+        private InputManager input;
+
+        //Textures and colors
+
+        /// <summary>
+        /// A white square meant for drawing rectangles
+        /// </summary>
+        private Texture2D whitePixel;
+
+        /// <summary>
+        /// The color of the selector
+        /// </summary>
+        private Color selectorColor;
+
+        //Numbers and structs
+
+        /// <summary>
+        /// Holds the point that a selection is started
+        /// </summary>
+        private Vector2 selectorPoint;
 
         protected override void Initialize()
         {
             //Initialization
 
-            _input = InputManager.Instance;
+            //Shortcut to the input manager
+            input = InputManager.Instance;
+
+            //Setup selector color
+            selectorColor = new Color(Color.GreenYellow, 0.2f);
 
             ////
             base.Initialize();
             ////
 
-            _test = Editor.Content.Load<Texture2D>("test");
-            _consolas20 = Editor.Content.Load<SpriteFont>("Consolas20");
+            test = Editor.Content.Load<Texture2D>("test");
+            consolas20 = Editor.Content.Load<SpriteFont>("Consolas20");
+
+            //Create generic white pixel
+            whitePixel = new Texture2D(GraphicsDevice, 1, 1);
+            whitePixel.SetData(new Color[] { Color.White });
+
 
         }
 
@@ -81,52 +110,51 @@ namespace Railgun.Editor.Controls
                     ////Transition
                     
                     //If middle pressed or alt pressed, switch to dragging
-                    if(_input.JustPressed(MouseButtonTypes.Middle)
-                        || _input.JustPressed(Keys.LeftAlt))
+                    if(input.JustPressed(MouseButtonTypes.Middle)
+                        || input.JustPressed(Keys.LeftAlt))
                     {
-                        //Set mouse cursor to hand (using explicit path
-                        //to class to not be ambiguous)
-                        Cursor = System.Windows.Forms.Cursors.Hand;
-                        //Change state
-                        _currentState = EditorState.Dragging;
+                        TransitionToDragging();
                     }
                     break;
                 case EditorState.Dragging:
 
                     //If middle is down or alt-dragging
-                    if(_input.IsDown(MouseButtonTypes.Middle)
-                        || _input.IsDown(Keys.LeftAlt) && _input.IsDown(MouseButtonTypes.Left))
-
-                    //Move build in camera by mouse change amount
-                    Editor.Cam.Move(
-                        (_input.PrevMouseState.Position - 
-                        _input.CurrentMouseState.Position)
-                        .ToVector2());
+                    if(input.IsDown(MouseButtonTypes.Middle)
+                        || input.IsDown(Keys.LeftAlt) && input.IsDown(MouseButtonTypes.Left))
+                    {
+                        //Move build in camera by mouse change amount
+                        Editor.Cam.Move(
+                            (input.PrevMouseState.Position -
+                            input.CurrentMouseState.Position)
+                            .ToVector2());
+                    }
 
 
                     ////Transition
 
                     //If middle not down and alt not pressed, switch to something
-                    if (!_input.IsDown(MouseButtonTypes.Middle)
-                        && !_input.IsDown(Keys.LeftAlt))
+                    if (!input.IsDown(MouseButtonTypes.Middle)
+                        && !input.IsDown(Keys.LeftAlt))
                     {
                         //If selecting
-                        if(_input.IsDown(MouseButtonTypes.Right))
+                        if(input.IsDown(MouseButtonTypes.Right))
                         {
-                            _currentState = EditorState.Selecting;
+                            TransitionToSelecting();
                         }
                         else//If not that, then go back to placing
                         {
-                            //Set mouse cursor to crosshair
-                            Cursor = System.Windows.Forms.Cursors.Cross;
-                            //Change state
-                            _currentState = EditorState.Placing;
+                            TransitionToPlacing();
                         }
                     }
                     break;
                 case EditorState.Selecting:
 
+
+
+
                     ////Transition
+
+
 
                     break;
             }
@@ -150,7 +178,7 @@ namespace Railgun.Editor.Controls
             ////
 
 
-            Editor.spriteBatch.Draw(_test,Vector2.Zero,Color.White);
+            Editor.spriteBatch.Draw(test,Vector2.Zero,Color.White);
 
             //Editor.spriteBatch.DrawRectangle
 
@@ -161,12 +189,27 @@ namespace Railgun.Editor.Controls
             Editor.spriteBatch.End();
             
             //Overlayed things to be drawn
-            Editor.spriteBatch.Begin();
+            Editor.spriteBatch.Begin(SpriteSortMode.Deferred,
+                BlendState.NonPremultiplied,//Better transparency
+                SamplerState.PointClamp,//Perfect Pixelation
+                DepthStencilState.Default,
+                RasterizerState.CullNone,
+                null,//No shaders
+                null);//No matrix transform
             ////
 
+            //Solid rectangle
+            Editor.spriteBatch.Draw(whitePixel, new Rectangle(
+                new Point(10, 10),
+                input.CurrentMouseState.Position), selectorColor);
+
+            //Rectangle outline
+            DrawRectangleOutline(new Rectangle(
+                new Point(10, 10),
+                input.CurrentMouseState.Position),
+                10, selectorColor);
 
             
-
 
 
 
@@ -199,15 +242,49 @@ namespace Railgun.Editor.Controls
             };
 
             //Draw to a new basic effect
-            BasicEffect basicEffect = new BasicEffect(GraphicsDevice);
+            BasicEffect basicEffect = new BasicEffect(Editor.graphics);
             basicEffect.VertexColorEnabled = true;
             basicEffect.View = Matrix.CreateLookAt(new Vector3(0, 0, 1), Vector3.Zero, Vector3.Up);
-            basicEffect.Projection = Matrix.CreateOrthographicOffCenter(0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, 0, 0, 1);
+            basicEffect.Projection = Matrix.CreateOrthographicOffCenter(0, Editor.graphics.Viewport.Width, Editor.graphics.Viewport.Height, 0, 0, 1);
 
             basicEffect.CurrentTechnique.Passes[0].Apply();
 
             // Draw the rectangle outline using DrawUserPrimitives()
-            GraphicsDevice.DrawUserPrimitives<VertexPositionColor>(PrimitiveType.LineList, vertices, 0, 4);
+            Editor.graphics.DrawUserPrimitives<VertexPositionColor>(PrimitiveType.LineList, vertices, 0, 4);
+        }
+
+        /// <summary>
+        /// A method that transitions to the placing state
+        /// </summary>
+        private void TransitionToPlacing()
+        {
+            //Set mouse cursor to crosshair (using explicit path
+            //to class to not be ambiguous)
+            Cursor = System.Windows.Forms.Cursors.Cross;
+            //Change state
+            _currentState = EditorState.Placing;
+        }
+
+        /// <summary>
+        /// A method that transitions to the drag state
+        /// </summary>
+        private void TransitionToDragging()
+        {
+            //Set mouse cursor to hand
+            Cursor = System.Windows.Forms.Cursors.Hand;
+            //Change state
+            _currentState = EditorState.Dragging;
+        }
+
+        /// <summary>
+        /// A method that transitions to the selecting state
+        /// </summary>
+        private void TransitionToSelecting()
+        {
+            //Set mouse cursor to selecting
+            Cursor = System.Windows.Forms.Cursors.Arrow;
+            //Change state
+            _currentState = EditorState.Selecting;
         }
     }
 }
