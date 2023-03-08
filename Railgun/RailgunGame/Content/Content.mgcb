@@ -35,7 +35,7 @@
 /processorParam:TextureFormat=Color
 /build:RedHealthSquare.png
 
-#begin WhiteHealthSqure.png
+#begin WhiteHealthSquare.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -45,5 +45,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:WhiteHealthSqure.png
+/build:WhiteHealthSquare.png
 
