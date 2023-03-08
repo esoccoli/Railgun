@@ -71,7 +71,7 @@ namespace Railgun.RailgunGame
 
         /// <summary>
         /// scale of the sprite obtained from rectangle
-        /// </summary>
+        /// </summary>S
         public float Scale { get; set; }
 
         /// <summary>
