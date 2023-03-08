@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 namespace Railgun.RailgunGame
 {
     // Joshua Smith
+    // 03/06/2023
     //
     // I mean, it's the player class. It moves, shoots, gets shot, dies, and I guess depending on the 
     // difficulty of our game, it wins sometimes.
     internal class Player : Entity
     {
-        private int minSpeed;
-        private int currentSpeed;
+        private int speed;
         private int dashSpeed;
         private bool dashing;
         private Rectangle hitboxTemp;
@@ -38,8 +38,7 @@ namespace Railgun.RailgunGame
         {
             // I'm only setting the health to 100 as a default value. We can come back and change this if we need to adjust it later.
             Health = 100;
-            minSpeed = 5;
-            currentSpeed = minSpeed;
+            speed = 5;
             dashSpeed = 7;
             
             Hitbox = hitbox;
@@ -55,16 +54,17 @@ namespace Railgun.RailgunGame
             // Handles the movement of the player. All of this is run if they're not currently dashing.
             if (!dashing)
             {
-                if (InputManager.IsKeyDown(Keys.W)) { hitboxTemp.Y -= currentSpeed; Hitbox = hitboxTemp; }
-                if (InputManager.IsKeyDown(Keys.A)) { hitboxTemp.X -= currentSpeed; Hitbox = hitboxTemp; }
-                if (InputManager.IsKeyDown(Keys.S)) { hitboxTemp.Y += currentSpeed; Hitbox = hitboxTemp; }
-                if (InputManager.IsKeyDown(Keys.D)) { hitboxTemp.X += currentSpeed; Hitbox = hitboxTemp; }
+                if (InputManager.IsKeyDown(Keys.W)) { hitboxTemp.Y -= speed; Hitbox = hitboxTemp; }
+                if (InputManager.IsKeyDown(Keys.A)) { hitboxTemp.X -= speed; Hitbox = hitboxTemp; }
+                if (InputManager.IsKeyDown(Keys.S)) { hitboxTemp.Y += speed; Hitbox = hitboxTemp; }
+                if (InputManager.IsKeyDown(Keys.D)) { hitboxTemp.X += speed; Hitbox = hitboxTemp; }
 
                 if (InputManager.IsKeyDown(Keys.LeftShift)) { preDash = Keyboard.GetState(); dashing = true; }
             }
             else
             {
-                Dash();
+                preDash = Keyboard.GetState();
+                Dash(gameTime);
             }
         }
 
@@ -74,7 +74,6 @@ namespace Railgun.RailgunGame
         public void ResetPlayer()
         {
             Health = 20;
-            currentSpeed = minSpeed;
         }
 
         /// <summary>
@@ -88,9 +87,30 @@ namespace Railgun.RailgunGame
         /// <summary>
         /// Dashes towards the mouse, and heals health for each bullet we hit during said dash.
         /// </summary>
-        public void Dash()
+        public void Dash(GameTime gameTime)
         {
-            
+            double dashTime = 0.0;
+            dashTime += gameTime.ElapsedGameTime.Seconds;
+
+            if (InputManager.IsKeyDown(Keys.W)) { hitboxTemp.Y -= speed; Hitbox = hitboxTemp; }
+            if (InputManager.IsKeyDown(Keys.A)) { hitboxTemp.X -= speed; Hitbox = hitboxTemp; }
+            if (InputManager.IsKeyDown(Keys.S)) { hitboxTemp.Y += speed; Hitbox = hitboxTemp; }
+            if (InputManager.IsKeyDown(Keys.D)) { hitboxTemp.X += speed; Hitbox = hitboxTemp; }
+
+            if(dashTime >= .75)
+            {
+                dashTime = 0.0;
+                dashing = false;
+            }
+        }        
+        
+        /// <summary>
+        /// This is where the player is drawn. Might not need to edit this but when the animation object is made, I might.
+        /// </summary>
+        /// <param name="sb"> The spritebatch being drawn with. </param>
+        public void Dash(SpriteBatch sb)
+        {
+            base.Draw(sb);
         }
-    }
-}
+    }                                        
+}                                            
