@@ -13,7 +13,7 @@ namespace Railgun.RailgunGame
 {
     internal abstract class Animatable : Entity
     {
-        //animation elements
+        // animation elements
 
         /// <summary>
         /// current frame of sprite sheet
@@ -41,13 +41,13 @@ namespace Railgun.RailgunGame
         /// </summary>
         public int TotalFrames { get; set; }
         
-        //This overload of Draw needs:
-        //texture, position, source rectangle,
-        //color, rotation, origin position,
-        //scale, SpriteEffects, and layer depth
+        // This overload of Draw needs:
+        // texture, position, source rectangle,
+        // color, rotation, origin position,
+        // scale, SpriteEffects, and layer depth
 
-        //texture is obtained through entity's texture
-        //position is obtained through entity's rectangle
+        // texture is obtained through entity's texture
+        // position is obtained through entity's rectangle
 
         /// <summary>
         /// source rectangle on sprite sheet
