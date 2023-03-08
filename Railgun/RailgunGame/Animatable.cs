@@ -71,7 +71,7 @@ namespace Railgun.RailgunGame
 
         /// <summary>
         /// scale of the sprite obtained from rectangle
-        /// </summary>
+        /// </summary>S
         public float Scale { get; set; }
 
         /// <summary>
@@ -85,6 +85,7 @@ namespace Railgun.RailgunGame
         /// depending on overload of draw, it is possible to sort what is drawn
         /// </summary>
         public float LayerDepth { get; set; }
+
 
         /// <summary>
         /// instantiates animatable entity
@@ -150,7 +151,7 @@ namespace Railgun.RailgunGame
             TimeCounter += gameTime.ElapsedGameTime.TotalSeconds;
 
             // Has enough time gone by to actually flip frames?
-            if (TimeCounter >= TimeCounter)
+            if (TimeCounter >= SecondsPerFrame)
             {
                 // Update the frame and wrap
                 CurrentFrame++;

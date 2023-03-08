@@ -11,10 +11,8 @@ using Microsoft.Xna.Framework.Input;
 //Class for all projectiles in the game
 namespace Railgun.RailgunGame
 {
-    internal class Projectile : Entity
+    internal class Projectile : Animatable
     {
-
-
         /// <summary>
         /// speed at which projectile's x value updates
         /// </summary>
@@ -28,15 +26,45 @@ namespace Railgun.RailgunGame
         /// <summary>
         /// determines if a projectile is activre or not
         /// </summary>
-        public bool IsActive { get;  protected set; }
-        
+        public bool IsActive { get; protected set; }
+
+        /// <summary>
+        /// possible animation states for projectiles
+        /// </summary>
+        public enum ProjectileStates
+        {
+            IsActive,
+            HasCollided,
+            NotActive
+        }
+
         /// <summary>
         /// instantiates a projectile
         /// </summary>
         /// <param name="hitbox">hitbox of projectile</param>
         /// <param name="texture">texture of projectile</param>
-        public Projectile(Rectangle hitbox, Texture2D texture, float xVelocity, float yVelocity)
-            : base(hitbox, texture) 
+        public Projectile(Rectangle hitbox,
+                          Texture2D texture,
+                          GameTime gameTime,
+                          double fPS,
+                          Rectangle sourceRectangle,
+                          Color color, float rotation,
+                          Vector2 sourceOrigin,
+                          float scale,
+                          float layerDepth,
+                          float xVelocity,
+                          float yVelocity)
+
+            : base(hitbox, 
+                   texture, 
+                   gameTime, 
+                   fPS, 
+                   sourceRectangle, 
+                   color, 
+                   rotation, 
+                   sourceOrigin, 
+                   scale, 
+                   layerDepth)
         {
 
             XVelocity = xVelocity;
@@ -64,8 +92,6 @@ namespace Railgun.RailgunGame
             {
                 IsActive = false;
                 //switch from active animation to collided animation
-                //_hasHit = true;
-                //_currentFrame = 0;
                 return true;
             }
 
