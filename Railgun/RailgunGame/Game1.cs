@@ -8,12 +8,15 @@ namespace Railgun.RailgunGame
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private SpriteFont font;
 
         private Texture2D backgroundHealthUI;
         private Texture2D foregroundHealthUI;
 
+        private GameState currentGameState;
 
         private UI userInterface;
+        private Player mainPlayer;
 
         public Game1()
         {
@@ -22,15 +25,29 @@ namespace Railgun.RailgunGame
             IsMouseVisible = true;
         }
 
+        public enum GameState
+        {
+            Menu,
+            Game,
+            Pause,
+            GameOver
+        }
+
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            currentGameState = GameState.Menu;
+            font = this.Content.Load<SpriteFont>("Mynerve24");
+
+            GameTime gameTime = new GameTime();
 
             //UI Stuff
             backgroundHealthUI = Content.Load<Texture2D>("WhiteHealthSquare");
             foregroundHealthUI = Content.Load<Texture2D>("RedHealthSquare");
 
-            userInterface = new UI(backgroundHealthUI, foregroundHealthUI, false, 100, 100, null, 12, 12); //Creates a UI object. Values to be updated later. Null values need to be replaced (obviously)
+            //Creates a player - update later
+            Player mainPlayer = new Player(new Rectangle(0, 0, 0, 0), backgroundHealthUI, gameTime);
+
+            userInterface = new UI(backgroundHealthUI, foregroundHealthUI, true, 100, 100, font, 12, 12); //Creates a UI object. Values to be updated later. 
             base.Initialize();
         }
 
@@ -43,14 +60,57 @@ namespace Railgun.RailgunGame
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            KeyboardState kbState = Keyboard.GetState();
 
+            switch (currentGameState)
+            {
+                case GameState.Menu:
 
+                    if (kbState.IsKeyDown(Keys.Enter))
+                    {
+                        currentGameState = GameState.Game;
+                    }
 
-            // TODO: Add your update logic here
+                    break;
+                case GameState.Game:
 
-            userInterface.Update(90, 10); //Updates the UI. Values to be updated later
+                    userInterface.Update(90, 10); //Updates the UI. Values to be updated later
+
+                    if (kbState.IsKeyDown(Keys.R))
+                    {
+                        currentGameState = GameState.GameOver;
+                    }
+                    if (kbState.IsKeyDown(Keys.Escape))
+                    {
+                        currentGameState = GameState.Pause;
+                    }
+                    
+                    //Add this when we have Player working
+
+                    //if (mainPlayer.Health <= 0)
+                    //{
+                    //    currentGameState = GameState.GameOver;
+                    //}
+
+                    break;
+                case GameState.Pause:
+
+                    if (kbState.IsKeyDown(Keys.Enter))
+                    {
+                        currentGameState = GameState.Game;
+                    }
+
+                    break;
+                case GameState.GameOver:
+
+                    if (kbState.IsKeyDown(Keys.Enter))
+                    {
+                        currentGameState = GameState.Game;
+                    }
+
+                    break;
+            }
+
             base.Update(gameTime);
         }
 
@@ -58,9 +118,35 @@ namespace Railgun.RailgunGame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            _spriteBatch.Begin();
 
-            userInterface.Draw(_spriteBatch); //Draws UI
+            switch (currentGameState)
+            {
+                case GameState.Menu:
+
+                    _spriteBatch.DrawString(font, "Menu", new Vector2(_graphics.PreferredBackBufferWidth - 100, 20), Color.White);
+
+                    break;
+                case GameState.Game:
+
+                    _spriteBatch.DrawString(font, "Game", new Vector2(_graphics.PreferredBackBufferWidth - 100, 20), Color.White);
+                    userInterface.Draw(_spriteBatch); //Draws UI
+
+                    break;
+                case GameState.Pause:
+
+                    _spriteBatch.DrawString(font, "Pause", new Vector2(_graphics.PreferredBackBufferWidth - 100, 20), Color.White);
+
+                    break;
+                case GameState.GameOver:
+
+                    _spriteBatch.DrawString(font, "Game Over", new Vector2(_graphics.PreferredBackBufferWidth - 175, 20), Color.White);
+
+                    break;
+            }
+
+            _spriteBatch.End();
+
             base.Draw(gameTime);
         }
     }

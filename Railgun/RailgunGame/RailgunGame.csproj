@@ -12,6 +12,7 @@
     <RootNamespace>$(SolutionName.Replace(" ", "_")).$(MSBuildProjectName.Replace(" ","_"))</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Content\WhiteHealthSquare.png" />
     <None Remove="Icon.ico" />
     <None Remove="Icon.bmp" />
   </ItemGroup>
