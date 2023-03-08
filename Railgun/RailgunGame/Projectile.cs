@@ -14,6 +14,15 @@ namespace Railgun.RailgunGame
     internal class Projectile : Animatable
     {
         /// <summary>
+        /// possible animation states for projectiles
+        /// </summary>
+        public enum ProjectileStates
+        {
+            IsActive,
+            HasCollided
+        }
+
+        /// <summary>
         /// speed at which projectile's x value updates
         /// </summary>
         public float XVelocity { get; set; }
@@ -23,20 +32,7 @@ namespace Railgun.RailgunGame
         /// </summary>
         public float YVelocity { get; set; }
 
-        /// <summary>
-        /// determines if a projectile is activre or not
-        /// </summary>
-        public bool IsActive { get; protected set; }
-
-        /// <summary>
-        /// possible animation states for projectiles
-        /// </summary>
-        public enum ProjectileStates
-        {
-            IsActive,
-            HasCollided,
-            NotActive
-        }
+        public ProjectileStates CurrentState { get; set; }
 
         /// <summary>
         /// instantiates a projectile
@@ -47,55 +43,75 @@ namespace Railgun.RailgunGame
                           Texture2D texture,
                           GameTime gameTime,
                           double fPS,
+                          int totalFrames,
                           Rectangle sourceRectangle,
-                          Color color, float rotation,
+                          Color color,
+                          float rotation,
                           Vector2 sourceOrigin,
                           float scale,
                           float layerDepth,
                           float xVelocity,
                           float yVelocity)
 
-            : base(hitbox, 
-                   texture, 
-                   gameTime, 
-                   fPS, 
-                   sourceRectangle, 
-                   color, 
-                   rotation, 
-                   sourceOrigin, 
-                   scale, 
+            : base(hitbox,
+                   texture,
+                   gameTime,
+                   fPS,
+                   totalFrames,
+                   sourceRectangle,
+                   color,
+                   rotation,
+                   sourceOrigin,
+                   scale,
                    layerDepth)
         {
 
             XVelocity = xVelocity;
             YVelocity = yVelocity;
 
-            //should change when it intersects
-            IsActive = true;
         }
 
         /// <summary>
         /// checks if a projectile has collided with an entity
         /// </summary>
         /// <param name="check">entity to check collision with</param>
-        /// <returns>whether or not the projectile has collided</returns>
-        public bool CheckCollision(Entity check)
+        public void CheckCollision(Entity check)
         {
-            //projectile is still in a data structure but inactive
-            if (!IsActive)
-            {
-                return false;
-            }
-
-            //has hit an entity
+            // has hit an entity
             if (check.Hitbox.Intersects(this.Hitbox))
             {
-                IsActive = false;
-                //switch from active animation to collided animation
-                return true;
+                CurrentState = ProjectileStates.HasCollided;
             }
+        }
 
-            return false;
+        /// <summary>
+        /// updates the current state and position
+        /// of the projectile
+        /// </summary>
+        /// <param name="gameTime">GameTime</param>
+        public void Update(GameTime gameTime)
+        {
+            switch (CurrentState)
+            {
+                case ProjectileStates.IsActive:
+                    Rectangle tempRectangle = new Rectangle((int)(Hitbox.X + XVelocity), 
+                                                            (int)(Hitbox.Y + YVelocity), 
+                                                            Hitbox.Width, 
+                                                            Hitbox.Height);
+                    break;
+
+                case ProjectileStates.HasCollided:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Draws the projectile 
+        /// </summary>
+        /// <param name="sb">_spritebatch</param>
+        public void Draw(SpriteBatch sb)
+        {
+            base.Draw(sb);
         }
     }
 }

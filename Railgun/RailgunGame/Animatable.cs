@@ -40,6 +40,8 @@ namespace Railgun.RailgunGame
         /// total numeber of frames for animation
         /// </summary>
         public int TotalFrames { get; set; }
+
+        public int NumColumns { get; set; }
         
         // This overload of Draw needs:
         // texture, position, source rectangle,
@@ -79,20 +81,23 @@ namespace Railgun.RailgunGame
         /// </summary>
         public SpriteEffects SpriteEffect { get; set; }
 
-
         /// <summary> 
         /// if set to 1 objects will be drawn in order
         /// depending on overload of draw, it is possible to sort what is drawn
         /// </summary>
         public float LayerDepth { get; set; }
 
+        //going to need to edit class for sprite sheets with multiple rows
 
         /// <summary>
         /// instantiates animatable entity
+        /// number of columns is set to 1
+        /// use when animation is in one row
         /// </summary>
         /// <param name="hitbox">hitbox and location</param>
         /// <param name="texture">texture of the entity</param>
         /// <param name="fPS">how many frames one image lasts for</param>
+        ///  /// <param name="totalFrames">total number of frames</param
         /// <param name="sourceRectangle">source rectangle on sprite sheet</param>
         /// <param name="color">color of the sprite to be drawn</param>
         /// <param name="rotation">rotation of the sprite</param>
@@ -101,7 +106,8 @@ namespace Railgun.RailgunGame
         public Animatable(Rectangle hitbox, 
                           Texture2D texture, 
                           GameTime gameTime,
-                          double fPS,  
+                          double fPS,
+                          int totalFrames,
                           Rectangle sourceRectangle, 
                           Color color, float rotation, 
                           Vector2 sourceOrigin, 
@@ -110,11 +116,12 @@ namespace Railgun.RailgunGame
 
         :base(hitbox, texture, gameTime)
         {
-            CurrentFrame = 0;
+            CurrentFrame = 1;
             FPS = fPS;
             SecondsPerFrame = 1.0f / FPS;
             TimeCounter = 0;
-            TotalFrames = 1;
+            TotalFrames = totalFrames;
+            NumColumns = 1;
 
             SourceRectangle = sourceRectangle;
             Color = color;

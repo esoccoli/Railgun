@@ -19,7 +19,8 @@ namespace Railgun.RailgunGame
         public Rectangle Hitbox { get; set; }
 
         /// <summary>
-        /// entity's sprite
+        /// entity's primary sprite 
+        /// (idle for player/enemy, active for projectiles)
         /// </summary>
         public Texture2D Texture { get; set; }
 
