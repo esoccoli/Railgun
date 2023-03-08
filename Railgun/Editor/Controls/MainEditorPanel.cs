@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Forms.Controls;
 using Railgun.Editor.Util;
 
+
 namespace Railgun.Editor.Controls
 {
     /// <summary>
@@ -151,7 +152,9 @@ namespace Railgun.Editor.Controls
 
             Editor.spriteBatch.Draw(_test,Vector2.Zero,Color.White);
 
+            //Editor.spriteBatch.DrawRectangle
 
+            //Editor.graphics.DrawPrimitives(PrimitiveType.TriangleList, 0, 5);
 
 
             ////
@@ -162,8 +165,49 @@ namespace Railgun.Editor.Controls
             ////
 
 
+            
+
+
+
+
             ////
             Editor.spriteBatch.End();
+        }
+
+        /// <summary>
+        /// Draws a rectangle based with the specified bounds and color
+        /// </summary>
+        /// <param name="rectangle">The rectangle outline to draw</param>
+        /// <param name="width">The thickness of the outline</param>
+        /// <param name="color">The color to draw the rectangle outline</param>
+        private void DrawRectangleOutline(Rectangle rectangle, int width, Color color)
+        {
+            //Create vertices based on the given rectangle
+            VertexPositionColor[] vertices = new VertexPositionColor[]
+            {
+                new VertexPositionColor(new Vector3(rectangle.Left, rectangle.Top, 0), color),
+                new VertexPositionColor(new Vector3(rectangle.Right, rectangle.Top, 0), color),
+
+                new VertexPositionColor(new Vector3(rectangle.Right, rectangle.Top, 0), color),
+                new VertexPositionColor(new Vector3(rectangle.Right, rectangle.Bottom, 0), color),
+
+                new VertexPositionColor(new Vector3(rectangle.Right, rectangle.Bottom, 0), color),
+                new VertexPositionColor(new Vector3(rectangle.Left, rectangle.Bottom, 0), color),
+
+                new VertexPositionColor(new Vector3(rectangle.Left, rectangle.Bottom, 0), color),
+                new VertexPositionColor(new Vector3(rectangle.Left, rectangle.Top, 0), color)
+            };
+
+            //Draw to a new basic effect
+            BasicEffect basicEffect = new BasicEffect(GraphicsDevice);
+            basicEffect.VertexColorEnabled = true;
+            basicEffect.View = Matrix.CreateLookAt(new Vector3(0, 0, 1), Vector3.Zero, Vector3.Up);
+            basicEffect.Projection = Matrix.CreateOrthographicOffCenter(0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, 0, 0, 1);
+
+            basicEffect.CurrentTechnique.Passes[0].Apply();
+
+            // Draw the rectangle outline using DrawUserPrimitives()
+            GraphicsDevice.DrawUserPrimitives<VertexPositionColor>(PrimitiveType.LineList, vertices, 0, 4);
         }
     }
 }
