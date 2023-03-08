@@ -86,6 +86,14 @@ namespace Railgun.RailgunGame
         /// </summary>
         public float LayerDepth { get; set; }
 
+        //possible animation states
+        public enum AnimationStates
+        {
+            IsActive,
+            HasCollided,
+            NotActive
+        }
+
         /// <summary>
         /// instantiates animatable entity
         /// </summary>
