@@ -74,6 +74,7 @@ namespace Railgun.RailgunGame
         public void ResetPlayer()
         {
             Health = 20;
+            currentSpeed = minSpeed;
         }
 
         /// <summary>
