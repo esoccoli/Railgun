@@ -66,13 +66,6 @@ namespace Railgun.RailgunGame
         public static bool IsKeyDown(Keys key) => kbState.IsKeyDown(key);
 
         /// <summary>
-        /// Determines if the specified key is currently not pressed
-        /// </summary>
-        /// <param name="key">Key to check</param>
-        /// <returns>True if the key is currently not pressed</returns>
-        public static bool IsKeyUp(Keys key) => kbState.IsKeyUp(key);
-        
-        /// <summary>
         /// Checks if the specified mouse button is currently pressed
         /// </summary>
         /// <param name="button">Mouse button to check</param>
@@ -95,28 +88,63 @@ namespace Railgun.RailgunGame
 
             return isDown;
         }
+
+        /// <summary>
+        /// Checks if the specified key started being pressed this frame
+        /// </summary>
+        /// <param name="key">Key to check</param>
+        /// <returns>True if the key is down this frame and was up last frame, false otherwise</returns>
+        public static bool IsKeyPressed(Keys key) => kbState.IsKeyDown(key) && prevKbState.IsKeyUp(key);
         
         /// <summary>
-        /// Checks if a specified mouse button is currently released
+        /// Checks if the specified key was released this frame
+        /// </summary>
+        /// <param name="key">Key to check</param>
+        /// <returns>True if the key is up this frame and was down last frame, false otherwise</returns>
+        public static bool IsKeyReleased(Keys key) => kbState.IsKeyUp(key) && prevKbState.IsKeyDown(key);
+        
+        /// <summary>
+        /// Checks if the specified mouse button changed from released to pressed this frame
         /// </summary>
         /// <param name="button">Button to check</param>
-        /// <returns>True if the button is released, false otherwise</returns>
-        public static bool IsButtonUp(MouseButtons button)
+        /// <returns>True if the button is pressed this frame and was released last frame, false otherwise</returns>
+        public static bool MouseButtonPressed(MouseButtons button)
         {
-            bool isUp = false;
+            bool isPressed = false;
+            
+            switch (button)
+            {
+                case MouseButtons.Left:
+                    isPressed = mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released;
+                    break;
+                case MouseButtons.Right:
+                    isPressed = mouseState.RightButton == ButtonState.Pressed && prevMouseState.RightButton == ButtonState.Released;
+                    break;
+            }
+
+            return isPressed;
+        }
+        
+        /// <summary>
+        /// Checks if the specified mouse button changed from pressed to released this frame
+        /// </summary>
+        /// <param name="button">Button to check</param>
+        /// <returns>True if the button is released this frame and was pressed last frame, false otherwise</returns>
+        public static bool MouseButtonReleased(MouseButtons button)
+        {
+            bool isReleased = false;
 
             switch (button)
             {
                 case MouseButtons.Left:
-                    isUp = mouseState.LeftButton == ButtonState.Released;
+                    isReleased = mouseState.LeftButton == ButtonState.Released && prevMouseState.LeftButton == ButtonState.Pressed;
                     break;
                 case MouseButtons.Right:
-                    isUp = mouseState.RightButton == ButtonState.Released;
+                    isReleased = mouseState.RightButton == ButtonState.Released && prevMouseState.RightButton == ButtonState.Pressed;
                     break;
             }
 
-            return isUp;
+            return isReleased;
         }
-
     }
 }
