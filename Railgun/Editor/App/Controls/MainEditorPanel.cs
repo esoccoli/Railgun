@@ -2,10 +2,10 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Forms.Controls;
-using Railgun.Editor.Util;
+using Railgun.Editor.App.Util;
 
 
-namespace Railgun.Editor.Controls
+namespace Railgun.Editor.App.Controls
 {
     /// <summary>
     /// Represents the states that the user can preform within the editor
