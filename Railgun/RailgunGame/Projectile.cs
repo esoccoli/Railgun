@@ -92,7 +92,7 @@ namespace Railgun.RailgunGame
             switch (CurrentState)
             {
                 case ProjectileStates.IsActive:
-                    //replace old location with new location
+                    Hitbox = new Rectangle((int)(Hitbox.X + XVelocity), (int)(Hitbox.Y + YVelocity), Hitbox.Width, Hitbox.Height)
                     break;
 
                 case ProjectileStates.HasCollided:
@@ -115,7 +115,10 @@ namespace Railgun.RailgunGame
                     break;
 
                 case ProjectileStates.HasCollided:
-                    HasCollided.Draw(sb, GameTime, new Vector2(Hitbox.X, Hitbox.Y));
+                    if (HasCollided.CurrentFrame != HasCollided.TotalFrames)
+                    {
+                        HasCollided.Draw(sb, GameTime, new Vector2(Hitbox.X, Hitbox.Y));
+                    }
                     break;
             }
         }
