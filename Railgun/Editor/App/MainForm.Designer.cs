@@ -43,10 +43,17 @@
             this.mouseXStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.mouseYStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.camZoomStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.tilePanelLabel = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.editPanelLabel = new System.Windows.Forms.Label();
             this.mainEditorPanel = new Railgun.Editor.App.Controls.MainEditorPanel();
             this.menuStrip.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
+            this.leftSideTableLayoutPanel.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -59,7 +66,7 @@
             this.saveStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(900, 28);
+            this.menuStrip.Size = new System.Drawing.Size(900, 30);
             this.menuStrip.TabIndex = 2;
             this.menuStrip.Text = "menuStrip";
             // 
@@ -68,7 +75,7 @@
             this.logoToolStripMenuItem.Enabled = false;
             this.logoToolStripMenuItem.Image = global::Railgun.Editor.Properties.Resources.railgun_transparent;
             this.logoToolStripMenuItem.Name = "logoToolStripMenuItem";
-            this.logoToolStripMenuItem.Size = new System.Drawing.Size(34, 24);
+            this.logoToolStripMenuItem.Size = new System.Drawing.Size(34, 26);
             // 
             // fileToolStripMenuItem
             // 
@@ -78,7 +85,7 @@
             this.saveAsToolStripMenuItem,
             this.exportToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 26);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // newMapToolStripMenuItem
@@ -109,7 +116,7 @@
             // saveStripMenuItem
             // 
             this.saveStripMenuItem.Name = "saveStripMenuItem";
-            this.saveStripMenuItem.Size = new System.Drawing.Size(54, 24);
+            this.saveStripMenuItem.Size = new System.Drawing.Size(54, 26);
             this.saveStripMenuItem.Text = "Save";
             // 
             // mainTableLayoutPanel
@@ -120,18 +127,20 @@
             this.mainTableLayoutPanel.Controls.Add(this.mainEditorPanel, 1, 0);
             this.mainTableLayoutPanel.Controls.Add(this.leftSideTableLayoutPanel, 0, 0);
             this.mainTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainTableLayoutPanel.Location = new System.Drawing.Point(0, 28);
+            this.mainTableLayoutPanel.Location = new System.Drawing.Point(0, 30);
             this.mainTableLayoutPanel.Margin = new System.Windows.Forms.Padding(4);
             this.mainTableLayoutPanel.Name = "mainTableLayoutPanel";
             this.mainTableLayoutPanel.RowCount = 1;
             this.mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.mainTableLayoutPanel.Size = new System.Drawing.Size(900, 472);
+            this.mainTableLayoutPanel.Size = new System.Drawing.Size(900, 470);
             this.mainTableLayoutPanel.TabIndex = 3;
             // 
             // leftSideTableLayoutPanel
             // 
             this.leftSideTableLayoutPanel.ColumnCount = 1;
             this.leftSideTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.leftSideTableLayoutPanel.Controls.Add(this.panel2, 0, 1);
+            this.leftSideTableLayoutPanel.Controls.Add(this.panel1, 0, 0);
             this.leftSideTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.leftSideTableLayoutPanel.Location = new System.Drawing.Point(4, 4);
             this.leftSideTableLayoutPanel.Margin = new System.Windows.Forms.Padding(4);
@@ -139,11 +148,12 @@
             this.leftSideTableLayoutPanel.RowCount = 2;
             this.leftSideTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.leftSideTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.leftSideTableLayoutPanel.Size = new System.Drawing.Size(392, 464);
+            this.leftSideTableLayoutPanel.Size = new System.Drawing.Size(392, 462);
             this.leftSideTableLayoutPanel.TabIndex = 1;
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mouseXStatus,
@@ -157,15 +167,17 @@
             // 
             // mouseXStatus
             // 
+            this.mouseXStatus.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mouseXStatus.Name = "mouseXStatus";
-            this.mouseXStatus.Size = new System.Drawing.Size(21, 20);
+            this.mouseXStatus.Size = new System.Drawing.Size(26, 20);
             this.mouseXStatus.Text = "X:";
             // 
             // mouseYStatus
             // 
+            this.mouseYStatus.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mouseYStatus.Margin = new System.Windows.Forms.Padding(20, 4, 0, 2);
             this.mouseYStatus.Name = "mouseYStatus";
-            this.mouseYStatus.Size = new System.Drawing.Size(20, 20);
+            this.mouseYStatus.Size = new System.Drawing.Size(26, 20);
             this.mouseYStatus.Text = "Y:";
             // 
             // camZoomStatus
@@ -177,6 +189,46 @@
             this.camZoomStatus.Click += new System.EventHandler(this.CamZoomStatus_Click);
             this.camZoomStatus.MouseEnter += new System.EventHandler(this.HighlightStatus_mouseEnter);
             this.camZoomStatus.MouseLeave += new System.EventHandler(this.UnHighlightStatus_mouseExit);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.tilePanelLabel);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(386, 225);
+            this.panel1.TabIndex = 0;
+            // 
+            // tilePanelLabel
+            // 
+            this.tilePanelLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tilePanelLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tilePanelLabel.Location = new System.Drawing.Point(0, 0);
+            this.tilePanelLabel.Name = "tilePanelLabel";
+            this.tilePanelLabel.Size = new System.Drawing.Size(386, 16);
+            this.tilePanelLabel.TabIndex = 0;
+            this.tilePanelLabel.Text = "Tiles";
+            this.tilePanelLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.editPanelLabel);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(3, 234);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(386, 225);
+            this.panel2.TabIndex = 1;
+            // 
+            // editPanelLabel
+            // 
+            this.editPanelLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.editPanelLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.editPanelLabel.Location = new System.Drawing.Point(0, 0);
+            this.editPanelLabel.Name = "editPanelLabel";
+            this.editPanelLabel.Size = new System.Drawing.Size(386, 16);
+            this.editPanelLabel.TabIndex = 0;
+            this.editPanelLabel.Text = "Edit";
+            this.editPanelLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // mainEditorPanel
             // 
@@ -191,7 +243,7 @@
             this.mainEditorPanel.MouseHoverUpdatesOnly = false;
             this.mainEditorPanel.Name = "mainEditorPanel";
             this.mainEditorPanel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.mainEditorPanel.Size = new System.Drawing.Size(492, 464);
+            this.mainEditorPanel.Size = new System.Drawing.Size(492, 462);
             this.mainEditorPanel.TabIndex = 0;
             this.mainEditorPanel.Text = "mainEditorPanel";
             // 
@@ -215,8 +267,11 @@
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.mainTableLayoutPanel.ResumeLayout(false);
+            this.leftSideTableLayoutPanel.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -238,5 +293,9 @@
         private System.Windows.Forms.ToolStripStatusLabel mouseYStatus;
         private System.Windows.Forms.ToolStripStatusLabel camZoomStatus;
         private System.Windows.Forms.ToolStripMenuItem logoToolStripMenuItem;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label editPanelLabel;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label tilePanelLabel;
     }
 }

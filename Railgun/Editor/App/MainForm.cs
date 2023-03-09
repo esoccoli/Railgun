@@ -19,15 +19,9 @@ namespace Railgun.Editor.App
     /// </summary>
     public partial class MainForm : Form
     {
-        //Color theme
-        Color baseColor = Color.FromArgb(31, 31, 31);
-        Color labelColor = Color.FromArgb(128, 128, 128);
-        Color contrastColor = Color.White;
-        Color panelColor = Color.FromArgb(51, 51, 51);
-        Color highlightColor = Color.FromArgb(80, 80, 80);
-
-
-
+        /// <summary>
+        /// Instantiate this form
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
@@ -48,16 +42,34 @@ namespace Railgun.Editor.App
 
 
             //Set color scheme
-            //BackColor = baseColor;
+            BackColor = DarkTheme.BaseColor;
             //Set each color
             foreach (Control control in Controls)
             {
+                //If menu
                 if (control is MenuStrip)
                 {
                     MenuStrip menuStrip = control as MenuStrip;
-                    //menuStrip.BackColor = baseColor;
-                    //menuStrip.ForeColor = contrastColor;
-                    menuStrip.Renderer = new DarkMenuStripRenderer();
+                    menuStrip.BackColor = DarkTheme.BaseColor;
+                    menuStrip.ForeColor = DarkTheme.ContrastColor;
+                    //Also set theme for each item
+                    foreach(ToolStripMenuItem item in menuStrip.Items)
+                    {
+                        item.BackColor = DarkTheme.BaseColor;
+                        item.ForeColor = DarkTheme.ContrastColor;
+                        //Same for subItems
+                        foreach (ToolStripMenuItem subItem in item.DropDownItems)
+                        {
+                            subItem.BackColor = DarkTheme.BaseColor;
+                            subItem.ForeColor = DarkTheme.ContrastColor;
+                        }
+                    }
+                    menuStrip.Renderer = new DarkTheme.DarkMenuStripRenderer();
+                }
+                else
+                {
+                    control.BackColor = DarkTheme.BaseColor;
+                    control.ForeColor = DarkTheme.ContrastColor;
                 }
             }
         }
@@ -75,10 +87,10 @@ namespace Railgun.Editor.App
             //Set positions with these digits
             mouseXStatus.Text = "X: " + 
                 InputManager.Instance.CurrentMouseState
-                .Position.X.ToString("##000");
+                .Position.X.ToString(" 000;-000");
             mouseYStatus.Text = "Y: " +
                 InputManager.Instance.CurrentMouseState
-                .Position.Y.ToString("##000");
+                .Position.Y.ToString(" 000;-000");
             //Set zoom amount
             camZoomStatus.Text = "Zoom: " +
                 mainEditorPanel.Editor.Cam.Zoom
@@ -93,7 +105,7 @@ namespace Railgun.Editor.App
         private void UnHighlightStatus_mouseExit(object sender, EventArgs e)
         {
             //Set color to darker
-            (sender as ToolStripStatusLabel).BackColor = highlightColor;
+            (sender as ToolStripStatusLabel).BackColor = DarkTheme.BaseColor;
         }
 
         /// <summary>
@@ -102,7 +114,7 @@ namespace Railgun.Editor.App
         private void HighlightStatus_mouseEnter(object sender, EventArgs e)
         {
             //Set color to brighter
-            (sender as ToolStripStatusLabel).BackColor = baseColor;
+            (sender as ToolStripStatusLabel).BackColor = DarkTheme.HighlightColor;
         }
 
         //Status events
