@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using SharpDX;
 
-namespace Railgun.Editor.Util
+namespace Railgun.Editor.App.Util
 {
     /// <summary>
     /// An enumeration representing the different mouse buttons that can be pressed
