@@ -41,7 +41,15 @@ namespace Railgun.RailgunGame
         /// </summary>
         public int TotalFrames { get; set; }
 
+        /// <summary>
+        /// number of columns on the spritesheet
+        /// </summary>
         public int NumColumns { get; set; }
+
+        /// <summary>
+        /// number of rows on the spritesheet
+        /// </summary>
+        public int NumRows { get; set; }
         
         // This overload of Draw needs:
         // texture, position, source rectangle,
@@ -121,7 +129,10 @@ namespace Railgun.RailgunGame
             SecondsPerFrame = 1.0f / FPS;
             TimeCounter = 0;
             TotalFrames = totalFrames;
-            NumColumns = 1;
+
+            //gets rows and columns
+            NumColumns = texture.Width / hitbox.Width;
+            NumRows = texture.Height / hitbox.Height;
 
             SourceRectangle = sourceRectangle;
             Color = color;
