@@ -40,38 +40,7 @@ namespace Railgun.Editor.App
             mainEditorPanel.OnUpdate += UpdateStatus;
 
 
-
-            //Set color scheme
-            BackColor = DarkTheme.BaseColor;
-            //Set each color
-            foreach (Control control in Controls)
-            {
-                //If menu
-                if (control is MenuStrip)
-                {
-                    MenuStrip menuStrip = control as MenuStrip;
-                    menuStrip.BackColor = DarkTheme.BaseColor;
-                    menuStrip.ForeColor = DarkTheme.ContrastColor;
-                    //Also set theme for each item
-                    foreach(ToolStripMenuItem item in menuStrip.Items)
-                    {
-                        item.BackColor = DarkTheme.BaseColor;
-                        item.ForeColor = DarkTheme.ContrastColor;
-                        //Same for subItems
-                        foreach (ToolStripMenuItem subItem in item.DropDownItems)
-                        {
-                            subItem.BackColor = DarkTheme.BaseColor;
-                            subItem.ForeColor = DarkTheme.ContrastColor;
-                        }
-                    }
-                    menuStrip.Renderer = new DarkTheme.DarkMenuStripRenderer();
-                }
-                else
-                {
-                    control.BackColor = DarkTheme.BaseColor;
-                    control.ForeColor = DarkTheme.ContrastColor;
-                }
-            }
+            ColorControls(Controls);
         }
 
         private void newMap_Click(object sender, EventArgs e)
@@ -85,15 +54,14 @@ namespace Railgun.Editor.App
         private void UpdateStatus()
         {
             //Set positions with these digits
-            mouseXStatus.Text = "X: " + 
+            mouseXStatus.Text = 
                 InputManager.Instance.CurrentMouseState
                 .Position.X.ToString(" 000;-000");
-            mouseYStatus.Text = "Y: " +
+            mouseYStatus.Text =
                 InputManager.Instance.CurrentMouseState
                 .Position.Y.ToString(" 000;-000");
             //Set zoom amount
-            camZoomStatus.Text = "Zoom: " +
-                mainEditorPanel.Editor.Cam.Zoom
+            camZoomStatus.Text = mainEditorPanel.Editor.Cam.Zoom
                 .ToString("0.00");
         }
 
@@ -125,6 +93,65 @@ namespace Railgun.Editor.App
         private void CamZoomStatus_Click(object sender, EventArgs e)
         {
             mainEditorPanel.Editor.Cam.Zoom = 1f;
+        }
+
+        /// <summary>
+        /// Colors each control based on its type
+        /// </summary>
+        /// <param name="controls"></param>
+        private void ColorControls(Control.ControlCollection controls)
+        {
+            foreach (Control control in controls)
+            {
+                //If menu
+                if (control is MenuStrip)
+                {
+                    MenuStrip menuStrip = control as MenuStrip;
+                    menuStrip.BackColor = DarkTheme.BaseColor;
+                    menuStrip.ForeColor = DarkTheme.ContrastColor;
+                    //Also set theme for each item
+                    foreach (ToolStripMenuItem item in menuStrip.Items)
+                    {
+                        item.BackColor = DarkTheme.BaseColor;
+                        item.ForeColor = DarkTheme.ContrastColor;
+                        //Same for subItems
+                        foreach (ToolStripMenuItem subItem in item.DropDownItems)
+                        {
+                            subItem.BackColor = DarkTheme.BaseColor;
+                            subItem.ForeColor = DarkTheme.ContrastColor;
+                        }
+                    }
+                    menuStrip.Renderer = new DarkTheme.DarkMenuStripRenderer();
+                }
+                //If label
+                else if (control is Label)
+                {
+                    Label label = control as Label;
+                    label.BackColor = DarkTheme.BaseColor;
+                    label.ForeColor = DarkTheme.LabelColor;
+                }
+                //If a table layout
+                else if (control is TableLayoutPanel)
+                {
+                    //These act as borders that surround controls
+                    TableLayoutPanel table = control as TableLayoutPanel;
+                    table.BackColor = DarkTheme.LabelColor;
+                }
+                //If a panel
+                else if (control is Panel)
+                {
+                    Panel panel = control as Panel;
+                    panel.BackColor = DarkTheme.PanelColor;
+                }
+                else
+                {
+                    control.BackColor = DarkTheme.BaseColor;
+                    control.ForeColor = DarkTheme.LabelColor;
+                }
+
+                //Recurse for any child controls inside this control
+                ColorControls(control.Controls);
+            }
         }
 
     }
