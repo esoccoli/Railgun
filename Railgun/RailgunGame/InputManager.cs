@@ -25,13 +25,25 @@ namespace Railgun.RailgunGame
     /// </summary>
     public static class InputManager
     {
-        // Tracks the current keyboard  & mouse state
-        private static KeyboardState kbState;
-        private static MouseState mouseState;
-    
-        // Tracks the keyboard & mouse state from last frame
-        private static KeyboardState prevKbState;
-        private static MouseState prevMouseState;
+        /// <summary>
+        /// Tracks the current keyboard state
+        /// </summary>
+        public static KeyboardState KbState { get; private set; }
+        
+        /// <summary>
+        /// Tracks the current mouse state
+        /// </summary>
+        public static MouseState MouseState { get; private set; }
+        
+        /// <summary>
+        /// Tracks the keyboard state from the previous frame
+        /// </summary>
+        public static KeyboardState PrevKbState;
+        
+        /// <summary>
+        /// Tracks the mouse state from the previous frame
+        /// </summary>
+        public static MouseState PrevMouseState;
     
         /// <summary>
         /// Initializes the InputManager class
@@ -39,11 +51,11 @@ namespace Railgun.RailgunGame
         static InputManager()
         {
             // Initializes the current & previous mouse and keyboard states
-            kbState = Keyboard.GetState();
-            mouseState = Mouse.GetState();
+            KbState = Keyboard.GetState();
+            MouseState = Mouse.GetState();
         
-            prevKbState = Keyboard.GetState();
-            prevMouseState = Mouse.GetState();
+            PrevKbState = Keyboard.GetState();
+            PrevMouseState = Mouse.GetState();
         }
     
         /// <summary>
@@ -51,11 +63,11 @@ namespace Railgun.RailgunGame
         /// </summary>
         public static void UpdateInputState()
         {
-            prevKbState = kbState;
-            prevMouseState = mouseState;
+            PrevKbState = KbState;
+            PrevMouseState = MouseState;
 
-            kbState = Keyboard.GetState();
-            mouseState = Mouse.GetState();
+            KbState = Keyboard.GetState();
+            MouseState = Mouse.GetState();
         }
 
         /// <summary>
@@ -63,7 +75,7 @@ namespace Railgun.RailgunGame
         /// </summary>
         /// <param name="key">Key to check</param>
         /// <returns>True if the key is currently being pressed, false otherwise</returns>
-        public static bool IsKeyDown(Keys key) => kbState.IsKeyDown(key);
+        public static bool IsKeyDown(Keys key) => KbState.IsKeyDown(key);
 
         /// <summary>
         /// Checks if the specified mouse button is currently pressed
@@ -79,10 +91,10 @@ namespace Railgun.RailgunGame
             switch (button)
             {
                 case MouseButtons.Left:
-                    isDown = mouseState.LeftButton == ButtonState.Pressed;
+                    isDown = MouseState.LeftButton == ButtonState.Pressed;
                     break;
                 case MouseButtons.Right:
-                    isDown = mouseState.RightButton == ButtonState.Pressed;
+                    isDown = MouseState.RightButton == ButtonState.Pressed;
                     break;
             }
 
@@ -94,14 +106,14 @@ namespace Railgun.RailgunGame
         /// </summary>
         /// <param name="key">Key to check</param>
         /// <returns>True if the key is down this frame and was up last frame, false otherwise</returns>
-        public static bool IsKeyPressed(Keys key) => kbState.IsKeyDown(key) && prevKbState.IsKeyUp(key);
+        public static bool IsKeyPressed(Keys key) => KbState.IsKeyDown(key) && PrevKbState.IsKeyUp(key);
         
         /// <summary>
         /// Checks if the specified key was released this frame
         /// </summary>
         /// <param name="key">Key to check</param>
         /// <returns>True if the key is up this frame and was down last frame, false otherwise</returns>
-        public static bool IsKeyReleased(Keys key) => kbState.IsKeyUp(key) && prevKbState.IsKeyDown(key);
+        public static bool IsKeyReleased(Keys key) => KbState.IsKeyUp(key) && PrevKbState.IsKeyDown(key);
         
         /// <summary>
         /// Checks if the specified mouse button changed from released to pressed this frame
@@ -115,10 +127,10 @@ namespace Railgun.RailgunGame
             switch (button)
             {
                 case MouseButtons.Left:
-                    isPressed = mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released;
+                    isPressed = MouseState.LeftButton == ButtonState.Pressed && PrevMouseState.LeftButton == ButtonState.Released;
                     break;
                 case MouseButtons.Right:
-                    isPressed = mouseState.RightButton == ButtonState.Pressed && prevMouseState.RightButton == ButtonState.Released;
+                    isPressed = MouseState.RightButton == ButtonState.Pressed && PrevMouseState.RightButton == ButtonState.Released;
                     break;
             }
 
@@ -137,10 +149,10 @@ namespace Railgun.RailgunGame
             switch (button)
             {
                 case MouseButtons.Left:
-                    isReleased = mouseState.LeftButton == ButtonState.Released && prevMouseState.LeftButton == ButtonState.Pressed;
+                    isReleased = MouseState.LeftButton == ButtonState.Released && PrevMouseState.LeftButton == ButtonState.Pressed;
                     break;
                 case MouseButtons.Right:
-                    isReleased = mouseState.RightButton == ButtonState.Released && prevMouseState.RightButton == ButtonState.Pressed;
+                    isReleased = MouseState.RightButton == ButtonState.Released && PrevMouseState.RightButton == ButtonState.Pressed;
                     break;
             }
 
