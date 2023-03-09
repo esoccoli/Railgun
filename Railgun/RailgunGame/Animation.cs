@@ -16,7 +16,7 @@ namespace Railgun.RailgunGame
         // animation elements
 
         /// <summary>
-        /// current frame of sprite sheet
+        /// current columns in a row of sprite sheet
         /// </summary>
         public int CurrentFrame { get; set; }
 
@@ -41,7 +41,15 @@ namespace Railgun.RailgunGame
         /// </summary>
         public int TotalFrames { get; set; }
 
+        /// <summary>
+        /// number of columns on the spritesheet
+        /// </summary>
         public int NumColumns { get; set; }
+
+        /// <summary>
+        /// number of rows on the spritesheet
+        /// </summary>
+        public int NumRows { get; set; }
         
         // This overload of Draw needs:
         // texture, position, source rectangle,
@@ -121,7 +129,10 @@ namespace Railgun.RailgunGame
             SecondsPerFrame = 1.0f / FPS;
             TimeCounter = 0;
             TotalFrames = totalFrames;
-            NumColumns = 1;
+
+            //gets rows and columns
+            NumColumns = texture.Width / hitbox.Width;
+            NumRows = texture.Height / hitbox.Height;
 
             SourceRectangle = sourceRectangle;
             Color = color;
@@ -163,7 +174,28 @@ namespace Railgun.RailgunGame
             {
                 // Update the frame and wrap
                 CurrentFrame++;
-                if (CurrentFrame >= TotalFrames) CurrentFrame = 1;
+
+                // if it is on the last frame
+                if (CurrentFrame >= NumColumns && SourceRectangle.Y * NumRows == Texture.Height)
+                {
+                    CurrentFrame = 0;
+                    SourceRectangle = new Rectangle(SourceRectangle.X,
+                                                    0,
+                                                    SourceRectangle.Width,
+                                                    SourceRectangle.Height);
+
+                }
+
+                // checks if the end of a row has been
+                // reached and moves to next row
+                else if (CurrentFrame >= NumColumns)
+                {
+                    CurrentFrame = 0;
+                    SourceRectangle = new Rectangle(SourceRectangle.X, 
+                                                    SourceRectangle.Y + SourceRectangle.Height, 
+                                                    SourceRectangle.Width, 
+                                                    SourceRectangle.Height);
+                }
 
                 // Remove one "frame" worth of time
                 TimeCounter -= SecondsPerFrame;

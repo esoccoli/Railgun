@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Input;
 //Class for all projectiles in the game
 namespace Railgun.RailgunGame
 {
-    internal class Projectile : Animation
+    internal class Projectile : Entity
     {
         /// <summary>
         /// possible animation states for projectiles
@@ -32,7 +32,21 @@ namespace Railgun.RailgunGame
         /// </summary>
         public float YVelocity { get; set; }
 
+        /// <summary>
+        /// current state of the projectile:
+        /// active or has collided
+        /// </summary>
         public ProjectileStates CurrentState { get; set; }
+
+        /// <summary>
+        /// animation to play when projectile is active
+        /// </summary>
+        public Animation IsActive { get; set; }
+
+        /// <summary>
+        /// animation to play when projectile collides
+        /// </summary>
+        public Animation HasCollided { get; set; }
 
         /// <summary>
         /// instantiates a projectile
@@ -42,28 +56,12 @@ namespace Railgun.RailgunGame
         public Projectile(Rectangle hitbox,
                           Texture2D texture,
                           GameTime gameTime,
-                          double fPS,
-                          int totalFrames,
-                          Rectangle sourceRectangle,
-                          Color color,
-                          float rotation,
-                          Vector2 sourceOrigin,
-                          float scale,
-                          float layerDepth,
                           float xVelocity,
                           float yVelocity)
 
             : base(hitbox,
                    texture,
-                   gameTime,
-                   fPS,
-                   totalFrames,
-                   sourceRectangle,
-                   color,
-                   rotation,
-                   sourceOrigin,
-                   scale,
-                   layerDepth)
+                   gameTime)
         {
 
             XVelocity = xVelocity;
@@ -81,7 +79,6 @@ namespace Railgun.RailgunGame
             if (check.Hitbox.Intersects(this.Hitbox))
             {
                 CurrentState = ProjectileStates.HasCollided;
-                CurrentFrame = 1;
             }
         }
 
@@ -90,29 +87,37 @@ namespace Railgun.RailgunGame
         /// of the projectile
         /// </summary>
         /// <param name="gameTime">GameTime</param>
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, Entity check)
         {
             switch (CurrentState)
             {
                 case ProjectileStates.IsActive:
-                    Rectangle tempRectangle = new Rectangle((int)(Hitbox.X + XVelocity), 
-                                                            (int)(Hitbox.Y + YVelocity), 
-                                                            Hitbox.Width, 
-                                                            Hitbox.Height);
+                    //replace old location with new location
                     break;
 
                 case ProjectileStates.HasCollided:
+                    //do nothing
                     break;
             }
         }
 
         /// <summary>
-        /// Draws the projectile 
+        /// Draws the projectile with 
+        /// the specified properties
         /// </summary>
         /// <param name="sb">_spritebatch</param>
         public void Draw(SpriteBatch sb)
         {
-            base.Draw(sb);
+            switch (CurrentState)
+            {
+                case ProjectileStates.IsActive:
+                    IsActive.Draw(sb, GameTime, new Vector2(Hitbox.X, Hitbox.Y));
+                    break;
+
+                case ProjectileStates.HasCollided:
+                    HasCollided.Draw(sb, GameTime, new Vector2(Hitbox.X, Hitbox.Y));
+                    break;
+            }
         }
     }
 }
