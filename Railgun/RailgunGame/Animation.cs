@@ -16,7 +16,7 @@ namespace Railgun.RailgunGame
         // animation elements
 
         /// <summary>
-        /// current frame of sprite sheet
+        /// current columns in a row of sprite sheet
         /// </summary>
         public int CurrentFrame { get; set; }
 
@@ -174,7 +174,28 @@ namespace Railgun.RailgunGame
             {
                 // Update the frame and wrap
                 CurrentFrame++;
-                if (CurrentFrame >= TotalFrames) CurrentFrame = 1;
+
+                // if it is on the last frame
+                if (CurrentFrame >= NumColumns && SourceRectangle.Y * NumRows == Texture.Height)
+                {
+                    CurrentFrame = 0;
+                    SourceRectangle = new Rectangle(SourceRectangle.X,
+                                                    0,
+                                                    SourceRectangle.Width,
+                                                    SourceRectangle.Height);
+
+                }
+
+                // checks if the end of a row has been
+                // reached and moves to next row
+                else if (CurrentFrame >= NumColumns)
+                {
+                    CurrentFrame = 0;
+                    SourceRectangle = new Rectangle(SourceRectangle.X, 
+                                                    SourceRectangle.Y + SourceRectangle.Height, 
+                                                    SourceRectangle.Width, 
+                                                    SourceRectangle.Height);
+                }
 
                 // Remove one "frame" worth of time
                 TimeCounter -= SecondsPerFrame;
