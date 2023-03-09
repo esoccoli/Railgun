@@ -73,7 +73,7 @@ namespace Railgun.Editor.App
         private void UnHighlightStatus_mouseExit(object sender, EventArgs e)
         {
             //Set color to darker
-            (sender as ToolStripStatusLabel).BackColor = DarkTheme.BaseColor;
+            (sender as ToolStripStatusLabel).BackColor = DarkTheme.Base;
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Railgun.Editor.App
         private void HighlightStatus_mouseEnter(object sender, EventArgs e)
         {
             //Set color to brighter
-            (sender as ToolStripStatusLabel).BackColor = DarkTheme.HighlightColor;
+            (sender as ToolStripStatusLabel).BackColor = DarkTheme.Highlight;
         }
 
         //Status events
@@ -107,18 +107,18 @@ namespace Railgun.Editor.App
                 if (control is MenuStrip)
                 {
                     MenuStrip menuStrip = control as MenuStrip;
-                    menuStrip.BackColor = DarkTheme.BaseColor;
-                    menuStrip.ForeColor = DarkTheme.ContrastColor;
+                    menuStrip.BackColor = DarkTheme.Base;
+                    menuStrip.ForeColor = DarkTheme.Label;
                     //Also set theme for each item
                     foreach (ToolStripMenuItem item in menuStrip.Items)
                     {
-                        item.BackColor = DarkTheme.BaseColor;
-                        item.ForeColor = DarkTheme.ContrastColor;
+                        item.BackColor = DarkTheme.Base;
+                        item.ForeColor = DarkTheme.Label;
                         //Same for subItems
                         foreach (ToolStripMenuItem subItem in item.DropDownItems)
                         {
-                            subItem.BackColor = DarkTheme.BaseColor;
-                            subItem.ForeColor = DarkTheme.ContrastColor;
+                            subItem.BackColor = DarkTheme.Base;
+                            subItem.ForeColor = DarkTheme.Label;
                         }
                     }
                     menuStrip.Renderer = new DarkTheme.DarkMenuStripRenderer();
@@ -127,26 +127,26 @@ namespace Railgun.Editor.App
                 else if (control is Label)
                 {
                     Label label = control as Label;
-                    label.BackColor = DarkTheme.BaseColor;
-                    label.ForeColor = DarkTheme.LabelColor;
+                    label.BackColor = DarkTheme.Base;
+                    label.ForeColor = DarkTheme.Label;
                 }
                 //If a table layout
                 else if (control is TableLayoutPanel)
                 {
                     //These act as borders that surround controls
                     TableLayoutPanel table = control as TableLayoutPanel;
-                    table.BackColor = DarkTheme.LabelColor;
+                    table.BackColor = DarkTheme.Outline;
                 }
                 //If a panel
                 else if (control is Panel)
                 {
                     Panel panel = control as Panel;
-                    panel.BackColor = DarkTheme.PanelColor;
+                    panel.BackColor = DarkTheme.Panel;
                 }
                 else
                 {
-                    control.BackColor = DarkTheme.BaseColor;
-                    control.ForeColor = DarkTheme.LabelColor;
+                    control.BackColor = DarkTheme.Base;
+                    control.ForeColor = DarkTheme.Label;
                 }
 
                 //Recurse for any child controls inside this control

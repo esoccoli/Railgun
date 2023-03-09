@@ -16,30 +16,28 @@ namespace Railgun.Editor.App
     public class DarkTheme : ProfessionalColorTable
     {
         //Color theme
-        public static Color BaseColor => Color.FromArgb(31, 31, 31);
-        public static Color LabelColor => Color.FromArgb(128, 128, 128);
-        public static Color ContrastColor => Color.White;
-        public static Color PanelColor => Color.FromArgb(51, 51, 51);
-        public static Color HighlightColor => Color.FromArgb(80, 80, 80);
+        public static Color Base => Color.FromArgb(31, 31, 31);
+        public static Color Outline => Color.FromArgb(128, 128, 128);
+        public static Color Label => Color.FromArgb(224, 224, 224);
+        public static Color Panel => Color.FromArgb(51, 51, 51);
+        public static Color Highlight => Color.FromArgb(80, 80, 80);
 
         //Set color table
-        public override Color MenuItemSelected => HighlightColor;
-        public override Color MenuItemSelectedGradientBegin => HighlightColor;
-        public override Color MenuItemSelectedGradientEnd => HighlightColor;
-        public override Color MenuItemBorder => LabelColor;
-        public override Color MenuStripGradientBegin => BaseColor;
-        public override Color MenuStripGradientEnd => BaseColor;
-        public override Color MenuItemPressedGradientBegin => HighlightColor;
-        public override Color MenuItemPressedGradientEnd => HighlightColor;
-        public override Color ToolStripBorder => LabelColor;
-        public override Color MenuBorder => LabelColor;
+        public override Color MenuItemSelected => Highlight;
+        public override Color MenuItemSelectedGradientBegin => Highlight;
+        public override Color MenuItemSelectedGradientEnd => Highlight;
+        public override Color MenuItemBorder => Outline;
+        public override Color MenuStripGradientBegin => Base;
+        public override Color MenuStripGradientEnd => Base;
+        public override Color MenuItemPressedGradientBegin => Highlight;
+        public override Color MenuItemPressedGradientEnd => Highlight;
+        public override Color ToolStripBorder => Outline;
+        public override Color MenuBorder => Outline;
 
         //Create custom renderers
 
         /// <summary>
         /// The menustrip rendering theme for the editor
-        /// <para>Author: Jonathan Jan</para>
-        /// Date Created: 3/9/2023
         /// </summary>
         public class DarkMenuStripRenderer : ToolStripProfessionalRenderer
         {
