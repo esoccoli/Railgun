@@ -74,6 +74,11 @@ namespace Railgun.Editor.Controls
         /// </summary>
         private bool selecting;
 
+        /// <summary>
+        /// The rectangle being selected
+        /// </summary>
+        private Rectangle selectionRectangle;
+
         protected override void Initialize()
         {
             //Initialization
@@ -163,70 +168,6 @@ namespace Railgun.Editor.Controls
                 selecting = false;
             }
 
-
-
-
-
-
-            ////States of the editor (dragging, placing, selecting)
-            //switch(_currentState)
-            //{
-            //    case EditorState.Placing:
-
-
-
-            //        ////Transition
-
-            //        //If middle pressed or alt pressed, switch to dragging
-            //        if(input.JustPressed(MouseButtonTypes.Middle)
-            //            || input.JustPressed(Keys.LeftAlt))
-            //        {
-            //            TransitionToDragging();
-            //        }
-            //        break;
-            //    case EditorState.Dragging:
-
-            //        //If middle is down or alt-dragging
-            //        if(input.IsDown(MouseButtonTypes.Middle)
-            //            || input.IsDown(Keys.LeftAlt) && input.IsDown(MouseButtonTypes.Left))
-            //        {
-            //            //Move build in camera by mouse change amount
-            //            Editor.Cam.Move(
-            //                (input.PrevMouseState.Position -
-            //                input.CurrentMouseState.Position)
-            //                .ToVector2());
-            //        }
-
-
-            //        ////Transition
-
-            //        //If middle not down and alt not pressed, switch to something
-            //        if (!input.IsDown(MouseButtonTypes.Middle)
-            //            && !input.IsDown(Keys.LeftAlt))
-            //        {
-            //            //If selecting
-            //            if(input.IsDown(MouseButtonTypes.Right))
-            //            {
-            //                TransitionToSelecting();
-            //            }
-            //            else//If not that, then go back to placing
-            //            {
-            //                TransitionToPlacing();
-            //            }
-            //        }
-            //        break;
-            //    case EditorState.Selecting:
-
-
-
-
-            //        ////Transition
-
-
-
-            //        break;
-            //}
-
             ////
             OnUpdate();//Invoke update event
             base.Update(gameTime);
@@ -266,17 +207,11 @@ namespace Railgun.Editor.Controls
                 null);//No matrix transform
             ////
 
+            //Draw selection rectangle
             if(selecting)
             {
-                //DEBGU
-                var selectionRect = new Rectangle(selectorPoint,
-                    input.CurrentMouseState.Position - selectorPoint);
-
                 //Solid rectangle
-                Editor.spriteBatch.Draw(whitePixel, selectionRect, selectorColor);
-
-                //Rectangle outline
-                DrawRectangleOutline(selectionRect,10, selectorColor);
+                Editor.spriteBatch.Draw(whitePixel, selectionRectangle, selectorColor);
             }
 
             
@@ -285,42 +220,6 @@ namespace Railgun.Editor.Controls
 
             ////
             Editor.spriteBatch.End();
-        }
-
-        /// <summary>
-        /// Draws a rectangle based with the specified bounds and color
-        /// </summary>
-        /// <param name="rectangle">The rectangle outline to draw</param>
-        /// <param name="width">The thickness of the outline</param>
-        /// <param name="color">The color to draw the rectangle outline</param>
-        private void DrawRectangleOutline(Rectangle rectangle, int width, Color color)
-        {
-            //Create vertices based on the given rectangle
-            VertexPositionColor[] vertices = new VertexPositionColor[]
-            {
-                new VertexPositionColor(new Vector3(rectangle.Left, rectangle.Top, 0), color),
-                new VertexPositionColor(new Vector3(rectangle.Right, rectangle.Top, 0), color),
-
-                new VertexPositionColor(new Vector3(rectangle.Right, rectangle.Top, 0), color),
-                new VertexPositionColor(new Vector3(rectangle.Right, rectangle.Bottom, 0), color),
-
-                new VertexPositionColor(new Vector3(rectangle.Right, rectangle.Bottom, 0), color),
-                new VertexPositionColor(new Vector3(rectangle.Left, rectangle.Bottom, 0), color),
-
-                new VertexPositionColor(new Vector3(rectangle.Left, rectangle.Bottom, 0), color),
-                new VertexPositionColor(new Vector3(rectangle.Left, rectangle.Top, 0), color)
-            };
-
-            //Draw to a new basic effect
-            BasicEffect basicEffect = new BasicEffect(Editor.graphics);
-            basicEffect.VertexColorEnabled = true;
-            basicEffect.View = Matrix.CreateLookAt(new Vector3(0, 0, 1), Vector3.Zero, Vector3.Up);
-            basicEffect.Projection = Matrix.CreateOrthographicOffCenter(0, Editor.graphics.Viewport.Width, Editor.graphics.Viewport.Height, 0, 0, 1);
-
-            basicEffect.CurrentTechnique.Passes[0].Apply();
-
-            // Draw the rectangle outline using DrawUserPrimitives()
-            Editor.graphics.DrawUserPrimitives<VertexPositionColor>(PrimitiveType.LineList, vertices, 0, 4);
         }
 
         /// <summary>
@@ -358,7 +257,10 @@ namespace Railgun.Editor.Controls
             }
 
             //Selecting procedures
-            
+
+            //Set selection rectangle
+            selectionRectangle = new Rectangle(
+                selectorPoint, input.CurrentMouseState.Position - selectorPoint);
         }
 
     }
