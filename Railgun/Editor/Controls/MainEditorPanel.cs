@@ -168,6 +168,9 @@ namespace Railgun.Editor.Controls
                 selecting = false;
             }
 
+            //Zoom by scroll amount
+            Editor.Cam.Zoom += input.GetScrollDirection()/10;
+
             ////
             OnUpdate();//Invoke update event
             base.Update(gameTime);
@@ -236,10 +239,11 @@ namespace Railgun.Editor.Controls
         public void Pan()
         {
             //Move build in camera by mouse change amount
+            //Divide by zoom so that movement is constant
             Editor.Cam.Move(
                 (input.PrevMouseState.Position -
                 input.CurrentMouseState.Position)
-                .ToVector2());
+                .ToVector2()/ Editor.Cam.Zoom);
         }
         
         /// <summary>

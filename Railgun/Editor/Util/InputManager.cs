@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
+using SharpDX;
 
 namespace Railgun.Editor.Util
 {
@@ -160,5 +161,20 @@ namespace Railgun.Editor.Util
         /// <returns>TRUE if just released</returns>
         public bool JustReleased(MouseButtonTypes button)
             => !IsDown(button) && WasDown(button);
+
+        /// <summary>
+        /// Returns 1,0,-1 representing the scroll wheel direction
+        /// 1 = up,
+        /// -1 = down,
+        /// 0 = no scrolling,
+        /// </summary>
+        /// <returns>The direction of scrolling</returns>
+        public float GetScrollDirection()
+        {
+            //Subtract last
+            return Math.Sign(
+                CurrentMouseState.ScrollWheelValue -
+                PrevMouseState.ScrollWheelValue);
+        }
     }
 }
