@@ -10,10 +10,10 @@ namespace Railgun.Editor.Controls
     /// <summary>
     /// Represents the states that the user can preform within the editor
     /// </summary>
-    public enum EditorState
+    public enum EditorMode
     {
         Placing,
-        Dragging,
+        Panning,
         Selecting
     }
 
@@ -41,9 +41,9 @@ namespace Railgun.Editor.Controls
         public event UpdateDelegate OnUpdate;
 
         /// <summary>
-        /// The current state of this editor (how you are interacting with it)
+        /// The current mode of this editor (how you are interacting with it)
         /// </summary>
-        private EditorState _currentState;
+        public EditorMode CurrentMode { get; set; }
 
         /// <summary>
         /// The input manager as a field (much less to type)
@@ -57,17 +57,22 @@ namespace Railgun.Editor.Controls
         /// </summary>
         private Texture2D whitePixel;
 
+        //Selector
+
         /// <summary>
         /// The color of the selector
         /// </summary>
         private Color selectorColor;
 
-        //Numbers and structs
-
         /// <summary>
         /// Holds the point that a selection is started
         /// </summary>
-        private Vector2 selectorPoint;
+        private Point selectorPoint;
+
+        /// <summary>
+        /// Whether the user is selecting or not
+        /// </summary>
+        private bool selecting;
 
         protected override void Initialize()
         {
@@ -78,6 +83,8 @@ namespace Railgun.Editor.Controls
 
             //Setup selector color
             selectorColor = new Color(Color.GreenYellow, 0.2f);
+
+            CurrentMode = EditorMode.Placing;
 
             ////
             base.Initialize();
@@ -100,64 +107,125 @@ namespace Railgun.Editor.Controls
             //Maybe don't do FSM
             //Maybe make method: transition
 
-            //States of the editor (dragging, placing, selecting)
-            switch(_currentState)
+            //If placing
+            if (CurrentMode == EditorMode.Placing)
             {
-                case EditorState.Placing:
-
-
-
-                    ////Transition
-                    
-                    //If middle pressed or alt pressed, switch to dragging
-                    if(input.JustPressed(MouseButtonTypes.Middle)
-                        || input.JustPressed(Keys.LeftAlt))
-                    {
-                        TransitionToDragging();
-                    }
-                    break;
-                case EditorState.Dragging:
-
-                    //If middle is down or alt-dragging
-                    if(input.IsDown(MouseButtonTypes.Middle)
-                        || input.IsDown(Keys.LeftAlt) && input.IsDown(MouseButtonTypes.Left))
-                    {
-                        //Move build in camera by mouse change amount
-                        Editor.Cam.Move(
-                            (input.PrevMouseState.Position -
-                            input.CurrentMouseState.Position)
-                            .ToVector2());
-                    }
-
-
-                    ////Transition
-
-                    //If middle not down and alt not pressed, switch to something
-                    if (!input.IsDown(MouseButtonTypes.Middle)
-                        && !input.IsDown(Keys.LeftAlt))
-                    {
-                        //If selecting
-                        if(input.IsDown(MouseButtonTypes.Right))
-                        {
-                            TransitionToSelecting();
-                        }
-                        else//If not that, then go back to placing
-                        {
-                            TransitionToPlacing();
-                        }
-                    }
-                    break;
-                case EditorState.Selecting:
-
-
-
-
-                    ////Transition
-
-
-
-                    break;
+                //Set mouse cursor
+                Cursor = System.Windows.Forms.Cursors.Arrow;
+                //Check if need move
+                if (input.IsDown(MouseButtonTypes.Left))
+                {
+                    Place();
+                }
             }
+
+            //If panning
+            if (input.IsDown(Keys.LeftAlt) || CurrentMode == EditorMode.Panning)
+            {
+                //Set mouse cursor
+                Cursor = System.Windows.Forms.Cursors.Hand;
+                //Check if need move
+                if (input.IsDown(MouseButtonTypes.Left))
+                {
+                    Pan();
+                }
+            }
+            else if(input.IsDown(MouseButtonTypes.Middle))
+            {
+                //Set mouse cursor
+                Cursor = System.Windows.Forms.Cursors.Hand;
+                Pan();
+            }
+
+            //If selecting
+            if (input.IsDown(Keys.LeftShift) || CurrentMode == EditorMode.Selecting)
+            {
+                //Set mouse cursor
+                Cursor = System.Windows.Forms.Cursors.Cross;
+                //Check if need move
+                if (input.IsDown(MouseButtonTypes.Left))
+                {
+                    SelectObjects(MouseButtonTypes.Left);
+                }
+                else
+                {
+                    selecting = false;
+                }
+            }
+            else if (input.IsDown(MouseButtonTypes.Middle))
+            {
+                //Set mouse cursor
+                Cursor = System.Windows.Forms.Cursors.Hand;
+                SelectObjects(MouseButtonTypes.Middle);
+            }
+            else
+            {
+                selecting = false;
+            }
+
+
+
+
+
+
+            ////States of the editor (dragging, placing, selecting)
+            //switch(_currentState)
+            //{
+            //    case EditorState.Placing:
+
+
+
+            //        ////Transition
+
+            //        //If middle pressed or alt pressed, switch to dragging
+            //        if(input.JustPressed(MouseButtonTypes.Middle)
+            //            || input.JustPressed(Keys.LeftAlt))
+            //        {
+            //            TransitionToDragging();
+            //        }
+            //        break;
+            //    case EditorState.Dragging:
+
+            //        //If middle is down or alt-dragging
+            //        if(input.IsDown(MouseButtonTypes.Middle)
+            //            || input.IsDown(Keys.LeftAlt) && input.IsDown(MouseButtonTypes.Left))
+            //        {
+            //            //Move build in camera by mouse change amount
+            //            Editor.Cam.Move(
+            //                (input.PrevMouseState.Position -
+            //                input.CurrentMouseState.Position)
+            //                .ToVector2());
+            //        }
+
+
+            //        ////Transition
+
+            //        //If middle not down and alt not pressed, switch to something
+            //        if (!input.IsDown(MouseButtonTypes.Middle)
+            //            && !input.IsDown(Keys.LeftAlt))
+            //        {
+            //            //If selecting
+            //            if(input.IsDown(MouseButtonTypes.Right))
+            //            {
+            //                TransitionToSelecting();
+            //            }
+            //            else//If not that, then go back to placing
+            //            {
+            //                TransitionToPlacing();
+            //            }
+            //        }
+            //        break;
+            //    case EditorState.Selecting:
+
+
+
+
+            //        ////Transition
+
+
+
+            //        break;
+            //}
 
             ////
             OnUpdate();//Invoke update event
@@ -198,16 +266,18 @@ namespace Railgun.Editor.Controls
                 null);//No matrix transform
             ////
 
-            //Solid rectangle
-            Editor.spriteBatch.Draw(whitePixel, new Rectangle(
-                new Point(10, 10),
-                input.CurrentMouseState.Position), selectorColor);
+            if(selecting)
+            {
+                //DEBGU
+                var selectionRect = new Rectangle(selectorPoint,
+                    input.CurrentMouseState.Position - selectorPoint);
 
-            //Rectangle outline
-            DrawRectangleOutline(new Rectangle(
-                new Point(10, 10),
-                input.CurrentMouseState.Position),
-                10, selectorColor);
+                //Solid rectangle
+                Editor.spriteBatch.Draw(whitePixel, selectionRect, selectorColor);
+
+                //Rectangle outline
+                DrawRectangleOutline(selectionRect,10, selectorColor);
+            }
 
             
 
@@ -254,37 +324,42 @@ namespace Railgun.Editor.Controls
         }
 
         /// <summary>
-        /// A method that transitions to the placing state
+        /// Places the current selected object
         /// </summary>
-        private void TransitionToPlacing()
+        public void Place()
         {
-            //Set mouse cursor to crosshair (using explicit path
-            //to class to not be ambiguous)
-            Cursor = System.Windows.Forms.Cursors.Cross;
-            //Change state
-            _currentState = EditorState.Placing;
+
         }
 
         /// <summary>
-        /// A method that transitions to the drag state
+        /// Pans the camera based on the user movement
         /// </summary>
-        private void TransitionToDragging()
+        public void Pan()
         {
-            //Set mouse cursor to hand
-            Cursor = System.Windows.Forms.Cursors.Hand;
-            //Change state
-            _currentState = EditorState.Dragging;
+            //Move build in camera by mouse change amount
+            Editor.Cam.Move(
+                (input.PrevMouseState.Position -
+                input.CurrentMouseState.Position)
+                .ToVector2());
+        }
+        
+        /// <summary>
+        /// Updates for selections using the specified mouse button
+        /// </summary>
+        /// <param name="mouseButton">The button to check for</param>
+        public void SelectObjects(MouseButtonTypes mouseButton)
+        {
+            //If not already down, do starting procedures
+            if(!input.WasDown(mouseButton))
+            {
+                //Set initial selection point
+                selectorPoint = input.CurrentMouseState.Position;
+                selecting = true;
+            }
+
+            //Selecting procedures
+            
         }
 
-        /// <summary>
-        /// A method that transitions to the selecting state
-        /// </summary>
-        private void TransitionToSelecting()
-        {
-            //Set mouse cursor to selecting
-            Cursor = System.Windows.Forms.Cursors.Arrow;
-            //Change state
-            _currentState = EditorState.Selecting;
-        }
     }
 }
