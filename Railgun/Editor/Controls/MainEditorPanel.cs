@@ -143,7 +143,7 @@ namespace Railgun.Editor.Controls
             }
 
             //If selecting
-            if (input.IsDown(Keys.LeftShift) || CurrentMode == EditorMode.Selecting)
+            else if (input.IsDown(Keys.LeftShift) || CurrentMode == EditorMode.Selecting)
             {
                 //Set mouse cursor
                 Cursor = System.Windows.Forms.Cursors.Cross;
@@ -157,11 +157,11 @@ namespace Railgun.Editor.Controls
                     selecting = false;
                 }
             }
-            else if (input.IsDown(MouseButtonTypes.Middle))
+            else if (input.IsDown(MouseButtonTypes.Right))
             {
                 //Set mouse cursor
-                Cursor = System.Windows.Forms.Cursors.Hand;
-                SelectObjects(MouseButtonTypes.Middle);
+                Cursor = System.Windows.Forms.Cursors.Cross;
+                SelectObjects(MouseButtonTypes.Right);
             }
             else
             {
@@ -203,7 +203,7 @@ namespace Railgun.Editor.Controls
                 SamplerState.PointClamp,//Perfect Pixelation
                 DepthStencilState.Default,
                 RasterizerState.CullNone,
-                null,//No shaders
+                null,
                 null);//No matrix transform
             ////
 
