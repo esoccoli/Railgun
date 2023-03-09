@@ -171,12 +171,20 @@ namespace Railgun.Editor.App.Controls
                 selecting = false;
             }
 
-            //Zoom by adding a multiplied version of the current
-            //zoom by a positive or negative 1/15
-            //doing this ensures that the scroll is constant
-            //Clamp at values too big or small
-            Editor.Cam.Zoom = MathHelper.Clamp(
-                Editor.Cam.Zoom + Editor.Cam.Zoom*input.GetScrollDirection() / 15, 0.3f, 3f);
+            //Zoom based on scrolling
+            ZoomEditor(input.GetScrollDirection());
+
+            //If plus, zoom in
+            if(input.IsDown(Keys.OemPlus))
+            {
+                ZoomEditor(1);
+            }
+
+            //If plus, zoom out
+            if (input.IsDown(Keys.OemMinus))
+            {
+                ZoomEditor(-1);
+            }
 
             ////
             OnUpdate();//Invoke update event
@@ -272,6 +280,20 @@ namespace Railgun.Editor.App.Controls
             //Set selection rectangle
             selectionRectangle = new Rectangle(
                 selectorPoint, input.CurrentMouseState.Position - selectorPoint);
+        }
+
+        /// <summary>
+        /// Zooms by the normalized specified amount within the editor limits
+        /// </summary>
+        /// <param name="zoom">The zoom amount</param>
+        public void ZoomEditor(float zoom)
+        {
+            //Zoom by adding a multiplied version of the current
+            //zoom by a positive or negative 1/15
+            //doing this ensures that the scroll is constant
+            //Clamp at values too big or small
+            Editor.Cam.Zoom = MathHelper.Clamp(
+                Editor.Cam.Zoom + Editor.Cam.Zoom * zoom / 15, 0.3f, 3f);
         }
 
     }
