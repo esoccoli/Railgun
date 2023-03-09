@@ -10,10 +10,10 @@ namespace Railgun.Editor.Controls
     /// <summary>
     /// Represents the states that the user can preform within the editor
     /// </summary>
-    public enum EditorState
+    public enum EditorMode
     {
         Placing,
-        Dragging,
+        Panning,
         Selecting
     }
 
@@ -30,9 +30,10 @@ namespace Railgun.Editor.Controls
     public class MainEditorPanel : MonoGameControl
     {
         //DEBUG
-        private Texture2D _test;
-        private SpriteFont _consolas20;
-        private Vector2 _changed;
+        private Texture2D test;
+        private SpriteFont consolas20;
+
+        //Bigger managing classes
 
         /// <summary>
         /// Called every update cycle of this panel
@@ -40,27 +41,67 @@ namespace Railgun.Editor.Controls
         public event UpdateDelegate OnUpdate;
 
         /// <summary>
-        /// The current state of this editor (how you are interacting with it)
+        /// The current mode of this editor (how you are interacting with it)
         /// </summary>
-        private EditorState _currentState;
+        public EditorMode CurrentMode { get; set; }
 
         /// <summary>
         /// The input manager as a field (much less to type)
         /// </summary>
-        private InputManager _input;
+        private InputManager input;
+
+        //Textures and colors
+
+        /// <summary>
+        /// A white square meant for drawing rectangles
+        /// </summary>
+        private Texture2D whitePixel;
+
+        //Selector
+
+        /// <summary>
+        /// The color of the selector
+        /// </summary>
+        private Color selectorColor;
+
+        /// <summary>
+        /// Holds the point that a selection is started
+        /// </summary>
+        private Point selectorPoint;
+
+        /// <summary>
+        /// Whether the user is selecting or not
+        /// </summary>
+        private bool selecting;
+
+        /// <summary>
+        /// The rectangle being selected
+        /// </summary>
+        private Rectangle selectionRectangle;
 
         protected override void Initialize()
         {
             //Initialization
 
-            _input = InputManager.Instance;
+            //Shortcut to the input manager
+            input = InputManager.Instance;
+
+            //Setup selector color
+            selectorColor = new Color(Color.GreenYellow, 0.2f);
+
+            CurrentMode = EditorMode.Placing;
 
             ////
             base.Initialize();
             ////
 
-            _test = Editor.Content.Load<Texture2D>("test");
-            _consolas20 = Editor.Content.Load<SpriteFont>("Consolas20");
+            test = Editor.Content.Load<Texture2D>("test");
+            consolas20 = Editor.Content.Load<SpriteFont>("Consolas20");
+
+            //Create generic white pixel
+            whitePixel = new Texture2D(GraphicsDevice, 1, 1);
+            whitePixel.SetData(new Color[] { Color.White });
+
 
         }
 
@@ -71,64 +112,60 @@ namespace Railgun.Editor.Controls
             //Maybe don't do FSM
             //Maybe make method: transition
 
-            //States of the editor (dragging, placing, selecting)
-            switch(_currentState)
+            //If placing
+            if (CurrentMode == EditorMode.Placing)
             {
-                case EditorState.Placing:
+                //Set mouse cursor
+                Cursor = System.Windows.Forms.Cursors.Arrow;
+                //Check if need move
+                if (input.IsDown(MouseButtonTypes.Left))
+                {
+                    Place();
+                }
+            }
 
+            //If panning
+            if (input.IsDown(Keys.LeftAlt) || CurrentMode == EditorMode.Panning)
+            {
+                //Set mouse cursor
+                Cursor = System.Windows.Forms.Cursors.Hand;
+                //Check if need move
+                if (input.IsDown(MouseButtonTypes.Left))
+                {
+                    Pan();
+                }
+            }
+            else if(input.IsDown(MouseButtonTypes.Middle))
+            {
+                //Set mouse cursor
+                Cursor = System.Windows.Forms.Cursors.Hand;
+                Pan();
+            }
 
-
-                    ////Transition
-                    
-                    //If middle pressed or alt pressed, switch to dragging
-                    if(_input.JustPressed(MouseButtonTypes.Middle)
-                        || _input.JustPressed(Keys.LeftAlt))
-                    {
-                        //Set mouse cursor to hand (using explicit path
-                        //to class to not be ambiguous)
-                        Cursor = System.Windows.Forms.Cursors.Hand;
-                        //Change state
-                        _currentState = EditorState.Dragging;
-                    }
-                    break;
-                case EditorState.Dragging:
-
-                    //If middle is down or alt-dragging
-                    if(_input.IsDown(MouseButtonTypes.Middle)
-                        || _input.IsDown(Keys.LeftAlt) && _input.IsDown(MouseButtonTypes.Left))
-
-                    //Move build in camera by mouse change amount
-                    Editor.Cam.Move(
-                        (_input.PrevMouseState.Position - 
-                        _input.CurrentMouseState.Position)
-                        .ToVector2());
-
-
-                    ////Transition
-
-                    //If middle not down and alt not pressed, switch to something
-                    if (!_input.IsDown(MouseButtonTypes.Middle)
-                        && !_input.IsDown(Keys.LeftAlt))
-                    {
-                        //If selecting
-                        if(_input.IsDown(MouseButtonTypes.Right))
-                        {
-                            _currentState = EditorState.Selecting;
-                        }
-                        else//If not that, then go back to placing
-                        {
-                            //Set mouse cursor to crosshair
-                            Cursor = System.Windows.Forms.Cursors.Cross;
-                            //Change state
-                            _currentState = EditorState.Placing;
-                        }
-                    }
-                    break;
-                case EditorState.Selecting:
-
-                    ////Transition
-
-                    break;
+            //If selecting
+            if (input.IsDown(Keys.LeftShift) || CurrentMode == EditorMode.Selecting)
+            {
+                //Set mouse cursor
+                Cursor = System.Windows.Forms.Cursors.Cross;
+                //Check if need move
+                if (input.IsDown(MouseButtonTypes.Left))
+                {
+                    SelectObjects(MouseButtonTypes.Left);
+                }
+                else
+                {
+                    selecting = false;
+                }
+            }
+            else if (input.IsDown(MouseButtonTypes.Middle))
+            {
+                //Set mouse cursor
+                Cursor = System.Windows.Forms.Cursors.Hand;
+                SelectObjects(MouseButtonTypes.Middle);
+            }
+            else
+            {
+                selecting = false;
             }
 
             ////
@@ -150,7 +187,7 @@ namespace Railgun.Editor.Controls
             ////
 
 
-            Editor.spriteBatch.Draw(_test,Vector2.Zero,Color.White);
+            Editor.spriteBatch.Draw(test,Vector2.Zero,Color.White);
 
             //Editor.spriteBatch.DrawRectangle
 
@@ -161,12 +198,23 @@ namespace Railgun.Editor.Controls
             Editor.spriteBatch.End();
             
             //Overlayed things to be drawn
-            Editor.spriteBatch.Begin();
+            Editor.spriteBatch.Begin(SpriteSortMode.Deferred,
+                BlendState.NonPremultiplied,//Better transparency
+                SamplerState.PointClamp,//Perfect Pixelation
+                DepthStencilState.Default,
+                RasterizerState.CullNone,
+                null,//No shaders
+                null);//No matrix transform
             ////
 
+            //Draw selection rectangle
+            if(selecting)
+            {
+                //Solid rectangle
+                Editor.spriteBatch.Draw(whitePixel, selectionRectangle, selectorColor);
+            }
 
             
-
 
 
 
@@ -175,39 +223,45 @@ namespace Railgun.Editor.Controls
         }
 
         /// <summary>
-        /// Draws a rectangle based with the specified bounds and color
+        /// Places the current selected object
         /// </summary>
-        /// <param name="rectangle">The rectangle outline to draw</param>
-        /// <param name="width">The thickness of the outline</param>
-        /// <param name="color">The color to draw the rectangle outline</param>
-        private void DrawRectangleOutline(Rectangle rectangle, int width, Color color)
+        public void Place()
         {
-            //Create vertices based on the given rectangle
-            VertexPositionColor[] vertices = new VertexPositionColor[]
-            {
-                new VertexPositionColor(new Vector3(rectangle.Left, rectangle.Top, 0), color),
-                new VertexPositionColor(new Vector3(rectangle.Right, rectangle.Top, 0), color),
 
-                new VertexPositionColor(new Vector3(rectangle.Right, rectangle.Top, 0), color),
-                new VertexPositionColor(new Vector3(rectangle.Right, rectangle.Bottom, 0), color),
-
-                new VertexPositionColor(new Vector3(rectangle.Right, rectangle.Bottom, 0), color),
-                new VertexPositionColor(new Vector3(rectangle.Left, rectangle.Bottom, 0), color),
-
-                new VertexPositionColor(new Vector3(rectangle.Left, rectangle.Bottom, 0), color),
-                new VertexPositionColor(new Vector3(rectangle.Left, rectangle.Top, 0), color)
-            };
-
-            //Draw to a new basic effect
-            BasicEffect basicEffect = new BasicEffect(GraphicsDevice);
-            basicEffect.VertexColorEnabled = true;
-            basicEffect.View = Matrix.CreateLookAt(new Vector3(0, 0, 1), Vector3.Zero, Vector3.Up);
-            basicEffect.Projection = Matrix.CreateOrthographicOffCenter(0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, 0, 0, 1);
-
-            basicEffect.CurrentTechnique.Passes[0].Apply();
-
-            // Draw the rectangle outline using DrawUserPrimitives()
-            GraphicsDevice.DrawUserPrimitives<VertexPositionColor>(PrimitiveType.LineList, vertices, 0, 4);
         }
+
+        /// <summary>
+        /// Pans the camera based on the user movement
+        /// </summary>
+        public void Pan()
+        {
+            //Move build in camera by mouse change amount
+            Editor.Cam.Move(
+                (input.PrevMouseState.Position -
+                input.CurrentMouseState.Position)
+                .ToVector2());
+        }
+        
+        /// <summary>
+        /// Updates for selections using the specified mouse button
+        /// </summary>
+        /// <param name="mouseButton">The button to check for</param>
+        public void SelectObjects(MouseButtonTypes mouseButton)
+        {
+            //If not already down, do starting procedures
+            if(!input.WasDown(mouseButton))
+            {
+                //Set initial selection point
+                selectorPoint = input.CurrentMouseState.Position;
+                selecting = true;
+            }
+
+            //Selecting procedures
+
+            //Set selection rectangle
+            selectionRectangle = new Rectangle(
+                selectorPoint, input.CurrentMouseState.Position - selectorPoint);
+        }
+
     }
 }

@@ -102,6 +102,15 @@ namespace Railgun.RailgunGame
                 dashTime = 0.0;
                 dashing = false;
             }
-        }                                    
+        }        
+        
+        /// <summary>
+        /// This is where the player is drawn. Might not need to edit this but when the animation object is made, I might.
+        /// </summary>
+        /// <param name="sb"> The spritebatch being drawn with. </param>
+        public void Dash(SpriteBatch sb)
+        {
+            base.Draw(sb);
+        }
     }                                        
 }                                            
