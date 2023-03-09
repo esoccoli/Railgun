@@ -42,6 +42,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.mouseXStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.mouseYStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.camZoomStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -73,26 +74,26 @@
             // newMapToolStripMenuItem
             // 
             this.newMapToolStripMenuItem.Name = "newMapToolStripMenuItem";
-            this.newMapToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.newMapToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
             this.newMapToolStripMenuItem.Text = "New";
             this.newMapToolStripMenuItem.Click += new System.EventHandler(this.newMap_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
             this.saveAsToolStripMenuItem.Text = "Save As";
             // 
             // exportToolStripMenuItem
             // 
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
             this.exportToolStripMenuItem.Text = "Export";
             // 
             // saveStripMenuItem
@@ -120,6 +121,7 @@
             // mainEditorPanel
             // 
             this.mainEditorPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.mainEditorPanel.CurrentMode = Railgun.Editor.Controls.EditorMode.Placing;
             this.mainEditorPanel.Cursor = System.Windows.Forms.Cursors.Cross;
             this.mainEditorPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainEditorPanel.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -152,7 +154,8 @@
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mouseXStatus,
-            this.mouseYStatus});
+            this.mouseYStatus,
+            this.camZoomStatus});
             this.statusStrip1.Location = new System.Drawing.Point(0, 427);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(882, 26);
@@ -162,14 +165,20 @@
             // mouseXStatus
             // 
             this.mouseXStatus.Name = "mouseXStatus";
-            this.mouseXStatus.Size = new System.Drawing.Size(49, 20);
-            this.mouseXStatus.Text = "X: 000";
+            this.mouseXStatus.Size = new System.Drawing.Size(21, 20);
+            this.mouseXStatus.Text = "X:";
             // 
             // mouseYStatus
             // 
             this.mouseYStatus.Name = "mouseYStatus";
-            this.mouseYStatus.Size = new System.Drawing.Size(48, 20);
-            this.mouseYStatus.Text = "Y: 000";
+            this.mouseYStatus.Size = new System.Drawing.Size(20, 20);
+            this.mouseYStatus.Text = "Y:";
+            // 
+            // camZoomStatus
+            // 
+            this.camZoomStatus.Name = "camZoomStatus";
+            this.camZoomStatus.Size = new System.Drawing.Size(52, 20);
+            this.camZoomStatus.Text = "Zoom:";
             // 
             // MainForm
             // 
@@ -212,5 +221,6 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel mouseXStatus;
         private System.Windows.Forms.ToolStripStatusLabel mouseYStatus;
+        private System.Windows.Forms.ToolStripStatusLabel camZoomStatus;
     }
 }

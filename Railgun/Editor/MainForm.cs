@@ -49,10 +49,14 @@ namespace Railgun.Editor
             //Set positions with these digits
             mouseXStatus.Text = "X: " + 
                 InputManager.Instance.CurrentMouseState
-                .Position.X.ToString("##000.00");
+                .Position.X.ToString("##000");
             mouseYStatus.Text = "Y: " +
                 InputManager.Instance.CurrentMouseState
-                .Position.Y.ToString("##000.00");
+                .Position.Y.ToString("##000");
+            //Set zoom amount
+            camZoomStatus.Text = "Zoom: " +
+                mainEditorPanel.Editor.Cam.Zoom
+                .ToString("0.00");
         }
     }
 }

@@ -168,8 +168,12 @@ namespace Railgun.Editor.Controls
                 selecting = false;
             }
 
-            //Zoom by scroll amount
-            Editor.Cam.Zoom += input.GetScrollDirection()/10;
+            //Zoom by adding a multiplied version of the current
+            //zoom by a positive or negative 1/15
+            //doing this ensures that the scroll is constant
+            //Clamp at values too big or small
+            Editor.Cam.Zoom = MathHelper.Clamp(
+                Editor.Cam.Zoom + Editor.Cam.Zoom*input.GetScrollDirection() / 15, 0.3f, 3f);
 
             ////
             OnUpdate();//Invoke update event
