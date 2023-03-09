@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Input;
 //Class for all projectiles in the game
 namespace Railgun.RailgunGame
 {
-    internal class Projectile : Animatable
+    internal class Projectile : Animation
     {
         /// <summary>
         /// possible animation states for projectiles

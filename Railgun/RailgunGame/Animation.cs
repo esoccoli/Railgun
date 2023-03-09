@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Input;
 //Class responsible for animating all objects
 namespace Railgun.RailgunGame
 {
-    internal abstract class Animatable : Entity
+    internal class Animation
     {
         // animation elements
 
@@ -48,8 +48,10 @@ namespace Railgun.RailgunGame
         // color, rotation, origin position,
         // scale, SpriteEffects, and layer depth
 
-        // texture is obtained through entity's texture
-        // position is obtained through entity's rectangle
+        /// <summary>
+        /// Textrure for the animation
+        /// </summary>
+        public Texture2D Texture { get; set; }
 
         /// <summary>
         /// source rectangle on sprite sheet
@@ -103,7 +105,7 @@ namespace Railgun.RailgunGame
         /// <param name="rotation">rotation of the sprite</param>
         /// <param name="sourceOrigin">location of origin for source rectangle</param>
         /// <param name="scale">scale of the sprite</param>
-        public Animatable(Rectangle hitbox, 
+        public Animation(Rectangle hitbox, 
                           Texture2D texture, 
                           GameTime gameTime,
                           double fPS,
@@ -113,8 +115,6 @@ namespace Railgun.RailgunGame
                           Vector2 sourceOrigin, 
                           float scale,
                           float layerDepth)
-
-        :base(hitbox, texture, gameTime)
         {
             CurrentFrame = 1;
             FPS = fPS;
@@ -136,14 +136,15 @@ namespace Railgun.RailgunGame
         /// draws the sprite with specified properties
         /// </summary>
         /// <param name="sb">_spritebatch</param>
-        public override void Draw(SpriteBatch sb)
+        public void Draw(SpriteBatch sb, GameTime gameTime, Vector2 position)
         {
-            sb.Draw(Texture, new Vector2(Hitbox.X, Hitbox.Y), 
-                                         SourceRectangle, Color, 
-                                         Rotation, 
-                                         SourceOrigin, Scale, 
-                                         SpriteEffect, LayerDepth);
-            UpdateAnimation(GameTime);
+            sb.Draw(Texture, position, 
+                    SourceRectangle, 
+                    Color, Rotation, 
+                    SourceOrigin, Scale, 
+                    SpriteEffect, LayerDepth);
+
+            UpdateAnimation(gameTime);
         }
 
 
