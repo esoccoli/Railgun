@@ -95,6 +95,9 @@ namespace Railgun.Editor.App.Controls
             base.Initialize();
             ////
 
+            //Set bg color
+            Editor.BackgroundColor = new Color(25, 25, 25);
+
             test = Editor.Content.Load<Texture2D>("test");
             consolas20 = Editor.Content.Load<SpriteFont>("Consolas20");
 
