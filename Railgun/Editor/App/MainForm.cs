@@ -39,7 +39,10 @@ namespace Railgun.Editor.App
             //Subscribe update status to update event in main editor control
             mainEditorPanel.OnUpdate += UpdateStatus;
 
+            //Reset camera position to origin
+            mainEditorPanel.ResetCamera();
 
+            //Color the controls to a darker scheme
             ColorControls(Controls);
         }
 
