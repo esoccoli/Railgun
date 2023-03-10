@@ -86,6 +86,7 @@ namespace Railgun.RailgunGame
             {
                 case ProjectileStates.IsActive:
                     Hitbox = new Rectangle((int)(Hitbox.X + Velocity.X), (int)(Hitbox.Y + Velocity.Y), Hitbox.Width, Hitbox.Height);
+                    CheckCollision(check);
                     break;
 
                 case ProjectileStates.HasCollided:
