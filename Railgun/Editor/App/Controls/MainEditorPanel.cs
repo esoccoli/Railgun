@@ -327,7 +327,17 @@ namespace Railgun.Editor.App.Controls
             //doing this ensures that the scroll is constant
             //Clamp at values too big or small
             Editor.Cam.Zoom = MathHelper.Clamp(
-                Editor.Cam.Zoom + Editor.Cam.Zoom * zoom / 15, 0.3f, 3f);
+                Editor.Cam.Zoom + Editor.Cam.Zoom * zoom / 10, 0.1f, 3f);
+        }
+
+        /// <summary>
+        /// Resets the camera to 0,0 with a zoom of 1
+        /// </summary>
+        public void ResetCamera()
+        {
+            Editor.Cam.Zoom = 1f;
+            //Center to the origin tile
+            Editor.Cam.Position = new Vector2(CurrentMap.TileSize/2);
         }
 
         /// <summary>

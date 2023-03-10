@@ -81,16 +81,6 @@ namespace Railgun.Editor.App
             (sender as ToolStripStatusLabel).BackColor = DarkTheme.Highlight;
         }
 
-        //Status events
-
-        /// <summary>
-        /// Resets the zoom when zoom in status is clicked
-        /// </summary>
-        private void CamZoomStatus_Click(object sender, EventArgs e)
-        {
-            mainEditorPanel.Editor.Cam.Zoom = 1f;
-        }
-
         /// <summary>
         /// Colors each control based on its type
         /// </summary>
@@ -150,5 +140,22 @@ namespace Railgun.Editor.App
             }
         }
 
+        //View delagates
+
+        /// <summary>
+        /// Resets the camera of the editor
+        /// </summary>
+        private void ResetCamera_Click(object sender, EventArgs e)
+        {
+            mainEditorPanel.ResetCamera();
+        }
+
+        /// <summary>
+        /// Resets the zoom when zoom in status or menu bar is clicked
+        /// </summary>
+        private void ResetZoom_Click(object sender, EventArgs e)
+        {
+            mainEditorPanel.Editor.Cam.Zoom = 1f;
+        }
     }
 }

@@ -37,6 +37,15 @@
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rotate90CWToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rotate90CCWToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.flipHorizontallyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.flipVerticallyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetZoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetCameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.mainEditorPanel = new Railgun.Editor.App.Controls.MainEditorPanel();
             this.leftSideTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -51,6 +60,8 @@
             this.mouseYStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.camZoomStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.camZoomStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.deselectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.leftSideTableLayoutPanel.SuspendLayout();
@@ -64,7 +75,10 @@
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.logoToolStripMenuItem,
             this.fileToolStripMenuItem,
-            this.saveStripMenuItem});
+            this.saveStripMenuItem,
+            this.editToolStripMenuItem,
+            this.viewToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(900, 30);
@@ -92,26 +106,26 @@
             // newMapToolStripMenuItem
             // 
             this.newMapToolStripMenuItem.Name = "newMapToolStripMenuItem";
-            this.newMapToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.newMapToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
             this.newMapToolStripMenuItem.Text = "New";
             this.newMapToolStripMenuItem.Click += new System.EventHandler(this.newMap_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
             this.saveAsToolStripMenuItem.Text = "Save As";
             // 
             // exportToolStripMenuItem
             // 
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
             this.exportToolStripMenuItem.Text = "Export";
             // 
             // saveStripMenuItem
@@ -119,6 +133,74 @@
             this.saveStripMenuItem.Name = "saveStripMenuItem";
             this.saveStripMenuItem.Size = new System.Drawing.Size(54, 26);
             this.saveStripMenuItem.Text = "Save";
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rotate90CWToolStripMenuItem,
+            this.rotate90CCWToolStripMenuItem,
+            this.flipHorizontallyToolStripMenuItem,
+            this.flipVerticallyToolStripMenuItem,
+            this.deselectToolStripMenuItem,
+            this.deleteToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(49, 26);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // rotate90CWToolStripMenuItem
+            // 
+            this.rotate90CWToolStripMenuItem.Name = "rotate90CWToolStripMenuItem";
+            this.rotate90CWToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.rotate90CWToolStripMenuItem.Text = "Rotate 90 CW";
+            // 
+            // rotate90CCWToolStripMenuItem
+            // 
+            this.rotate90CCWToolStripMenuItem.Name = "rotate90CCWToolStripMenuItem";
+            this.rotate90CCWToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.rotate90CCWToolStripMenuItem.Text = "Rotate 90 CCW";
+            // 
+            // flipHorizontallyToolStripMenuItem
+            // 
+            this.flipHorizontallyToolStripMenuItem.Name = "flipHorizontallyToolStripMenuItem";
+            this.flipHorizontallyToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.flipHorizontallyToolStripMenuItem.Text = "Flip Horizontally";
+            // 
+            // flipVerticallyToolStripMenuItem
+            // 
+            this.flipVerticallyToolStripMenuItem.Name = "flipVerticallyToolStripMenuItem";
+            this.flipVerticallyToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.flipVerticallyToolStripMenuItem.Text = "Flip Vertically";
+            // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.resetZoomToolStripMenuItem,
+            this.resetCameraToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(55, 26);
+            this.viewToolStripMenuItem.Text = "View";
+            // 
+            // resetZoomToolStripMenuItem
+            // 
+            this.resetZoomToolStripMenuItem.Name = "resetZoomToolStripMenuItem";
+            this.resetZoomToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D0)));
+            this.resetZoomToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.resetZoomToolStripMenuItem.Text = "Reset Zoom";
+            this.resetZoomToolStripMenuItem.Click += new System.EventHandler(this.ResetZoom_Click);
+            // 
+            // resetCameraToolStripMenuItem
+            // 
+            this.resetCameraToolStripMenuItem.Name = "resetCameraToolStripMenuItem";
+            this.resetCameraToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
+            this.resetCameraToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.resetCameraToolStripMenuItem.Text = "Reset Camera";
+            this.resetCameraToolStripMenuItem.Click += new System.EventHandler(this.ResetCamera_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(55, 26);
+            this.helpToolStripMenuItem.Text = "Help";
             // 
             // mainTableLayoutPanel
             // 
@@ -282,9 +364,23 @@
             this.camZoomStatus.Size = new System.Drawing.Size(44, 20);
             this.camZoomStatus.Text = "0.00";
             this.camZoomStatus.ToolTipText = "Reset Camera Zoom";
-            this.camZoomStatus.Click += new System.EventHandler(this.CamZoomStatus_Click);
+            this.camZoomStatus.Click += new System.EventHandler(this.ResetZoom_Click);
             this.camZoomStatus.MouseEnter += new System.EventHandler(this.HighlightStatus_mouseEnter);
             this.camZoomStatus.MouseLeave += new System.EventHandler(this.UnHighlightStatus_mouseExit);
+            // 
+            // deselectToolStripMenuItem
+            // 
+            this.deselectToolStripMenuItem.Name = "deselectToolStripMenuItem";
+            this.deselectToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D)));
+            this.deselectToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.deselectToolStripMenuItem.Text = "Deselect";
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.deleteToolStripMenuItem.Text = "Delete";
             // 
             // MainForm
             // 
@@ -337,5 +433,16 @@
         private System.Windows.Forms.ToolStripStatusLabel mouseYStatusLabel;
         private System.Windows.Forms.ToolStripStatusLabel camZoomStatusLabel;
         private System.Windows.Forms.ToolStripMenuItem logoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rotate90CWToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rotate90CCWToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem flipHorizontallyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem flipVerticallyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resetZoomToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resetCameraToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deselectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
     }
 }
