@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Resources;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Railgun.Editor.App.Util;
@@ -13,6 +14,11 @@ namespace Railgun.Editor.App
     /// </summary>
     public partial class MainForm : Form
     {
+        /// <summary>
+        /// The resources of this form
+        /// </summary>
+        public ResourceManager resources = new ResourceManager(typeof(MainForm));
+
         #region Initial methods
 
         /// <summary>
