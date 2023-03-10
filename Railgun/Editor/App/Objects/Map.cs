@@ -45,9 +45,9 @@ namespace Railgun.Editor.App.Objects
         /// </summary>
         /// <param name="rawPoint">The point to convert to grid-point</param>
         /// <returns>The grid point corresponding to the specified point</returns>
-        public Point GetGridPoint(Point rawPoint)
+        public Vector2 GetGridPoint(Vector2 rawPoint)
         {
-            return rawPoint / new Point(TileSize);
+            return Vector2.Floor(rawPoint / new Vector2(TileSize));
         }
     }
 }

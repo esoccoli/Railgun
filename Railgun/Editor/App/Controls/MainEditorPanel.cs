@@ -70,23 +70,13 @@ namespace Railgun.Editor.App.Controls
         /// <summary>
         /// The grid point of the mouse relative to the camera
         /// </summary>
-        public Point MouseGridPosition
-        {
-            //Transform absolute mouse position by cam, get grid point of that
-            get => CurrentMap.GetGridPoint(MouseCameraPosition);
-        }
+        public Point MouseGridPosition { get; protected set; }
 
         /// <summary>
         /// The mouse position relative to the camera (where the mouse
         /// is pointing to as if it was transformed by the camera)
         /// </summary>
-        public Point MouseCameraPosition
-        {
-            //The mouse pos transformed by the inverse cam matrix
-            get => Vector2.Transform(
-                    input.CurrentMouseState.Position.ToVector2(),
-                    Matrix.Invert(Editor.Cam.Transform)).ToPoint();
-        }
+        public Vector2 MouseCameraPosition { get; protected set; }
 
 
         //Bigger managing classes
@@ -223,6 +213,7 @@ namespace Railgun.Editor.App.Controls
 
             ////
             Editor.Cam.GetTransformation();//Create the transformation for the draw cycle
+            ComputeMousePosition();//Find relative mouse to grid and cam
             OnUpdate();//Invoke update event
             base.Update(gameTime);
         }
@@ -243,7 +234,10 @@ namespace Railgun.Editor.App.Controls
 
             Editor.spriteBatch.Draw(test,Vector2.Zero,Color.White);
 
-            //Editor.spriteBatch.DrawRectangle
+            Editor.spriteBatch.Draw(whitePixel,
+                new Rectangle(
+                    MouseGridPosition*new Point(CurrentMap.TileSize),
+                    new Point(CurrentMap.TileSize)), Color.White);
 
             //Editor.graphics.DrawPrimitives(PrimitiveType.TriangleList, 0, 5);
 
@@ -334,6 +328,20 @@ namespace Railgun.Editor.App.Controls
             //Clamp at values too big or small
             Editor.Cam.Zoom = MathHelper.Clamp(
                 Editor.Cam.Zoom + Editor.Cam.Zoom * zoom / 15, 0.3f, 3f);
+        }
+
+        /// <summary>
+        /// Updates the mouse position relative to the camera and to the grid
+        /// </summary>
+        public void ComputeMousePosition()
+        {
+            //The mouse pos transformed by the inverse cam matrix
+            MouseCameraPosition = Vector2.Transform(
+                input.CurrentMouseState.Position.ToVector2(),
+                Matrix.Invert(Editor.Cam.Transform));
+
+            //Transform absolute mouse position by cam, get grid point of that
+            MouseGridPosition = CurrentMap.GetGridPoint(MouseCameraPosition).ToPoint();
         }
 
     }
