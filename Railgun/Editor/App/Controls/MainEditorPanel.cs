@@ -2,8 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Forms.Controls;
+using Railgun.Editor.App.Objects;
 using Railgun.Editor.App.Util;
-
 
 namespace Railgun.Editor.App.Controls
 {
@@ -27,23 +27,11 @@ namespace Railgun.Editor.App.Controls
     /// <para>Author: Jonathan Jan</para>
     /// Date Created: 3/6/2023
     /// </summary>
-    public class MainEditorPanel : MonoGameControl
+    internal class MainEditorPanel : MonoGameControl
     {
         //DEBUG
         private Texture2D test;
         private SpriteFont consolas20;
-
-        //Bigger managing classes
-
-        /// <summary>
-        /// Called every update cycle of this panel
-        /// </summary>
-        public event UpdateDelegate OnUpdate;
-
-        /// <summary>
-        /// The current mode of this editor (how you are interacting with it)
-        /// </summary>
-        public EditorMode CurrentMode { get; set; }
 
         /// <summary>
         /// The input manager as a field (much less to type)
@@ -79,6 +67,50 @@ namespace Railgun.Editor.App.Controls
         /// </summary>
         private Rectangle selectionRectangle;
 
+        /// <summary>
+        /// The grid point of the mouse relative to the camera
+        /// </summary>
+        public Point MouseGridPosition
+        {
+            //Transform absolute mouse position by cam, get grid point of that
+            get => CurrentMap.GetGridPoint(MouseCameraPosition);
+        }
+
+        /// <summary>
+        /// The mouse position relative to the camera (where the mouse
+        /// is pointing to as if it was transformed by the camera)
+        /// </summary>
+        public Point MouseCameraPosition
+        {
+            //The mouse pos transformed by the inverse cam matrix
+            get => Vector2.Transform(
+                    input.CurrentMouseState.Position.ToVector2(),
+                    Matrix.Invert(Editor.Cam.Transform)).ToPoint();
+        }
+
+
+        //Bigger managing classes
+
+        /// <summary>
+        /// Called every update cycle of this panel
+        /// </summary>
+        public event UpdateDelegate OnUpdate;
+
+        /// <summary>
+        /// The current mode of this editor (how you are interacting with it)
+        /// </summary>
+        public EditorMode CurrentMode { get; set; }
+
+        /// <summary>
+        /// The current map in this editor
+        /// </summary>
+        public Map CurrentMap { get; set; }
+
+        /// <summary>
+        /// The current tile to be placed
+        /// </summary>
+        public Tile CurrentTile { get; set; }
+
         protected override void Initialize()
         {
             //Initialization
@@ -90,6 +122,9 @@ namespace Railgun.Editor.App.Controls
             selectorColor = new Color(Color.GreenYellow, 0.2f);
 
             CurrentMode = EditorMode.Placing;
+
+            //Start in a new map
+            CurrentMap = new Map(100);
 
             ////
             base.Initialize();
@@ -187,6 +222,7 @@ namespace Railgun.Editor.App.Controls
             }
 
             ////
+            Editor.Cam.GetTransformation();//Create the transformation for the draw cycle
             OnUpdate();//Invoke update event
             base.Update(gameTime);
         }
@@ -201,7 +237,7 @@ namespace Railgun.Editor.App.Controls
                 DepthStencilState.Default,
                 RasterizerState.CullNone,
                 null,//No shaders
-                Editor.Cam.GetTransformation());//Transform by camera
+                Editor.Cam.Transform);//Transform by camera
             ////
 
 
@@ -245,7 +281,11 @@ namespace Railgun.Editor.App.Controls
         /// </summary>
         public void Place()
         {
-
+            //If placing
+            if(input.IsDown(MouseButtonTypes.Left))
+            {
+                //Place current object
+            }
         }
 
         /// <summary>

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Xna.Framework;
 using Railgun.Editor.App.Controls;
 using Railgun.Editor.App.Util;
 
@@ -54,12 +54,8 @@ namespace Railgun.Editor.App
         private void UpdateStatus()
         {
             //Set positions with these digits
-            mouseXStatus.Text = 
-                InputManager.Instance.CurrentMouseState
-                .Position.X.ToString(" 000;-000");
-            mouseYStatus.Text =
-                InputManager.Instance.CurrentMouseState
-                .Position.Y.ToString(" 000;-000");
+            mouseXStatus.Text = mainEditorPanel.MouseGridPosition.X.ToString(" 000;-000");
+            mouseYStatus.Text = mainEditorPanel.MouseGridPosition.Y.ToString(" 000;-000");
             //Set zoom amount
             camZoomStatus.Text = mainEditorPanel.Editor.Cam.Zoom
                 .ToString("0.00");

@@ -81,6 +81,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="App\DarkTheme.cs" />
+    <Compile Include="App\Objects\Entity.cs" />
+    <Compile Include="App\Objects\Tile.cs" />
+    <Compile Include="App\Objects\Map.cs" />
     <Compile Include="App\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
