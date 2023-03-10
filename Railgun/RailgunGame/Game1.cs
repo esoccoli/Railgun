@@ -33,7 +33,7 @@ namespace Railgun.RailgunGame
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            IsMouseVisible = false;
         }
 
         public enum GameState
@@ -74,7 +74,7 @@ namespace Railgun.RailgunGame
             gameReticle = Content.Load<Texture2D>("gameReticle");
 
             //Creates a player - update later
-            Player mainPlayer = new Player(new Rectangle(0, 0, 0, 0), backgroundHealthUI, gameTime, null, null);
+            Player mainPlayer = new Player(new Rectangle(0, 0, 0, 0), backgroundHealthUI, null, null);
 
             userInterface = new UI(backgroundHealthUI, foregroundHealthUI, true, 100, 100, font, 12, 12); //Creates a UI object. Values to be updated later. 
             base.Initialize();
@@ -156,10 +156,14 @@ namespace Railgun.RailgunGame
                     double xScale = _graphics.PreferredBackBufferWidth / 800.0;
                     double yScale = _graphics.PreferredBackBufferHeight / 480.0;
 
-                    _spriteBatch.Draw(menuLogo, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuLogo.Width / 10) / 2), 0, (menuLogo.Width / 10) * (int)xScale, (menuLogo.Height / 10) * (int)yScale), Color.White);
-                    _spriteBatch.Draw(menuPlay, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuPlay.Width / 10) / 2), 125, (menuPlay.Width / 10) * (int)xScale, (menuPlay.Height / 10) * (int)yScale), Color.White);
-                    _spriteBatch.Draw(menuOptions, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuOptions.Width / 10) / 2), 270, (menuOptions.Width / 10) * (int)xScale, (menuOptions.Height / 10) * (int)yScale), Color.White);
-                    _spriteBatch.Draw(menuQuit, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuQuit.Width / 10) / 2), 375, (menuQuit.Width / 10) * (int)xScale, (menuQuit.Height / 10) * (int)yScale), Color.White);
+                    _spriteBatch.Draw(menuLogo, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuLogo.Width * (int)xScale / 10) / 2), 20, (menuLogo.Width / 10) * (int)xScale, (menuLogo.Height / 10) * (int)yScale), Color.White);
+                    _spriteBatch.Draw(menuPlay, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuPlay.Width * (int)xScale / 10) / 2), 125, (menuPlay.Width / 10) * (int)xScale, (menuPlay.Height / 10) * (int)yScale), Color.White);
+                    _spriteBatch.Draw(menuOptions, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuOptions.Width * (int)xScale / 10) / 2), 270, (menuOptions.Width / 10) * (int)xScale, (menuOptions.Height / 10) * (int)yScale), Color.White);
+                    _spriteBatch.Draw(menuQuit, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuQuit.Width / 10) * (int)xScale / 2), 375, (menuQuit.Width / 10) * (int)xScale, (menuQuit.Height / 10) * (int)yScale), Color.White);
+
+                    //Draws reticle
+                    MouseState mState = Mouse.GetState();
+                    _spriteBatch.Draw(gameReticle, new Rectangle(mState.X - 25, mState.Y - 25, 50, 50), Color.White);
 
                     _spriteBatch.DrawString(font, "Menu", new Vector2(_graphics.PreferredBackBufferWidth - 100, 20), Color.White);
 
