@@ -122,6 +122,10 @@
     <Content Include="Credits.txt">
       <SubType>Form</SubType>
     </Content>
+    <None Include="Resources\Exit.png" />
+    <None Include="Resources\Maximize.png" />
+    <None Include="Resources\Minimize.png" />
+    <None Include="Resources\Normal.png" />
     <Content Include="Resources\railgun editor logo large.ico" />
     <Content Include="Resources\railgun editor logo.ico" />
     <Content Include="Resources\railgun editor logo.png" />
