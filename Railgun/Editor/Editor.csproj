@@ -126,12 +126,10 @@
     <None Include="Resources\Maximize.png" />
     <None Include="Resources\Minimize.png" />
     <None Include="Resources\Normal.png" />
+    <None Include="Resources\Logo.png" />
     <Content Include="Resources\railgun editor logo large.ico" />
-    <Content Include="Resources\railgun editor logo.ico" />
     <Content Include="Resources\railgun editor logo.png" />
     <Content Include="Resources\railgun transparent.ico" />
-    <Content Include="Resources\railgun transparent.png" />
-    <None Include="Resources\railgun transparent1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MonoGame.Forms.DX.3.0.0\build\MonoGame.Forms.DX.targets" Condition="Exists('..\packages\MonoGame.Forms.DX.3.0.0\build\MonoGame.Forms.DX.targets')" />

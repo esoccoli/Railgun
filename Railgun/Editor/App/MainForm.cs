@@ -14,10 +14,6 @@ namespace Railgun.Editor.App
     /// </summary>
     public partial class MainForm : Form
     {
-        /// <summary>
-        /// The resources of this form
-        /// </summary>
-        public ResourceManager resources = new ResourceManager(typeof(MainForm));
 
         #region Initial methods
 
@@ -234,7 +230,6 @@ namespace Railgun.Editor.App
         }
 
         #endregion
-
 
     }
 }

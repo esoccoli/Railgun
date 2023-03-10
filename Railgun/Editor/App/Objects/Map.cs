@@ -47,7 +47,18 @@ namespace Railgun.Editor.App.Objects
         /// <returns>The grid point corresponding to the specified point</returns>
         public Vector2 GetGridPoint(Vector2 rawPoint)
         {
-            return Vector2.Floor(rawPoint / new Vector2(TileSize));
+            return GetGridPoint(rawPoint, TileSize);
+        }
+
+        /// <summary>
+        /// Returns the point with the specified grid size corresponding to the specified point
+        /// </summary>
+        /// <param name="rawPoint">The point to convert to grid-point</param>
+        /// <param name="tileSize">The size of each tile on the grid</param>
+        /// <returns>The grid point corresponding to the specified point</returns>
+        public static Vector2 GetGridPoint(Vector2 rawPoint, int tileSize)
+        {
+            return Vector2.Floor(rawPoint / new Vector2(tileSize));
         }
     }
 }

@@ -73,6 +73,16 @@ namespace Railgun.Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Logo {
+            get {
+                object obj = ResourceManager.GetObject("Logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Maximize {
             get {
                 object obj = ResourceManager.GetObject("Maximize", resourceCulture);
@@ -96,16 +106,6 @@ namespace Railgun.Editor.Properties {
         internal static System.Drawing.Bitmap Normal {
             get {
                 object obj = ResourceManager.GetObject("Normal", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap railgun_transparent {
-            get {
-                object obj = ResourceManager.GetObject("railgun transparent", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
