@@ -123,6 +123,7 @@ namespace Railgun.RailgunGame
                           float scale,
                           float layerDepth)
         {
+            Texture = texture;
             CurrentFrame = 1;
             FPS = fPS;
             SecondsPerFrame = 1.0f / FPS;
