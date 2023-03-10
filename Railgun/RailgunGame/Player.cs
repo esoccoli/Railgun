@@ -33,7 +33,17 @@ namespace Railgun.RailgunGame
         public int Health { get; set; }
 
         /// <summary>
-        /// This is where the player's bullets are stored. This makes it
+        /// This is the amount of the bullets that the player has.
+        /// </summary>
+        public int Ammo { get; set; }
+
+        /// <summary>
+        /// This is the amount of time before the dash is available again.
+        /// </summary>
+        public double DashCooldown { get; set; }
+
+        /// <summary>
+        /// This is where the player's bullets are stored.
         /// </summary>
         public List<Projectile> PlayerBullets { get; private set; }
 
@@ -48,6 +58,8 @@ namespace Railgun.RailgunGame
             Health = 100;
             speed = 5;
             dashSpeed = 7;
+            Ammo = 8;
+            DashCooldown = 10.0;
 
             this.activeBullet = activeBullet;
             this.notActiveBullet = notActiveBullet;
@@ -62,6 +74,11 @@ namespace Railgun.RailgunGame
         /// <param name="gameTime"> The amount of time spent in the game. </param>
         public override void Update(GameTime gameTime)
         {
+            if(DashCooldown > 0.0)
+            {
+                DashCooldown -= gameTime.TotalGameTime.TotalSeconds;
+            }
+
             // Handles the movement of the player. All of this is run if they're not currently dashing.
             if (!dashing)
             {
@@ -70,8 +87,10 @@ namespace Railgun.RailgunGame
                 if (InputManager.IsKeyDown(Keys.S)) { hitboxTemp.Y += speed; Hitbox = hitboxTemp; }
                 if (InputManager.IsKeyDown(Keys.D)) { hitboxTemp.X += speed; Hitbox = hitboxTemp; }
 
-                if (InputManager.IsButtonDown(MouseButtons.Left)) { Shoot(gameTime); }
+                if (InputManager.IsButtonDown(MouseButtons.Left) && Ammo > 0) { Shoot(gameTime); }
+                if (InputManager.IsButtonDown(MouseButtons.Right)) { Reload(); }
 
+                // Make sure to update this so it checks the dash cooldown.
                 if (InputManager.IsKeyDown(Keys.LeftShift)) { preDash = Keyboard.GetState(); dashing = true; }
             }
             else
@@ -87,6 +106,7 @@ namespace Railgun.RailgunGame
         public void ResetPlayer()
         {
             Health = 20;
+            Ammo = 8;
         }
 
         /// <summary>
@@ -94,6 +114,10 @@ namespace Railgun.RailgunGame
         /// </summary>
         public void Shoot(GameTime gameTime)
         {
+            Ammo--;
+
+            // NEED TO DO MATH TO SEE WHERE MOUSE IS AND WHERE BULLETS SHOULD BE SHOT.
+
             PlayerBullets.Add(new Projectile(new Rectangle(Hitbox.X, Hitbox.Y, 20, 20), activeBullet, notActiveBullet, new Vector2(3.0f, 3.0f)));
         }
 
@@ -105,12 +129,14 @@ namespace Railgun.RailgunGame
             double dashTime = 0.0;
             dashTime += gameTime.ElapsedGameTime.Seconds;
 
+            // This is NOT user input, this is what the directional input of the user was back when they initially started dashing.
             if (preDash.IsKeyDown(Keys.W)) { hitboxTemp.Y -= dashSpeed; Hitbox = hitboxTemp; }
             if (preDash.IsKeyDown(Keys.A)) { hitboxTemp.X -= dashSpeed; Hitbox = hitboxTemp; }
             if (preDash.IsKeyDown(Keys.S)) { hitboxTemp.Y += dashSpeed; Hitbox = hitboxTemp; }
             if (preDash.IsKeyDown(Keys.D)) { hitboxTemp.X += dashSpeed; Hitbox = hitboxTemp; }
 
-            if(dashTime >= .75)
+            // This is the total duration of the dash. We can edit this number later.
+            if(dashTime >= .75) 
             {
                 dashTime = 0.0;
                 dashing = false;
@@ -127,12 +153,20 @@ namespace Railgun.RailgunGame
         }
 
         /// <summary>
-        /// The method that damages AND heals the player. This gets called when the player reloads, or gets shot.
+        /// This method damages the player. It also heals them if they're dashing.
         /// </summary>
-        /// <param name="reload"> This just checks to see if it was reloading that damaged the player. </param>
-        public void Damage(bool reload)
+        /// <param name="damage"> The amount of damage that this specific projectile will deal. </param>
+        public void Damage(int damage)
         {
-
+            if (!dashing)
+            {
+                Health -= damage;
+            }
+            else
+            {
+                // If the player is dashing, they heal this amount per bullet. This can be adjusted during playtesting.
+                Health += 5;
+            }
         }
 
         /// <summary>
@@ -140,7 +174,8 @@ namespace Railgun.RailgunGame
         /// </summary>
         public void Reload()
         {
-
+            Damage(20); // The player takes 20 damage for reloading. This can be adjusted later.
+            Ammo = 8;
         }
     }                                        
 }                                            
