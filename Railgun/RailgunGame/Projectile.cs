@@ -51,7 +51,6 @@ namespace Railgun.RailgunGame
         public Projectile(Rectangle hitbox,
                           Animation isActiveAnimation,
                           Animation hasCollidedAnimation,
-                          GameTime gameTime,
                           Vector2 Velocity)
 
             : base(hitbox,
