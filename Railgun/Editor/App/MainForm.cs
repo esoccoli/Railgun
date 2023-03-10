@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using Microsoft.Xna.Framework;
-using Railgun.Editor.App.Controls;
 using Railgun.Editor.App.Util;
 
 namespace Railgun.Editor.App
@@ -19,6 +13,8 @@ namespace Railgun.Editor.App
     /// </summary>
     public partial class MainForm : Form
     {
+        #region Initial methods
+
         /// <summary>
         /// Instantiate this form
         /// </summary>
@@ -26,7 +22,6 @@ namespace Railgun.Editor.App
         {
             InitializeComponent();
         }
-        
 
         /// <summary>
         /// Called when the form is loaded
@@ -44,44 +39,6 @@ namespace Railgun.Editor.App
 
             //Color the controls to a darker scheme
             ColorControls(Controls);
-        }
-
-        private void newMap_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// Updates the status strip with useful info
-        /// </summary>
-        private void UpdateStatus()
-        {
-            //Set positions with these digits
-            mouseXStatus.Text = mainEditorPanel.MouseGridPosition.X.ToString(" 000;-000");
-            mouseYStatus.Text = mainEditorPanel.MouseGridPosition.Y.ToString(" 000;-000");
-            //Set zoom amount
-            camZoomStatus.Text = mainEditorPanel.Editor.Cam.Zoom
-                .ToString("0.00");
-        }
-
-        //General control events
-
-        /// <summary>
-        /// Un-highlight when stop hovering over
-        /// </summary>
-        private void UnHighlightStatus_mouseExit(object sender, EventArgs e)
-        {
-            //Set color to darker
-            (sender as ToolStripStatusLabel).BackColor = DarkTheme.Base;
-        }
-
-        /// <summary>
-        /// Highlight when hovering over
-        /// </summary>
-        private void HighlightStatus_mouseEnter(object sender, EventArgs e)
-        {
-            //Set color to brighter
-            (sender as ToolStripStatusLabel).BackColor = DarkTheme.Highlight;
         }
 
         /// <summary>
@@ -143,7 +100,78 @@ namespace Railgun.Editor.App
             }
         }
 
-        //View delagates
+        #endregion
+
+        #region Making the window dragable by the menustrip
+
+        //Thanks to https://stackoverflow.com/a/4580843/14951726 and
+        //https://stackoverflow.com/a/24691094/14951726 answer for
+        //guiding me in the right direction on how to use the windows api
+
+        //Helpful resources for windows api messages regarding dragging
+        //0xA1 = WM_NCLBUTTONDOWN https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-nclbuttondown
+        //0x2 = HT_CAPTION https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-nchittest
+
+        //Import windows api message sending method
+        [DllImportAttribute("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+        /// <summary>
+        /// Allows the menu strip to drag the window when dragging inside the menu strip
+        /// </summary>
+        private void MenuStrip_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                //Release capture so that next frame will call this method again
+                menuStrip.Capture = false;
+                //Send api message to call window dragging,
+                //as if this was a normal window border
+                SendMessage(Handle, 0xA1, 0x2, 0);
+
+            }
+        }
+
+        #endregion
+
+        #region Status events
+
+        /// <summary>
+        /// Updates the status strip with useful info
+        /// </summary>
+        private void UpdateStatus()
+        {
+            //Set positions with these digits
+            mouseXStatus.Text = mainEditorPanel.MouseGridPosition.X.ToString(" 000;-000");
+            mouseYStatus.Text = mainEditorPanel.MouseGridPosition.Y.ToString(" 000;-000");
+            //Set zoom amount
+            camZoomStatus.Text = mainEditorPanel.Editor.Cam.Zoom
+                .ToString("0.00");
+        }
+
+        /// <summary>
+        /// Un-highlight when stop hovering over
+        /// </summary>
+        private void UnHighlightStatus_mouseExit(object sender, EventArgs e)
+        {
+            //Set color to darker
+            (sender as ToolStripStatusLabel).BackColor = DarkTheme.Base;
+        }
+
+        /// <summary>
+        /// Highlight when hovering over
+        /// </summary>
+        private void HighlightStatus_mouseEnter(object sender, EventArgs e)
+        {
+            //Set color to brighter
+            (sender as ToolStripStatusLabel).BackColor = DarkTheme.Highlight;
+        }
+
+        #endregion
+
+        #region Menustrip events
+
+        //View
 
         /// <summary>
         /// Resets the camera of the editor
@@ -160,5 +188,7 @@ namespace Railgun.Editor.App
         {
             mainEditorPanel.Editor.Cam.Zoom = 1f;
         }
+
+        #endregion
     }
 }

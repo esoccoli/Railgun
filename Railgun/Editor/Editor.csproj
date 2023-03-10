@@ -81,6 +81,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="App\DarkTheme.cs" />
+    <Compile Include="App\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="App\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
     <Compile Include="App\Objects\Entity.cs" />
     <Compile Include="App\Objects\Tile.cs" />
     <Compile Include="App\Objects\Map.cs" />
@@ -93,6 +99,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="App\Util\InputManager.cs" />
+    <EmbeddedResource Include="App\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="App\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -125,6 +134,7 @@
     <Content Include="Resources\railgun editor logo large.ico" />
     <Content Include="Resources\railgun editor logo.ico" />
     <Content Include="Resources\railgun editor logo.png" />
+    <Content Include="Resources\railgun transparent.ico" />
     <Content Include="Resources\railgun transparent.png" />
     <None Include="Resources\railgun transparent1.png" />
   </ItemGroup>
