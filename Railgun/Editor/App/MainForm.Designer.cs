@@ -38,19 +38,19 @@
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.mainEditorPanel = new Railgun.Editor.App.Controls.MainEditorPanel();
             this.leftSideTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.mouseXStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.mouseYStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.camZoomStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.editPanel = new System.Windows.Forms.Panel();
+            this.editLabel = new System.Windows.Forms.Label();
             this.objectsLabel = new System.Windows.Forms.Label();
             this.objectsPanel = new System.Windows.Forms.Panel();
-            this.mainEditorPanel = new Railgun.Editor.App.Controls.MainEditorPanel();
-            this.editLabel = new System.Windows.Forms.Label();
-            this.editPanel = new System.Windows.Forms.Panel();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.mouseXStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.mouseXStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.mouseYStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.mouseYStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.camZoomStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.camZoomStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.leftSideTableLayoutPanel.SuspendLayout();
@@ -92,26 +92,26 @@
             // newMapToolStripMenuItem
             // 
             this.newMapToolStripMenuItem.Name = "newMapToolStripMenuItem";
-            this.newMapToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
+            this.newMapToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.newMapToolStripMenuItem.Text = "New";
             this.newMapToolStripMenuItem.Click += new System.EventHandler(this.newMap_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.saveAsToolStripMenuItem.Text = "Save As";
             // 
             // exportToolStripMenuItem
             // 
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.exportToolStripMenuItem.Text = "Export";
             // 
             // saveStripMenuItem
@@ -138,6 +138,25 @@
             this.mainTableLayoutPanel.Size = new System.Drawing.Size(900, 470);
             this.mainTableLayoutPanel.TabIndex = 3;
             // 
+            // mainEditorPanel
+            // 
+            this.mainEditorPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.mainEditorPanel.CurrentMap = null;
+            this.mainEditorPanel.CurrentMode = Railgun.Editor.App.Controls.EditorMode.Placing;
+            this.mainEditorPanel.CurrentTile = null;
+            this.mainEditorPanel.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.mainEditorPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainEditorPanel.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mainEditorPanel.ForeColor = System.Drawing.Color.White;
+            this.mainEditorPanel.Location = new System.Drawing.Point(400, 3);
+            this.mainEditorPanel.Margin = new System.Windows.Forms.Padding(0, 3, 0, 5);
+            this.mainEditorPanel.MouseHoverUpdatesOnly = false;
+            this.mainEditorPanel.Name = "mainEditorPanel";
+            this.mainEditorPanel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.mainEditorPanel.Size = new System.Drawing.Size(500, 436);
+            this.mainEditorPanel.TabIndex = 0;
+            this.mainEditorPanel.Text = "mainEditorPanel";
+            // 
             // leftSideTableLayoutPanel
             // 
             this.leftSideTableLayoutPanel.ColumnCount = 1;
@@ -158,51 +177,32 @@
             this.leftSideTableLayoutPanel.Size = new System.Drawing.Size(400, 438);
             this.leftSideTableLayoutPanel.TabIndex = 1;
             // 
-            // statusStrip1
+            // editPanel
             // 
-            this.statusStrip1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mouseXStatusLabel,
-            this.mouseXStatus,
-            this.mouseYStatusLabel,
-            this.mouseYStatus,
-            this.camZoomStatusLabel,
-            this.camZoomStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 474);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(900, 26);
-            this.statusStrip1.TabIndex = 4;
-            this.statusStrip1.Text = "statusStrip";
+            this.editPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.editPanel.Location = new System.Drawing.Point(0, 242);
+            this.editPanel.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
+            this.editPanel.Name = "editPanel";
+            this.editPanel.Size = new System.Drawing.Size(397, 193);
+            this.editPanel.TabIndex = 3;
             // 
-            // mouseXStatus
+            // editLabel
             // 
-            this.mouseXStatus.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mouseXStatus.Name = "mouseXStatus";
-            this.mouseXStatus.Size = new System.Drawing.Size(35, 20);
-            this.mouseXStatus.Text = "000";
-            // 
-            // mouseYStatus
-            // 
-            this.mouseYStatus.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mouseYStatus.Name = "mouseYStatus";
-            this.mouseYStatus.Size = new System.Drawing.Size(35, 20);
-            this.mouseYStatus.Text = "000";
-            // 
-            // camZoomStatus
-            // 
-            this.camZoomStatus.Font = new System.Drawing.Font("Courier New", 9F);
-            this.camZoomStatus.Name = "camZoomStatus";
-            this.camZoomStatus.Size = new System.Drawing.Size(44, 20);
-            this.camZoomStatus.Text = "0.00";
-            this.camZoomStatus.ToolTipText = "Reset Camera Zoom";
-            this.camZoomStatus.Click += new System.EventHandler(this.CamZoomStatus_Click);
-            this.camZoomStatus.MouseEnter += new System.EventHandler(this.HighlightStatus_mouseEnter);
-            this.camZoomStatus.MouseLeave += new System.EventHandler(this.UnHighlightStatus_mouseExit);
+            this.editLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.editLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.editLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.editLabel.Location = new System.Drawing.Point(0, 219);
+            this.editLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
+            this.editLabel.Name = "editLabel";
+            this.editLabel.Size = new System.Drawing.Size(397, 20);
+            this.editLabel.TabIndex = 2;
+            this.editLabel.Text = "Edit";
+            this.editLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // objectsLabel
             // 
             this.objectsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.objectsLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.objectsLabel.ForeColor = System.Drawing.SystemColors.ControlText;
             this.objectsLabel.Location = new System.Drawing.Point(0, 0);
             this.objectsLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
@@ -221,43 +221,22 @@
             this.objectsPanel.Size = new System.Drawing.Size(397, 193);
             this.objectsPanel.TabIndex = 1;
             // 
-            // mainEditorPanel
+            // statusStrip1
             // 
-            this.mainEditorPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.mainEditorPanel.CurrentMode = Railgun.Editor.App.Controls.EditorMode.Placing;
-            this.mainEditorPanel.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.mainEditorPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainEditorPanel.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mainEditorPanel.ForeColor = System.Drawing.Color.White;
-            this.mainEditorPanel.Location = new System.Drawing.Point(400, 3);
-            this.mainEditorPanel.Margin = new System.Windows.Forms.Padding(0, 3, 0, 5);
-            this.mainEditorPanel.MouseHoverUpdatesOnly = false;
-            this.mainEditorPanel.Name = "mainEditorPanel";
-            this.mainEditorPanel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.mainEditorPanel.Size = new System.Drawing.Size(500, 436);
-            this.mainEditorPanel.TabIndex = 0;
-            this.mainEditorPanel.Text = "mainEditorPanel";
-            // 
-            // editLabel
-            // 
-            this.editLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.editLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.editLabel.Location = new System.Drawing.Point(0, 219);
-            this.editLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
-            this.editLabel.Name = "editLabel";
-            this.editLabel.Size = new System.Drawing.Size(397, 20);
-            this.editLabel.TabIndex = 2;
-            this.editLabel.Text = "Edit";
-            this.editLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // editPanel
-            // 
-            this.editPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.editPanel.Location = new System.Drawing.Point(0, 242);
-            this.editPanel.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
-            this.editPanel.Name = "editPanel";
-            this.editPanel.Size = new System.Drawing.Size(397, 193);
-            this.editPanel.TabIndex = 3;
+            this.statusStrip1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mouseXStatusLabel,
+            this.mouseXStatus,
+            this.mouseYStatusLabel,
+            this.mouseYStatus,
+            this.camZoomStatusLabel,
+            this.camZoomStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 474);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(900, 26);
+            this.statusStrip1.TabIndex = 4;
+            this.statusStrip1.Text = "statusStrip";
             // 
             // mouseXStatusLabel
             // 
@@ -265,6 +244,13 @@
             this.mouseXStatusLabel.Name = "mouseXStatusLabel";
             this.mouseXStatusLabel.Size = new System.Drawing.Size(21, 20);
             this.mouseXStatusLabel.Text = "X:";
+            // 
+            // mouseXStatus
+            // 
+            this.mouseXStatus.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mouseXStatus.Name = "mouseXStatus";
+            this.mouseXStatus.Size = new System.Drawing.Size(35, 20);
+            this.mouseXStatus.Text = "000";
             // 
             // mouseYStatusLabel
             // 
@@ -274,6 +260,13 @@
             this.mouseYStatusLabel.Size = new System.Drawing.Size(20, 20);
             this.mouseYStatusLabel.Text = "Y:";
             // 
+            // mouseYStatus
+            // 
+            this.mouseYStatus.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mouseYStatus.Name = "mouseYStatus";
+            this.mouseYStatus.Size = new System.Drawing.Size(35, 20);
+            this.mouseYStatus.Text = "000";
+            // 
             // camZoomStatusLabel
             // 
             this.camZoomStatusLabel.Margin = new System.Windows.Forms.Padding(20, 4, 0, 2);
@@ -281,6 +274,17 @@
             this.camZoomStatusLabel.Size = new System.Drawing.Size(52, 20);
             this.camZoomStatusLabel.Text = "Zoom:";
             this.camZoomStatusLabel.ToolTipText = "Reset Camera Zoom";
+            // 
+            // camZoomStatus
+            // 
+            this.camZoomStatus.Font = new System.Drawing.Font("Courier New", 9F);
+            this.camZoomStatus.Name = "camZoomStatus";
+            this.camZoomStatus.Size = new System.Drawing.Size(44, 20);
+            this.camZoomStatus.Text = "0.00";
+            this.camZoomStatus.ToolTipText = "Reset Camera Zoom";
+            this.camZoomStatus.Click += new System.EventHandler(this.CamZoomStatus_Click);
+            this.camZoomStatus.MouseEnter += new System.EventHandler(this.HighlightStatus_mouseEnter);
+            this.camZoomStatus.MouseLeave += new System.EventHandler(this.UnHighlightStatus_mouseExit);
             // 
             // MainForm
             // 
@@ -325,7 +329,6 @@
         private System.Windows.Forms.ToolStripStatusLabel mouseXStatus;
         private System.Windows.Forms.ToolStripStatusLabel mouseYStatus;
         private System.Windows.Forms.ToolStripStatusLabel camZoomStatus;
-        private System.Windows.Forms.ToolStripMenuItem logoToolStripMenuItem;
         private System.Windows.Forms.Label objectsLabel;
         private System.Windows.Forms.Panel objectsPanel;
         private System.Windows.Forms.Label editLabel;
@@ -333,5 +336,6 @@
         private System.Windows.Forms.ToolStripStatusLabel mouseXStatusLabel;
         private System.Windows.Forms.ToolStripStatusLabel mouseYStatusLabel;
         private System.Windows.Forms.ToolStripStatusLabel camZoomStatusLabel;
+        private System.Windows.Forms.ToolStripMenuItem logoToolStripMenuItem;
     }
 }
