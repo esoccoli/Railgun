@@ -23,17 +23,14 @@ namespace Railgun.RailgunGame
         /// </summary>
         public Texture2D Texture { get; set; }
 
-        public GameTime GameTime { get; set; }
-
         /// <summary>
         /// intatntiates a geenric entity with a 
         /// location, hitbox, and sprite
         /// </summary>
-        public Entity(Rectangle hitbox, Texture2D texture, GameTime gameTime) 
+        public Entity(Rectangle hitbox, Texture2D texture)
         {
             Hitbox = hitbox;
             Texture = texture;
-            GameTime = gameTime;
         }
 
         /// <summary>
