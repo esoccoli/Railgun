@@ -96,7 +96,7 @@
             // 
             this.logoToolStripMenuItem.AutoSize = false;
             this.logoToolStripMenuItem.Enabled = false;
-            this.logoToolStripMenuItem.Image = global::Railgun.Editor.Properties.Resources.railgun_transparent;
+            this.logoToolStripMenuItem.Image = global::Railgun.Editor.Properties.Resources.Logo;
             this.logoToolStripMenuItem.Name = "logoToolStripMenuItem";
             this.logoToolStripMenuItem.Size = new System.Drawing.Size(40, 40);
             // 
