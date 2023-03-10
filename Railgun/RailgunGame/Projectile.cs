@@ -92,7 +92,7 @@ namespace Railgun.RailgunGame
             switch (CurrentState)
             {
                 case ProjectileStates.IsActive:
-                    Hitbox = new Rectangle((int)(Hitbox.X + XVelocity), (int)(Hitbox.Y + YVelocity), Hitbox.Width, Hitbox.Height)
+                    Hitbox = new Rectangle((int)(Hitbox.X + XVelocity), (int)(Hitbox.Y + YVelocity), Hitbox.Width, Hitbox.Height);
                     break;
 
                 case ProjectileStates.HasCollided:

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace Railgun.RailgunGame
 {
@@ -16,7 +17,8 @@ namespace Railgun.RailgunGame
         private GameState currentGameState;
 
         private UI userInterface;
-        private Player mainPlayer;
+
+        private List<Projectile> playerBullets;
 
         public Game1()
         {
