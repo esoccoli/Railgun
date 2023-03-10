@@ -54,13 +54,14 @@ namespace Railgun.RailgunGame
         /// <param name="hitbox">hitbox of projectile</param>
         /// <param name="texture">texture of projectile</param>
         public Projectile(Rectangle hitbox,
-                          Texture2D texture,
+                          Animation isActiveAnimation,
+                          Animation hasCollidedAnimation,
                           GameTime gameTime,
                           float xVelocity,
                           float yVelocity)
 
             : base(hitbox,
-                   texture,
+                   isActiveAnimation.Texture,
                    gameTime)
         {
 
