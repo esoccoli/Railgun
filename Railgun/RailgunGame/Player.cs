@@ -22,6 +22,9 @@ namespace Railgun.RailgunGame
         private Rectangle hitboxTemp;
         private KeyboardState preDash;
 
+        private Animation activeBullet;
+        private Animation notActiveBullet;
+
         // I will organize this later.
         
         /// <summary>
@@ -39,12 +42,15 @@ namespace Railgun.RailgunGame
         /// </summary>
         /// <param name="hitbox"> The rectangle that defines where the player is, and where they can be injured. </param>
         /// <param name="texture"> The texture used to show what our player looks like. </param>
-        public Player(Rectangle hitbox, Texture2D texture, GameTime gameTime) : base(hitbox, texture, gameTime)
+        public Player(Rectangle hitbox, Texture2D texture, GameTime gameTime, Animation activeBullet, Animation notActiveBullet) : base(hitbox, texture, gameTime)
         {
             // I'm only setting the health to 100 as a default value. We can come back and change this if we need to adjust it later.
             Health = 100;
             speed = 5;
             dashSpeed = 7;
+
+            this.activeBullet = activeBullet;
+            this.notActiveBullet = notActiveBullet;
             
             Hitbox = hitbox;
             Texture = texture;
@@ -64,7 +70,7 @@ namespace Railgun.RailgunGame
                 if (InputManager.IsKeyDown(Keys.S)) { hitboxTemp.Y += speed; Hitbox = hitboxTemp; }
                 if (InputManager.IsKeyDown(Keys.D)) { hitboxTemp.X += speed; Hitbox = hitboxTemp; }
 
-                if (InputManager.IsButtonDown(MouseButtons.Left)) { Shoot(); }
+                if (InputManager.IsButtonDown(MouseButtons.Left)) { Shoot(gameTime); }
 
                 if (InputManager.IsKeyDown(Keys.LeftShift)) { preDash = Keyboard.GetState(); dashing = true; }
             }
@@ -86,23 +92,23 @@ namespace Railgun.RailgunGame
         /// <summary>
         /// The player's form of attacking. Creates bullet objects. That's essentially it.
         /// </summary>
-        public void Shoot()
+        public void Shoot(GameTime gameTime)
         {
-            
+            //PlayerBullets.Add(new Projectile(new Rectangle(Hitbox.X, Hitbox.Y, 20, 20), activeBullet, notActiveBullet, ));
         }
 
         /// <summary>
-        /// Dashes towards the mouse, and heals health for each bullet we hit during said dash.
+        /// Dashes in the direction that the player was not facing. They absorb bullets in this phase too, to regain health.
         /// </summary>
         public void Dash(GameTime gameTime)
         {
             double dashTime = 0.0;
             dashTime += gameTime.ElapsedGameTime.Seconds;
 
-            if (preDash.IsKeyDown(Keys.W)) { hitboxTemp.Y -= speed; Hitbox = hitboxTemp; }
-            if (preDash.IsKeyDown(Keys.A)) { hitboxTemp.X -= speed; Hitbox = hitboxTemp; }
-            if (preDash.IsKeyDown(Keys.S)) { hitboxTemp.Y += speed; Hitbox = hitboxTemp; }
-            if (preDash.IsKeyDown(Keys.D)) { hitboxTemp.X += speed; Hitbox = hitboxTemp; }
+            if (preDash.IsKeyDown(Keys.W)) { hitboxTemp.Y -= dashSpeed; Hitbox = hitboxTemp; }
+            if (preDash.IsKeyDown(Keys.A)) { hitboxTemp.X -= dashSpeed; Hitbox = hitboxTemp; }
+            if (preDash.IsKeyDown(Keys.S)) { hitboxTemp.Y += dashSpeed; Hitbox = hitboxTemp; }
+            if (preDash.IsKeyDown(Keys.D)) { hitboxTemp.X += dashSpeed; Hitbox = hitboxTemp; }
 
             if(dashTime >= .75)
             {
@@ -118,6 +124,16 @@ namespace Railgun.RailgunGame
         public void Draw(SpriteBatch sb)
         {
             base.Draw(sb);
+        }
+
+        public void Damage(bool reload)
+        {
+
+        }
+
+        public void Reload()
+        {
+
         }
     }                                        
 }                                            

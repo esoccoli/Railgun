@@ -37,6 +37,15 @@ namespace Railgun.RailgunGame
 
         protected override void Initialize()
         {
+            #region Set Screen Resolution
+            // I just set it to 1920x1080p cuz that's standard. We can change it later if needed, and full screen it when we're done.
+
+            _graphics.PreferredBackBufferHeight = 1080;
+            _graphics.PreferredBackBufferWidth = 1920;
+            //_graphics.IsFullScreen = true;
+            _graphics.ApplyChanges();
+            #endregion
+
             currentGameState = GameState.Menu;
             font = this.Content.Load<SpriteFont>("Mynerve24");
 
@@ -47,7 +56,7 @@ namespace Railgun.RailgunGame
             foregroundHealthUI = Content.Load<Texture2D>("RedHealthSquare");
 
             //Creates a player - update later
-            Player mainPlayer = new Player(new Rectangle(0, 0, 0, 0), backgroundHealthUI, gameTime);
+            Player mainPlayer = new Player(new Rectangle(0, 0, 0, 0), backgroundHealthUI, gameTime, null, null);
 
             userInterface = new UI(backgroundHealthUI, foregroundHealthUI, true, 100, 100, font, 12, 12); //Creates a UI object. Values to be updated later. 
             base.Initialize();
