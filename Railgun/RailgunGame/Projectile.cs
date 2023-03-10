@@ -54,13 +54,14 @@ namespace Railgun.RailgunGame
         /// <param name="hitbox">hitbox of projectile</param>
         /// <param name="texture">texture of projectile</param>
         public Projectile(Rectangle hitbox,
-                          Texture2D texture,
+                          Animation isActiveAnimation,
+                          Animation hasCollidedAnimation,
                           GameTime gameTime,
                           float xVelocity,
                           float yVelocity)
 
             : base(hitbox,
-                   texture,
+                   isActiveAnimation.Texture,
                    gameTime)
         {
 
@@ -92,7 +93,7 @@ namespace Railgun.RailgunGame
             switch (CurrentState)
             {
                 case ProjectileStates.IsActive:
-                    Hitbox = new Rectangle((int)(Hitbox.X + XVelocity), (int)(Hitbox.Y + YVelocity), Hitbox.Width, Hitbox.Height)
+                    Hitbox = new Rectangle((int)(Hitbox.X + XVelocity), (int)(Hitbox.Y + YVelocity), Hitbox.Width, Hitbox.Height);
                     break;
 
                 case ProjectileStates.HasCollided:

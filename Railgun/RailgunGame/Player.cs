@@ -30,6 +30,11 @@ namespace Railgun.RailgunGame
         public int Health { get; set; }
 
         /// <summary>
+        /// This is where the player's bullets are stored. This makes it
+        /// </summary>
+        public List<Projectile> PlayerBullets { get; private set; }
+
+        /// <summary>
         /// I mean realistically we only call this once, just to create our player at the start of the game.
         /// </summary>
         /// <param name="hitbox"> The rectangle that defines where the player is, and where they can be injured. </param>
@@ -59,6 +64,8 @@ namespace Railgun.RailgunGame
                 if (InputManager.IsKeyDown(Keys.S)) { hitboxTemp.Y += speed; Hitbox = hitboxTemp; }
                 if (InputManager.IsKeyDown(Keys.D)) { hitboxTemp.X += speed; Hitbox = hitboxTemp; }
 
+                if (InputManager.IsButtonDown(MouseButtons.Left)) { Shoot(); }
+
                 if (InputManager.IsKeyDown(Keys.LeftShift)) { preDash = Keyboard.GetState(); dashing = true; }
             }
             else
@@ -81,7 +88,7 @@ namespace Railgun.RailgunGame
         /// </summary>
         public void Shoot()
         {
-            // Can't really implement this without InputManager and Projectile.
+            
         }
 
         /// <summary>
@@ -92,10 +99,10 @@ namespace Railgun.RailgunGame
             double dashTime = 0.0;
             dashTime += gameTime.ElapsedGameTime.Seconds;
 
-            if (InputManager.IsKeyDown(Keys.W)) { hitboxTemp.Y -= speed; Hitbox = hitboxTemp; }
-            if (InputManager.IsKeyDown(Keys.A)) { hitboxTemp.X -= speed; Hitbox = hitboxTemp; }
-            if (InputManager.IsKeyDown(Keys.S)) { hitboxTemp.Y += speed; Hitbox = hitboxTemp; }
-            if (InputManager.IsKeyDown(Keys.D)) { hitboxTemp.X += speed; Hitbox = hitboxTemp; }
+            if (preDash.IsKeyDown(Keys.W)) { hitboxTemp.Y -= speed; Hitbox = hitboxTemp; }
+            if (preDash.IsKeyDown(Keys.A)) { hitboxTemp.X -= speed; Hitbox = hitboxTemp; }
+            if (preDash.IsKeyDown(Keys.S)) { hitboxTemp.Y += speed; Hitbox = hitboxTemp; }
+            if (preDash.IsKeyDown(Keys.D)) { hitboxTemp.X += speed; Hitbox = hitboxTemp; }
 
             if(dashTime >= .75)
             {
@@ -108,7 +115,7 @@ namespace Railgun.RailgunGame
         /// This is where the player is drawn. Might not need to edit this but when the animation object is made, I might.
         /// </summary>
         /// <param name="sb"> The spritebatch being drawn with. </param>
-        public void Dash(SpriteBatch sb)
+        public void Draw(SpriteBatch sb)
         {
             base.Draw(sb);
         }
