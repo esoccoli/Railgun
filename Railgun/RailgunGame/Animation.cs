@@ -115,7 +115,6 @@ namespace Railgun.RailgunGame
         /// <param name="scale">scale of the sprite</param>
         public Animation(Rectangle hitbox, 
                           Texture2D texture, 
-                          GameTime gameTime,
                           double fPS,
                           int totalFrames,
                           Rectangle sourceRectangle, 

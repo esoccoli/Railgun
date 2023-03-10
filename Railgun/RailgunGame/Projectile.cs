@@ -23,14 +23,9 @@ namespace Railgun.RailgunGame
         }
 
         /// <summary>
-        /// speed at which projectile's x value updates
+        /// Projectile's X and Y velocities
         /// </summary>
-        public float XVelocity { get; set; }
-
-        /// <summary>
-        /// speed at which projectile's y value updates
-        /// </summary>
-        public float YVelocity { get; set; }
+        public Vector2 Velocity { get; set; }
 
         /// <summary>
         /// current state of the projectile:
@@ -56,17 +51,13 @@ namespace Railgun.RailgunGame
         public Projectile(Rectangle hitbox,
                           Animation isActiveAnimation,
                           Animation hasCollidedAnimation,
-                          GameTime gameTime,
-                          float xVelocity,
-                          float yVelocity)
+                          Vector2 Velocity)
 
             : base(hitbox,
-                   isActiveAnimation.Texture,
-                   gameTime)
+                   isActiveAnimation.Texture)
         {
 
-            XVelocity = xVelocity;
-            YVelocity = yVelocity;
+            this.Velocity = Velocity;
 
         }
 
@@ -93,7 +84,7 @@ namespace Railgun.RailgunGame
             switch (CurrentState)
             {
                 case ProjectileStates.IsActive:
-                    Hitbox = new Rectangle((int)(Hitbox.X + XVelocity), (int)(Hitbox.Y + YVelocity), Hitbox.Width, Hitbox.Height);
+                    Hitbox = new Rectangle((int)(Hitbox.X + Velocity.X), (int)(Hitbox.Y + Velocity.Y), Hitbox.Width, Hitbox.Height);
                     break;
 
                 case ProjectileStates.HasCollided:
@@ -107,18 +98,18 @@ namespace Railgun.RailgunGame
         /// the specified properties
         /// </summary>
         /// <param name="sb">_spritebatch</param>
-        public void Draw(SpriteBatch sb)
+        public void Draw(SpriteBatch sb, GameTime gameTime)
         {
             switch (CurrentState)
             {
                 case ProjectileStates.IsActive:
-                    IsActive.Draw(sb, GameTime, new Vector2(Hitbox.X, Hitbox.Y));
+                    IsActive.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y));
                     break;
 
                 case ProjectileStates.HasCollided:
                     if (HasCollided.CurrentFrame != HasCollided.TotalFrames)
                     {
-                        HasCollided.Draw(sb, GameTime, new Vector2(Hitbox.X, Hitbox.Y));
+                        HasCollided.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y));
                     }
                     break;
             }
