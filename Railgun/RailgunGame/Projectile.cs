@@ -56,8 +56,9 @@ namespace Railgun.RailgunGame
             : base(hitbox,
                    isActiveAnimation.Texture)
         {
-
             this.Velocity = Velocity;
+            IsActive = isActiveAnimation;
+            HasCollided = hasCollidedAnimation;
 
         }
 
