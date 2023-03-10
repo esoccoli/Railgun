@@ -25,13 +25,25 @@ namespace Railgun.RailgunGame
     /// </summary>
     public static class InputManager
     {
-        // Tracks the current keyboard  & mouse state
-        private static KeyboardState kbState;
-        private static MouseState mouseState;
-    
-        // Tracks the keyboard & mouse state from last frame
-        private static KeyboardState prevKbState;
-        private static MouseState prevMouseState;
+        /// <summary>
+        /// Tracks the current keyboard state
+        /// </summary>
+        public static KeyboardState KbState { get; private set; }
+        
+        /// <summary>
+        /// Tracks the current mouse state
+        /// </summary>
+        public static MouseState MouseState { get; private set; }
+        
+        /// <summary>
+        /// Tracks the keyboard state from the previous frame
+        /// </summary>
+        public static KeyboardState PrevKbState;
+        
+        /// <summary>
+        /// Tracks the mouse state from the previous frame
+        /// </summary>
+        public static MouseState PrevMouseState;
     
         /// <summary>
         /// Initializes the InputManager class
@@ -39,11 +51,11 @@ namespace Railgun.RailgunGame
         static InputManager()
         {
             // Initializes the current & previous mouse and keyboard states
-            kbState = Keyboard.GetState();
-            mouseState = Mouse.GetState();
+            KbState = Keyboard.GetState();
+            MouseState = Mouse.GetState();
         
-            prevKbState = Keyboard.GetState();
-            prevMouseState = Mouse.GetState();
+            PrevKbState = Keyboard.GetState();
+            PrevMouseState = Mouse.GetState();
         }
     
         /// <summary>
@@ -51,11 +63,11 @@ namespace Railgun.RailgunGame
         /// </summary>
         public static void UpdateInputState()
         {
-            prevKbState = kbState;
-            prevMouseState = mouseState;
+            PrevKbState = KbState;
+            PrevMouseState = MouseState;
 
-            kbState = Keyboard.GetState();
-            mouseState = Mouse.GetState();
+            KbState = Keyboard.GetState();
+            MouseState = Mouse.GetState();
         }
 
         /// <summary>
@@ -63,15 +75,8 @@ namespace Railgun.RailgunGame
         /// </summary>
         /// <param name="key">Key to check</param>
         /// <returns>True if the key is currently being pressed, false otherwise</returns>
-        public static bool IsKeyDown(Keys key) => kbState.IsKeyDown(key);
+        public static bool IsKeyDown(Keys key) => KbState.IsKeyDown(key);
 
-        /// <summary>
-        /// Determines if the specified key is currently not pressed
-        /// </summary>
-        /// <param name="key">Key to check</param>
-        /// <returns>True if the key is currently not pressed</returns>
-        public static bool IsKeyUp(Keys key) => kbState.IsKeyUp(key);
-        
         /// <summary>
         /// Checks if the specified mouse button is currently pressed
         /// </summary>
@@ -86,37 +91,72 @@ namespace Railgun.RailgunGame
             switch (button)
             {
                 case MouseButtons.Left:
-                    isDown = mouseState.LeftButton == ButtonState.Pressed;
+                    isDown = MouseState.LeftButton == ButtonState.Pressed;
                     break;
                 case MouseButtons.Right:
-                    isDown = mouseState.RightButton == ButtonState.Pressed;
+                    isDown = MouseState.RightButton == ButtonState.Pressed;
                     break;
             }
 
             return isDown;
         }
+
+        /// <summary>
+        /// Checks if the specified key started being pressed this frame
+        /// </summary>
+        /// <param name="key">Key to check</param>
+        /// <returns>True if the key is down this frame and was up last frame, false otherwise</returns>
+        public static bool IsKeyPressed(Keys key) => KbState.IsKeyDown(key) && PrevKbState.IsKeyUp(key);
         
         /// <summary>
-        /// Checks if a specified mouse button is currently released
+        /// Checks if the specified key was released this frame
+        /// </summary>
+        /// <param name="key">Key to check</param>
+        /// <returns>True if the key is up this frame and was down last frame, false otherwise</returns>
+        public static bool IsKeyReleased(Keys key) => KbState.IsKeyUp(key) && PrevKbState.IsKeyDown(key);
+        
+        /// <summary>
+        /// Checks if the specified mouse button changed from released to pressed this frame
         /// </summary>
         /// <param name="button">Button to check</param>
-        /// <returns>True if the button is released, false otherwise</returns>
-        public static bool IsButtonUp(MouseButtons button)
+        /// <returns>True if the button is pressed this frame and was released last frame, false otherwise</returns>
+        public static bool MouseButtonPressed(MouseButtons button)
         {
-            bool isUp = false;
+            bool isPressed = false;
+            
+            switch (button)
+            {
+                case MouseButtons.Left:
+                    isPressed = MouseState.LeftButton == ButtonState.Pressed && PrevMouseState.LeftButton == ButtonState.Released;
+                    break;
+                case MouseButtons.Right:
+                    isPressed = MouseState.RightButton == ButtonState.Pressed && PrevMouseState.RightButton == ButtonState.Released;
+                    break;
+            }
+
+            return isPressed;
+        }
+        
+        /// <summary>
+        /// Checks if the specified mouse button changed from pressed to released this frame
+        /// </summary>
+        /// <param name="button">Button to check</param>
+        /// <returns>True if the button is released this frame and was pressed last frame, false otherwise</returns>
+        public static bool MouseButtonReleased(MouseButtons button)
+        {
+            bool isReleased = false;
 
             switch (button)
             {
                 case MouseButtons.Left:
-                    isUp = mouseState.LeftButton == ButtonState.Released;
+                    isReleased = MouseState.LeftButton == ButtonState.Released && PrevMouseState.LeftButton == ButtonState.Pressed;
                     break;
                 case MouseButtons.Right:
-                    isUp = mouseState.RightButton == ButtonState.Released;
+                    isReleased = MouseState.RightButton == ButtonState.Released && PrevMouseState.RightButton == ButtonState.Pressed;
                     break;
             }
 
-            return isUp;
+            return isReleased;
         }
-
     }
 }
