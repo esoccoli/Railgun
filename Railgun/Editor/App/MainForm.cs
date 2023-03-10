@@ -39,6 +39,11 @@ namespace Railgun.Editor.App
 
             //Color the controls to a darker scheme
             ColorControls(Controls);
+
+            //Set maximized bounds to working area (not cover taskbar)
+            //Inflate a bit to make the borders not show
+            MaximizedBounds = Rectangle.Inflate(Screen.GetWorkingArea(this),10,10);
+            WindowState = FormWindowState.Maximized;
         }
 
         /// <summary>
@@ -189,6 +194,41 @@ namespace Railgun.Editor.App
             mainEditorPanel.Editor.Cam.Zoom = 1f;
         }
 
+        /// <summary>
+        /// Called when the exit button is clicked
+        /// </summary>
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Try to close, if unsaved, then close event will handle it
+            Close();
+        }
+
+        /// <summary>
+        /// Called when the maximize/minimize button is clicked
+        /// </summary>
+        private void MaximizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Switch based on the current state of the window
+            if (WindowState == FormWindowState.Maximized)
+            {
+                WindowState = FormWindowState.Normal;
+            }
+            else if (WindowState == FormWindowState.Normal)
+            {
+                WindowState = FormWindowState.Maximized;
+            }
+        }
+
+        /// <summary>
+        /// Minimizes the window to the taskbar
+        /// </summary>
+        private void MinimizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
+        }
+
         #endregion
+
+
     }
 }
