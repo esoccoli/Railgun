@@ -42,7 +42,7 @@ namespace Railgun.RailgunGame
         /// </summary>
         /// <param name="hitbox"> The rectangle that defines where the player is, and where they can be injured. </param>
         /// <param name="texture"> The texture used to show what our player looks like. </param>
-        public Player(Rectangle hitbox, Texture2D texture, GameTime gameTime, Animation activeBullet, Animation notActiveBullet) : base(hitbox, texture, gameTime)
+        public Player(Rectangle hitbox, Texture2D texture, Animation activeBullet, Animation notActiveBullet) : base(hitbox, texture)
         {
             // I'm only setting the health to 100 as a default value. We can come back and change this if we need to adjust it later.
             Health = 100;
@@ -94,11 +94,11 @@ namespace Railgun.RailgunGame
         /// </summary>
         public void Shoot(GameTime gameTime)
         {
-            //PlayerBullets.Add(new Projectile(new Rectangle(Hitbox.X, Hitbox.Y, 20, 20), activeBullet, notActiveBullet, ));
+            PlayerBullets.Add(new Projectile(new Rectangle(Hitbox.X, Hitbox.Y, 20, 20), activeBullet, notActiveBullet, new Vector2(3.0f, 3.0f)));
         }
 
         /// <summary>
-        /// Dashes in the direction that the player was not facing. They absorb bullets in this phase too, to regain health.
+        /// Dashes in the direction that the player was not facing.
         /// </summary>
         public void Dash(GameTime gameTime)
         {
@@ -126,11 +126,18 @@ namespace Railgun.RailgunGame
             base.Draw(sb);
         }
 
+        /// <summary>
+        /// The method that damages AND heals the player. This gets called when the player reloads, or gets shot.
+        /// </summary>
+        /// <param name="reload"> This just checks to see if it was reloading that damaged the player. </param>
         public void Damage(bool reload)
         {
 
         }
 
+        /// <summary>
+        /// This refills the player's ammo. It also hurts them.
+        /// </summary>
         public void Reload()
         {
 
