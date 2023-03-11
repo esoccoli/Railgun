@@ -18,7 +18,7 @@ namespace Railgun.Editor.App
         //Color theme
         public static Color Base => Color.FromArgb(31, 31, 31);
         public static Color Outline => Color.FromArgb(128, 128, 128);
-        public static Color Label => Color.FromArgb(224, 224, 224);
+        public static Color Label => Color.White;//Color.FromArgb(224, 224, 224);
         public static Color Panel => Color.FromArgb(51, 51, 51);
         public static Color Highlight => Color.FromArgb(80, 80, 80);
 
