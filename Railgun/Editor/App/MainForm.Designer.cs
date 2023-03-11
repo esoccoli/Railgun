@@ -52,6 +52,7 @@
             this.maximizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.minimizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.mainEditorPanel = new Railgun.Editor.App.Controls.MainEditorPanel();
             this.leftSideTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.editPanel = new System.Windows.Forms.Panel();
             this.editLabel = new System.Windows.Forms.Label();
@@ -64,7 +65,6 @@
             this.mouseYStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.camZoomStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.camZoomStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.mainEditorPanel = new Railgun.Editor.App.Controls.MainEditorPanel();
             this.menuStrip.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.leftSideTableLayoutPanel.SuspendLayout();
@@ -166,39 +166,39 @@
             // rotate90CWToolStripMenuItem
             // 
             this.rotate90CWToolStripMenuItem.Name = "rotate90CWToolStripMenuItem";
-            this.rotate90CWToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.rotate90CWToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
             this.rotate90CWToolStripMenuItem.Text = "Rotate 90 CW";
             // 
             // rotate90CCWToolStripMenuItem
             // 
             this.rotate90CCWToolStripMenuItem.Name = "rotate90CCWToolStripMenuItem";
-            this.rotate90CCWToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.rotate90CCWToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
             this.rotate90CCWToolStripMenuItem.Text = "Rotate 90 CCW";
             // 
             // flipHorizontallyToolStripMenuItem
             // 
             this.flipHorizontallyToolStripMenuItem.Name = "flipHorizontallyToolStripMenuItem";
-            this.flipHorizontallyToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.flipHorizontallyToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
             this.flipHorizontallyToolStripMenuItem.Text = "Flip Horizontally";
             // 
             // flipVerticallyToolStripMenuItem
             // 
             this.flipVerticallyToolStripMenuItem.Name = "flipVerticallyToolStripMenuItem";
-            this.flipVerticallyToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.flipVerticallyToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
             this.flipVerticallyToolStripMenuItem.Text = "Flip Vertically";
             // 
             // deselectToolStripMenuItem
             // 
             this.deselectToolStripMenuItem.Name = "deselectToolStripMenuItem";
             this.deselectToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D)));
-            this.deselectToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.deselectToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
             this.deselectToolStripMenuItem.Text = "Deselect";
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
             this.deleteToolStripMenuItem.Text = "Delete";
             // 
             // viewToolStripMenuItem
@@ -240,7 +240,7 @@
             this.exitToolStripMenuItem.AutoSize = false;
             this.exitToolStripMenuItem.Image = global::Railgun.Editor.Properties.Resources.Exit;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(50, 40);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(45, 40);
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // maximizeToolStripMenuItem
@@ -249,7 +249,7 @@
             this.maximizeToolStripMenuItem.AutoSize = false;
             this.maximizeToolStripMenuItem.Image = global::Railgun.Editor.Properties.Resources.Maximize;
             this.maximizeToolStripMenuItem.Name = "maximizeToolStripMenuItem";
-            this.maximizeToolStripMenuItem.Size = new System.Drawing.Size(50, 40);
+            this.maximizeToolStripMenuItem.Size = new System.Drawing.Size(45, 40);
             this.maximizeToolStripMenuItem.Click += new System.EventHandler(this.MaximizeToolStripMenuItem_Click);
             // 
             // minimizeToolStripMenuItem
@@ -258,7 +258,7 @@
             this.minimizeToolStripMenuItem.AutoSize = false;
             this.minimizeToolStripMenuItem.Image = global::Railgun.Editor.Properties.Resources.Minimize;
             this.minimizeToolStripMenuItem.Name = "minimizeToolStripMenuItem";
-            this.minimizeToolStripMenuItem.Size = new System.Drawing.Size(50, 40);
+            this.minimizeToolStripMenuItem.Size = new System.Drawing.Size(45, 40);
             this.minimizeToolStripMenuItem.Click += new System.EventHandler(this.MinimizeToolStripMenuItem_Click);
             // 
             // mainTableLayoutPanel
@@ -278,6 +278,25 @@
             this.mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.mainTableLayoutPanel.Size = new System.Drawing.Size(900, 455);
             this.mainTableLayoutPanel.TabIndex = 3;
+            // 
+            // mainEditorPanel
+            // 
+            this.mainEditorPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.mainEditorPanel.CurrentMap = null;
+            this.mainEditorPanel.CurrentMode = Railgun.Editor.App.Controls.EditorMode.Placing;
+            this.mainEditorPanel.CurrentTile = null;
+            this.mainEditorPanel.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.mainEditorPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainEditorPanel.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mainEditorPanel.ForeColor = System.Drawing.Color.White;
+            this.mainEditorPanel.Location = new System.Drawing.Point(400, 2);
+            this.mainEditorPanel.Margin = new System.Windows.Forms.Padding(0, 2, 0, 5);
+            this.mainEditorPanel.MouseHoverUpdatesOnly = false;
+            this.mainEditorPanel.Name = "mainEditorPanel";
+            this.mainEditorPanel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.mainEditorPanel.Size = new System.Drawing.Size(500, 422);
+            this.mainEditorPanel.TabIndex = 0;
+            this.mainEditorPanel.Text = "mainEditorPanel";
             // 
             // leftSideTableLayoutPanel
             // 
@@ -408,25 +427,6 @@
             this.camZoomStatus.Click += new System.EventHandler(this.ResetZoom_Click);
             this.camZoomStatus.MouseEnter += new System.EventHandler(this.HighlightStatus_mouseEnter);
             this.camZoomStatus.MouseLeave += new System.EventHandler(this.UnHighlightStatus_mouseExit);
-            // 
-            // mainEditorPanel
-            // 
-            this.mainEditorPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.mainEditorPanel.CurrentMap = null;
-            this.mainEditorPanel.CurrentMode = Railgun.Editor.App.Controls.EditorMode.Placing;
-            this.mainEditorPanel.CurrentTile = null;
-            this.mainEditorPanel.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.mainEditorPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainEditorPanel.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mainEditorPanel.ForeColor = System.Drawing.Color.White;
-            this.mainEditorPanel.Location = new System.Drawing.Point(400, 2);
-            this.mainEditorPanel.Margin = new System.Windows.Forms.Padding(0, 2, 0, 5);
-            this.mainEditorPanel.MouseHoverUpdatesOnly = false;
-            this.mainEditorPanel.Name = "mainEditorPanel";
-            this.mainEditorPanel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.mainEditorPanel.Size = new System.Drawing.Size(500, 422);
-            this.mainEditorPanel.TabIndex = 0;
-            this.mainEditorPanel.Text = "mainEditorPanel";
             // 
             // MainForm
             // 
