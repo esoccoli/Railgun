@@ -30,7 +30,8 @@ namespace Railgun.Editor.App.Objects
         /// <summary>
         /// The position of this tile relative to the grid
         /// </summary>
-        public Vector2 GridLocation => Map.GetGridPoint(Destination.Location.ToVector2(), TileSize)
+        public Vector2 GridLocation
+            => Map.GetGridPoint(Destination.Location.ToVector2(), TileSize);
 
         /// <summary>
         /// The destination rectangle of this tile
