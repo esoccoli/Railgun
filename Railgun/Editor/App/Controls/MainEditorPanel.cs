@@ -279,6 +279,7 @@ namespace Railgun.Editor.App.Controls
             if(input.IsDown(MouseButtonTypes.Left))
             {
                 //Place current object
+                //Tile tile = CurrentTile.
             }
         }
 
