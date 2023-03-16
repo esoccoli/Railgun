@@ -26,13 +26,13 @@ namespace Railgun.RailgunGame
         public double FPS { get; set; }
 
         /// <summary>
-        /// amount of time one frame should last for
+        /// time one frame lasts for
         /// </summary>
         public double SecondsPerFrame { get; set; }
 
         /// <summary>
         /// time since image was changed
-        /// aka "delta time"
+        /// aka "delta time" or "Elapsed time"
         /// </summary>
         public double TimeCounter { get; set; }
 
@@ -59,7 +59,7 @@ namespace Railgun.RailgunGame
         /// <summary>
         /// Textrure for the animation
         /// </summary>
-        public Texture2D Texture { get; set; }
+        public Texture2D SpriteSheet { get; set; }
 
         /// <summary>
         /// source rectangle on sprite sheet
@@ -123,8 +123,8 @@ namespace Railgun.RailgunGame
                           float scale,
                           float layerDepth)
         {
-            Texture = texture;
-            CurrentFrame = 1;
+            SpriteSheet = texture;
+            CurrentFrame = 0;
             FPS = fPS;
             SecondsPerFrame = 1.0f / FPS;
             TimeCounter = 0;
@@ -149,19 +149,19 @@ namespace Railgun.RailgunGame
         /// <param name="sb">_spritebatch</param>
         public void Draw(SpriteBatch sb, GameTime gameTime, Vector2 position)
         {
-            sb.Draw(Texture, position, 
+            UpdateAnimation(gameTime);
+
+            sb.Draw(SpriteSheet, position, 
                     SourceRectangle, 
                     Color, Rotation, 
                     SourceOrigin, Scale, 
                     SpriteEffect, LayerDepth);
-
-            UpdateAnimation(gameTime);
         }
 
 
 
         /// <summary>
-        /// Updates the animation time
+        /// Updates the current frame for the animation
         /// </summary>
         /// <param name="gameTime">Game time information</param>
         private void UpdateAnimation(GameTime gameTime)
@@ -176,29 +176,12 @@ namespace Railgun.RailgunGame
                 CurrentFrame++;
 
                 // if it is on the last frame
-                if (CurrentFrame >= NumColumns && SourceRectangle.Y * NumRows == Texture.Height)
+                if (CurrentFrame == TotalFrames) 
                 {
                     CurrentFrame = 0;
-                    SourceRectangle = new Rectangle(SourceRectangle.X,
-                                                    0,
-                                                    SourceRectangle.Width,
-                                                    SourceRectangle.Height);
-
                 }
 
-                // checks if the end of a row has been
-                // reached and moves to next row
-                else if (CurrentFrame >= NumColumns)
-                {
-                    CurrentFrame = 0;
-                    SourceRectangle = new Rectangle(SourceRectangle.X, 
-                                                    SourceRectangle.Y + SourceRectangle.Height, 
-                                                    SourceRectangle.Width, 
-                                                    SourceRectangle.Height);
-                }
-
-                // Remove one "frame" worth of time
-                TimeCounter -= SecondsPerFrame;
+                TimeCounter = 0;
             }
         }
     }

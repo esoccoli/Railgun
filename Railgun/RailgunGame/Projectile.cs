@@ -54,7 +54,7 @@ namespace Railgun.RailgunGame
                           Vector2 Velocity)
 
             : base(hitbox,
-                   isActiveAnimation.Texture)
+                   isActiveAnimation.SpriteSheet)
         {
             this.Velocity = Velocity;
             IsActive = isActiveAnimation;
