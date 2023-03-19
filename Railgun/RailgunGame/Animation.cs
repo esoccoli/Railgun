@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -13,17 +14,13 @@ namespace Railgun.RailgunGame
 {
     internal class Animation
     {
+
         // animation elements
 
         /// <summary>
         /// current columns in a row of sprite sheet
         /// </summary>
         public int CurrentFrame { get; set; }
-
-        /// <summary>
-        /// interval that frames are displayed at
-        /// </summary>
-        public double FPS { get; set; }
 
         /// <summary>
         /// time one frame lasts for
@@ -97,48 +94,24 @@ namespace Railgun.RailgunGame
         /// </summary>
         public float LayerDepth { get; set; }
 
-        //going to need to edit class for sprite sheets with multiple rows
+        public int FrameWidth { get; set; }
 
-        /// <summary>
-        /// instantiates animatable entity
-        /// number of columns is set to 1
-        /// use when animation is in one row
-        /// </summary>
-        /// <param name="hitbox">hitbox and location</param>
-        /// <param name="texture">texture of the entity</param>
-        /// <param name="fPS">how many frames one image lasts for</param>
-        ///  /// <param name="totalFrames">total number of frames</param
-        /// <param name="sourceRectangle">source rectangle on sprite sheet</param>
-        /// <param name="color">color of the sprite to be drawn</param>
-        /// <param name="rotation">rotation of the sprite</param>
-        /// <param name="sourceOrigin">location of origin for source rectangle</param>
-        /// <param name="scale">scale of the sprite</param>
-        public Animation(Rectangle hitbox, 
-                          Texture2D texture, 
-                          double fPS,
-                          int totalFrames,
-                          Rectangle sourceRectangle, 
-                          Color color, float rotation, 
-                          Vector2 sourceOrigin, 
-                          float scale,
-                          float layerDepth)
+        public int FrameHeight { get; set; }
+
+        public Animation(Texture2D spriteSheet, int rows, int columns, float framesPerSecond) 
         {
-            SpriteSheet = texture;
+            SpriteSheet = spriteSheet;
             CurrentFrame = 0;
-            FPS = fPS;
-            SecondsPerFrame = 1.0f / FPS;
+            SecondsPerFrame = 1.0f / framesPerSecond;
             TimeCounter = 0;
-            TotalFrames = totalFrames;
+            NumRows = rows;
+            NumColumns = columns;
+            TotalFrames = NumRows * NumColumns;
 
-            //gets rows and columns
-            NumColumns = texture.Width / hitbox.Width;
-            NumRows = texture.Height / hitbox.Height;
+            FrameWidth = SpriteSheet.Width / NumColumns;
+            FrameHeight= SpriteSheet.Height / NumRows;
 
-            SourceRectangle = sourceRectangle;
-            Color = color;
-            Rotation = rotation;
-            SourceOrigin = sourceOrigin;
-            Scale = scale;
+            Scale = 1.0f;
             SpriteEffect = SpriteEffects.None;
             LayerDepth = 1.0f;
         }
@@ -151,11 +124,15 @@ namespace Railgun.RailgunGame
         {
             UpdateAnimation(gameTime);
 
-            sb.Draw(SpriteSheet, position, 
-                    SourceRectangle, 
-                    Color, Rotation, 
-                    SourceOrigin, Scale, 
-                    SpriteEffect, LayerDepth);
+            int row = CurrentFrame / NumColumns;
+            int col = CurrentFrame % NumColumns;
+
+            SourceRectangle = new Rectangle(FrameWidth * col, FrameHeight * row, FrameWidth, FrameHeight);
+
+            //rectangle on screen to be drawn to
+            Rectangle destination = new Rectangle((int)position.X, (int)position.Y, FrameWidth, FrameHeight);
+
+            sb.Draw(SpriteSheet, destination, SourceRectangle, Color.White);
         }
 
 
@@ -176,7 +153,7 @@ namespace Railgun.RailgunGame
                 CurrentFrame++;
 
                 // if it is on the last frame
-                if (CurrentFrame == TotalFrames) 
+                if (CurrentFrame >= TotalFrames) 
                 {
                     CurrentFrame = 0;
                 }
