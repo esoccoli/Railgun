@@ -30,45 +30,59 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.logoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rotate90CWToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rotate90CCWToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.flipHorizontallyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.flipVerticallyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deselectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.resetZoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.resetCameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.maximizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.minimizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.mainEditorPanel = new Railgun.Editor.App.Controls.MapEditor();
-            this.leftSideTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.editPanel = new System.Windows.Forms.Panel();
-            this.editLabel = new System.Windows.Forms.Label();
-            this.objectsLabel = new System.Windows.Forms.Label();
-            this.objectsPanel = new System.Windows.Forms.Panel();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.mouseXStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.mouseXStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.mouseYStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.mouseYStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.camZoomStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.camZoomStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripMenuItem_Logo = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_File = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_New = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_Open = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_Save = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_SaveAs = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_Export = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_Edit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_Rotate90CW = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_Rotate90CCW = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_FlipHorizontally = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_FlipVertically = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_Deselect = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_Delete = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_View = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_ResetZoom = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_ResetCamera = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_Help = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_Exit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_Maximize = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_Minimize = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel_LabelX = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel_ValueX = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel_LabelY = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel_ValueY = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel_LabelZoom = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel_ValueZoom = new System.Windows.Forms.ToolStripStatusLabel();
+            this.splitContainer_MainEditor = new System.Windows.Forms.SplitContainer();
+            this.splitContainer_LeftSideBar = new System.Windows.Forms.SplitContainer();
+            this.mapEditor = new Railgun.Editor.App.Controls.MapEditor();
+            this.tableLayoutPanel_Objects = new System.Windows.Forms.TableLayoutPanel();
+            this.label_Objects = new System.Windows.Forms.Label();
+            this.panel_Objects = new System.Windows.Forms.Panel();
+            this.tilePicker = new GameTimeControl.TilePicker();
+            this.tableLayoutPanel_Edit = new System.Windows.Forms.TableLayoutPanel();
+            this.label_Edit = new System.Windows.Forms.Label();
+            this.panel_Edit = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel_MainOutline = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip.SuspendLayout();
-            this.mainTableLayoutPanel.SuspendLayout();
-            this.leftSideTableLayoutPanel.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
+            this.statusStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer_MainEditor)).BeginInit();
+            this.splitContainer_MainEditor.Panel1.SuspendLayout();
+            this.splitContainer_MainEditor.Panel2.SuspendLayout();
+            this.splitContainer_MainEditor.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer_LeftSideBar)).BeginInit();
+            this.splitContainer_LeftSideBar.Panel1.SuspendLayout();
+            this.splitContainer_LeftSideBar.Panel2.SuspendLayout();
+            this.splitContainer_LeftSideBar.SuspendLayout();
+            this.tableLayoutPanel_Objects.SuspendLayout();
+            this.panel_Objects.SuspendLayout();
+            this.tableLayoutPanel_Edit.SuspendLayout();
+            this.tableLayoutPanel_MainOutline.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -76,366 +90,430 @@
             this.menuStrip.BackColor = System.Drawing.SystemColors.Control;
             this.menuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.logoToolStripMenuItem,
-            this.fileToolStripMenuItem,
-            this.editToolStripMenuItem,
-            this.viewToolStripMenuItem,
-            this.helpToolStripMenuItem,
-            this.exitToolStripMenuItem,
-            this.maximizeToolStripMenuItem,
-            this.minimizeToolStripMenuItem});
+            this.toolStripMenuItem_Logo,
+            this.toolStripMenuItem_File,
+            this.toolStripMenuItem_Edit,
+            this.toolStripMenuItem_View,
+            this.toolStripMenuItem_Help,
+            this.toolStripMenuItem_Exit,
+            this.toolStripMenuItem_Maximize,
+            this.toolStripMenuItem_Minimize});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(5, 1, 0, 0);
-            this.menuStrip.Size = new System.Drawing.Size(900, 45);
+            this.menuStrip.Size = new System.Drawing.Size(881, 45);
             this.menuStrip.TabIndex = 2;
             this.menuStrip.Text = "menuStrip";
             this.menuStrip.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MenuStrip_MouseDown);
             // 
-            // logoToolStripMenuItem
+            // toolStripMenuItem_Logo
             // 
-            this.logoToolStripMenuItem.AutoSize = false;
-            this.logoToolStripMenuItem.Enabled = false;
-            this.logoToolStripMenuItem.Image = global::Railgun.Editor.Properties.Resources.Logo;
-            this.logoToolStripMenuItem.Margin = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.logoToolStripMenuItem.Name = "logoToolStripMenuItem";
-            this.logoToolStripMenuItem.Size = new System.Drawing.Size(36, 36);
+            this.toolStripMenuItem_Logo.AutoSize = false;
+            this.toolStripMenuItem_Logo.Enabled = false;
+            this.toolStripMenuItem_Logo.Image = global::Railgun.Editor.Properties.Resources.Logo;
+            this.toolStripMenuItem_Logo.Margin = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.toolStripMenuItem_Logo.Name = "toolStripMenuItem_Logo";
+            this.toolStripMenuItem_Logo.Size = new System.Drawing.Size(36, 36);
             // 
-            // fileToolStripMenuItem
+            // toolStripMenuItem_File
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newMapToolStripMenuItem,
-            this.openToolStripMenuItem,
-            this.saveToolStripMenuItem,
-            this.saveAsToolStripMenuItem,
-            this.exportToolStripMenuItem});
-            this.fileToolStripMenuItem.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
-            this.fileToolStripMenuItem.Text = "File";
+            this.toolStripMenuItem_File.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem_New,
+            this.toolStripMenuItem_Open,
+            this.toolStripMenuItem_Save,
+            this.toolStripMenuItem_SaveAs,
+            this.toolStripMenuItem_Export});
+            this.toolStripMenuItem_File.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
+            this.toolStripMenuItem_File.Name = "toolStripMenuItem_File";
+            this.toolStripMenuItem_File.Size = new System.Drawing.Size(46, 24);
+            this.toolStripMenuItem_File.Text = "File";
             // 
-            // newMapToolStripMenuItem
+            // toolStripMenuItem_New
             // 
-            this.newMapToolStripMenuItem.Name = "newMapToolStripMenuItem";
-            this.newMapToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newMapToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
-            this.newMapToolStripMenuItem.Text = "New";
+            this.toolStripMenuItem_New.Name = "toolStripMenuItem_New";
+            this.toolStripMenuItem_New.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.toolStripMenuItem_New.Size = new System.Drawing.Size(233, 26);
+            this.toolStripMenuItem_New.Text = "New";
             // 
-            // openToolStripMenuItem
+            // toolStripMenuItem_Open
             // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
-            this.openToolStripMenuItem.Text = "Open";
+            this.toolStripMenuItem_Open.Name = "toolStripMenuItem_Open";
+            this.toolStripMenuItem_Open.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.toolStripMenuItem_Open.Size = new System.Drawing.Size(233, 26);
+            this.toolStripMenuItem_Open.Text = "Open";
             // 
-            // saveToolStripMenuItem
+            // toolStripMenuItem_Save
             // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
-            this.saveToolStripMenuItem.Text = "Save";
+            this.toolStripMenuItem_Save.Name = "toolStripMenuItem_Save";
+            this.toolStripMenuItem_Save.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.toolStripMenuItem_Save.Size = new System.Drawing.Size(233, 26);
+            this.toolStripMenuItem_Save.Text = "Save";
             // 
-            // saveAsToolStripMenuItem
+            // toolStripMenuItem_SaveAs
             // 
-            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            this.toolStripMenuItem_SaveAs.Name = "toolStripMenuItem_SaveAs";
+            this.toolStripMenuItem_SaveAs.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
-            this.saveAsToolStripMenuItem.Text = "Save As";
+            this.toolStripMenuItem_SaveAs.Size = new System.Drawing.Size(233, 26);
+            this.toolStripMenuItem_SaveAs.Text = "Save As";
             // 
-            // exportToolStripMenuItem
+            // toolStripMenuItem_Export
             // 
-            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
-            this.exportToolStripMenuItem.Text = "Export";
+            this.toolStripMenuItem_Export.Name = "toolStripMenuItem_Export";
+            this.toolStripMenuItem_Export.Size = new System.Drawing.Size(233, 26);
+            this.toolStripMenuItem_Export.Text = "Export";
             // 
-            // editToolStripMenuItem
+            // toolStripMenuItem_Edit
             // 
-            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.rotate90CWToolStripMenuItem,
-            this.rotate90CCWToolStripMenuItem,
-            this.flipHorizontallyToolStripMenuItem,
-            this.flipVerticallyToolStripMenuItem,
-            this.deselectToolStripMenuItem,
-            this.deleteToolStripMenuItem});
-            this.editToolStripMenuItem.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(49, 24);
-            this.editToolStripMenuItem.Text = "Edit";
+            this.toolStripMenuItem_Edit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem_Rotate90CW,
+            this.toolStripMenuItem_Rotate90CCW,
+            this.toolStripMenuItem_FlipHorizontally,
+            this.toolStripMenuItem_FlipVertically,
+            this.toolStripMenuItem_Deselect,
+            this.toolStripMenuItem_Delete});
+            this.toolStripMenuItem_Edit.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
+            this.toolStripMenuItem_Edit.Name = "toolStripMenuItem_Edit";
+            this.toolStripMenuItem_Edit.Size = new System.Drawing.Size(49, 24);
+            this.toolStripMenuItem_Edit.Text = "Edit";
             // 
-            // rotate90CWToolStripMenuItem
+            // toolStripMenuItem_Rotate90CW
             // 
-            this.rotate90CWToolStripMenuItem.Name = "rotate90CWToolStripMenuItem";
-            this.rotate90CWToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
-            this.rotate90CWToolStripMenuItem.Text = "Rotate 90 CW";
+            this.toolStripMenuItem_Rotate90CW.Name = "toolStripMenuItem_Rotate90CW";
+            this.toolStripMenuItem_Rotate90CW.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItem_Rotate90CW.Text = "Rotate 90 CW";
             // 
-            // rotate90CCWToolStripMenuItem
+            // toolStripMenuItem_Rotate90CCW
             // 
-            this.rotate90CCWToolStripMenuItem.Name = "rotate90CCWToolStripMenuItem";
-            this.rotate90CCWToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
-            this.rotate90CCWToolStripMenuItem.Text = "Rotate 90 CCW";
+            this.toolStripMenuItem_Rotate90CCW.Name = "toolStripMenuItem_Rotate90CCW";
+            this.toolStripMenuItem_Rotate90CCW.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItem_Rotate90CCW.Text = "Rotate 90 CCW";
             // 
-            // flipHorizontallyToolStripMenuItem
+            // toolStripMenuItem_FlipHorizontally
             // 
-            this.flipHorizontallyToolStripMenuItem.Name = "flipHorizontallyToolStripMenuItem";
-            this.flipHorizontallyToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
-            this.flipHorizontallyToolStripMenuItem.Text = "Flip Horizontally";
+            this.toolStripMenuItem_FlipHorizontally.Name = "toolStripMenuItem_FlipHorizontally";
+            this.toolStripMenuItem_FlipHorizontally.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItem_FlipHorizontally.Text = "Flip Horizontally";
             // 
-            // flipVerticallyToolStripMenuItem
+            // toolStripMenuItem_FlipVertically
             // 
-            this.flipVerticallyToolStripMenuItem.Name = "flipVerticallyToolStripMenuItem";
-            this.flipVerticallyToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
-            this.flipVerticallyToolStripMenuItem.Text = "Flip Vertically";
+            this.toolStripMenuItem_FlipVertically.Name = "toolStripMenuItem_FlipVertically";
+            this.toolStripMenuItem_FlipVertically.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItem_FlipVertically.Text = "Flip Vertically";
             // 
-            // deselectToolStripMenuItem
+            // toolStripMenuItem_Deselect
             // 
-            this.deselectToolStripMenuItem.Name = "deselectToolStripMenuItem";
-            this.deselectToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D)));
-            this.deselectToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
-            this.deselectToolStripMenuItem.Text = "Deselect";
+            this.toolStripMenuItem_Deselect.Name = "toolStripMenuItem_Deselect";
+            this.toolStripMenuItem_Deselect.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D)));
+            this.toolStripMenuItem_Deselect.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItem_Deselect.Text = "Deselect";
             // 
-            // deleteToolStripMenuItem
+            // toolStripMenuItem_Delete
             // 
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
-            this.deleteToolStripMenuItem.Text = "Delete";
+            this.toolStripMenuItem_Delete.Name = "toolStripMenuItem_Delete";
+            this.toolStripMenuItem_Delete.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.toolStripMenuItem_Delete.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItem_Delete.Text = "Delete";
             // 
-            // viewToolStripMenuItem
+            // toolStripMenuItem_View
             // 
-            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.resetZoomToolStripMenuItem,
-            this.resetCameraToolStripMenuItem});
-            this.viewToolStripMenuItem.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
-            this.viewToolStripMenuItem.Text = "View";
+            this.toolStripMenuItem_View.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem_ResetZoom,
+            this.toolStripMenuItem_ResetCamera});
+            this.toolStripMenuItem_View.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
+            this.toolStripMenuItem_View.Name = "toolStripMenuItem_View";
+            this.toolStripMenuItem_View.Size = new System.Drawing.Size(55, 24);
+            this.toolStripMenuItem_View.Text = "View";
             // 
-            // resetZoomToolStripMenuItem
+            // toolStripMenuItem_ResetZoom
             // 
-            this.resetZoomToolStripMenuItem.Name = "resetZoomToolStripMenuItem";
-            this.resetZoomToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D0)));
-            this.resetZoomToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
-            this.resetZoomToolStripMenuItem.Text = "Reset Zoom";
-            this.resetZoomToolStripMenuItem.Click += new System.EventHandler(this.ResetZoom_Click);
+            this.toolStripMenuItem_ResetZoom.Name = "toolStripMenuItem_ResetZoom";
+            this.toolStripMenuItem_ResetZoom.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D0)));
+            this.toolStripMenuItem_ResetZoom.Size = new System.Drawing.Size(233, 26);
+            this.toolStripMenuItem_ResetZoom.Text = "Reset Zoom";
+            this.toolStripMenuItem_ResetZoom.Click += new System.EventHandler(this.ResetZoom_Click);
             // 
-            // resetCameraToolStripMenuItem
+            // toolStripMenuItem_ResetCamera
             // 
-            this.resetCameraToolStripMenuItem.Name = "resetCameraToolStripMenuItem";
-            this.resetCameraToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
-            this.resetCameraToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
-            this.resetCameraToolStripMenuItem.Text = "Reset Camera";
-            this.resetCameraToolStripMenuItem.Click += new System.EventHandler(this.ResetCamera_Click);
+            this.toolStripMenuItem_ResetCamera.Name = "toolStripMenuItem_ResetCamera";
+            this.toolStripMenuItem_ResetCamera.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
+            this.toolStripMenuItem_ResetCamera.Size = new System.Drawing.Size(233, 26);
+            this.toolStripMenuItem_ResetCamera.Text = "Reset Camera";
+            this.toolStripMenuItem_ResetCamera.Click += new System.EventHandler(this.ResetCamera_Click);
             // 
-            // helpToolStripMenuItem
+            // toolStripMenuItem_Help
             // 
-            this.helpToolStripMenuItem.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
-            this.helpToolStripMenuItem.Text = "Help";
+            this.toolStripMenuItem_Help.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
+            this.toolStripMenuItem_Help.Name = "toolStripMenuItem_Help";
+            this.toolStripMenuItem_Help.Size = new System.Drawing.Size(55, 24);
+            this.toolStripMenuItem_Help.Text = "Help";
             // 
-            // exitToolStripMenuItem
+            // toolStripMenuItem_Exit
             // 
-            this.exitToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.exitToolStripMenuItem.AutoSize = false;
-            this.exitToolStripMenuItem.Image = global::Railgun.Editor.Properties.Resources.Exit;
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(45, 40);
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
+            this.toolStripMenuItem_Exit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripMenuItem_Exit.AutoSize = false;
+            this.toolStripMenuItem_Exit.Image = global::Railgun.Editor.Properties.Resources.Exit;
+            this.toolStripMenuItem_Exit.Name = "toolStripMenuItem_Exit";
+            this.toolStripMenuItem_Exit.Size = new System.Drawing.Size(45, 40);
+            this.toolStripMenuItem_Exit.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
-            // maximizeToolStripMenuItem
+            // toolStripMenuItem_Maximize
             // 
-            this.maximizeToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.maximizeToolStripMenuItem.AutoSize = false;
-            this.maximizeToolStripMenuItem.Image = global::Railgun.Editor.Properties.Resources.Maximize;
-            this.maximizeToolStripMenuItem.Name = "maximizeToolStripMenuItem";
-            this.maximizeToolStripMenuItem.Size = new System.Drawing.Size(45, 40);
-            this.maximizeToolStripMenuItem.Click += new System.EventHandler(this.MaximizeToolStripMenuItem_Click);
+            this.toolStripMenuItem_Maximize.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripMenuItem_Maximize.AutoSize = false;
+            this.toolStripMenuItem_Maximize.Image = global::Railgun.Editor.Properties.Resources.Maximize;
+            this.toolStripMenuItem_Maximize.Name = "toolStripMenuItem_Maximize";
+            this.toolStripMenuItem_Maximize.Size = new System.Drawing.Size(45, 40);
+            this.toolStripMenuItem_Maximize.Click += new System.EventHandler(this.MaximizeToolStripMenuItem_Click);
             // 
-            // minimizeToolStripMenuItem
+            // toolStripMenuItem_Minimize
             // 
-            this.minimizeToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.minimizeToolStripMenuItem.AutoSize = false;
-            this.minimizeToolStripMenuItem.Image = global::Railgun.Editor.Properties.Resources.Minimize;
-            this.minimizeToolStripMenuItem.Name = "minimizeToolStripMenuItem";
-            this.minimizeToolStripMenuItem.Size = new System.Drawing.Size(45, 40);
-            this.minimizeToolStripMenuItem.Click += new System.EventHandler(this.MinimizeToolStripMenuItem_Click);
+            this.toolStripMenuItem_Minimize.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripMenuItem_Minimize.AutoSize = false;
+            this.toolStripMenuItem_Minimize.Image = global::Railgun.Editor.Properties.Resources.Minimize;
+            this.toolStripMenuItem_Minimize.Name = "toolStripMenuItem_Minimize";
+            this.toolStripMenuItem_Minimize.Size = new System.Drawing.Size(45, 40);
+            this.toolStripMenuItem_Minimize.Click += new System.EventHandler(this.MinimizeToolStripMenuItem_Click);
             // 
-            // mainTableLayoutPanel
+            // statusStrip
             // 
-            this.mainTableLayoutPanel.BackColor = System.Drawing.Color.Transparent;
-            this.mainTableLayoutPanel.ColumnCount = 2;
-            this.mainTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 400F));
-            this.mainTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.mainTableLayoutPanel.Controls.Add(this.mainEditorPanel, 1, 0);
-            this.mainTableLayoutPanel.Controls.Add(this.leftSideTableLayoutPanel, 0, 0);
-            this.mainTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainTableLayoutPanel.Location = new System.Drawing.Point(0, 45);
-            this.mainTableLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.mainTableLayoutPanel.Name = "mainTableLayoutPanel";
-            this.mainTableLayoutPanel.RowCount = 2;
-            this.mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
-            this.mainTableLayoutPanel.Size = new System.Drawing.Size(900, 455);
-            this.mainTableLayoutPanel.TabIndex = 3;
+            this.statusStrip.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel_LabelX,
+            this.toolStripStatusLabel_ValueX,
+            this.toolStripStatusLabel_LabelY,
+            this.toolStripStatusLabel_ValueY,
+            this.toolStripStatusLabel_LabelZoom,
+            this.toolStripStatusLabel_ValueZoom});
+            this.statusStrip.Location = new System.Drawing.Point(0, 455);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 13, 0);
+            this.statusStrip.Size = new System.Drawing.Size(881, 26);
+            this.statusStrip.TabIndex = 4;
+            this.statusStrip.Text = "statusStrip";
             // 
-            // mainEditorPanel
+            // toolStripStatusLabel_LabelX
             // 
-            this.mainEditorPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.mainEditorPanel.CurrentMap = null;
-            this.mainEditorPanel.CurrentMode = Railgun.Editor.App.Controls.EditorMode.Placing;
-            this.mainEditorPanel.CurrentTile = null;
-            this.mainEditorPanel.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.mainEditorPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainEditorPanel.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mainEditorPanel.ForeColor = System.Drawing.Color.White;
-            this.mainEditorPanel.Location = new System.Drawing.Point(400, 2);
-            this.mainEditorPanel.Margin = new System.Windows.Forms.Padding(0, 2, 0, 5);
-            this.mainEditorPanel.MouseHoverUpdatesOnly = false;
-            this.mainEditorPanel.Name = "mainEditorPanel";
-            this.mainEditorPanel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.mainEditorPanel.Size = new System.Drawing.Size(500, 422);
-            this.mainEditorPanel.TabIndex = 0;
-            this.mainEditorPanel.Text = "mainEditorPanel";
+            this.toolStripStatusLabel_LabelX.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toolStripStatusLabel_LabelX.Name = "toolStripStatusLabel_LabelX";
+            this.toolStripStatusLabel_LabelX.Size = new System.Drawing.Size(21, 20);
+            this.toolStripStatusLabel_LabelX.Text = "X:";
             // 
-            // leftSideTableLayoutPanel
+            // toolStripStatusLabel_ValueX
             // 
-            this.leftSideTableLayoutPanel.ColumnCount = 1;
-            this.leftSideTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.leftSideTableLayoutPanel.Controls.Add(this.editPanel, 0, 3);
-            this.leftSideTableLayoutPanel.Controls.Add(this.editLabel, 0, 2);
-            this.leftSideTableLayoutPanel.Controls.Add(this.objectsLabel, 0, 0);
-            this.leftSideTableLayoutPanel.Controls.Add(this.objectsPanel, 0, 1);
-            this.leftSideTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.leftSideTableLayoutPanel.Location = new System.Drawing.Point(0, 2);
-            this.leftSideTableLayoutPanel.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.leftSideTableLayoutPanel.Name = "leftSideTableLayoutPanel";
-            this.leftSideTableLayoutPanel.RowCount = 4;
-            this.leftSideTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.leftSideTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.leftSideTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.leftSideTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.leftSideTableLayoutPanel.Size = new System.Drawing.Size(400, 425);
-            this.leftSideTableLayoutPanel.TabIndex = 1;
+            this.toolStripStatusLabel_ValueX.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStripStatusLabel_ValueX.Name = "toolStripStatusLabel_ValueX";
+            this.toolStripStatusLabel_ValueX.Size = new System.Drawing.Size(35, 20);
+            this.toolStripStatusLabel_ValueX.Text = "000";
             // 
-            // editPanel
+            // toolStripStatusLabel_LabelY
             // 
-            this.editPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.editPanel.Location = new System.Drawing.Point(0, 234);
-            this.editPanel.Margin = new System.Windows.Forms.Padding(0, 2, 3, 2);
-            this.editPanel.Name = "editPanel";
-            this.editPanel.Size = new System.Drawing.Size(397, 189);
-            this.editPanel.TabIndex = 3;
+            this.toolStripStatusLabel_LabelY.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toolStripStatusLabel_LabelY.Margin = new System.Windows.Forms.Padding(20, 4, 0, 2);
+            this.toolStripStatusLabel_LabelY.Name = "toolStripStatusLabel_LabelY";
+            this.toolStripStatusLabel_LabelY.Size = new System.Drawing.Size(20, 20);
+            this.toolStripStatusLabel_LabelY.Text = "Y:";
             // 
-            // editLabel
+            // toolStripStatusLabel_ValueY
             // 
-            this.editLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.editLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.editLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.editLabel.Location = new System.Drawing.Point(0, 212);
-            this.editLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
-            this.editLabel.Name = "editLabel";
-            this.editLabel.Size = new System.Drawing.Size(397, 20);
-            this.editLabel.TabIndex = 2;
-            this.editLabel.Text = "Edit";
-            this.editLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolStripStatusLabel_ValueY.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStripStatusLabel_ValueY.Name = "toolStripStatusLabel_ValueY";
+            this.toolStripStatusLabel_ValueY.Size = new System.Drawing.Size(35, 20);
+            this.toolStripStatusLabel_ValueY.Text = "000";
             // 
-            // objectsLabel
+            // toolStripStatusLabel_LabelZoom
             // 
-            this.objectsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.objectsLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.objectsLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.objectsLabel.Location = new System.Drawing.Point(0, 0);
-            this.objectsLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
-            this.objectsLabel.Name = "objectsLabel";
-            this.objectsLabel.Size = new System.Drawing.Size(397, 20);
-            this.objectsLabel.TabIndex = 0;
-            this.objectsLabel.Text = "Objects";
-            this.objectsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolStripStatusLabel_LabelZoom.Margin = new System.Windows.Forms.Padding(20, 4, 0, 2);
+            this.toolStripStatusLabel_LabelZoom.Name = "toolStripStatusLabel_LabelZoom";
+            this.toolStripStatusLabel_LabelZoom.Size = new System.Drawing.Size(52, 20);
+            this.toolStripStatusLabel_LabelZoom.Text = "Zoom:";
+            this.toolStripStatusLabel_LabelZoom.ToolTipText = "Reset Camera Zoom";
             // 
-            // objectsPanel
+            // toolStripStatusLabel_ValueZoom
             // 
-            this.objectsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.objectsPanel.Location = new System.Drawing.Point(0, 22);
-            this.objectsPanel.Margin = new System.Windows.Forms.Padding(0, 2, 3, 2);
-            this.objectsPanel.Name = "objectsPanel";
-            this.objectsPanel.Size = new System.Drawing.Size(397, 188);
-            this.objectsPanel.TabIndex = 1;
+            this.toolStripStatusLabel_ValueZoom.Font = new System.Drawing.Font("Courier New", 9F);
+            this.toolStripStatusLabel_ValueZoom.Name = "toolStripStatusLabel_ValueZoom";
+            this.toolStripStatusLabel_ValueZoom.Size = new System.Drawing.Size(44, 20);
+            this.toolStripStatusLabel_ValueZoom.Text = "0.00";
+            this.toolStripStatusLabel_ValueZoom.ToolTipText = "Reset Camera Zoom";
+            this.toolStripStatusLabel_ValueZoom.Click += new System.EventHandler(this.ResetZoom_Click);
+            this.toolStripStatusLabel_ValueZoom.MouseEnter += new System.EventHandler(this.HighlightStatus_mouseEnter);
+            this.toolStripStatusLabel_ValueZoom.MouseLeave += new System.EventHandler(this.UnHighlightStatus_mouseExit);
             // 
-            // statusStrip1
+            // splitContainer_MainEditor
             // 
-            this.statusStrip1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mouseXStatusLabel,
-            this.mouseXStatus,
-            this.mouseYStatusLabel,
-            this.mouseYStatus,
-            this.camZoomStatusLabel,
-            this.camZoomStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 474);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 13, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(900, 26);
-            this.statusStrip1.TabIndex = 4;
-            this.statusStrip1.Text = "statusStrip";
+            this.splitContainer_MainEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer_MainEditor.Location = new System.Drawing.Point(0, 4);
+            this.splitContainer_MainEditor.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.splitContainer_MainEditor.Name = "splitContainer_MainEditor";
             // 
-            // mouseXStatusLabel
+            // splitContainer_MainEditor.Panel1
             // 
-            this.mouseXStatusLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.mouseXStatusLabel.Name = "mouseXStatusLabel";
-            this.mouseXStatusLabel.Size = new System.Drawing.Size(21, 20);
-            this.mouseXStatusLabel.Text = "X:";
+            this.splitContainer_MainEditor.Panel1.Controls.Add(this.splitContainer_LeftSideBar);
             // 
-            // mouseXStatus
+            // splitContainer_MainEditor.Panel2
             // 
-            this.mouseXStatus.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mouseXStatus.Name = "mouseXStatus";
-            this.mouseXStatus.Size = new System.Drawing.Size(35, 20);
-            this.mouseXStatus.Text = "000";
+            this.splitContainer_MainEditor.Panel2.Controls.Add(this.mapEditor);
+            this.splitContainer_MainEditor.Size = new System.Drawing.Size(881, 402);
+            this.splitContainer_MainEditor.SplitterDistance = 293;
+            this.splitContainer_MainEditor.TabIndex = 5;
             // 
-            // mouseYStatusLabel
+            // splitContainer_LeftSideBar
             // 
-            this.mouseYStatusLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.mouseYStatusLabel.Margin = new System.Windows.Forms.Padding(20, 4, 0, 2);
-            this.mouseYStatusLabel.Name = "mouseYStatusLabel";
-            this.mouseYStatusLabel.Size = new System.Drawing.Size(20, 20);
-            this.mouseYStatusLabel.Text = "Y:";
+            this.splitContainer_LeftSideBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer_LeftSideBar.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer_LeftSideBar.Name = "splitContainer_LeftSideBar";
+            this.splitContainer_LeftSideBar.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // mouseYStatus
+            // splitContainer_LeftSideBar.Panel1
             // 
-            this.mouseYStatus.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mouseYStatus.Name = "mouseYStatus";
-            this.mouseYStatus.Size = new System.Drawing.Size(35, 20);
-            this.mouseYStatus.Text = "000";
+            this.splitContainer_LeftSideBar.Panel1.Controls.Add(this.tableLayoutPanel_Objects);
+            this.splitContainer_LeftSideBar.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             // 
-            // camZoomStatusLabel
+            // splitContainer_LeftSideBar.Panel2
             // 
-            this.camZoomStatusLabel.Margin = new System.Windows.Forms.Padding(20, 4, 0, 2);
-            this.camZoomStatusLabel.Name = "camZoomStatusLabel";
-            this.camZoomStatusLabel.Size = new System.Drawing.Size(52, 20);
-            this.camZoomStatusLabel.Text = "Zoom:";
-            this.camZoomStatusLabel.ToolTipText = "Reset Camera Zoom";
+            this.splitContainer_LeftSideBar.Panel2.Controls.Add(this.tableLayoutPanel_Edit);
+            this.splitContainer_LeftSideBar.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.splitContainer_LeftSideBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.splitContainer_LeftSideBar.Size = new System.Drawing.Size(293, 402);
+            this.splitContainer_LeftSideBar.SplitterDistance = 196;
+            this.splitContainer_LeftSideBar.TabIndex = 0;
             // 
-            // camZoomStatus
+            // mapEditor
             // 
-            this.camZoomStatus.Font = new System.Drawing.Font("Courier New", 9F);
-            this.camZoomStatus.Name = "camZoomStatus";
-            this.camZoomStatus.Size = new System.Drawing.Size(44, 20);
-            this.camZoomStatus.Text = "0.00";
-            this.camZoomStatus.ToolTipText = "Reset Camera Zoom";
-            this.camZoomStatus.Click += new System.EventHandler(this.ResetZoom_Click);
-            this.camZoomStatus.MouseEnter += new System.EventHandler(this.HighlightStatus_mouseEnter);
-            this.camZoomStatus.MouseLeave += new System.EventHandler(this.UnHighlightStatus_mouseExit);
+            this.mapEditor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.mapEditor.CurrentMap = null;
+            this.mapEditor.CurrentMode = Railgun.Editor.App.Controls.EditorMode.Placing;
+            this.mapEditor.CurrentTile = null;
+            this.mapEditor.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.mapEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mapEditor.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mapEditor.ForeColor = System.Drawing.Color.White;
+            this.mapEditor.Location = new System.Drawing.Point(0, 0);
+            this.mapEditor.Margin = new System.Windows.Forms.Padding(0, 2, 0, 5);
+            this.mapEditor.MouseHoverUpdatesOnly = false;
+            this.mapEditor.Name = "mapEditor";
+            this.mapEditor.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.mapEditor.Size = new System.Drawing.Size(584, 402);
+            this.mapEditor.TabIndex = 1;
+            this.mapEditor.Text = "mainEditorPanel";
+            // 
+            // tableLayoutPanel_Objects
+            // 
+            this.tableLayoutPanel_Objects.ColumnCount = 1;
+            this.tableLayoutPanel_Objects.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_Objects.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_Objects.Controls.Add(this.panel_Objects, 0, 1);
+            this.tableLayoutPanel_Objects.Controls.Add(this.label_Objects, 0, 0);
+            this.tableLayoutPanel_Objects.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel_Objects.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel_Objects.Name = "tableLayoutPanel_Objects";
+            this.tableLayoutPanel_Objects.RowCount = 2;
+            this.tableLayoutPanel_Objects.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_Objects.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_Objects.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_Objects.Size = new System.Drawing.Size(293, 196);
+            this.tableLayoutPanel_Objects.TabIndex = 6;
+            // 
+            // label_Objects
+            // 
+            this.label_Objects.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label_Objects.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label_Objects.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label_Objects.Location = new System.Drawing.Point(0, 0);
+            this.label_Objects.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
+            this.label_Objects.Name = "label_Objects";
+            this.label_Objects.Size = new System.Drawing.Size(293, 16);
+            this.label_Objects.TabIndex = 3;
+            this.label_Objects.Text = "Objects";
+            this.label_Objects.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // panel_Objects
+            // 
+            this.panel_Objects.Controls.Add(this.tilePicker);
+            this.panel_Objects.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_Objects.Location = new System.Drawing.Point(0, 20);
+            this.panel_Objects.Margin = new System.Windows.Forms.Padding(0);
+            this.panel_Objects.Name = "panel_Objects";
+            this.panel_Objects.Size = new System.Drawing.Size(293, 176);
+            this.panel_Objects.TabIndex = 4;
+            // 
+            // tilePicker
+            // 
+            this.tilePicker.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tilePicker.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tilePicker.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
+            this.tilePicker.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tilePicker.Location = new System.Drawing.Point(0, 62);
+            this.tilePicker.MouseHoverUpdatesOnly = false;
+            this.tilePicker.Name = "tilePicker";
+            this.tilePicker.Size = new System.Drawing.Size(293, 114);
+            this.tilePicker.TabIndex = 0;
+            this.tilePicker.Text = "tilePicker1";
+            // 
+            // tableLayoutPanel_Edit
+            // 
+            this.tableLayoutPanel_Edit.ColumnCount = 1;
+            this.tableLayoutPanel_Edit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_Edit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_Edit.Controls.Add(this.panel_Edit, 0, 1);
+            this.tableLayoutPanel_Edit.Controls.Add(this.label_Edit, 0, 0);
+            this.tableLayoutPanel_Edit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel_Edit.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel_Edit.Name = "tableLayoutPanel_Edit";
+            this.tableLayoutPanel_Edit.RowCount = 2;
+            this.tableLayoutPanel_Edit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_Edit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_Edit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_Edit.Size = new System.Drawing.Size(293, 202);
+            this.tableLayoutPanel_Edit.TabIndex = 7;
+            // 
+            // label_Edit
+            // 
+            this.label_Edit.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label_Edit.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label_Edit.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label_Edit.Location = new System.Drawing.Point(0, 0);
+            this.label_Edit.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
+            this.label_Edit.Name = "label_Edit";
+            this.label_Edit.Size = new System.Drawing.Size(293, 16);
+            this.label_Edit.TabIndex = 4;
+            this.label_Edit.Text = "Edit";
+            this.label_Edit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // panel_Edit
+            // 
+            this.panel_Edit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_Edit.Location = new System.Drawing.Point(0, 20);
+            this.panel_Edit.Margin = new System.Windows.Forms.Padding(0);
+            this.panel_Edit.Name = "panel_Edit";
+            this.panel_Edit.Size = new System.Drawing.Size(293, 182);
+            this.panel_Edit.TabIndex = 5;
+            // 
+            // tableLayoutPanel_MainOutline
+            // 
+            this.tableLayoutPanel_MainOutline.ColumnCount = 1;
+            this.tableLayoutPanel_MainOutline.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_MainOutline.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_MainOutline.Controls.Add(this.splitContainer_MainEditor, 0, 0);
+            this.tableLayoutPanel_MainOutline.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel_MainOutline.Location = new System.Drawing.Point(0, 45);
+            this.tableLayoutPanel_MainOutline.Name = "tableLayoutPanel_MainOutline";
+            this.tableLayoutPanel_MainOutline.RowCount = 1;
+            this.tableLayoutPanel_MainOutline.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_MainOutline.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_MainOutline.Size = new System.Drawing.Size(881, 410);
+            this.tableLayoutPanel_MainOutline.TabIndex = 6;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(900, 500);
+            this.ClientSize = new System.Drawing.Size(881, 481);
             this.ControlBox = false;
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.mainTableLayoutPanel);
+            this.Controls.Add(this.tableLayoutPanel_MainOutline);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -448,10 +526,20 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            this.mainTableLayoutPanel.ResumeLayout(false);
-            this.leftSideTableLayoutPanel.ResumeLayout(false);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
+            this.splitContainer_MainEditor.Panel1.ResumeLayout(false);
+            this.splitContainer_MainEditor.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer_MainEditor)).EndInit();
+            this.splitContainer_MainEditor.ResumeLayout(false);
+            this.splitContainer_LeftSideBar.Panel1.ResumeLayout(false);
+            this.splitContainer_LeftSideBar.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer_LeftSideBar)).EndInit();
+            this.splitContainer_LeftSideBar.ResumeLayout(false);
+            this.tableLayoutPanel_Objects.ResumeLayout(false);
+            this.panel_Objects.ResumeLayout(false);
+            this.tableLayoutPanel_Edit.ResumeLayout(false);
+            this.tableLayoutPanel_MainOutline.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -459,40 +547,44 @@
 
         #endregion
         private System.Windows.Forms.MenuStrip menuStrip;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem newMapToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
-        private System.Windows.Forms.TableLayoutPanel mainTableLayoutPanel;
-        private Controls.MapEditor mainEditorPanel;
-        private System.Windows.Forms.TableLayoutPanel leftSideTableLayoutPanel;
-        private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel mouseXStatus;
-        private System.Windows.Forms.ToolStripStatusLabel mouseYStatus;
-        private System.Windows.Forms.ToolStripStatusLabel camZoomStatus;
-        private System.Windows.Forms.Label objectsLabel;
-        private System.Windows.Forms.Panel objectsPanel;
-        private System.Windows.Forms.Label editLabel;
-        private System.Windows.Forms.Panel editPanel;
-        private System.Windows.Forms.ToolStripStatusLabel mouseXStatusLabel;
-        private System.Windows.Forms.ToolStripStatusLabel mouseYStatusLabel;
-        private System.Windows.Forms.ToolStripStatusLabel camZoomStatusLabel;
-        private System.Windows.Forms.ToolStripMenuItem logoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem rotate90CWToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem rotate90CCWToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem flipHorizontallyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem flipVerticallyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem resetZoomToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem resetCameraToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deselectToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem maximizeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem minimizeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_File;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_New;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Open;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Export;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_SaveAs;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_ValueX;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_ValueY;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_ValueZoom;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_LabelX;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_LabelY;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_LabelZoom;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Logo;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Edit;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Rotate90CW;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Rotate90CCW;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_FlipHorizontally;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_FlipVertically;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_View;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_ResetZoom;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_ResetCamera;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Help;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Deselect;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Delete;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Save;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Exit;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Maximize;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Minimize;
+        private System.Windows.Forms.SplitContainer splitContainer_MainEditor;
+        private System.Windows.Forms.SplitContainer splitContainer_LeftSideBar;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Objects;
+        private System.Windows.Forms.Panel panel_Objects;
+        private GameTimeControl.TilePicker tilePicker;
+        private System.Windows.Forms.Label label_Objects;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Edit;
+        private System.Windows.Forms.Panel panel_Edit;
+        private System.Windows.Forms.Label label_Edit;
+        private Controls.MapEditor mapEditor;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_MainOutline;
     }
 }

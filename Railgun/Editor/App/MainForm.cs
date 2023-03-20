@@ -30,13 +30,13 @@ namespace Railgun.Editor.App
         private void MainForm_Load(object sender, EventArgs e)
         {
             //Subscribe input update to main editor update event
-            mainEditorPanel.OnUpdate += InputManager.Instance.Update;
+            mapEditor.OnUpdate += InputManager.Instance.Update;
 
             //Subscribe update status to update event in main editor control
-            mainEditorPanel.OnUpdate += UpdateStatus;
+            mapEditor.OnUpdate += UpdateStatus;
 
             //Reset camera position to origin
-            mainEditorPanel.ResetCamera();
+            mapEditor.ResetCamera();
 
             //Color the controls to a darker scheme
             ColorControls(Controls);
@@ -89,6 +89,13 @@ namespace Railgun.Editor.App
                     TableLayoutPanel table = control as TableLayoutPanel;
                     table.BackColor = DarkTheme.Outline;
                 }
+                //If a split container layout
+                else if (control is SplitContainer)
+                {
+                    //These act as borders that surround controls
+                    SplitContainer splitContainer = control as SplitContainer;
+                    splitContainer.BackColor = DarkTheme.Outline;
+                }
                 //If a panel
                 else if (control is Panel)
                 {
@@ -104,6 +111,9 @@ namespace Railgun.Editor.App
                 //Recurse for any child controls inside this control
                 ColorControls(control.Controls);
             }
+
+            //Set background color as an outline
+            BackColor = DarkTheme.Outline;
         }
 
         #endregion
@@ -148,10 +158,10 @@ namespace Railgun.Editor.App
         private void UpdateStatus()
         {
             //Set positions with these digits
-            mouseXStatus.Text = mainEditorPanel.MouseGridPosition.X.ToString(" 000;-000");
-            mouseYStatus.Text = mainEditorPanel.MouseGridPosition.Y.ToString(" 000;-000");
+            toolStripStatusLabel_ValueX.Text = mapEditor.MouseGridPosition.X.ToString(" 000;-000");
+            toolStripStatusLabel_ValueY.Text = mapEditor.MouseGridPosition.Y.ToString(" 000;-000");
             //Set zoom amount
-            camZoomStatus.Text = mainEditorPanel.Editor.Cam.Zoom
+            toolStripStatusLabel_ValueZoom.Text = mapEditor.Editor.Cam.Zoom
                 .ToString("0.00");
         }
 
@@ -184,7 +194,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void ResetCamera_Click(object sender, EventArgs e)
         {
-            mainEditorPanel.ResetCamera();
+            mapEditor.ResetCamera();
         }
 
         /// <summary>
@@ -192,7 +202,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void ResetZoom_Click(object sender, EventArgs e)
         {
-            mainEditorPanel.Editor.Cam.Zoom = 1f;
+            mapEditor.Editor.Cam.Zoom = 1f;
         }
 
         /// <summary>
