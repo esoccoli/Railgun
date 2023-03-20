@@ -121,6 +121,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\tmp\Grass hill tiles v.2.png" />
+    <Content Include="Content\tmp\Grass tiles v.2.png" />
+    <Content Include="Content\tmp\Tall Grass hill tiles v.2.png" />
     <Content Include="Credits.txt">
       <SubType>Form</SubType>
     </Content>
