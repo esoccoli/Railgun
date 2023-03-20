@@ -52,7 +52,7 @@
             this.maximizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.minimizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.mainEditorPanel = new Railgun.Editor.App.Controls.MainEditorPanel();
+            this.mainEditorPanel = new Railgun.Editor.App.Controls.MapEditor();
             this.leftSideTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.editPanel = new System.Windows.Forms.Panel();
             this.editLabel = new System.Windows.Forms.Label();
@@ -464,7 +464,7 @@
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel mainTableLayoutPanel;
-        private Controls.MainEditorPanel mainEditorPanel;
+        private Controls.MapEditor mainEditorPanel;
         private System.Windows.Forms.TableLayoutPanel leftSideTableLayoutPanel;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;

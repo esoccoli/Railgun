@@ -23,11 +23,12 @@ namespace Railgun.Editor.App.Controls
     public delegate void UpdateDelegate();
 
     /// <summary>
-    /// The main control that the editor has allowing most editing functionality.
+    /// The main control that the editor has allowing most editing functionality
+    /// for the current map
     /// <para>Author: Jonathan Jan</para>
     /// Date Created: 3/6/2023
     /// </summary>
-    internal class MainEditorPanel : MonoGameControl
+    internal class MapEditor : MonoGameControl
     {
         //DEBUG
         private Texture2D test;
