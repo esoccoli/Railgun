@@ -49,9 +49,14 @@ namespace Railgun.Editor.App.Controls
         //Selector
 
         /// <summary>
-        /// The color of the selector
+        /// The fill color of the selector
         /// </summary>
-        private Color selectorColor;
+        private Color selectorColorFill;
+
+        /// <summary>
+        /// The color of the selector outline
+        /// </summary>
+        private Color selectorColorOutline;
 
         /// <summary>
         /// Holds the point that a selection is started
@@ -110,7 +115,8 @@ namespace Railgun.Editor.App.Controls
             input = InputManager.Instance;
 
             //Setup selector color
-            selectorColor = new Color(Color.GreenYellow, 0.2f);
+            selectorColorFill = new Color(Color.White, 0.2f);
+            selectorColorOutline = new Color(Color.White, 0.2f);
 
             CurrentMode = EditorMode.Placing;
 
@@ -235,10 +241,10 @@ namespace Railgun.Editor.App.Controls
 
             Editor.spriteBatch.Draw(test,Vector2.Zero,Color.White);
 
-            Editor.spriteBatch.Draw(whitePixel,
-                new Rectangle(
-                    MouseGridPosition*new Point(CurrentMap.TileSize),
-                    new Point(CurrentMap.TileSize)), Color.White);
+            //Editor.spriteBatch.Draw(whitePixel,
+            //    new Rectangle(
+            //        MouseGridPosition*new Point(CurrentMap.TileSize),
+            //        new Point(CurrentMap.TileSize)), Color.White);
 
             //Editor.graphics.DrawPrimitives(PrimitiveType.TriangleList, 0, 5);
 
@@ -260,7 +266,7 @@ namespace Railgun.Editor.App.Controls
             if(selecting)
             {
                 //Solid rectangle
-                Editor.spriteBatch.Draw(whitePixel, selectionRectangle, selectorColor);
+                Editor.spriteBatch.Draw(whitePixel, selectionRectangle, selectorColorFill);
             }
 
             
@@ -269,6 +275,24 @@ namespace Railgun.Editor.App.Controls
 
             ////
             Editor.spriteBatch.End();
+
+            //Begin shapebatch without depth (so that shapes are drawn to the top)
+            Editor.graphics.DepthStencilState = DepthStencilState.None;
+            ShapeBatch.Begin(Editor.graphics);
+            ////
+
+            //Draw selection rectangle
+            if (selecting)
+            {
+                //Solid rectangle
+                ShapeBatch.BoxOutline(selectionRectangle, selectorColorOutline);
+            }
+
+            ////
+            ShapeBatch.End();
+            //Set depth back to default
+            Editor.graphics.DepthStencilState = DepthStencilState.Default;
+
         }
 
         /// <summary>

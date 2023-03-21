@@ -6,7 +6,9 @@
 //
 // https://github.com/vixorien/shapebatch
 //
-// Modified by Jonathan Jan to work with .NET Framework 4.7.2 (it doesn't have MathF)
+// Modified by Jonathan Jan to work with
+// .NET Framework 4.7.2 (it doesn't have MathF)
+// and with extra "extension" methods
 // -----------------------------------------
 
 using System;
@@ -1109,5 +1111,59 @@ namespace Railgun.Editor.App.Util
         {
             return PixelsToNDCs(pixelPosition.X, pixelPosition.Y, depth);
         }
+
+
+        //Jonathan's "extensions" but since it is static,
+        //I don't think I can make a real extension method
+
+        ///// <summary>
+        ///// "EXTENSION"
+        ///// <para>Draws a box outline with the specified line width (thickness) and color</para>
+        ///// </summary>
+        ///// <param name="x">X position of box</param>
+        ///// <param name="y">Y position of box</param>
+        ///// <param name="width">Width of box</param>
+        ///// <param name="height">Height of box</param>
+        ///// <param name="lineWidth">Width of the outline</param>
+        ///// <param name="color">Color of the outline</param>
+        ///// <exception cref="InvalidOperationException"></exception>
+        //public static void BoxOutline(float x, float y, float width, float height, float lineWidth, Color color)
+        //{
+        //    if (!batchActive)
+        //        throw new InvalidOperationException("BoxOutline() must be called between Begin() and End()");
+
+        //    // Create the corners
+        //    Vector2 topLeft = new Vector2(x, y);
+        //    Vector2 topRight = new Vector2(x + width, y);
+        //    Vector2 bottomRight = new Vector2(x + width, y + height);
+        //    Vector2 bottomLeft = new Vector2(x, y + height + 1); // This corner always rasterizes incorrectly, so adjust by 1 pixel
+
+        //    // Draw the four lines with specified line-width that make up the box
+        //    BatchWideLine(topLeft, topRight, lineWidth, color, color);         // Top
+        //    BatchWideLine(topRight, bottomRight, lineWidth, color, color);     // Right
+        //    BatchWideLine(bottomRight, bottomLeft, lineWidth, color, color);   // Bottom
+        //    BatchWideLine(bottomLeft, topLeft, lineWidth, color, color);       // Left
+
+        //    // Progress to the next depth
+        //    NextDepth();
+        //}
+
+        ///// <summary>
+        ///// "EXTENSION"
+        ///// <para>Draws a box outline with the specified line width (thickness) and color</para>
+        ///// </summary>
+        ///// <param name="rect">Rectangle defining the box</param>
+        ///// <param name="lineWidth">Width of the outline</param>
+        ///// <param name="color">Color of the outline</param>
+        ///// <exception cref="InvalidOperationException"></exception>
+        //public static void BoxOutline(Rectangle rect, float lineWidth, Color color)
+        //{
+        //    if (!batchActive)
+        //        throw new InvalidOperationException("BoxOutline() must be called between Begin() and End()");
+
+        //    // Decompose the rectangle and call the other custom overload
+        //    BoxOutline(rect.X, rect.Y, rect.Width, rect.Height, lineWidth, color);
+        //}
+
     }
 }
