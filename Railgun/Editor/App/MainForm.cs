@@ -45,6 +45,9 @@ namespace Railgun.Editor.App
             //Inflate a bit to make the borders not show
             MaximizedBounds = Rectangle.Inflate(Screen.GetWorkingArea(this),10,10);
             WindowState = FormWindowState.Maximized;
+
+            //Set main resizer to 300 pixels
+            splitContainer_MainEditor.SplitterDistance = 300;
         }
 
         /// <summary>

@@ -375,7 +375,7 @@ namespace Railgun.Editor.App.Util
             Vector2 topLeft = new Vector2(x, y);
             Vector2 topRight = new Vector2(x + width, y);
             Vector2 bottomRight = new Vector2(x + width, y + height);
-            Vector2 bottomLeft = new Vector2(x, y + height + 1); // This corner always rasterizes incorrectly, so adjust by 1 pixel
+            Vector2 bottomLeft = new Vector2(x, y + height); // This corner always rasterizes incorrectly, so adjust by 1 pixel
 
             // Draw the four lines that make up the box
             BatchLine(topLeft, topRight, color, color);         // Top
@@ -408,7 +408,7 @@ namespace Railgun.Editor.App.Util
             Vector2 topLeft = new Vector2(x, y);
             Vector2 topRight = new Vector2(x + width, y);
             Vector2 bottomRight = new Vector2(x + width, y + height);
-            Vector2 bottomLeft = new Vector2(x, y + height + 1); // This corner always rasterizes incorrectly, so adjust by 1 pixel
+            Vector2 bottomLeft = new Vector2(x, y + height); // This corner always rasterizes incorrectly, so adjust by 1 pixel
 
             // Draw the four lines that make up the box
             BatchLine(topLeft, topRight, colorTopLeft, colorTopRight);              // Top

@@ -251,30 +251,6 @@ namespace Railgun.Editor.App.Controls
 
             ////
             Editor.spriteBatch.End();
-            
-            //Overlayed things to be drawn
-            Editor.spriteBatch.Begin(SpriteSortMode.Deferred,
-                BlendState.NonPremultiplied,//Better transparency
-                SamplerState.PointClamp,//Perfect Pixelation
-                DepthStencilState.Default,
-                RasterizerState.CullNone,
-                null,
-                null);//No matrix transform
-            ////
-
-            //Draw selection rectangle
-            if(selecting)
-            {
-                //Solid rectangle
-                Editor.spriteBatch.Draw(whitePixel, selectionRectangle, selectorColorFill);
-            }
-
-            
-
-
-
-            ////
-            Editor.spriteBatch.End();
 
             //Begin shapebatch without depth (so that shapes are drawn to the top)
             Editor.graphics.DepthStencilState = DepthStencilState.None;
@@ -285,6 +261,8 @@ namespace Railgun.Editor.App.Controls
             if (selecting)
             {
                 //Solid rectangle
+                ShapeBatch.Box(selectionRectangle, selectorColorFill);
+                //Outline
                 ShapeBatch.BoxOutline(selectionRectangle, selectorColorOutline);
             }
 
@@ -294,6 +272,8 @@ namespace Railgun.Editor.App.Controls
             Editor.graphics.DepthStencilState = DepthStencilState.Default;
 
         }
+
+        #region Actions
 
         /// <summary>
         /// Places the current selected object
@@ -356,6 +336,10 @@ namespace Railgun.Editor.App.Controls
                 Editor.Cam.Zoom + Editor.Cam.Zoom * zoom / 10, 0.1f, 3f);
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>
         /// Resets the camera to 0,0 with a zoom of 1
         /// </summary>
@@ -379,6 +363,8 @@ namespace Railgun.Editor.App.Controls
             //Transform absolute mouse position by cam, get grid point of that
             MouseGridPosition = CurrentMap.GetGridPoint(MouseCameraPosition).ToPoint();
         }
+
+        #endregion
 
     }
 }
