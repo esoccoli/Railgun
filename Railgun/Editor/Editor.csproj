@@ -95,6 +95,7 @@
     </Compile>
     <Compile Include="App\Objects\Visuals\IDrawable.cs" />
     <Compile Include="App\Objects\Visuals\Visual.cs" />
+    <Compile Include="App\Util\ShapeBatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="App\Util\InputManager.cs" />
