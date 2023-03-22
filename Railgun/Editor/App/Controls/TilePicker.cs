@@ -10,7 +10,10 @@ namespace Railgun.Editor.App.Controls
     /// </summary>
     public class TilePicker : MonoGameControl
     {
-        //Fields & Properties Here!
+        /// <summary>
+        /// The pixel size of each tile
+        /// </summary>
+        public int TileSize { get; set; }
 
         protected override void Initialize()
         {

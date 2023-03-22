@@ -48,6 +48,9 @@ namespace Railgun.Editor.App
 
             //Set main split container to 300 pixels
             splitContainer_MainEditor.SplitterDistance = 300;
+
+            //Set tile size to 32 pixels
+            textBox_TileSize.Text = "32";
         }
 
         /// <summary>
@@ -247,5 +250,38 @@ namespace Railgun.Editor.App
 
         #endregion
 
+        #region Tile picker events
+
+        /// <summary>
+        /// Changes the tile size when the text box is changed
+        /// </summary>
+        private void TileSize_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+
+            //If valid, set the tile size
+            if(int.TryParse(textBox.Text, out int tileSize))
+            {
+                tilePicker.TileSize = tileSize;
+            }
+            //If not valid number an not empty, set it to previous valid number
+            else if (textBox.Text != string.Empty)
+            {
+                textBox.Text = tilePicker.TileSize.ToString();
+                //Set cursor to end of text
+                textBox.SelectionStart = textBox.TextLength;
+            }
+        }
+
+        /// <summary>
+        /// Called when the text box has lost focus and
+        /// makes sure it has the correct number
+        /// </summary>
+        private void TileSize_Leave(object sender, EventArgs e)
+        {
+            (sender as TextBox).Text = tilePicker.TileSize.ToString();
+        }
+
+        #endregion
     }
 }
