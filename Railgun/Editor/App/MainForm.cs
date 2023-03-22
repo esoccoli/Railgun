@@ -260,7 +260,7 @@ namespace Railgun.Editor.App
             TextBox textBox = sender as TextBox;
 
             //If valid, set the tile size
-            if(int.TryParse(textBox.Text, out int tileSize))
+            if(int.TryParse(textBox.Text, out int tileSize) && tileSize > 0)
             {
                 tilePicker.TileSize = tileSize;
             }

@@ -145,10 +145,9 @@ namespace Railgun.Editor.App.Controls
 
         protected override void Update(GameTime gameTime)
         {
-            //Plan: right click+drag to select, middle or alt+drag to pan, left to place
-
-            //Maybe don't do FSM
-            //Maybe make method: transition
+            base.Update(gameTime);
+            ////
+            
 
             //If placing
             if (CurrentMode == EditorMode.Placing)
@@ -225,7 +224,6 @@ namespace Railgun.Editor.App.Controls
             Editor.Cam.GetTransformation();//Create the transformation for the draw cycle
             ComputeMousePosition();//Find relative mouse to grid and cam
             OnUpdate();//Invoke update event
-            base.Update(gameTime);
         }
 
         protected override void Draw()
