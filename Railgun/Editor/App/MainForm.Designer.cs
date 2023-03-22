@@ -62,13 +62,17 @@
             this.splitContainer_LeftSideBar = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel_Objects = new System.Windows.Forms.TableLayoutPanel();
             this.panel_Objects = new System.Windows.Forms.Panel();
-            this.tilePicker = new GameTimeControl.TilePicker();
             this.label_Objects = new System.Windows.Forms.Label();
             this.tableLayoutPanel_Edit = new System.Windows.Forms.TableLayoutPanel();
             this.panel_Edit = new System.Windows.Forms.Panel();
             this.label_Edit = new System.Windows.Forms.Label();
             this.mapEditor = new Railgun.Editor.App.Controls.MapEditor();
             this.tableLayoutPanel_MainOutline = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel_TilePicker = new System.Windows.Forms.TableLayoutPanel();
+            this.panel_TileSettings = new System.Windows.Forms.Panel();
+            this.tilePicker = new Railgun.Editor.App.Controls.TilePicker();
+            this.textBox_TileSize = new System.Windows.Forms.TextBox();
+            this.label_TileSize = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_MainEditor)).BeginInit();
@@ -83,6 +87,8 @@
             this.panel_Objects.SuspendLayout();
             this.tableLayoutPanel_Edit.SuspendLayout();
             this.tableLayoutPanel_MainOutline.SuspendLayout();
+            this.tableLayoutPanel_TilePicker.SuspendLayout();
+            this.panel_TileSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -401,26 +407,13 @@
             // 
             // panel_Objects
             // 
-            this.panel_Objects.Controls.Add(this.tilePicker);
+            this.panel_Objects.Controls.Add(this.tableLayoutPanel_TilePicker);
             this.panel_Objects.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_Objects.Location = new System.Drawing.Point(0, 20);
             this.panel_Objects.Margin = new System.Windows.Forms.Padding(0);
             this.panel_Objects.Name = "panel_Objects";
             this.panel_Objects.Size = new System.Drawing.Size(275, 176);
             this.panel_Objects.TabIndex = 4;
-            // 
-            // tilePicker
-            // 
-            this.tilePicker.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.tilePicker.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tilePicker.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
-            this.tilePicker.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.tilePicker.Location = new System.Drawing.Point(0, 62);
-            this.tilePicker.MouseHoverUpdatesOnly = false;
-            this.tilePicker.Name = "tilePicker";
-            this.tilePicker.Size = new System.Drawing.Size(275, 114);
-            this.tilePicker.TabIndex = 0;
-            this.tilePicker.Text = "tilePicker1";
             // 
             // label_Objects
             // 
@@ -508,6 +501,66 @@
             this.tableLayoutPanel_MainOutline.Size = new System.Drawing.Size(881, 410);
             this.tableLayoutPanel_MainOutline.TabIndex = 6;
             // 
+            // tableLayoutPanel_TilePicker
+            // 
+            this.tableLayoutPanel_TilePicker.ColumnCount = 1;
+            this.tableLayoutPanel_TilePicker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_TilePicker.Controls.Add(this.tilePicker, 0, 1);
+            this.tableLayoutPanel_TilePicker.Controls.Add(this.panel_TileSettings, 0, 0);
+            this.tableLayoutPanel_TilePicker.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel_TilePicker.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel_TilePicker.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel_TilePicker.Name = "tableLayoutPanel_TilePicker";
+            this.tableLayoutPanel_TilePicker.RowCount = 2;
+            this.tableLayoutPanel_TilePicker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel_TilePicker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_TilePicker.Size = new System.Drawing.Size(275, 176);
+            this.tableLayoutPanel_TilePicker.TabIndex = 1;
+            // 
+            // panel_TileSettings
+            // 
+            this.panel_TileSettings.Controls.Add(this.label_TileSize);
+            this.panel_TileSettings.Controls.Add(this.textBox_TileSize);
+            this.panel_TileSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_TileSettings.Location = new System.Drawing.Point(0, 0);
+            this.panel_TileSettings.Margin = new System.Windows.Forms.Padding(0);
+            this.panel_TileSettings.Name = "panel_TileSettings";
+            this.panel_TileSettings.Size = new System.Drawing.Size(275, 50);
+            this.panel_TileSettings.TabIndex = 0;
+            // 
+            // tilePicker
+            // 
+            this.tilePicker.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tilePicker.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tilePicker.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
+            this.tilePicker.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tilePicker.Location = new System.Drawing.Point(0, 50);
+            this.tilePicker.Margin = new System.Windows.Forms.Padding(0);
+            this.tilePicker.MouseHoverUpdatesOnly = false;
+            this.tilePicker.Name = "tilePicker";
+            this.tilePicker.Size = new System.Drawing.Size(275, 126);
+            this.tilePicker.TabIndex = 1;
+            this.tilePicker.Text = "tilePicker1";
+            // 
+            // textBox_TileSize
+            // 
+            this.textBox_TileSize.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.textBox_TileSize.Location = new System.Drawing.Point(95, 9);
+            this.textBox_TileSize.Name = "textBox_TileSize";
+            this.textBox_TileSize.Size = new System.Drawing.Size(41, 22);
+            this.textBox_TileSize.TabIndex = 3;
+            // 
+            // label_TileSize
+            // 
+            this.label_TileSize.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label_TileSize.AutoSize = true;
+            this.label_TileSize.BackColor = System.Drawing.Color.Transparent;
+            this.label_TileSize.Location = new System.Drawing.Point(12, 9);
+            this.label_TileSize.Name = "label_TileSize";
+            this.label_TileSize.Size = new System.Drawing.Size(62, 16);
+            this.label_TileSize.TabIndex = 4;
+            this.label_TileSize.Text = "Tile Size:";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -542,6 +595,9 @@
             this.panel_Objects.ResumeLayout(false);
             this.tableLayoutPanel_Edit.ResumeLayout(false);
             this.tableLayoutPanel_MainOutline.ResumeLayout(false);
+            this.tableLayoutPanel_TilePicker.ResumeLayout(false);
+            this.panel_TileSettings.ResumeLayout(false);
+            this.panel_TileSettings.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -581,12 +637,16 @@
         private System.Windows.Forms.SplitContainer splitContainer_LeftSideBar;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Objects;
         private System.Windows.Forms.Panel panel_Objects;
-        private GameTimeControl.TilePicker tilePicker;
         private System.Windows.Forms.Label label_Objects;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Edit;
         private System.Windows.Forms.Panel panel_Edit;
         private System.Windows.Forms.Label label_Edit;
         private Controls.MapEditor mapEditor;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_MainOutline;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_TilePicker;
+        private Controls.TilePicker tilePicker;
+        private System.Windows.Forms.Panel panel_TileSettings;
+        private System.Windows.Forms.Label label_TileSize;
+        private System.Windows.Forms.TextBox textBox_TileSize;
     }
 }

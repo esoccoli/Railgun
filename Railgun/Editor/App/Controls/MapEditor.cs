@@ -46,7 +46,7 @@ namespace Railgun.Editor.App.Controls
         /// </summary>
         private Texture2D whitePixel;
 
-        //Selector
+        #region Selector
 
         /// <summary>
         /// The fill color of the selector
@@ -84,8 +84,9 @@ namespace Railgun.Editor.App.Controls
         /// </summary>
         public Vector2 MouseCameraPosition { get; protected set; }
 
+        #endregion
 
-        //Bigger managing classes
+        #region Bigger managing classes
 
         /// <summary>
         /// Called every update cycle of this panel
@@ -106,6 +107,8 @@ namespace Railgun.Editor.App.Controls
         /// The current tile to be placed
         /// </summary>
         public Tile CurrentTile { get; set; }
+
+        #endregion
 
         protected override void Initialize()
         {

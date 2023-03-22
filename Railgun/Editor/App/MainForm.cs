@@ -46,7 +46,7 @@ namespace Railgun.Editor.App
             MaximizedBounds = Rectangle.Inflate(Screen.GetWorkingArea(this),10,10);
             WindowState = FormWindowState.Maximized;
 
-            //Set main resizer to 300 pixels
+            //Set main split container to 300 pixels
             splitContainer_MainEditor.SplitterDistance = 300;
         }
 
@@ -82,7 +82,11 @@ namespace Railgun.Editor.App
                 else if (control is Label)
                 {
                     Label label = control as Label;
-                    label.BackColor = DarkTheme.Base;
+                    //Ignore if transparent
+                    if(label.BackColor != Color.Transparent)
+                    {
+                        label.BackColor = DarkTheme.Base;
+                    }
                     label.ForeColor = DarkTheme.Label;
                 }
                 //If a table layout

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Forms.Controls;
 
-namespace GameTimeControl
+namespace Railgun.Editor.App.Controls
 {
     /// <summary>
     /// A control that contains tiles of a tileset
