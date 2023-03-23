@@ -17,7 +17,9 @@ namespace Railgun.Editor.App.Controls
 
         protected override void Initialize()
         {
-            
+            //Set max and min zoom
+            MinZoom = 0.1f;
+            MaxZoom = 20f;
 
             ////
             base.Initialize();
@@ -36,10 +38,7 @@ namespace Railgun.Editor.App.Controls
             ////
 
             //Only preform these actions if the mouse is inside this control
-            if (IsMouseInsideControl)
-            {
-                PerformUserActions();
-            }
+            PerformUserActions();
         }
 
         protected override void Draw()

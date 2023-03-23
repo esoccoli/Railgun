@@ -45,9 +45,40 @@ namespace Railgun.Editor.App.Controls
         protected bool panning;
 
         /// <summary>
-        /// The point that the user started panning at
+        /// The minimum zoom amount for this control
         /// </summary>
-        private System.Drawing.Point panningPoint;
+        public float MinZoom
+        {
+            get => minZoom;
+            set
+            {
+                //Clamp to the normal camra constraints
+                if (value < 0.1f)
+                {
+                    value = 0.1f;
+                }
+                minZoom = value;
+            }
+        }
+        private float minZoom;
+
+        /// <summary>
+        /// The maximum zoom amount for this control
+        /// </summary>
+        public float MaxZoom
+        {
+            get => maxZoom;
+            set
+            {
+                //Clamp to the normal camra constraints
+                if (value < 0.1f)
+                {
+                    value = 0.1f;
+                }
+                maxZoom = value;
+            }
+        }
+        private float maxZoom;
 
 
         protected override void Initialize()
@@ -103,64 +134,55 @@ namespace Railgun.Editor.App.Controls
 
         }
 
-        #region Actions
-
-
         /// <summary>
         /// Updates the different actions that can be preformed by the user
         /// </summary>
         protected void PerformUserActions()
         {
-            //If alt and mouse down, pan
-            //if (input.IsDown(Keys.LeftAlt))
-            //{
-            //    //Set mouse cursor
-            //    Cursor = System.Windows.Forms.Cursors.Hand;
-            //    if(input.IsDown(MouseButtonTypes.Left))
-            //    {
-            //        Pan();
-            //    }
-            //}
-            //middle click, pan
+            //If panning, pan
             if (panning)
             {
-                Pan();
+                //Move build in camera by mouse change amount
+                //Divide by zoom so that movement is constant
+                Editor.Cam.Move(
+                    (input.PrevMouseState.Position -
+                    input.CurrentMouseState.Position)
+                    .ToVector2() / Editor.Cam.Zoom);
             }
 
-
-
-            //Zoom based on scrolling
-            ZoomEditor(input.GetScrollDirection());
-
-            //If plus, zoom in
-            if (input.IsDown(Keys.OemPlus))
+            //Only perform if mouse is inside this control
+            if(IsMouseInsideControl)
             {
-                ZoomEditor(0.5f);
+                //Zoom based on scrolling
+                ZoomEditor(input.GetScrollDirection());
+
+                //Zoom if minus or plus is pressed
+                if (input.IsDown(Keys.OemMinus))
+                {
+                    ZoomEditor(-0.5f);
+                }
+
+                //Zoom if minus or plus is pressed
+                if (input.IsDown(Keys.OemPlus))
+                {
+                    ZoomEditor(0.5f);
+                }
             }
 
-            //If plus, zoom out
-            if (input.IsDown(Keys.OemMinus))
-            {
-                ZoomEditor(-0.5f);
-            }
-
-            ////
-            Editor.Cam.GetTransformation();//Create the transformation for the draw cycle
+            //Create the transformation for the draw cycle
+            Editor.Cam.GetTransformation();
         }
 
+        #region Camera Functions
+
         /// <summary>
-        /// Pans the camera based on the user movement
+        /// Resets the camera to 0,0 with a zoom of 1
         /// </summary>
-        public virtual void Pan()
+        public void ResetCamera()
         {
-            //Set mouse cursor
-            Cursor = System.Windows.Forms.Cursors.Hand;
-            //Move build in camera by mouse change amount
-            //Divide by zoom so that movement is constant
-            Editor.Cam.Move(
-                (input.PrevMouseState.Position -
-                input.CurrentMouseState.Position)
-                .ToVector2() / Editor.Cam.Zoom);
+            Editor.Cam.Zoom = 1f;
+            //Center to the origin tile
+            Editor.Cam.Position = new Vector2(GridSize / 2);
         }
 
         /// <summary>
@@ -171,16 +193,19 @@ namespace Railgun.Editor.App.Controls
         {
             //Zoom by adding a multiplied version of the current
             //zoom by a positive or negative 1/15
-            //doing this ensures that the scroll is constant
+            //doing this ensures that the scroll is almost constant
             //Clamp at values too big or small
             Editor.Cam.Zoom = MathHelper.Clamp(
-                Editor.Cam.Zoom + Editor.Cam.Zoom * zoom / 10, 0.1f, 3f);
+                Editor.Cam.Zoom + Editor.Cam.Zoom * zoom / 10, MinZoom, MaxZoom);
         }
 
         #endregion
 
-        #region Action based interactions
+        #region Event Based Actions
 
+        /// <summary>
+        /// Called when a button on the mouse is pressed, stops panning
+        /// </summary>
         protected override void OnMouseDown(System.Windows.Forms.MouseEventArgs e)
         {
             base.OnMouseDown(e);
@@ -196,6 +221,9 @@ namespace Railgun.Editor.App.Controls
             }
         }
 
+        /// <summary>
+        /// Called when a button on the mouse is released, stops panning
+        /// </summary>
         protected override void OnMouseUp(System.Windows.Forms.MouseEventArgs e)
         {
             base.OnMouseUp(e);
@@ -209,32 +237,6 @@ namespace Railgun.Editor.App.Controls
                 panning = false;
             }
         }
-
-        //protected override void OnMouseMove(System.Windows.Forms.MouseEventArgs e)
-        //{
-        //    base.OnMouseMove(e);
-
-        //    if (panning)
-        //    {
-        //        //Move build in camera by mouse change amount
-        //        //Divide by zoom so that movement is constant
-        //        Editor.Cam.Move(
-        //            (input.PrevMouseState.Position -
-        //            input.CurrentMouseState.Position)
-        //            .ToVector2() / Editor.Cam.Zoom);
-        //    }
-
-        //    //if (CamMouseDown)
-        //    //{
-        //    //    int xDiff = CamFirstMouseDownPosition.X - e.Location.X;
-        //    //    int yDiff = CamFirstMouseDownPosition.Y - e.Location.Y;
-
-        //    //    Editor.MoveCam(new Vector2(xDiff, yDiff));
-
-        //    //    CamFirstMouseDownPosition.X = e.Location.X;
-        //    //    CamFirstMouseDownPosition.Y = e.Location.Y;
-        //    //}
-        //}
 
         #endregion
     }

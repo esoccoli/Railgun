@@ -101,6 +101,10 @@ namespace Railgun.Editor.App.Controls
             //Start in a new map
             CurrentMap = new Map(100);
 
+            //Set max and min zoom
+            MinZoom = 0.1f;
+            MaxZoom = 2f;
+
             ////
             base.Initialize();
             ////
@@ -145,7 +149,7 @@ namespace Railgun.Editor.App.Controls
                     selecting = false;
 
                     //Set mouse cursor
-                    Cursor = System.Windows.Forms.Cursors.Arrow;
+                    //Cursor = System.Windows.Forms.Cursors.Arrow;
 
                     //If mouse down
                     if (input.IsDown(MouseButtonTypes.Left))
@@ -231,19 +235,6 @@ namespace Railgun.Editor.App.Controls
                 //Tile tile = CurrentTile.
             }
         }
-
-        /// <summary>
-        /// Pans the camera based on the user movement
-        /// </summary>
-        public override void Pan()
-        {
-            //Move build in camera by mouse change amount
-            //Divide by zoom so that movement is constant
-            Editor.Cam.Move(
-                (input.PrevMouseState.Position -
-                input.CurrentMouseState.Position)
-                .ToVector2()/ Editor.Cam.Zoom);
-        }
         
         /// <summary>
         /// Updates for selections using the specified mouse button
@@ -268,33 +259,11 @@ namespace Railgun.Editor.App.Controls
                 selectorPoint, input.CurrentMouseState.Position - selectorPoint);
         }
 
-        /// <summary>
-        /// Zooms by the normalized specified amount within the editor limits
-        /// </summary>
-        /// <param name="zoom">The zoom amount</param>
-        public override void ZoomEditor(float zoom)
-        {
-            //Zoom by adding a multiplied version of the current
-            //zoom by a positive or negative 1/15
-            //doing this ensures that the scroll is constant
-            //Clamp at values too big or small
-            Editor.Cam.Zoom = MathHelper.Clamp(
-                Editor.Cam.Zoom + Editor.Cam.Zoom * zoom / 10, 0.1f, 3f);
-        }
-
         #endregion
 
         #region Other Methods
 
-        /// <summary>
-        /// Resets the camera to 0,0 with a zoom of 1
-        /// </summary>
-        public void ResetCamera()
-        {
-            Editor.Cam.Zoom = 1f;
-            //Center to the origin tile
-            Editor.Cam.Position = new Vector2(CurrentMap.TileSize/2);
-        }
+        
 
         /// <summary>
         /// Updates the mouse position relative to the camera and to the grid
