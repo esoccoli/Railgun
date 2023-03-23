@@ -14,6 +14,8 @@ namespace Railgun.RailgunGame
         private Texture2D backgroundHealthUI;
         private Texture2D foregroundHealthUI;
 
+        private Player mainPlayer;
+
         // Menu Textures
         private Texture2D menuLogo;        
         private Texture2D menuPlay;
@@ -73,8 +75,8 @@ namespace Railgun.RailgunGame
             //Game Reticle
             gameReticle = Content.Load<Texture2D>("gameReticle");
 
-            //Creates a player - update later
-            Player mainPlayer = new Player(new Rectangle(0, 0, 0, 0), backgroundHealthUI, null, null);
+            // Player constructor.
+            mainPlayer = new Player(new Rectangle(870, 510, 100, 100), menuLogo, null, null);
 
             userInterface = new UI(backgroundHealthUI, foregroundHealthUI, true, 100, 100, font, 12, 12); //Creates a UI object. Values to be updated later. 
             base.Initialize();
@@ -105,21 +107,22 @@ namespace Railgun.RailgunGame
 
                     userInterface.Update(90, 10); //Updates the UI. Values to be updated later
 
-                    if (kbState.IsKeyDown(Keys.R))
+                    if (kbState.IsKeyDown(Keys.R)) // A temporary way to instantly lose the game. Or maybe an unintentional feature!!!
                     {
                         currentGameState = GameState.GameOver;
                     }
-                    if (kbState.IsKeyDown(Keys.Escape))
+                    if (kbState.IsKeyDown(Keys.Escape)) // A way to pause the game.
                     {
                         currentGameState = GameState.Pause;
                     }
                     
-                    //Add this when we have Player working
+                    // Ends the game when the player's HP falls below one.
+                    if (mainPlayer.Health <= 0)
+                    {
+                        currentGameState = GameState.GameOver;
+                    }
 
-                    //if (mainPlayer.Health <= 0)
-                    //{
-                    //    currentGameState = GameState.GameOver;
-                    //}
+                    mainPlayer.Update(gameTime);
 
                     break;
                 case GameState.Pause:
@@ -169,7 +172,7 @@ namespace Railgun.RailgunGame
 
                     break;
                 case GameState.Game:
-
+                    mainPlayer.Draw(_spriteBatch);
                     _spriteBatch.DrawString(font, "Game", new Vector2(_graphics.PreferredBackBufferWidth - 100, 20), Color.White);
                     userInterface.Draw(_spriteBatch); //Draws UI
 

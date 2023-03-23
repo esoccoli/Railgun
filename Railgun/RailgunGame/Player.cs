@@ -19,6 +19,7 @@ namespace Railgun.RailgunGame
         private int speed;
         private int dashSpeed;
         private bool dashing;
+        
         private Rectangle hitboxTemp;
         private KeyboardState preDash;
 
@@ -43,6 +44,11 @@ namespace Railgun.RailgunGame
         public double DashCooldown { get; set; }
 
         /// <summary>
+        /// The amount of time the player has been dashing for.
+        /// </summary>
+        public double DashTime { get; set; }
+
+        /// <summary>
         /// This is where the player's bullets are stored.
         /// </summary>
         public List<Projectile> PlayerBullets { get; private set; }
@@ -60,11 +66,14 @@ namespace Railgun.RailgunGame
             dashSpeed = 7;
             Ammo = 8;
             DashCooldown = 10.0;
+            dashing = false;
+            DashTime = 0.0;
 
             this.activeBullet = activeBullet;
             this.notActiveBullet = notActiveBullet;
             
             Hitbox = hitbox;
+            hitboxTemp = hitbox;
             Texture = texture;
         }
 
@@ -82,20 +91,30 @@ namespace Railgun.RailgunGame
             // Handles the movement of the player. All of this is run if they're not currently dashing.
             if (!dashing)
             {
+                // Input Manager might be broken. Using these for testing.
+                if (Keyboard.GetState().IsKeyDown(Keys.W)) { hitboxTemp.Y -= speed; Hitbox = hitboxTemp; }
+                if (Keyboard.GetState().IsKeyDown(Keys.A)) { hitboxTemp.X -= speed; Hitbox = hitboxTemp; }
+                if (Keyboard.GetState().IsKeyDown(Keys.S)) { hitboxTemp.Y += speed; Hitbox = hitboxTemp; }
+                if (Keyboard.GetState().IsKeyDown(Keys.D)) { hitboxTemp.X += speed; Hitbox = hitboxTemp; }
+
+                if (Mouse.GetState().LeftButton == ButtonState.Pressed && Ammo > 0) { Shoot(gameTime); }
+                if (Mouse.GetState().RightButton == ButtonState.Pressed) { Reload(); }
+
+                if (Keyboard.GetState().IsKeyDown(Keys.LeftShift)) { preDash = Keyboard.GetState(); dashing = true; }
+                // Input Manager might be broken. Using these for testing.
                 if (InputManager.IsKeyDown(Keys.W)) { hitboxTemp.Y -= speed; Hitbox = hitboxTemp; }
                 if (InputManager.IsKeyDown(Keys.A)) { hitboxTemp.X -= speed; Hitbox = hitboxTemp; }
                 if (InputManager.IsKeyDown(Keys.S)) { hitboxTemp.Y += speed; Hitbox = hitboxTemp; }
                 if (InputManager.IsKeyDown(Keys.D)) { hitboxTemp.X += speed; Hitbox = hitboxTemp; }
 
                 if (InputManager.IsButtonDown(MouseButtons.Left) && Ammo > 0) { Shoot(gameTime); }
-                if (InputManager.IsButtonDown(MouseButtons.Right)) { Reload(); }
+                if (InputManager.IsButtonDown(MouseButtons.Right) && Ammo <= 0) { Reload(); }
 
                 // Make sure to update this so it checks the dash cooldown.
                 if (InputManager.IsKeyDown(Keys.LeftShift)) { preDash = Keyboard.GetState(); dashing = true; }
             }
             else
             {
-                preDash = Keyboard.GetState();
                 Dash(gameTime);
             }
         }
@@ -118,7 +137,7 @@ namespace Railgun.RailgunGame
 
             // NEED TO DO MATH TO SEE WHERE MOUSE IS AND WHERE BULLETS SHOULD BE SHOT.
 
-            PlayerBullets.Add(new Projectile(new Rectangle(Hitbox.X, Hitbox.Y, 20, 20), activeBullet, notActiveBullet, new Vector2(3.0f, 3.0f)));
+            //PlayerBullets.Add(new Projectile(new Rectangle(Hitbox.X, Hitbox.Y, 20, 20), activeBullet, notActiveBullet, new Vector2(3.0f, 3.0f)));
         }
 
         /// <summary>
@@ -126,8 +145,7 @@ namespace Railgun.RailgunGame
         /// </summary>
         public void Dash(GameTime gameTime)
         {
-            double dashTime = 0.0;
-            dashTime += gameTime.ElapsedGameTime.Seconds;
+            DashTime += gameTime.ElapsedGameTime.TotalSeconds;
 
             // This is NOT user input, this is what the directional input of the user was back when they initially started dashing.
             if (preDash.IsKeyDown(Keys.W)) { hitboxTemp.Y -= dashSpeed; Hitbox = hitboxTemp; }
@@ -136,9 +154,9 @@ namespace Railgun.RailgunGame
             if (preDash.IsKeyDown(Keys.D)) { hitboxTemp.X += dashSpeed; Hitbox = hitboxTemp; }
 
             // This is the total duration of the dash. We can edit this number later.
-            if(dashTime >= .75) 
+            if(DashTime >= .75) 
             {
-                dashTime = 0.0;
+                DashTime = 0.0;
                 dashing = false;
             }
         }        
@@ -149,7 +167,14 @@ namespace Railgun.RailgunGame
         /// <param name="sb"> The spritebatch being drawn with. </param>
         public void Draw(SpriteBatch sb)
         {
-            base.Draw(sb);
+            if (!dashing)
+            {
+                sb.Draw(Texture, Hitbox, Color.White);
+            }
+            else
+            {
+                sb.Draw(Texture, Hitbox, Color.Blue);
+            }
         }
 
         /// <summary>
