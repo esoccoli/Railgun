@@ -15,7 +15,7 @@ namespace Railgun.Editor.App.Controls
         /// <summary>
         /// The size of the grid
         /// </summary>
-        public float GridSize
+        public virtual float GridSize
         {
             get => gridSize;
             set
@@ -60,8 +60,12 @@ namespace Railgun.Editor.App.Controls
         /// </summary>
         protected void DrawGrid()
         {
-            //The offset of the grid
-            Vector2 offset = Vector2.Floor(Editor.Cam.Position / GridSize);
+            //Compute the offset to draw the grid
+            Vector2 offset = -Editor.Cam.Position/GridSize;//Get offset based on grid size
+            offset -= Vector2.Floor(offset);//Get the decimal part only
+            offset *= GridSize;//Multiply by grid size to get offset in pixels
+
+            Vector2 edbug = Vector2.Zero;
 
             //Draw vertical grid lines
             for (float x = offset.X; x < Editor.graphics.Viewport.Width; x += GridSize)
@@ -70,6 +74,8 @@ namespace Railgun.Editor.App.Controls
                     new Vector2(x, 0),
                     new Vector2(x, Editor.graphics.Viewport.Height),
                     GridColor);
+
+                edbug.X++;
             }
 
             //Draw horizontal grid lines
@@ -79,7 +85,15 @@ namespace Railgun.Editor.App.Controls
                     new Vector2(0, y),
                     new Vector2(Editor.graphics.Viewport.Width, y),
                     GridColor);
+
+                edbug.Y++;
             }
+
+            Editor.spriteBatch.Begin();
+            Editor.spriteBatch.DrawString(Editor.Font, edbug.ToString(), Vector2.Zero, Color.Red);
+            Editor.spriteBatch.DrawString(Editor.Font, Editor.graphics.Viewport.ToString(), Vector2.UnitY*20, Color.Wheat);
+            Editor.spriteBatch.DrawString(Editor.Font, offset.ToString(), Vector2.UnitY*40, Color.Green);
+            Editor.spriteBatch.End();
         }
 
         #region Actions
