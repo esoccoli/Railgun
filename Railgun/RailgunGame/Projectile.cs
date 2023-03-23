@@ -36,7 +36,7 @@ namespace Railgun.RailgunGame
         /// <summary>
         /// animation to play when projectile is active
         /// </summary>
-        public Animation IsActive { get; set; }
+        public Texture2D IsActive { get; set; }
 
         /// <summary>
         /// animation to play when projectile collides
@@ -49,15 +49,15 @@ namespace Railgun.RailgunGame
         /// <param name="hitbox">hitbox of projectile</param>
         /// <param name="texture">texture of projectile</param>
         public Projectile(Rectangle hitbox,
-                          Animation isActiveAnimation,
+                          Texture2D isActiveTexture,
                           Animation hasCollidedAnimation,
                           Vector2 Velocity)
 
             : base(hitbox,
-                   isActiveAnimation.SpriteSheet)
+                   isActiveTexture)
         {
             this.Velocity = Velocity;
-            IsActive = isActiveAnimation;
+            IsActive = isActiveTexture;
             HasCollided = hasCollidedAnimation;
 
         }
@@ -104,7 +104,7 @@ namespace Railgun.RailgunGame
             switch (CurrentState)
             {
                 case ProjectileStates.IsActive:
-                    IsActive.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y));
+                    sb.Draw(IsActive, new Rectangle(Hitbox.X, Hitbox.Y, IsActive.Width,IsActive.Height), Color.White);
                     break;
 
                 case ProjectileStates.HasCollided:
