@@ -22,7 +22,7 @@ namespace Railgun.RailgunGame
         private Rectangle hitboxTemp;
         private KeyboardState preDash;
 
-        private Animation activeBullet;
+        private Texture2D activeBullet;
         private Animation notActiveBullet;
 
         // I will organize this later.
@@ -52,7 +52,7 @@ namespace Railgun.RailgunGame
         /// </summary>
         /// <param name="hitbox"> The rectangle that defines where the player is, and where they can be injured. </param>
         /// <param name="texture"> The texture used to show what our player looks like. </param>
-        public Player(Rectangle hitbox, Texture2D texture, Animation activeBullet, Animation notActiveBullet) : base(hitbox, texture)
+        public Player(Rectangle hitbox, Texture2D texture, Texture2D activeBullet, Animation notActiveBullet) : base(hitbox, texture)
         {
             // I'm only setting the health to 100 as a default value. We can come back and change this if we need to adjust it later.
             Health = 100;
@@ -105,7 +105,7 @@ namespace Railgun.RailgunGame
         /// </summary>
         public void ResetPlayer()
         {
-            Health = 20;
+            Health = 100;
             Ammo = 8;
         }
 
