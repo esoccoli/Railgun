@@ -8,16 +8,6 @@ using Railgun.Editor.App.Util;
 namespace Railgun.Editor.App.Controls
 {
     /// <summary>
-    /// Represents the states that the user can preform within the editor
-    /// </summary>
-    public enum EditorMode
-    {
-        Placing,
-        Panning,
-        Selecting
-    }
-
-    /// <summary>
     /// Represents a delegate that will be invoked every update cycle
     /// </summary>
     public delegate void UpdateDelegate();
@@ -28,16 +18,11 @@ namespace Railgun.Editor.App.Controls
     /// <para>Author: Jonathan Jan</para>
     /// Date Created: 3/6/2023
     /// </summary>
-    internal class MapEditor : MonoGameControl
+    internal class MapEditor : GridControl
     {
         //DEBUG
         private Texture2D test;
         private SpriteFont consolas20;
-
-        /// <summary>
-        /// The input manager as a field (much less to type)
-        /// </summary>
-        private InputManager input;
 
         //Textures and colors
 
@@ -46,32 +31,51 @@ namespace Railgun.Editor.App.Controls
         /// </summary>
         private Texture2D whitePixel;
 
+        #region Bigger managing classes
+
+        /// <summary>
+        /// Called every update cycle of this panel
+        /// </summary>
+        public event UpdateDelegate OnUpdate;
+
+        /// <summary>
+        /// The current map in this editor
+        /// </summary>
+        public Map CurrentMap { get; set; }
+
+        /// <summary>
+        /// The current tile to be placed
+        /// </summary>
+        public Tile CurrentTile { get; set; }
+
+        #endregion
+
         #region Selector
 
         /// <summary>
         /// The fill color of the selector
         /// </summary>
-        private Color selectorColorFill;
+        protected Color selectorColorFill;
 
         /// <summary>
         /// The color of the selector outline
         /// </summary>
-        private Color selectorColorOutline;
+        protected Color selectorColorOutline;
 
         /// <summary>
         /// Holds the point that a selection is started
         /// </summary>
-        private Point selectorPoint;
+        protected Point selectorPoint;
 
         /// <summary>
         /// Whether the user is selecting or not
         /// </summary>
-        private bool selecting;
+        protected bool selecting;
 
         /// <summary>
         /// The rectangle being selected
         /// </summary>
-        private Rectangle selectionRectangle;
+        protected Rectangle selectionRectangle;
 
         /// <summary>
         /// The grid point of the mouse relative to the camera
@@ -86,42 +90,13 @@ namespace Railgun.Editor.App.Controls
 
         #endregion
 
-        #region Bigger managing classes
-
-        /// <summary>
-        /// Called every update cycle of this panel
-        /// </summary>
-        public event UpdateDelegate OnUpdate;
-
-        /// <summary>
-        /// The current mode of this editor (how you are interacting with it)
-        /// </summary>
-        public EditorMode CurrentMode { get; set; }
-
-        /// <summary>
-        /// The current map in this editor
-        /// </summary>
-        public Map CurrentMap { get; set; }
-
-        /// <summary>
-        /// The current tile to be placed
-        /// </summary>
-        public Tile CurrentTile { get; set; }
-
-        #endregion
-
         protected override void Initialize()
         {
             //Initialization
 
-            //Shortcut to the input manager
-            input = InputManager.Instance;
-
             //Setup selector color
             selectorColorFill = new Color(Color.White, 0.2f);
             selectorColorOutline = new Color(Color.White, 0.2f);
-
-            CurrentMode = EditorMode.Placing;
 
             //Start in a new map
             CurrentMap = new Map(100);
@@ -147,81 +122,36 @@ namespace Railgun.Editor.App.Controls
         {
             base.Update(gameTime);
             ////
-            
 
-            //If placing
-            if (CurrentMode == EditorMode.Placing)
+
+            //If selecting with shift click
+            if (input.IsDown(Keys.LeftShift) && input.IsDown(MouseButtonTypes.Left))
             {
+                SelectObjects(MouseButtonTypes.Left);
+            }
+            else if (input.IsDown(MouseButtonTypes.Right))//If selecting with right click
+            {
+                SelectObjects(MouseButtonTypes.Right);
+            }
+            else
+            {
+                selecting = false;
+                
                 //Set mouse cursor
                 Cursor = System.Windows.Forms.Cursors.Arrow;
-                //Check if need move
+
+                //If mouse down
                 if (input.IsDown(MouseButtonTypes.Left))
                 {
                     Place();
                 }
             }
 
-            //If panning
-            if (input.IsDown(Keys.LeftAlt) || CurrentMode == EditorMode.Panning)
-            {
-                //Set mouse cursor
-                Cursor = System.Windows.Forms.Cursors.Hand;
-                //Check if need move
-                if (input.IsDown(MouseButtonTypes.Left))
-                {
-                    Pan();
-                }
-            }
-            else if(input.IsDown(MouseButtonTypes.Middle))
-            {
-                //Set mouse cursor
-                Cursor = System.Windows.Forms.Cursors.Hand;
-                Pan();
-            }
+            //Pan and zoom
+            PreformUserActions();
 
-            //If selecting
-            else if (input.IsDown(Keys.LeftShift) || CurrentMode == EditorMode.Selecting)
-            {
-                //Set mouse cursor
-                Cursor = System.Windows.Forms.Cursors.Cross;
-                //Check if need move
-                if (input.IsDown(MouseButtonTypes.Left))
-                {
-                    SelectObjects(MouseButtonTypes.Left);
-                }
-                else
-                {
-                    selecting = false;
-                }
-            }
-            else if (input.IsDown(MouseButtonTypes.Right))
-            {
-                //Set mouse cursor
-                Cursor = System.Windows.Forms.Cursors.Cross;
-                SelectObjects(MouseButtonTypes.Right);
-            }
-            else
-            {
-                selecting = false;
-            }
-
-            //Zoom based on scrolling
-            ZoomEditor(input.GetScrollDirection());
-
-            //If plus, zoom in
-            if(input.IsDown(Keys.OemPlus))
-            {
-                ZoomEditor(1);
-            }
-
-            //If plus, zoom out
-            if (input.IsDown(Keys.OemMinus))
-            {
-                ZoomEditor(-1);
-            }
 
             ////
-            Editor.Cam.GetTransformation();//Create the transformation for the draw cycle
             ComputeMousePosition();//Find relative mouse to grid and cam
             OnUpdate();//Invoke update event
         }
@@ -242,10 +172,10 @@ namespace Railgun.Editor.App.Controls
 
             Editor.spriteBatch.Draw(test,Vector2.Zero,Color.White);
 
-            //Editor.spriteBatch.Draw(whitePixel,
-            //    new Rectangle(
-            //        MouseGridPosition*new Point(CurrentMap.TileSize),
-            //        new Point(CurrentMap.TileSize)), Color.White);
+            Editor.spriteBatch.Draw(whitePixel,
+                new Rectangle(
+                    MouseGridPosition * new Point(CurrentMap.TileSize),
+                    new Point((int)GridSize)), Color.White);
 
             //Editor.graphics.DrawPrimitives(PrimitiveType.TriangleList, 0, 5);
 
@@ -266,6 +196,9 @@ namespace Railgun.Editor.App.Controls
                 //Outline
                 ShapeBatch.BoxOutline(selectionRectangle, selectorColorOutline);
             }
+
+            //Draw grid
+            DrawGrid();
 
             ////
             ShapeBatch.End();
@@ -292,7 +225,7 @@ namespace Railgun.Editor.App.Controls
         /// <summary>
         /// Pans the camera based on the user movement
         /// </summary>
-        public void Pan()
+        public override void Pan()
         {
             //Move build in camera by mouse change amount
             //Divide by zoom so that movement is constant
@@ -309,8 +242,10 @@ namespace Railgun.Editor.App.Controls
         public void SelectObjects(MouseButtonTypes mouseButton)
         {
             //If not already down, do starting procedures
-            if(!input.WasDown(mouseButton))
+            if (!input.WasDown(mouseButton))
             {
+                //Set mouse cursor
+                Cursor = System.Windows.Forms.Cursors.Cross;
                 //Set initial selection point
                 selectorPoint = input.CurrentMouseState.Position;
                 selecting = true;
@@ -327,7 +262,7 @@ namespace Railgun.Editor.App.Controls
         /// Zooms by the normalized specified amount within the editor limits
         /// </summary>
         /// <param name="zoom">The zoom amount</param>
-        public void ZoomEditor(float zoom)
+        public override void ZoomEditor(float zoom)
         {
             //Zoom by adding a multiplied version of the current
             //zoom by a positive or negative 1/15
@@ -339,7 +274,7 @@ namespace Railgun.Editor.App.Controls
 
         #endregion
 
-        #region Methods
+        #region Other Methods
 
         /// <summary>
         /// Resets the camera to 0,0 with a zoom of 1

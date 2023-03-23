@@ -527,7 +527,6 @@
             // 
             this.mapEditor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.mapEditor.CurrentMap = null;
-            this.mapEditor.CurrentMode = Railgun.Editor.App.Controls.EditorMode.Placing;
             this.mapEditor.CurrentTile = null;
             this.mapEditor.Cursor = System.Windows.Forms.Cursors.Cross;
             this.mapEditor.Dock = System.Windows.Forms.DockStyle.Fill;

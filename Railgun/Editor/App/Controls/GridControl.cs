@@ -1,35 +1,51 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using MonoGame.Forms.Controls;
 using Railgun.Editor.App.Util;
+using System;
 
 namespace Railgun.Editor.App.Controls
 {
     /// <summary>
     /// An abstract control that allows for grid traversal
     /// </summary>
-    public abstract class GridControl : MonoGameControl
+    internal abstract class GridControl : MonoGameControl
     {
         /// <summary>
         /// The size of the grid
         /// </summary>
         public float GridSize
         {
-            get { return gridSize; }
+            get => gridSize;
             set
             {
                 //Make sure it is above 0
-                if(value > 0f)
+                if (value > 0f)
                 {
-
+                    gridSize = value;
                 }
             }
         }
         private float gridSize;
 
+        /// <summary>
+        /// The color of the grid to be drawn to the control
+        /// </summary>
+        public Color GridColor { get; set; }
+
+        /// <summary>
+        /// The input manager as a field (much less to type)
+        /// </summary>
+        protected InputManager input;
+
+
         protected override void Initialize()
         {
-
+            //Shortcut to the input manager
+            input = InputManager.Instance;
+            GridSize = 100f;
+            GridColor = Color.White * 0.5f;
 
             ////
             base.Initialize();
@@ -38,48 +54,99 @@ namespace Railgun.Editor.App.Controls
 
         }
 
-        protected override void Update(GameTime gameTime)
+        /// <summary>
+        /// Draws the grid of this control using the grid size property
+        /// <para>Note: ShapeBatch should have Begin() already called prior</para>
+        /// </summary>
+        protected void DrawGrid()
         {
-            base.Update(gameTime);
-            ////
-            
-
-        }
-
-        protected override void Draw()
-        {
-            base.Draw();
-            ////
-            
-            //Draw grid
-
-            //Begin shapebatch without depth (so that shapes are drawn to the top)
-            Editor.graphics.DepthStencilState = DepthStencilState.None;
-            ShapeBatch.Begin(Editor.graphics);
-            ////
+            //The offset of the grid
+            Vector2 offset = Vector2.Floor(Editor.Cam.Position / GridSize);
 
             //Draw vertical grid lines
-            for (float x = 0; x < Editor.graphics.Viewport.Width; x += GridSize)
+            for (float x = offset.X; x < Editor.graphics.Viewport.Width; x += GridSize)
             {
                 ShapeBatch.Line(
                     new Vector2(x, 0),
                     new Vector2(x, Editor.graphics.Viewport.Height),
-                    Color.White);
+                    GridColor);
             }
 
             //Draw horizontal grid lines
-            for (float y = 0; y < Editor.graphics.Viewport.Height; y += GridSize)
+            for (float y = offset.Y; y < Editor.graphics.Viewport.Height; y += GridSize)
             {
                 ShapeBatch.Line(
                     new Vector2(0, y),
                     new Vector2(Editor.graphics.Viewport.Width, y),
-                    Color.White);
+                    GridColor);
+            }
+        }
+
+        #region Actions
+
+
+        /// <summary>
+        /// Updates the different actions that can be preformed by the user
+        /// </summary>
+        protected void PreformUserActions()
+        {
+            //If alt and mouse down or middle click, pan
+            if ((input.IsDown(Keys.LeftAlt) && input.IsDown(MouseButtonTypes.Left))
+                || input.IsDown(MouseButtonTypes.Middle))
+            {
+                Pan();
+            }
+
+            
+
+            //Zoom based on scrolling
+            ZoomEditor(input.GetScrollDirection());
+
+            //If plus, zoom in
+            if (input.IsDown(Keys.OemPlus))
+            {
+                ZoomEditor(1);
+            }
+
+            //If plus, zoom out
+            if (input.IsDown(Keys.OemMinus))
+            {
+                ZoomEditor(-1);
             }
 
             ////
-            ShapeBatch.End();
-            //Set depth back to default
-            Editor.graphics.DepthStencilState = DepthStencilState.Default;
+            Editor.Cam.GetTransformation();//Create the transformation for the draw cycle
         }
+
+        /// <summary>
+        /// Pans the camera based on the user movement
+        /// </summary>
+        public virtual void Pan()
+        {
+            //Set mouse cursor
+            Cursor = System.Windows.Forms.Cursors.Hand;
+            //Move build in camera by mouse change amount
+            //Divide by zoom so that movement is constant
+            Editor.Cam.Move(
+                (input.PrevMouseState.Position -
+                input.CurrentMouseState.Position)
+                .ToVector2() / Editor.Cam.Zoom);
+        }
+
+        /// <summary>
+        /// Zooms by the normalized specified amount within the editor limits
+        /// </summary>
+        /// <param name="zoom">The zoom amount</param>
+        public virtual void ZoomEditor(float zoom)
+        {
+            //Zoom by adding a multiplied version of the current
+            //zoom by a positive or negative 1/15
+            //doing this ensures that the scroll is constant
+            //Clamp at values too big or small
+            Editor.Cam.Zoom = MathHelper.Clamp(
+                Editor.Cam.Zoom + Editor.Cam.Zoom * zoom / 10, 0.1f, 3f);
+        }
+
+        #endregion
     }
 }
