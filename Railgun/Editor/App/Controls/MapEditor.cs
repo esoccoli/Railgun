@@ -123,37 +123,47 @@ namespace Railgun.Editor.App.Controls
             base.Update(gameTime);
             ////
 
-
-            //If selecting with shift click
-            if (input.IsDown(Keys.LeftShift) && input.IsDown(MouseButtonTypes.Left))
+            //Only preform these actions if the mouse is inside this control
+            //if(IsMouseInsideControl)
             {
-                SelectObjects(MouseButtonTypes.Left);
-            }
-            else if (input.IsDown(MouseButtonTypes.Right))//If selecting with right click
-            {
-                SelectObjects(MouseButtonTypes.Right);
-            }
-            else
-            {
-                selecting = false;
-                
-                //Set mouse cursor
-                Cursor = System.Windows.Forms.Cursors.Arrow;
-
-                //If mouse down
-                if (input.IsDown(MouseButtonTypes.Left))
+                //If selecting with shift click
+                if (input.IsDown(Keys.LeftShift))
                 {
-                    Place();
+                    //Set mouse cursor
+                    Cursor = System.Windows.Forms.Cursors.Cross;
+                    if (input.IsDown(MouseButtonTypes.Left))
+                    {
+                        SelectObjects(MouseButtonTypes.Left);
+                    }
                 }
+                else if (input.IsDown(MouseButtonTypes.Right))//If selecting with right click
+                {
+                    SelectObjects(MouseButtonTypes.Right);
+                }
+                else
+                {
+                    selecting = false;
+
+                    //Set mouse cursor
+                    Cursor = System.Windows.Forms.Cursors.Arrow;
+
+                    //If mouse down
+                    if (input.IsDown(MouseButtonTypes.Left))
+                    {
+                        Place();
+                    }
+                }
+
+                //Pan and zoom
+                PerformUserActions();
+
+
+                ////
+                ComputeMousePosition();//Find relative mouse to grid and cam
             }
 
-            //Pan and zoom
-            PreformUserActions();
-
-
-            ////
-            ComputeMousePosition();//Find relative mouse to grid and cam
-            OnUpdate();//Invoke update event
+            //Invoke update event
+            OnUpdate();
         }
 
         protected override void Draw()

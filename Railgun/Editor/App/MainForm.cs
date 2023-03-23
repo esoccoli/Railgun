@@ -262,12 +262,12 @@ namespace Railgun.Editor.App
             //If valid, set the tile size
             if(int.TryParse(textBox.Text, out int tileSize) && tileSize > 0)
             {
-                tilePicker.TileSize = tileSize;
+                tilePicker.GridSize = tileSize;
             }
             //If not valid number an not empty, set it to previous valid number
             else if (textBox.Text != string.Empty)
             {
-                textBox.Text = tilePicker.TileSize.ToString();
+                textBox.Text = tilePicker.GridSize.ToString();
                 //Set cursor to end of text
                 textBox.SelectionStart = textBox.TextLength;
             }
@@ -279,7 +279,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void TileSize_Leave(object sender, EventArgs e)
         {
-            (sender as TextBox).Text = tilePicker.TileSize.ToString();
+            (sender as TextBox).Text = tilePicker.GridSize.ToString();
         }
 
         #endregion

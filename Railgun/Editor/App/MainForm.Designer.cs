@@ -437,7 +437,7 @@
             this.tilePicker.Size = new System.Drawing.Size(280, 134);
             this.tilePicker.TabIndex = 1;
             this.tilePicker.Text = "tilePicker1";
-            this.tilePicker.TileSize = 0;
+            this.tilePicker.GridSize = 0;
             // 
             // panel_TileSettings
             // 
