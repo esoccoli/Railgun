@@ -60,40 +60,37 @@ namespace Railgun.Editor.App.Controls
         /// </summary>
         protected void DrawGrid()
         {
-            //Compute the offset to draw the grid
-            Vector2 offset = -Editor.Cam.Position/GridSize;//Get offset based on grid size
-            offset -= Vector2.Floor(offset);//Get the decimal part only
-            offset *= GridSize;//Multiply by grid size to get offset in pixels
+            //The grid size relative to the camera's zoom
+            float cameraGridSize = GridSize * Editor.Cam.Zoom;
 
-            Vector2 edbug = Vector2.Zero;
+            //Compute the offset to draw the grid
+
+            //Create a new vector that offsets origin from cam transflation
+            Vector2 offset = new Vector2(
+                Editor.Cam.Transform.Translation.X,
+                Editor.Cam.Transform.Translation.Y);
+            offset /= cameraGridSize;//Get offset based on grid size
+            offset -= Vector2.Floor(offset);//Get the decimal part only
+            offset *= cameraGridSize;//Multiply by grid size to get offset in pixels
 
             //Draw vertical grid lines
-            for (float x = offset.X; x < Editor.graphics.Viewport.Width; x += GridSize)
+            for (float x = offset.X; x < Editor.graphics.Viewport.Width; x += cameraGridSize)
             {
                 ShapeBatch.Line(
                     new Vector2(x, 0),
                     new Vector2(x, Editor.graphics.Viewport.Height),
                     GridColor);
-
-                edbug.X++;
             }
 
             //Draw horizontal grid lines
-            for (float y = offset.Y; y < Editor.graphics.Viewport.Height; y += GridSize)
+            for (float y = offset.Y; y < Editor.graphics.Viewport.Height; y += cameraGridSize)
             {
                 ShapeBatch.Line(
                     new Vector2(0, y),
                     new Vector2(Editor.graphics.Viewport.Width, y),
                     GridColor);
-
-                edbug.Y++;
             }
 
-            Editor.spriteBatch.Begin();
-            Editor.spriteBatch.DrawString(Editor.Font, edbug.ToString(), Vector2.Zero, Color.Red);
-            Editor.spriteBatch.DrawString(Editor.Font, Editor.graphics.Viewport.ToString(), Vector2.UnitY*20, Color.Wheat);
-            Editor.spriteBatch.DrawString(Editor.Font, offset.ToString(), Vector2.UnitY*40, Color.Green);
-            Editor.spriteBatch.End();
         }
 
         #region Actions
