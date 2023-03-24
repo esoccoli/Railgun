@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using Railgun.Editor.App.Objects;
 using Railgun.Editor.App.Util;
 
 namespace Railgun.Editor.App
@@ -13,6 +14,14 @@ namespace Railgun.Editor.App
     /// </summary>
     public partial class MainForm : Form
     {
+        #region Properties and Fields
+
+        /// <summary>
+        /// The current tile selected
+        /// </summary>
+        internal static Tile CurrentTile { get; set; }
+
+        #endregion
 
         #region Initial methods
 

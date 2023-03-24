@@ -10,6 +10,8 @@ namespace Railgun.Editor.App.Controls
 {
     /// <summary>
     /// An abstract control that allows for grid traversal
+    /// <para>Author: Jonathan Jan</para>
+    /// Date Created: 2/22/2023=
     /// </summary>
     internal abstract class GridControl : MonoGameControl
     {

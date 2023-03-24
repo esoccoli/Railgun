@@ -41,7 +41,7 @@ namespace Railgun.Editor.App.Controls
         /// <summary>
         /// The rectangle to show the tile that is currently selected
         /// </summary>
-        protected Rectangle selectionRectangle;
+        private Rectangle selectionRectangle;
 
         /// <summary>
         /// The color to highlight the selection
@@ -98,6 +98,9 @@ namespace Railgun.Editor.App.Controls
                         new Rectangle(
                             MouseGridPosition * new Point((int)GridSize),
                             new Point((int)GridSize));
+
+                    //Create tile from selection
+                    
                 }
             }
         }
@@ -149,8 +152,6 @@ namespace Railgun.Editor.App.Controls
             ShapeBatch.End();
             //Set depth back to default
             Editor.graphics.DepthStencilState = DepthStencilState.Default;
-
-
         }
     }
 }

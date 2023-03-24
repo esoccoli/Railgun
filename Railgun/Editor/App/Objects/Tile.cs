@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Railgun.Editor.App.Objects.Visuals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,53 +17,48 @@ namespace Railgun.Editor.App.Objects
     internal class Tile
     {
         /// <summary>
-        /// The texture of this tile
+        /// The visual of this tile
         /// </summary>
-        public Texture2D Texture { get; protected set; }
+        public IVisual Visual { get; protected set; }
 
         /// <summary>
-        /// The sprite effect (rotation and flip) of this tile
+        /// TRUE if this tile is solid
         /// </summary>
-        public SpriteEffects Flip { get; protected set; }
+        public bool IsSolid { get; set; }
 
         /// <summary>
-        /// The destination rectangle of this tile
+        /// Creates a new solid tile with the specified visual
         /// </summary>
-        public Rectangle Destination { get; set; }
+        /// <param name="visual">The visual of this tile</param>
+        public Tile(IVisual visual) : this(visual, true) { }
 
         /// <summary>
-        /// The size of this texture
+        /// Creates a new tile with the specified visual and solid status
         /// </summary>
-        public int TileSize { get; protected set; }
-
-        /// <summary>
-        /// The position of this tile relative to the grid
-        /// </summary>
-        public Vector2 GridLocation
-            => Map.GetGridPoint(Destination.Location.ToVector2(), TileSize);
-
-        /// <summary>
-        /// Creates a new tile with the specified destination and texture
-        /// </summary>
-        /// <param name="destination">The destination rectangle to draw this tile to</param>
-        /// <param name="texture">The texture of this tile</param>
-        /// <param name="orientation">The sprite effect of this tile</param>
-        /// <param name="tileSize">The tile's size</param>
-        protected Tile(Rectangle destination, Texture2D texture, SpriteEffects orientation, int tileSize)
+        /// <param name="visual">The visual of this tile</param>
+        /// <param name="isSolid">If this tile is solid or not</param>
+        public Tile(IVisual visual, bool isSolid)
         {
-            Destination = destination;
-            Texture = texture;
-            TileSize = tileSize;
-            Flip = orientation;
+            Visual = visual;
         }
 
         /// <summary>
-        /// Draws the tile to the specified sprite batch
+        /// Draws this tile to the specified sprite batch at 0,0
         /// </summary>
         /// <param name="spriteBatch">The sprite batch to draw to</param>
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Destination, null, Color.White, 0f, Vector2.Zero, Flip, 0f);
+            Draw(spriteBatch, Vector2.Zero);
+        }
+
+        /// <summary>
+        /// Draws this tile to the specified sprite batch and position
+        /// </summary>
+        /// <param name="sprite"></param>
+        /// <param name="position"></param>
+        public void Draw(SpriteBatch spriteBatch, Vector2 position)
+        {
+            Visual.Draw(spriteBatch, position);
         }
 
         /// <summary>
@@ -71,7 +67,13 @@ namespace Railgun.Editor.App.Objects
         /// <returns>A new Tile with the same parameters as this</returns>
         public Tile Clone()
         {
-            return new Tile(Destination, Texture, Flip, TileSize);
+            return new Tile(Visual);
         }
+
+        #region Static Prefabs
+
+        public static Tile Empty { get => new Tile(null, false); }
+
+        #endregion
     }
 }

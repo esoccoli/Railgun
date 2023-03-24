@@ -13,7 +13,7 @@ namespace Railgun.Editor.App.Objects.Visuals
     /// <para>Author: Jonathan Jan</para>
     /// Date Created: 3/10/2023
     /// </summary>
-    internal interface IDrawable
+    internal interface IVisual
     {
         /// <summary>
         /// Updates this visual if needed

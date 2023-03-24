@@ -25,7 +25,6 @@ namespace Railgun.Editor.App.Util
     /// </summary>
     internal class InputManager
     {
-        private static InputManager instance;
         /// <summary>
         /// The singleton instance of this InputManager
         /// </summary>
@@ -33,13 +32,15 @@ namespace Railgun.Editor.App.Util
         {
             get
             {
-                if( instance == null )
+                if(instance == null)
                 {
                     instance = new InputManager();
                 }
                 return instance;
             }
         }
+        private static InputManager instance;
+
 
         /// <summary>
         /// Returns the current mouse state
