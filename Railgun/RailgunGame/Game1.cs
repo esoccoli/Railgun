@@ -78,7 +78,7 @@ namespace Railgun.RailgunGame
             // Player constructor.
             mainPlayer = new Player(new Rectangle(870, 510, 100, 100), menuLogo, null, null);
 
-            userInterface = new UI(backgroundHealthUI, foregroundHealthUI, true, 100, 100, font, 12, 12); //Creates a UI object. Values to be updated later. 
+            userInterface = new UI(backgroundHealthUI, foregroundHealthUI, true, 100, 100, font, 8, 8); //Creates a UI object. Values to be updated later. 
             base.Initialize();
         }
 
@@ -105,7 +105,7 @@ namespace Railgun.RailgunGame
                     break;
                 case GameState.Game:
 
-                    userInterface.Update(90, 10); //Updates the UI. Values to be updated later
+                    userInterface.Update(mainPlayer.Health, mainPlayer.Ammo); //Updates the UI. Values to be updated later
 
                     if (kbState.IsKeyDown(Keys.R)) // A temporary way to instantly lose the game. Or maybe an unintentional feature!!!
                     {
@@ -123,7 +123,6 @@ namespace Railgun.RailgunGame
                     }
 
                     mainPlayer.Update(gameTime);
-
                     break;
                 case GameState.Pause:
 
@@ -152,6 +151,10 @@ namespace Railgun.RailgunGame
 
             _spriteBatch.Begin();
 
+            //Draws reticle
+            MouseState mState = Mouse.GetState();
+            _spriteBatch.Draw(gameReticle, new Rectangle(mState.X - 25, mState.Y - 25, 50, 50), Color.White);
+
             switch (currentGameState)
             {
                 case GameState.Menu:
@@ -163,10 +166,6 @@ namespace Railgun.RailgunGame
                     _spriteBatch.Draw(menuPlay, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuPlay.Width * (int)xScale / 10) / 2), 125, (menuPlay.Width / 10) * (int)xScale, (menuPlay.Height / 10) * (int)yScale), Color.White);
                     _spriteBatch.Draw(menuOptions, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuOptions.Width * (int)xScale / 10) / 2), 270, (menuOptions.Width / 10) * (int)xScale, (menuOptions.Height / 10) * (int)yScale), Color.White);
                     _spriteBatch.Draw(menuQuit, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuQuit.Width / 10) * (int)xScale / 2), 375, (menuQuit.Width / 10) * (int)xScale, (menuQuit.Height / 10) * (int)yScale), Color.White);
-
-                    //Draws reticle
-                    MouseState mState = Mouse.GetState();
-                    _spriteBatch.Draw(gameReticle, new Rectangle(mState.X - 25, mState.Y - 25, 50, 50), Color.White);
 
                     _spriteBatch.DrawString(font, "Menu", new Vector2(_graphics.PreferredBackBufferWidth - 100, 20), Color.White);
 

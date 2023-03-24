@@ -63,7 +63,7 @@ namespace Railgun.RailgunGame
             // I'm only setting the health to 100 as a default value. We can come back and change this if we need to adjust it later.
             Health = 100;
             speed = 5;
-            dashSpeed = 7;
+            dashSpeed = 10;
             Ammo = 8;
             DashCooldown = 10.0;
             dashing = false;
@@ -91,17 +91,8 @@ namespace Railgun.RailgunGame
             // Handles the movement of the player. All of this is run if they're not currently dashing.
             if (!dashing)
             {
-                // Input Manager might be broken. Using these for testing.
-                if (Keyboard.GetState().IsKeyDown(Keys.W)) { hitboxTemp.Y -= speed; Hitbox = hitboxTemp; }
-                if (Keyboard.GetState().IsKeyDown(Keys.A)) { hitboxTemp.X -= speed; Hitbox = hitboxTemp; }
-                if (Keyboard.GetState().IsKeyDown(Keys.S)) { hitboxTemp.Y += speed; Hitbox = hitboxTemp; }
-                if (Keyboard.GetState().IsKeyDown(Keys.D)) { hitboxTemp.X += speed; Hitbox = hitboxTemp; }
+                InputManager.UpdateInputState();
 
-                if (Mouse.GetState().LeftButton == ButtonState.Pressed && Ammo > 0) { Shoot(gameTime); }
-                if (Mouse.GetState().RightButton == ButtonState.Pressed) { Reload(); }
-
-                if (Keyboard.GetState().IsKeyDown(Keys.LeftShift)) { preDash = Keyboard.GetState(); dashing = true; }
-                // Input Manager might be broken. Using these for testing.
                 if (InputManager.IsKeyDown(Keys.W)) { hitboxTemp.Y -= speed; Hitbox = hitboxTemp; }
                 if (InputManager.IsKeyDown(Keys.A)) { hitboxTemp.X -= speed; Hitbox = hitboxTemp; }
                 if (InputManager.IsKeyDown(Keys.S)) { hitboxTemp.Y += speed; Hitbox = hitboxTemp; }
