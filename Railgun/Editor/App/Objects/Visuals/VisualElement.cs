@@ -105,7 +105,7 @@ namespace Railgun.Editor.App.Objects.Visuals
         /// <summary>
         /// Creates a new empty visual
         /// </summary>
-        IVisual IVisual.Empty => new VisualElement(null);
+        public static VisualElement Empty => new VisualElement(null);
 
         #endregion
     }

@@ -72,7 +72,10 @@ namespace Railgun.Editor.App.Objects
 
         #region Static Prefabs
 
-        public static Tile Empty { get => new Tile(null, false); }
+        /// <summary>
+        /// An empty tile
+        /// </summary>
+        public static Tile Empty => new Tile(VisualElement.Empty, false);
 
         #endregion
     }
