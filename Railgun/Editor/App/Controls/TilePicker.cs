@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Forms.Controls;
 using Railgun.Editor.App.Objects;
 using Railgun.Editor.App.Objects.Visuals;
 using Railgun.Editor.App.Util;
