@@ -11,6 +11,11 @@ using System.Threading.Tasks;
 namespace Railgun.Editor.App.Util
 {
     /// <summary>
+    /// A delegate that will be invoked when the current tile is changed
+    /// </summary>
+    public delegate void InvalidateCurrentTile();
+
+    /// <summary>
     /// A singleton style manager containing useful info
     /// and properties about tiles and editor selections
     /// <para>Author: Jonathan Jan</para>
@@ -42,9 +47,24 @@ namespace Railgun.Editor.App.Util
         }
 
         /// <summary>
+        /// An event that is called when the current tile is changed
+        /// </summary>
+        public event InvalidateCurrentTile OnCurrentTileChange;
+
+        /// <summary>
         /// The current tile to be placed
         /// </summary>
-        public Tile CurrentTile { get; set; }
+        public Tile CurrentTile
+        {
+            get => currentTile;
+            set
+            {
+                currentTile = value;
+                //Invalidates current tile display if not null
+                OnCurrentTileChange?.Invoke();
+            }
+        }
+        private Tile currentTile;
 
         /// <summary>
         /// A list of selected tiles to be edited

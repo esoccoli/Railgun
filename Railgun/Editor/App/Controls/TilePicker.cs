@@ -35,6 +35,8 @@ namespace Railgun.Editor.App.Controls
 
                     //Reset selection rectangle
                     selectionRectangle = new Rectangle(0, 0, (int)value, (int)value);
+
+                    CreateTileSelection();
                 }
             }
         }
@@ -54,7 +56,20 @@ namespace Railgun.Editor.App.Controls
         /// </summary>
         private Color selectionOutlineColor;
 
+        /// <summary>
+        /// Creates a tile from the current selection
+        /// </summary>
+        private void CreateTileSelection()
+        {
+            //Create tile from selection
+            TileManager.Instance.CurrentTile =
+                new Tile(new VisualElement(testure, selectionRectangle),
+                true);
+        }
+
         #endregion
+
+        #region Mono Behavior
 
         protected override void Initialize()
         {
@@ -100,10 +115,7 @@ namespace Railgun.Editor.App.Controls
                             MouseGridPosition * new Point((int)GridSize),
                             new Point((int)GridSize));
 
-                    //Create tile from selection
-                    TileManager.Instance.CurrentTile =
-                        new Tile(new VisualElement(testure, selectionRectangle),
-                        true);
+                    CreateTileSelection();
                 }
             }
         }
@@ -156,5 +168,7 @@ namespace Railgun.Editor.App.Controls
             //Set depth back to default
             Editor.graphics.DepthStencilState = DepthStencilState.Default;
         }
+
+        #endregion
     }
 }

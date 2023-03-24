@@ -24,9 +24,7 @@ namespace Railgun.Editor.App.Controls
         private Texture2D test;
         private SpriteFont consolas20;
 
-        //Textures and colors
-
-        #region Bigger managing classes
+        #region Bigger Managing Classes
 
         /// <summary>
         /// Called every update cycle of this panel
@@ -73,6 +71,8 @@ namespace Railgun.Editor.App.Controls
         protected Rectangle selectionRectangle;
 
         #endregion
+
+        #region Mono Behavior
 
         protected override void Initialize()
         {
@@ -200,6 +200,8 @@ namespace Railgun.Editor.App.Controls
 
         }
 
+        #endregion
+
         #region Actions
 
         /// <summary>
@@ -240,7 +242,7 @@ namespace Railgun.Editor.App.Controls
 
         #endregion
 
-        #region Other Methods
+        #region Other Methods EMPTY
 
         
 

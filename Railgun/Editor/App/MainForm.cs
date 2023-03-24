@@ -14,16 +14,13 @@ namespace Railgun.Editor.App
     /// </summary>
     public partial class MainForm : Form
     {
-        #region Properties and Fields
+        #region Properties and Fields EMPTY
 
-        /// <summary>
-        /// The current tile selected
-        /// </summary>
-        internal static Tile CurrentTile { get; set; }
+        
 
         #endregion
 
-        #region Initial methods
+        #region Initial Methods
 
         /// <summary>
         /// Instantiate this form
@@ -43,6 +40,9 @@ namespace Railgun.Editor.App
 
             //Subscribe update status to update event in main editor control
             mapEditor.OnUpdate += UpdateStatus;
+
+            //Subscribe current tile change to current tile display
+            TileManager.Instance.OnCurrentTileChange += currentTileContol.Update;
 
             //Color the controls to a darker scheme
             ColorControls(Controls);
@@ -163,7 +163,7 @@ namespace Railgun.Editor.App
 
         #endregion
 
-        #region Status events
+        #region Status Bar Events
 
         /// <summary>
         /// Updates the status strip with useful info
@@ -253,7 +253,7 @@ namespace Railgun.Editor.App
 
         #endregion
 
-        #region Tile picker events
+        #region Tile Picker Events
 
         /// <summary>
         /// Changes the tile size when the text box is changed

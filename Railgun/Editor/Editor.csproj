@@ -80,6 +80,9 @@
     <Compile Include="App\Controls\GridControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="App\Controls\CurrentTileDisplay.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="App\Controls\TilePicker.cs">
       <SubType>Component</SubType>
     </Compile>
