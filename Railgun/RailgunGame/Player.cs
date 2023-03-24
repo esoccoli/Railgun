@@ -44,6 +44,11 @@ namespace Railgun.RailgunGame
         public double DashCooldown { get; set; }
 
         /// <summary>
+        /// This is the amount of time before the player can shoot again.
+        /// </summary>
+        public double ShootCooldown { get; set; }
+
+        /// <summary>
         /// The amount of time the player has been dashing for.
         /// </summary>
         public double DashTime { get; set; }
@@ -65,7 +70,9 @@ namespace Railgun.RailgunGame
             speed = 5;
             dashSpeed = 10;
             Ammo = 8;
-            DashCooldown = 10.0;
+
+            DashCooldown = 0.0;
+            ShootCooldown = 0.0;
             dashing = false;
             DashTime = 0.0;
 
@@ -85,8 +92,12 @@ namespace Railgun.RailgunGame
         {
             if(DashCooldown > 0.0)
             {
-                DashCooldown -= gameTime.TotalGameTime.TotalSeconds;
-            }
+                DashCooldown -= gameTime.ElapsedGameTime.TotalSeconds;
+            } // Adjusts the cooldown on dashing accordingly.
+            if(ShootCooldown > 0.0)
+            {
+                ShootCooldown -= gameTime.ElapsedGameTime.TotalSeconds;
+            } // Adjusts the cooldown on shooting accordingly.
 
             // Handles the movement of the player. All of this is run if they're not currently dashing.
             if (!dashing)
@@ -98,11 +109,10 @@ namespace Railgun.RailgunGame
                 if (InputManager.IsKeyDown(Keys.S)) { hitboxTemp.Y += speed; Hitbox = hitboxTemp; }
                 if (InputManager.IsKeyDown(Keys.D)) { hitboxTemp.X += speed; Hitbox = hitboxTemp; }
 
-                if (InputManager.IsButtonDown(MouseButtons.Left) && Ammo > 0) { Shoot(gameTime); }
+                if (InputManager.IsButtonDown(MouseButtons.Left) && ShootCooldown <= 0.0 && Ammo > 0) { Shoot(gameTime); }
                 if (InputManager.IsButtonDown(MouseButtons.Right) && Ammo <= 0) { Reload(); }
 
-                // Make sure to update this so it checks the dash cooldown.
-                if (InputManager.IsKeyDown(Keys.LeftShift)) { preDash = Keyboard.GetState(); dashing = true; }
+                if (InputManager.IsKeyDown(Keys.LeftShift) && DashCooldown <= 0.0) { preDash = Keyboard.GetState(); dashing = true; }
             }
             else
             {
@@ -125,6 +135,7 @@ namespace Railgun.RailgunGame
         public void Shoot(GameTime gameTime)
         {
             Ammo--;
+            ShootCooldown = 2.5;
 
             // NEED TO DO MATH TO SEE WHERE MOUSE IS AND WHERE BULLETS SHOULD BE SHOT.
 
@@ -148,6 +159,7 @@ namespace Railgun.RailgunGame
             if(DashTime >= .75) 
             {
                 DashTime = 0.0;
+                DashCooldown = 10.0;
                 dashing = false;
             }
         }        
