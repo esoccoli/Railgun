@@ -51,22 +51,29 @@ namespace Railgun.Editor.App.Objects.Visuals
         #region Constructors
 
         /// <summary>
-        /// Creates a new visual element with the specified texture and default values
+        /// Creates a new visual element with all the specified parameters
+        /// <para>Note: No parameters will create a blank visual</para>
         /// </summary>
         /// <param name="texture">Texture, NULLABLE</param>
-        public VisualElement(Texture2D texture)
-            : this(texture, null, Color.White, 0f, 1f, SpriteEffects.None) { }
+        /// <param name="source">Source rectangle of the texture to be used</param>
+        /// <param name="rotation">Rotation</param>
+        /// <param name="scale">Scaling size</param>
+        /// <param name="flip">Sprite effect for orientation</param>
+        public VisualElement(Texture2D texture = null, Rectangle? source = null,
+            float rotation = 0f, float scale = 1f, SpriteEffects flip = SpriteEffects.None)
+        : this(Color.White, texture, source, rotation, scale, flip) { }
 
         /// <summary>
         /// Creates a new visual element with all the specified parameters
         /// </summary>
+        /// <param name="tint">Tint color</param>
         /// <param name="texture">Texture, NULLABLE</param>
         /// <param name="source">Source rectangle of the texture to be used</param>
-        /// <param name="tint">Tint color</param>
         /// <param name="rotation">Rotation</param>
         /// <param name="scale">Scaling size</param>
         /// <param name="flip">Sprite effect for orientation</param>
-        public VisualElement(Texture2D texture, Rectangle? source, Color tint, float rotation, float scale, SpriteEffects flip)
+        public VisualElement(Color tint, Texture2D texture = null, Rectangle? source = null,
+            float rotation = 0f, float scale = 1f, SpriteEffects flip = SpriteEffects.None)
         {
             Texture = texture;
             Source = source;
@@ -105,7 +112,7 @@ namespace Railgun.Editor.App.Objects.Visuals
         /// <summary>
         /// Creates a new empty visual
         /// </summary>
-        public static VisualElement Empty => new VisualElement(null);
+        public static VisualElement Empty => new VisualElement(Color.White);
 
         #endregion
     }

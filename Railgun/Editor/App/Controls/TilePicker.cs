@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Forms.Controls;
 using Railgun.Editor.App.Objects;
+using Railgun.Editor.App.Objects.Visuals;
 using Railgun.Editor.App.Util;
 
 namespace Railgun.Editor.App.Controls
@@ -100,7 +101,9 @@ namespace Railgun.Editor.App.Controls
                             new Point((int)GridSize));
 
                     //Create tile from selection
-                    
+                    TileManager.Instance.CurrentTile =
+                        new Tile(new VisualElement(testure, selectionRectangle),
+                        true);
                 }
             }
         }

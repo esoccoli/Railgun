@@ -40,6 +40,7 @@ namespace Railgun.Editor.App.Objects
         public Tile(IVisual visual, bool isSolid)
         {
             Visual = visual;
+            IsSolid = isSolid;
         }
 
         /// <summary>

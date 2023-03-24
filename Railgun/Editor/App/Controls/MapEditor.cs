@@ -165,6 +165,9 @@ namespace Railgun.Editor.App.Controls
                     MouseGridPosition * new Point(CurrentMap.TileSize),
                     new Point((int)GridSize)), Color.White);
 
+            TileManager.Instance.CurrentTile.Draw(Editor.spriteBatch,
+                (MouseGridPosition * new Point(CurrentMap.TileSize)).ToVector2());
+
             //Editor.graphics.DrawPrimitives(PrimitiveType.TriangleList, 0, 5);
 
 
