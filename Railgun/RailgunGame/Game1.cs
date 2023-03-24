@@ -22,6 +22,12 @@ namespace Railgun.RailgunGame
         private Texture2D menuOpti;
         private Texture2D menuQuit;
 
+        // Rectangles to make the Menu usable
+        private Rectangle logoRect;
+        private Rectangle playRect;
+        private Rectangle optiRect;
+        private Rectangle quitRect;
+
         // Reticle
         private Texture2D gameReticle;
 
@@ -91,27 +97,51 @@ namespace Railgun.RailgunGame
 
         protected override void Update(GameTime gameTime)
         {
-            KeyboardState kbState = Keyboard.GetState();
+            InputManager.UpdateInputState();
+            MouseState mState = Mouse.GetState();
 
             switch (currentGameState)
             {
                 case GameState.Menu:
 
-                    if (kbState.IsKeyDown(Keys.Enter))
+                    if (InputManager.IsButtonDown(MouseButtons.Left) 
+                        && mState.X > playRect.X 
+                        && mState.X < playRect.X + playRect.Width
+                        && mState.Y > playRect.Y
+                        && mState.Y < playRect.Y + playRect.Height)
                     {
                         currentGameState = GameState.Game;
                     }
+
+                    if (InputManager.IsButtonDown(MouseButtons.Left)
+                        && mState.X > optiRect.X
+                        && mState.X < optiRect.X + optiRect.Width
+                        && mState.Y > optiRect.Y
+                        && mState.Y < optiRect.Y + optiRect.Height)
+                    {
+                        currentGameState = GameState.Pause;
+                    }
+
+                    if (InputManager.IsButtonDown(MouseButtons.Left)
+                        && mState.X > quitRect.X
+                        && mState.X < quitRect.X + quitRect.Width
+                        && mState.Y > quitRect.Y
+                        && mState.Y < quitRect.Y + quitRect.Height)
+                    {
+                        this.Exit();
+                    }
+
 
                     break;
                 case GameState.Game:
 
                     userInterface.Update(mainPlayer.Health, mainPlayer.Ammo); //Updates the UI. Values to be updated later
 
-                    if (kbState.IsKeyDown(Keys.R)) // A temporary way to instantly lose the game. Or maybe an unintentional feature!!!
+                    if (InputManager.IsKeyDown(Keys.R)) // A temporary way to instantly lose the game. Or maybe an unintentional feature!!!
                     {
                         currentGameState = GameState.GameOver;
                     }
-                    if (kbState.IsKeyDown(Keys.Escape)) // A way to pause the game.
+                    if (InputManager.IsKeyDown(Keys.P)) // A way to pause the game.
                     {
                         currentGameState = GameState.Pause;
                     }
@@ -126,15 +156,20 @@ namespace Railgun.RailgunGame
                     break;
                 case GameState.Pause:
 
-                    if (kbState.IsKeyDown(Keys.Enter))
+                    if (InputManager.IsKeyDown(Keys.Enter))
                     {
                         currentGameState = GameState.Game;
+                    }
+
+                    if (InputManager.IsKeyDown(Keys.Escape))
+                    {
+                        this.Exit();
                     }
 
                     break;
                 case GameState.GameOver:
 
-                    if (kbState.IsKeyDown(Keys.Enter))
+                    if (InputManager.IsKeyDown(Keys.Enter))
                     {
                         currentGameState = GameState.Game;
                     }
@@ -171,15 +206,23 @@ namespace Railgun.RailgunGame
                         yScale = 1;
                     }
 
-                    _spriteBatch.Draw(menuLogo, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuLogo.Width * (int)xScale / 10) / 2), 20,  (menuLogo.Width / 10) * (int)xScale, (menuLogo.Height / 10) * (int)yScale), Color.White);
-                    _spriteBatch.Draw(menuPlay, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuPlay.Width * (int)xScale / 20) / 2), 250, (menuPlay.Width / 5)  / (int)xScale, (menuPlay.Height / 5)  / (int)yScale), Color.White);
-                    _spriteBatch.Draw(menuOpti, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuOpti.Width * (int)xScale / 20) / 2), 425, (menuOpti.Width / 5)  / (int)xScale, (menuOpti.Height / 5)  / (int)yScale), Color.White);
-                    _spriteBatch.Draw(menuQuit, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuQuit.Width * (int)xScale / 20) / 2), 575, (menuQuit.Width / 5)  / (int)xScale, (menuQuit.Height / 5)  / (int)yScale), Color.White);
+                    logoRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuLogo.Width * (int)xScale / 10) / 2), 20, (menuLogo.Width / 10) * (int)xScale, (menuLogo.Height / 10) * (int)yScale);
+                    playRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuPlay.Width * (int)xScale / 20) / 2), 250, (menuPlay.Width / 5) / (int)xScale, (menuPlay.Height / 5) / (int)yScale);
+                    optiRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuOpti.Width * (int)xScale / 20) / 2), 425, (menuOpti.Width / 5) / (int)xScale, (menuOpti.Height / 5) / (int)yScale);
+                    quitRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuQuit.Width * (int)xScale / 20) / 2), 575, (menuQuit.Width / 5) / (int)xScale, (menuQuit.Height / 5) / (int)yScale);
 
-                    _spriteBatch.DrawString(font, "Menu", new Vector2(_graphics.PreferredBackBufferWidth - 100, 20), Color.White);
+                    _spriteBatch.Draw(menuLogo, logoRect, Color.White);
+                    _spriteBatch.Draw(menuPlay, playRect, Color.White);
+                    _spriteBatch.Draw(menuOpti, optiRect, Color.White);
+                    _spriteBatch.Draw(menuQuit, quitRect, Color.White);
+
+                    _spriteBatch.DrawString(font, "Menu", new Vector2(_graphics.PreferredBackBufferWidth - 180, 20), Color.White);
 
                     _spriteBatch.DrawString(font, "xScale: " + xScale, new Vector2(_graphics.PreferredBackBufferWidth - 180, 50), Color.White);
                     _spriteBatch.DrawString(font, "yScale: " + yScale, new Vector2(_graphics.PreferredBackBufferWidth - 180, 80), Color.White);
+
+                    _spriteBatch.DrawString(font, "X: " + mState.X, new Vector2(_graphics.PreferredBackBufferWidth - 180, 110), Color.White);
+                    _spriteBatch.DrawString(font, "Y: " + mState.Y, new Vector2(_graphics.PreferredBackBufferWidth - 180, 140), Color.White);
 
                     break;
                 case GameState.Game:
