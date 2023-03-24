@@ -19,7 +19,7 @@ namespace Railgun.RailgunGame
         // Menu Textures
         private Texture2D menuLogo;        
         private Texture2D menuPlay;
-        private Texture2D menuOptions;
+        private Texture2D menuOpti;
         private Texture2D menuQuit;
 
         // Reticle
@@ -69,7 +69,7 @@ namespace Railgun.RailgunGame
             //Game Menu Stuff
             menuLogo = Content.Load<Texture2D>("menuLogo");
             menuPlay = Content.Load<Texture2D>("menuPlay");
-            menuOptions = Content.Load<Texture2D>("menuOptions");
+            menuOpti = Content.Load<Texture2D>("menuOptions");
             menuQuit = Content.Load<Texture2D>("menuQuit");
 
             //Game Reticle
@@ -162,12 +162,24 @@ namespace Railgun.RailgunGame
                     double xScale = _graphics.PreferredBackBufferWidth / 800.0;
                     double yScale = _graphics.PreferredBackBufferHeight / 480.0;
 
-                    _spriteBatch.Draw(menuLogo, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuLogo.Width * (int)xScale / 10) / 2), 20, (menuLogo.Width / 10) * (int)xScale, (menuLogo.Height / 10) * (int)yScale), Color.White);
-                    _spriteBatch.Draw(menuPlay, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuPlay.Width * (int)xScale / 10) / 2), 125, (menuPlay.Width / 10) * (int)xScale, (menuPlay.Height / 10) * (int)yScale), Color.White);
-                    _spriteBatch.Draw(menuOptions, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuOptions.Width * (int)xScale / 10) / 2), 270, (menuOptions.Width / 10) * (int)xScale, (menuOptions.Height / 10) * (int)yScale), Color.White);
-                    _spriteBatch.Draw(menuQuit, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuQuit.Width / 10) * (int)xScale / 2), 375, (menuQuit.Width / 10) * (int)xScale, (menuQuit.Height / 10) * (int)yScale), Color.White);
+                    if (xScale < 1)
+                    {
+                        xScale = 1;
+                    }
+                    if (yScale < 1)
+                    {
+                        yScale = 1;
+                    }
+
+                    _spriteBatch.Draw(menuLogo, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuLogo.Width * (int)xScale / 10) / 2), 20,  (menuLogo.Width / 10) * (int)xScale, (menuLogo.Height / 10) * (int)yScale), Color.White);
+                    _spriteBatch.Draw(menuPlay, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuPlay.Width * (int)xScale / 20) / 2), 250, (menuPlay.Width / 5)  / (int)xScale, (menuPlay.Height / 5)  / (int)yScale), Color.White);
+                    _spriteBatch.Draw(menuOpti, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuOpti.Width * (int)xScale / 20) / 2), 425, (menuOpti.Width / 5)  / (int)xScale, (menuOpti.Height / 5)  / (int)yScale), Color.White);
+                    _spriteBatch.Draw(menuQuit, new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuQuit.Width * (int)xScale / 20) / 2), 575, (menuQuit.Width / 5)  / (int)xScale, (menuQuit.Height / 5)  / (int)yScale), Color.White);
 
                     _spriteBatch.DrawString(font, "Menu", new Vector2(_graphics.PreferredBackBufferWidth - 100, 20), Color.White);
+
+                    _spriteBatch.DrawString(font, "xScale: " + xScale, new Vector2(_graphics.PreferredBackBufferWidth - 180, 50), Color.White);
+                    _spriteBatch.DrawString(font, "yScale: " + yScale, new Vector2(_graphics.PreferredBackBufferWidth - 180, 80), Color.White);
 
                     break;
                 case GameState.Game:

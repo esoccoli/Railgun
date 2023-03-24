@@ -61,8 +61,8 @@ namespace Railgun.RailgunGame
             backgroundHealthTexture = background;
             foregroundHealthTexture = foreground;
 
-            backgroundHealth = new Rectangle(10, 40, maxHealth, 10);
-            foregroundHealth = new Rectangle(10, 40, maxHealth, 10);
+            backgroundHealth = new Rectangle(10, 40, maxHealth * 2, 10);
+            foregroundHealth = new Rectangle(10, 40, maxHealth * 2, 10);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Railgun.RailgunGame
             //health bar to stay the same size no matter the health ammount. Currently, the size of the health bar is
             //directly tied to maxHealth, so if maxHealth is like 1000, the health bar will probably go off the screen
             //Vice versa, if the health is like 10, you may barely see the health bar. But for now it should work 
-            backgroundHealth = new Rectangle(10, 40, healthAmount, 10);
+            foregroundHealth = new Rectangle(10, 40, healthAmount * 2, 10);
             _spriteBatch.Draw(foregroundHealthTexture, foregroundHealth, Color.Red);
 
             _spriteBatch.DrawString(font, "Ammo: " + ammoAmount, new Vector2(10, 50), Color.White);
@@ -117,6 +117,7 @@ namespace Railgun.RailgunGame
             if (debugMode)
             {
                 _spriteBatch.DrawString(font, "Debug Mode", new Vector2(10, 90), Color.White);
+                _spriteBatch.DrawString(font, "Health Amt: " + healthAmount, new Vector2(10, 130), Color.White);
             }
         }
     }
