@@ -26,11 +26,6 @@ namespace Railgun.Editor.App.Controls
 
         //Textures and colors
 
-        /// <summary>
-        /// A white square meant for drawing rectangles
-        /// </summary>
-        private Texture2D whitePixel;
-
         #region Bigger managing classes
 
         /// <summary>
@@ -77,17 +72,6 @@ namespace Railgun.Editor.App.Controls
         /// </summary>
         protected Rectangle selectionRectangle;
 
-        /// <summary>
-        /// The grid point of the mouse relative to the camera
-        /// </summary>
-        public Point MouseGridPosition { get; protected set; }
-
-        /// <summary>
-        /// The mouse position relative to the camera (where the mouse
-        /// is pointing to as if it was transformed by the camera)
-        /// </summary>
-        public Vector2 MouseCameraPosition { get; protected set; }
-
         #endregion
 
         protected override void Initialize()
@@ -115,10 +99,8 @@ namespace Railgun.Editor.App.Controls
             test = Editor.Content.Load<Texture2D>("test");
             consolas20 = Editor.Content.Load<SpriteFont>("Consolas20");
 
-            //Create generic white pixel
-            whitePixel = new Texture2D(GraphicsDevice, 1, 1);
-            whitePixel.SetData(new Color[] { Color.White });
-
+            //Center camera on the 0,0 coordinate
+            Editor.Cam.DefaultPosition = new Vector2(GridSize / 2);
 
         }
 
@@ -127,43 +109,35 @@ namespace Railgun.Editor.App.Controls
             base.Update(gameTime);
             ////
 
-            //Only preform these actions if the mouse is inside this control
-            //if(IsMouseInsideControl)
+            //Pan and zoom
+            PerformUserActions();
+
+            //If selecting with shift click
+            if (input.IsDown(Keys.LeftShift))
             {
-                //If selecting with shift click
-                if (input.IsDown(Keys.LeftShift))
+                //Set mouse cursor
+                Cursor = System.Windows.Forms.Cursors.Cross;
+                if (input.IsDown(MouseButtonTypes.Left))
                 {
-                    //Set mouse cursor
-                    Cursor = System.Windows.Forms.Cursors.Cross;
-                    if (input.IsDown(MouseButtonTypes.Left))
-                    {
-                        SelectObjects(MouseButtonTypes.Left);
-                    }
+                    SelectObjects(MouseButtonTypes.Left);
                 }
-                else if (input.IsDown(MouseButtonTypes.Right))//If selecting with right click
+            }
+            else if (input.IsDown(MouseButtonTypes.Right))//If selecting with right click
+            {
+                SelectObjects(MouseButtonTypes.Right);
+            }
+            else
+            {
+                selecting = false;
+
+                //Set mouse cursor
+                //Cursor = System.Windows.Forms.Cursors.Arrow;
+
+                //If mouse down
+                if (input.IsDown(MouseButtonTypes.Left))
                 {
-                    SelectObjects(MouseButtonTypes.Right);
+                    Place();
                 }
-                else
-                {
-                    selecting = false;
-
-                    //Set mouse cursor
-                    //Cursor = System.Windows.Forms.Cursors.Arrow;
-
-                    //If mouse down
-                    if (input.IsDown(MouseButtonTypes.Left))
-                    {
-                        Place();
-                    }
-                }
-
-                //Pan and zoom
-                PerformUserActions();
-
-
-                ////
-                ComputeMousePosition();//Find relative mouse to grid and cam
             }
 
             //Invoke update event
@@ -265,19 +239,7 @@ namespace Railgun.Editor.App.Controls
 
         
 
-        /// <summary>
-        /// Updates the mouse position relative to the camera and to the grid
-        /// </summary>
-        public void ComputeMousePosition()
-        {
-            //The mouse pos transformed by the inverse cam matrix
-            MouseCameraPosition = Vector2.Transform(
-                input.CurrentMouseState.Position.ToVector2(),
-                Matrix.Invert(Editor.Cam.Transform));
-
-            //Transform absolute mouse position by cam, get grid point of that
-            MouseGridPosition = CurrentMap.GetGridPoint(MouseCameraPosition).ToPoint();
-        }
+        
 
         #endregion
 

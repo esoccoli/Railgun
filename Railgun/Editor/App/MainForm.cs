@@ -35,9 +35,6 @@ namespace Railgun.Editor.App
             //Subscribe update status to update event in main editor control
             mapEditor.OnUpdate += UpdateStatus;
 
-            //Reset camera position to origin
-            mapEditor.ResetCamera();
-
             //Color the controls to a darker scheme
             ColorControls(Controls);
 
@@ -46,11 +43,8 @@ namespace Railgun.Editor.App
             MaximizedBounds = Rectangle.Inflate(Screen.GetWorkingArea(this),10,10);
             WindowState = FormWindowState.Maximized;
 
-            //Set main split container to 300 pixels
-            splitContainer_MainEditor.SplitterDistance = 300;
-
-            //Set tile size to 32 pixels
-            textBox_TileSize.Text = "32";
+            //Set tile size to 16 pixels
+            textBox_TileSize.Text = "16";
         }
 
         /// <summary>

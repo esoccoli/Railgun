@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Forms.Controls;
+using Railgun.Editor.App.Objects;
 using Railgun.Editor.App.Util;
 using System;
 
@@ -12,6 +13,13 @@ namespace Railgun.Editor.App.Controls
     /// </summary>
     internal abstract class GridControl : MonoGameControl
     {
+        /// <summary>
+        /// A white square used for drawing rectangles
+        /// </summary>
+        protected Texture2D whitePixel;
+
+        #region Grid Properties and Fields
+
         /// <summary>
         /// The size of the grid
         /// </summary>
@@ -27,12 +35,25 @@ namespace Railgun.Editor.App.Controls
                 }
             }
         }
-        private float gridSize;
+        protected float gridSize;
 
         /// <summary>
         /// The color of the grid to be drawn to the control
         /// </summary>
         public Color GridColor { get; set; }
+
+        /// <summary>
+        /// The grid point of the mouse relative to the camera
+        /// </summary>
+        public Point MouseGridPosition { get; protected set; }
+
+        /// <summary>
+        /// The mouse position relative to the camera (where the mouse
+        /// is pointing to as if it was transformed by the camera)
+        /// </summary>
+        public Vector2 MouseCameraPosition { get; protected set; }
+
+        #endregion
 
         /// <summary>
         /// The input manager as a field (much less to type)
@@ -91,8 +112,17 @@ namespace Railgun.Editor.App.Controls
             ////
             base.Initialize();
             ////
-            
 
+            //Create generic white pixel
+            whitePixel = new Texture2D(GraphicsDevice, 1, 1);
+            whitePixel.SetData(new Color[] { Color.White });
+
+        }
+
+        protected override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            ComputeMousePosition();
         }
 
         /// <summary>
@@ -181,8 +211,7 @@ namespace Railgun.Editor.App.Controls
         public void ResetCamera()
         {
             Editor.Cam.Zoom = 1f;
-            //Center to the origin tile
-            Editor.Cam.Position = new Vector2(GridSize / 2);
+            Editor.Cam.Position = Editor.Cam.DefaultPosition;
         }
 
         /// <summary>
@@ -197,6 +226,20 @@ namespace Railgun.Editor.App.Controls
             //Clamp at values too big or small
             Editor.Cam.Zoom = MathHelper.Clamp(
                 Editor.Cam.Zoom + Editor.Cam.Zoom * zoom / 10, MinZoom, MaxZoom);
+        }
+
+        /// <summary>
+        /// Updates the mouse position relative to the camera and to the grid
+        /// </summary>
+        public void ComputeMousePosition()
+        {
+            //The mouse pos transformed by the inverse cam matrix
+            MouseCameraPosition = Vector2.Transform(
+                input.CurrentMouseState.Position.ToVector2(),
+                Matrix.Invert(Editor.Cam.Transform));
+
+            //Transform absolute mouse position by cam, get grid point of that
+            MouseGridPosition = Map.GetGridPoint(MouseCameraPosition, GridSize).ToPoint();
         }
 
         #endregion
