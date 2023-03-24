@@ -95,8 +95,9 @@ namespace Railgun.Editor.App
                     }
                     label.ForeColor = DarkTheme.Label;
                 }
-                //If a table layout
-                else if (control is TableLayoutPanel)
+                //If a table layout and not invisible
+                else if (control is TableLayoutPanel
+                    && control.BackColor != Color.Transparent)
                 {
                     //These act as borders that surround controls
                     TableLayoutPanel table = control as TableLayoutPanel;
