@@ -573,7 +573,6 @@
             // 
             this.mapEditor.BackColor = System.Drawing.SystemColors.Control;
             this.mapEditor.CurrentMap = null;
-            this.mapEditor.CurrentTile = null;
             this.mapEditor.Cursor = System.Windows.Forms.Cursors.Cross;
             this.mapEditor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mapEditor.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

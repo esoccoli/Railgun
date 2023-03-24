@@ -36,11 +36,6 @@ namespace Railgun.Editor.App.Controls
         /// </summary>
         public Map CurrentMap { get; set; }
 
-        /// <summary>
-        /// The current tile to be placed
-        /// </summary>
-        public Tile CurrentTile { get; set; }
-
         #endregion
 
         #region Selector
@@ -112,26 +107,15 @@ namespace Railgun.Editor.App.Controls
             //Pan and zoom
             PerformUserActions();
 
-            //If selecting with shift click
-            if (input.IsDown(Keys.LeftShift))
+            //If selecting, select
+            if(selecting)
+            {
+                SelectObjects();
+            }
+            else if(!panning)//If not selecting nor panning, placing
             {
                 //Set mouse cursor
-                Cursor = System.Windows.Forms.Cursors.Cross;
-                if (input.IsDown(MouseButtonTypes.Left))
-                {
-                    SelectObjects(MouseButtonTypes.Left);
-                }
-            }
-            else if (input.IsDown(MouseButtonTypes.Right))//If selecting with right click
-            {
-                SelectObjects(MouseButtonTypes.Right);
-            }
-            else
-            {
-                selecting = false;
-
-                //Set mouse cursor
-                //Cursor = System.Windows.Forms.Cursors.Arrow;
+                Cursor = System.Windows.Forms.Cursors.Arrow;
 
                 //If mouse down
                 if (input.IsDown(MouseButtonTypes.Left))
@@ -202,7 +186,46 @@ namespace Railgun.Editor.App.Controls
 
         #endregion
 
-        #region Actions
+        #region Actions and Events
+
+        /// <summary>
+        /// Called when a button on the mouse is pressed, starts panning and selection
+        /// </summary>
+        protected override void OnMouseDown(System.Windows.Forms.MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+
+            //If alt dragging or middle dragging
+            if (e.Button == System.Windows.Forms.MouseButtons.Right ||
+                (input.IsDown(Keys.LeftShift) &&
+                e.Button == System.Windows.Forms.MouseButtons.Left))
+            {
+                //Set mouse cursor
+                Cursor = System.Windows.Forms.Cursors.Cross;
+                selecting = true;
+                //Set initial selection point
+                selectorPoint = input.CurrentMouseState.Position;
+            }
+        }
+
+        /// <summary>
+        /// Called when a button on the mouse is released, stops panning and selection
+        /// </summary>
+        protected override void OnMouseUp(System.Windows.Forms.MouseEventArgs e)
+        {
+            base.OnMouseUp(e);
+
+            //If alt dragging or middle dragging
+            if (e.Button == System.Windows.Forms.MouseButtons.Right ||
+                (e.Button == System.Windows.Forms.MouseButtons.Left))
+            {
+                //Set mouse cursor
+                Cursor = System.Windows.Forms.Cursors.Arrow;
+                //Reset selection
+                selectionRectangle = Rectangle.Empty;
+                selecting = false;
+            }
+        }
 
         /// <summary>
         /// Places the current selected object
@@ -220,21 +243,8 @@ namespace Railgun.Editor.App.Controls
         /// <summary>
         /// Updates for selections using the specified mouse button
         /// </summary>
-        /// <param name="mouseButton">The button to check for</param>
-        public void SelectObjects(MouseButtonTypes mouseButton)
+        public void SelectObjects()
         {
-            //If not already down, do starting procedures
-            if (!input.WasDown(mouseButton))
-            {
-                //Set mouse cursor
-                Cursor = System.Windows.Forms.Cursors.Cross;
-                //Set initial selection point
-                selectorPoint = input.CurrentMouseState.Position;
-                selecting = true;
-            }
-
-            //Selecting procedures
-
             //Set selection rectangle
             selectionRectangle = new Rectangle(
                 selectorPoint, input.CurrentMouseState.Position - selectorPoint);
