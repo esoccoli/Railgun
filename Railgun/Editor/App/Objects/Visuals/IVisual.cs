@@ -27,5 +27,14 @@ namespace Railgun.Editor.App.Objects.Visuals
         /// <param name="spriteBatch">The sprite batch to draw to</param>
         /// <param name="position">The position to draw to</param>
         void Draw(SpriteBatch spriteBatch, Vector2 position);
+
+        #region Static Prefabs
+
+        /// <summary>
+        /// Creates a new empty visual
+        /// </summary>
+        IVisual Empty { get; }
+
+        #endregion
     }
 }

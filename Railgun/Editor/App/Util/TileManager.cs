@@ -37,8 +37,8 @@ namespace Railgun.Editor.App.Util
         /// </summary>
         public TileManager()
         {
-
-            CurrentTile = null;
+            CurrentTile = Tile.Empty;
+            SelectedTiles = new List<Tile>();
         }
 
         /// <summary>
