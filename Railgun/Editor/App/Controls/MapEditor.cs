@@ -160,13 +160,15 @@ namespace Railgun.Editor.App.Controls
 
             Editor.spriteBatch.Draw(test,Vector2.Zero,Color.White);
 
-            Editor.spriteBatch.Draw(whitePixel,
-                new Rectangle(
-                    MouseGridPosition * new Point(CurrentMap.TileSize),
-                    new Point((int)GridSize)), Color.White);
+            //Editor.spriteBatch.Draw(whitePixel,
+            //    new Rectangle(
+            //        MouseGridPosition * new Point(CurrentMap.TileSize),
+            //        new Point((int)GridSize)), Color.White);
 
             TileManager.Instance.CurrentTile.Draw(Editor.spriteBatch,
-                (MouseGridPosition * new Point(CurrentMap.TileSize)).ToVector2());
+                new Rectangle(
+                    MouseGridPosition * new Point(CurrentMap.TileSize),
+                    new Point((int)GridSize)));
 
             //Editor.graphics.DrawPrimitives(PrimitiveType.TriangleList, 0, 5);
 

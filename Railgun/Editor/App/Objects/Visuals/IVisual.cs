@@ -22,10 +22,17 @@ namespace Railgun.Editor.App.Objects.Visuals
         void Update(GameTime gameTime);
 
         /// <summary>
-        /// Draws this visual to the specified sprite batch
+        /// Draws this visual to the specified sprite batch and position
         /// </summary>
         /// <param name="spriteBatch">The sprite batch to draw to</param>
         /// <param name="position">The position to draw to</param>
         void Draw(SpriteBatch spriteBatch, Vector2 position);
+
+        /// <summary>
+        /// Draws this visual to the specified sprite batch and destination
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch to draw to</param>
+        /// <param name="destination">The destination rectangle to draw to</param>
+        void Draw(SpriteBatch spriteBatch, Rectangle destination);
     }
 }

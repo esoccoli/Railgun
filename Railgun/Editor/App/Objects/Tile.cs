@@ -55,11 +55,21 @@ namespace Railgun.Editor.App.Objects
         /// <summary>
         /// Draws this tile to the specified sprite batch and position
         /// </summary>
-        /// <param name="sprite"></param>
+        /// <param name="spriteBatch"></param>
         /// <param name="position"></param>
         public void Draw(SpriteBatch spriteBatch, Vector2 position)
         {
             Visual.Draw(spriteBatch, position);
+        }
+
+        /// <summary>
+        /// Draws this tile to the specified sprite batch and destination rectangle
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        /// <param name="destination"></param>
+        public void Draw(SpriteBatch spriteBatch, Rectangle destination)
+        {
+            Visual.Draw(spriteBatch, destination);
         }
 
         /// <summary>

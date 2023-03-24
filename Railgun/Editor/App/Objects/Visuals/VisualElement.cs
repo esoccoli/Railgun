@@ -107,6 +107,23 @@ namespace Railgun.Editor.App.Objects.Visuals
             }
         }
 
+        /// <summary>
+        /// Draws this visual to the specified spritebatch and destination rectangle
+        /// <para>Note: scaling property won't work if using this overload</para>
+        /// </summary>
+        /// <param name="spriteBatch">The spritebatch to draw to</param>
+        /// <param name="destination">The destination rectangle to draw to</param>
+        public void Draw(SpriteBatch spriteBatch, Rectangle destination)
+        {
+            //Only draw if not null
+            if (Texture != null)
+            {
+                spriteBatch.Draw(
+                Texture, destination, Source, Tint,
+                Rotation, Vector2.Zero, Flip, 0f);
+            }
+        }
+
         #region Static Prefabs
 
         /// <summary>
