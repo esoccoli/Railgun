@@ -38,6 +38,22 @@ namespace Railgun.Editor.App.Controls
 
         #endregion
 
+        //If I didn't do this, the designer would try to set a default value
+        //before the map is set in initialize
+        [System.ComponentModel.Browsable(false)]
+        /// <summary>
+        /// The map's grid size (always an integer value)
+        /// </summary>
+        public override float GridSize
+        {
+            get => CurrentMap.TileSize;
+            set
+            {
+                if(CurrentMap != null)
+                    CurrentMap.TileSize = (int)value;
+            }
+        }
+
         #region Selector
 
         /// <summary>
@@ -78,7 +94,7 @@ namespace Railgun.Editor.App.Controls
             selectorColorOutline = new Color(Color.White, 0.2f);
 
             //Start in a new map
-            CurrentMap = new Map(100);
+            CurrentMap = new Map(128);
 
             //Set max and min zoom
             MinZoom = 0.1f;
@@ -93,6 +109,9 @@ namespace Railgun.Editor.App.Controls
 
             test = Editor.Content.Load<Texture2D>("test");
             consolas20 = Editor.Content.Load<SpriteFont>("Consolas20");
+
+            //Set debug log font
+            DebugLog.Instance.Font = consolas20;
 
             //Center camera on the 0,0 coordinate
             Editor.Cam.DefaultPosition = new Vector2(GridSize / 2);
@@ -144,10 +163,8 @@ namespace Railgun.Editor.App.Controls
 
             Editor.spriteBatch.Draw(test,Vector2.Zero,Color.White);
 
-            //Editor.spriteBatch.Draw(whitePixel,
-            //    new Rectangle(
-            //        MouseGridPosition * new Point(CurrentMap.TileSize),
-            //        new Point((int)GridSize)), Color.White);
+            //Draw map
+            CurrentMap.Draw(Editor.spriteBatch);
 
             TileManager.Instance.CurrentTile.Draw(Editor.spriteBatch,
                 new Rectangle(
@@ -182,6 +199,10 @@ namespace Railgun.Editor.App.Controls
             //Set depth back to default
             Editor.graphics.DepthStencilState = DepthStencilState.Default;
 
+            //Draw DEBUG log
+            Editor.spriteBatch.Begin();
+            DebugLog.Instance.Draw(Editor.spriteBatch, GraphicsDevice.Viewport);
+            Editor.spriteBatch.End();
         }
 
         #endregion
@@ -233,10 +254,18 @@ namespace Railgun.Editor.App.Controls
         public void Place()
         {
             //If placing
-            if(input.IsDown(MouseButtonTypes.Left))
+            if(input.JustPressed(MouseButtonTypes.Left))
             {
-                //Place current object
-                //Tile tile = CurrentTile.
+                //Place current tile at tile point
+                CurrentMap[CurrentMap.GetGridPoint(
+                    MouseCameraPosition)]
+                    = TileManager.Instance.CurrentTile;
+
+                //DEBUG log
+                DebugLog.Instance.AddPersistantMessage(
+                    $"[Tile placed] Mouse: " +
+                    $"{CurrentMap.GetGridPoint(MouseCameraPosition)}",
+                    Color.Red);
             }
         }
         

@@ -1,4 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Railgun.Editor.App.Objects.Visuals;
+using Railgun.Editor.App.Util;
+using SharpDX.Direct2D1.Effects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,19 +19,46 @@ namespace Railgun.Editor.App.Objects
     internal class Map
     {
         /// <summary>
-        /// The size of a tile within this map
+        /// The map grid size
         /// </summary>
-        public int TileSize { get; protected set; }
+        public int TileSize
+        {
+            get => tileSize;
+            set
+            {
+                //Only if valid size
+                if(value > 0)
+                {
+                    tileSize = value;
+                }
+            }
+        }
+        private int tileSize;
 
         /// <summary>
-        /// The tiles in this map
+        /// A list of tilemaps where each list is a layer. Tilemaps are dictionaries
+        /// where the key is the point on the map and the value is the tile at that point
+        /// <para>Note: layers with larger indecies will appear above layers
+        /// with smaller indecies</para>
         /// </summary>
-        public List<Tile> Tiles { get; protected set; }
+        public List<Dictionary<Vector2, Tile>> Layers { get; protected set; }
 
         /// <summary>
         /// The entities in this map
         /// </summary>
         public List<Entity> Entities { get; protected set; }
+
+        /// <summary>
+        /// The tile at the specified grid position and layer
+        /// </summary>
+        /// <param name="gridPosition">The position relative to the grid</param>
+        /// <param name="layer">The drawing layer</param>
+        /// <returns>The tile at this position</returns>
+        public Tile this[Vector2 gridPosition, int layer = 0]
+        {
+            get => Layers[layer][gridPosition];
+            set => Layers[layer][gridPosition] = value;
+        }
 
         /// <summary>
         /// Creates a new map with the specified tile size
@@ -36,9 +67,42 @@ namespace Railgun.Editor.App.Objects
         public Map(int tileSize)
         {
             TileSize = tileSize;
-            Tiles = new List<Tile>();
+            Layers = new List<Dictionary<Vector2, Tile>>
+            {
+                new Dictionary<Vector2, Tile>()//Add default layer 0
+            };
             Entities = new List<Entity>();
         }
+
+        #region Drawing
+
+        /// <summary>
+        /// Draws this map to the specified sprite batch
+        /// </summary>
+        /// <param name="spriteBatch">THe sprite batch to draw to</param>
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            //Draw each layer
+            foreach(Dictionary<Vector2, Tile> layer in Layers)
+            {
+                //Draw each tile in this layer
+                foreach(KeyValuePair<Vector2, Tile> tile in layer)
+                {
+                    //Draw the tile to rectangle corresponding to its grid location
+                    tile.Value.Draw(
+                        spriteBatch, new Rectangle(
+                            (tile.Key * TileSize).ToPoint(),
+                            new Point(TileSize)));
+
+                    //DEBUG
+                    DebugLog.Instance.AddUpdateMessage(tile.Key.ToString());
+                }
+            }
+        }
+
+        #endregion
+
+        #region Useful Methods
 
         /// <summary>
         /// Returns the point on this map's grid corresponding to the specified point
@@ -60,5 +124,7 @@ namespace Railgun.Editor.App.Objects
         {
             return Vector2.Floor(rawPoint / new Vector2(tileSize));
         }
+
+        #endregion
     }
 }

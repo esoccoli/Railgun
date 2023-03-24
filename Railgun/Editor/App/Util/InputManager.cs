@@ -25,6 +25,8 @@ namespace Railgun.Editor.App.Util
     /// </summary>
     internal class InputManager
     {
+        #region Singleton Design
+
         /// <summary>
         /// The singleton instance of this InputManager
         /// </summary>
@@ -41,6 +43,7 @@ namespace Railgun.Editor.App.Util
         }
         private static InputManager instance;
 
+        #endregion
 
         /// <summary>
         /// Returns the current mouse state

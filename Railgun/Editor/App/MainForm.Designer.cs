@@ -577,7 +577,6 @@
             this.mapEditor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mapEditor.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mapEditor.ForeColor = System.Drawing.Color.Black;
-            this.mapEditor.GridSize = 0F;
             this.mapEditor.Location = new System.Drawing.Point(0, 0);
             this.mapEditor.Margin = new System.Windows.Forms.Padding(0, 2, 0, 4);
             this.mapEditor.MaxZoom = 0.1F;

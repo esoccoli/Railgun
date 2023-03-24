@@ -23,6 +23,9 @@ namespace Railgun.Editor.App.Util
     /// </summary>
     internal class TileManager
     {
+
+        #region Singleton Design
+
         /// <summary>
         /// The instance of this tile manager
         /// </summary>
@@ -45,6 +48,8 @@ namespace Railgun.Editor.App.Util
             CurrentTile = Tile.Empty;
             SelectedTiles = new List<Tile>();
         }
+
+        #endregion
 
         /// <summary>
         /// An event that is called when the current tile is changed
