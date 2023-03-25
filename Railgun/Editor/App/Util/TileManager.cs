@@ -65,11 +65,16 @@ namespace Railgun.Editor.App.Util
             set
             {
                 currentTile = value;
+                //Create tile preview (transparent to be shown on grid)
+                PreviewTile = value.Clone();
+                
                 //Invalidates current tile display if not null
                 OnCurrentTileChange?.Invoke();
             }
         }
         private Tile currentTile;
+
+        public Tile PreviewTile { get; private set; }
 
         /// <summary>
         /// A list of selected tiles to be edited

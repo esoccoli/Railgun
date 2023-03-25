@@ -94,8 +94,8 @@ namespace Railgun.Editor.App.Objects
                             (tile.Key * TileSize).ToPoint(),
                             new Point(TileSize)));
 
-                    //DEBUG
-                    DebugLog.Instance.AddUpdateMessage(tile.Key.ToString());
+                    ////DEBUG
+                    //DebugLog.Instance.AddUpdateMessage(tile.Key.ToString());
                 }
             }
         }

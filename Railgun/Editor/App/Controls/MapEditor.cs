@@ -20,8 +20,7 @@ namespace Railgun.Editor.App.Controls
     /// </summary>
     internal class MapEditor : GridControl
     {
-        //DEBUG
-        private Texture2D test;
+        //DEBUG font
         private SpriteFont consolas20;
 
         #region Bigger Managing Classes
@@ -107,10 +106,11 @@ namespace Railgun.Editor.App.Controls
             //Set bg color
             Editor.BackgroundColor = new Color(25, 25, 25);
 
-            test = Editor.Content.Load<Texture2D>("test");
             consolas20 = Editor.Content.Load<SpriteFont>("Consolas20");
 
-            //Set debug log font
+            //Setup debug log
+            DebugLog.Instance.Spacing = 25f;
+            DebugLog.Instance.Scale = 0.8f;
             DebugLog.Instance.Font = consolas20;
 
             //Center camera on the 0,0 coordinate
@@ -133,13 +133,17 @@ namespace Railgun.Editor.App.Controls
             }
             else if(!panning)//If not selecting nor panning, placing
             {
-                //Set mouse cursor
-                Cursor = System.Windows.Forms.Cursors.Arrow;
-
-                //If mouse down
-                if (input.IsDown(MouseButtonTypes.Left))
+                //Only perform if mouse is inside this control
+                if (IsMouseInsideControl)
                 {
-                    Place();
+                    //Set mouse cursor
+                    Cursor = System.Windows.Forms.Cursors.Arrow;
+
+                    //If mouse down
+                    if (input.IsDown(MouseButtonTypes.Left))
+                    {
+                        Place();
+                    }
                 }
             }
 
@@ -160,12 +164,10 @@ namespace Railgun.Editor.App.Controls
                 Editor.Cam.Transform);//Transform by camera
             ////
 
-
-            Editor.spriteBatch.Draw(test,Vector2.Zero,Color.White);
-
             //Draw map
             CurrentMap.Draw(Editor.spriteBatch);
 
+            //Draw tile preview
             TileManager.Instance.CurrentTile.Draw(Editor.spriteBatch,
                 new Rectangle(
                     MouseGridPosition * new Point(CurrentMap.TileSize),
@@ -254,18 +256,18 @@ namespace Railgun.Editor.App.Controls
         public void Place()
         {
             //If placing
-            if(input.JustPressed(MouseButtonTypes.Left))
+            if(input.IsDown(MouseButtonTypes.Left))
             {
                 //Place current tile at tile point
                 CurrentMap[CurrentMap.GetGridPoint(
                     MouseCameraPosition)]
                     = TileManager.Instance.CurrentTile;
 
-                //DEBUG log
-                DebugLog.Instance.AddPersistantMessage(
-                    $"[Tile placed] Mouse: " +
-                    $"{CurrentMap.GetGridPoint(MouseCameraPosition)}",
-                    Color.Red);
+                ////DEBUG log
+                //DebugLog.Instance.AddPersistantMessage(
+                //    $"[Tile placed] Mouse: " +
+                //    $"{CurrentMap.GetGridPoint(MouseCameraPosition)}",
+                //    Color.Red);
             }
         }
         

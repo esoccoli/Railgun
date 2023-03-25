@@ -143,7 +143,7 @@ namespace Railgun.Editor.App.Controls
             ////
             Editor.spriteBatch.End();
 
-            //Draw grid
+            //Draw grid and other shapebatch visuals
 
             //Begin shapebatch without depth (so that shapes are drawn to the top)
             Editor.graphics.DepthStencilState = DepthStencilState.None;

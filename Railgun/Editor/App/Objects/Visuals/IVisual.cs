@@ -15,6 +15,8 @@ namespace Railgun.Editor.App.Objects.Visuals
     /// </summary>
     internal interface IVisual
     {
+
+
         /// <summary>
         /// Updates this visual if needed
         /// </summary>

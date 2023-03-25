@@ -65,8 +65,8 @@ namespace Railgun.Editor.App.Objects
         /// <summary>
         /// Draws this tile to the specified sprite batch and destination rectangle
         /// </summary>
-        /// <param name="spriteBatch"></param>
-        /// <param name="destination"></param>
+        /// <param name="spriteBatch">Sprite batch to draw to</param>
+        /// <param name="destination">Destination rectangle to draw to</param>
         public void Draw(SpriteBatch spriteBatch, Rectangle destination)
         {
             Visual.Draw(spriteBatch, destination);

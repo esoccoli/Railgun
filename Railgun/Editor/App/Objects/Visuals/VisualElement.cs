@@ -14,39 +14,37 @@ namespace Railgun.Editor.App.Objects.Visuals
     /// <para>Author: Jonathan Jan</para>
     /// Date Created: 3/10/2023
     /// </summary>
-    internal class VisualElement : IVisual
+    internal struct VisualElement : IVisual
     {
         /// <summary>
         /// The texture of this visual.
-        /// <para>Note: NULLABLE but can't mark as nullable
-        /// since this is an older .NET version</para>
         /// </summary>
-        public Texture2D Texture {  get; protected set; }
+        public Texture2D Texture {  get; }
 
         /// <summary>
         /// The source rectangle of this visual's texture
         /// </summary>
-        public Rectangle? Source { get; protected set; }
+        public Rectangle? Source { get; }
 
         /// <summary>
         /// The tint of this visual
         /// </summary>
-        public Color Tint { get; protected set; }
+        public Color Tint { get; }
 
         /// <summary>
         /// The rotation of this visual
         /// </summary>
-        public float Rotation { get; protected set; }
+        public float Rotation { get; }
 
         /// <summary>
         /// The scaling size of this visual
         /// </summary>
-        public float Scale { get; protected set; }
+        public float Scale { get; }
 
         /// <summary>
         /// The sprite effect on this visual (how it is flipped)
         /// </summary>
-        public SpriteEffects Flip { get; protected set; }
+        public SpriteEffects Flip { get; }
 
         #region Constructors
 

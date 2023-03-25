@@ -68,7 +68,8 @@ namespace Railgun.Editor.App.Util
         {
             updateMessages = new List<Message>();
             persistantMessages = new List<Message>();
-            MessageSpacing = 40f;
+            Spacing = 40f;
+            Scale = 1f;
         }
 
         #endregion
@@ -87,7 +88,12 @@ namespace Railgun.Editor.App.Util
         /// <summary>
         /// The spacing between each message line
         /// </summary>
-        public float MessageSpacing { get; set; }
+        public float Spacing { get; set; }
+
+        /// <summary>
+        /// The scaling of the message
+        /// </summary>
+        public float Scale { get; set; }
 
         /// <summary>
         /// The font to draw with
@@ -165,9 +171,12 @@ namespace Railgun.Editor.App.Util
             //Draw all update messages
             foreach(Message message in updateMessages)
             {
-                spriteBatch.DrawString(Font, message.Text, currentPosition, message.Color);
+                spriteBatch.DrawString(
+                    Font, message.Text, currentPosition,
+                    message.Color, 0f, Vector2.Zero, Scale,
+                    SpriteEffects.None, 0f);
                 //Increment position by spacing
-                currentPosition.Y += MessageSpacing;
+                currentPosition.Y += Spacing;
             }
 
             //Clear current message log to prepare for next frame
@@ -188,10 +197,10 @@ namespace Railgun.Editor.App.Util
 
                 spriteBatch.DrawString(
                     Font, message.Text, currentPosition,
-                    message.Color, 0f, origin, 1f,
+                    message.Color, 0f, origin, Scale,
                     SpriteEffects.None, 0f);
                 //Increment position by spacing
-                currentPosition.Y += MessageSpacing;
+                currentPosition.Y += Spacing;
 
                 //Check if going off screen
                 if(currentPosition.Y > viewport.Height)
