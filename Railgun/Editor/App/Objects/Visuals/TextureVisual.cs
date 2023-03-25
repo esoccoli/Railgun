@@ -94,13 +94,14 @@ namespace Railgun.Editor.App.Objects.Visuals
         /// </summary>
         /// <param name="spriteBatch">The spritebatch to draw to</param>
         /// <param name="position">The position to draw to</param>
-        public void Draw(SpriteBatch spriteBatch, Vector2 position)
+        /// <param name="opacity">The opacity of the tint using multiplied color</param>
+        public void Draw(SpriteBatch spriteBatch, Vector2 position, float opacity = 1f)
         {
             //Only draw if not null
             if(Texture != null)
             {
                 spriteBatch.Draw(
-                Texture, position, Source, Tint,
+                Texture, position, Source, Tint * opacity,
                 Rotation, Vector2.Zero, Scale, Flip, 0f);
             }
         }
@@ -111,13 +112,14 @@ namespace Railgun.Editor.App.Objects.Visuals
         /// </summary>
         /// <param name="spriteBatch">The spritebatch to draw to</param>
         /// <param name="destination">The destination rectangle to draw to</param>
-        public void Draw(SpriteBatch spriteBatch, Rectangle destination)
+        /// <param name="opacity">The opacity of the tint using multiplied color</param>
+        public void Draw(SpriteBatch spriteBatch, Rectangle destination, float opacity = 1f)
         {
             //Only draw if not null
             if (Texture != null)
             {
                 spriteBatch.Draw(
-                Texture, destination, Source, Tint,
+                Texture, destination, Source, Tint * opacity,
                 Rotation, Vector2.Zero, Flip, 0f);
             }
         }

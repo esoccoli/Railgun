@@ -57,9 +57,10 @@ namespace Railgun.Editor.App.Objects
         /// </summary>
         /// <param name="spriteBatch"></param>
         /// <param name="position"></param>
-        public void Draw(SpriteBatch spriteBatch, Vector2 position)
+        /// <param name="opacity">The opacity of the tint using multiplied color</param>
+        public void Draw(SpriteBatch spriteBatch, Vector2 position, float opacity = 1f)
         {
-            Visual.Draw(spriteBatch, position);
+            Visual.Draw(spriteBatch, position, opacity);
         }
 
         /// <summary>
@@ -67,9 +68,10 @@ namespace Railgun.Editor.App.Objects
         /// </summary>
         /// <param name="spriteBatch">Sprite batch to draw to</param>
         /// <param name="destination">Destination rectangle to draw to</param>
-        public void Draw(SpriteBatch spriteBatch, Rectangle destination)
+        /// <param name="opacity">The opacity of the tint using multiplied color</param>
+        public void Draw(SpriteBatch spriteBatch, Rectangle destination, float opacity = 1f)
         {
-            Visual.Draw(spriteBatch, destination);
+            Visual.Draw(spriteBatch, destination, opacity);
         }
 
         /// <summary>

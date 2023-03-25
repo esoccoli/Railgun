@@ -125,7 +125,7 @@ namespace Railgun.Editor.App.Controls
             ////
 
             Editor.spriteBatch.Begin(SpriteSortMode.Deferred,
-                BlendState.NonPremultiplied,//Better transparency
+                BlendState.AlphaBlend,//Better transparency
                 SamplerState.PointClamp,//Perfect Pixelation
                 DepthStencilState.Default,
                 RasterizerState.CullNone,
@@ -147,6 +147,7 @@ namespace Railgun.Editor.App.Controls
 
             //Begin shapebatch without depth (so that shapes are drawn to the top)
             Editor.graphics.DepthStencilState = DepthStencilState.None;
+            Editor.graphics.BlendState = BlendState.NonPremultiplied;//For shapebatch transparency
             ShapeBatch.Begin(Editor.graphics);
             ////
 

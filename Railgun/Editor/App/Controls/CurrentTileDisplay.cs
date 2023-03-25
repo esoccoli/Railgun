@@ -38,7 +38,7 @@ namespace Railgun.Editor.App.Controls
         {
             base.Draw();
             Editor.spriteBatch.Begin(SpriteSortMode.Deferred,
-                BlendState.NonPremultiplied,//Better transparency
+                BlendState.AlphaBlend,//Better transparency
                 SamplerState.PointClamp,//Perfect Pixelation
                 DepthStencilState.Default,
                 RasterizerState.CullNone);

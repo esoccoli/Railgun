@@ -53,6 +53,11 @@ namespace Railgun.Editor.App.Controls
             }
         }
 
+        /// <summary>
+        /// Whether the user is placing or not
+        /// </summary>
+        private bool placing;
+
         #region Selector
 
         /// <summary>
@@ -134,13 +139,13 @@ namespace Railgun.Editor.App.Controls
             else if(!panning)//If not selecting nor panning, placing
             {
                 //Only perform if mouse is inside this control
-                if (IsMouseInsideControl)
+                if(IsMouseInsideControl)
                 {
                     //Set mouse cursor
                     Cursor = System.Windows.Forms.Cursors.Arrow;
 
-                    //If mouse down
-                    if (input.IsDown(MouseButtonTypes.Left))
+                    //Placing
+                    if(placing)
                     {
                         Place();
                     }
@@ -156,7 +161,7 @@ namespace Railgun.Editor.App.Controls
             base.Draw();
             //Things affected by the camera
             Editor.spriteBatch.Begin(SpriteSortMode.Deferred,
-                BlendState.NonPremultiplied,//Better transparency
+                BlendState.AlphaBlend,//Better transparency
                 SamplerState.PointClamp,//Perfect Pixelation
                 DepthStencilState.Default,
                 RasterizerState.CullNone,
@@ -167,20 +172,24 @@ namespace Railgun.Editor.App.Controls
             //Draw map
             CurrentMap.Draw(Editor.spriteBatch);
 
-            //Draw tile preview
-            TileManager.Instance.CurrentTile.Draw(Editor.spriteBatch,
-                new Rectangle(
-                    MouseGridPosition * new Point(CurrentMap.TileSize),
-                    new Point((int)GridSize)));
-
-            //Editor.graphics.DrawPrimitives(PrimitiveType.TriangleList, 0, 5);
-
+            //Only show if mouse is inside this control and not selecting
+            if(IsMouseInsideControl && !selecting)
+            {
+                //Draw transparent tile preview
+                TileManager.Instance.CurrentTile.Draw(
+                    Editor.spriteBatch,
+                    new Rectangle(
+                        MouseGridPosition * new Point(CurrentMap.TileSize),
+                        new Point((int)GridSize)),
+                    0.5f);
+            }
 
             ////
             Editor.spriteBatch.End();
 
             //Begin shapebatch without depth (so that shapes are drawn to the top)
             Editor.graphics.DepthStencilState = DepthStencilState.None;
+            Editor.graphics.BlendState = BlendState.NonPremultiplied;//For shapebatch transparency
             ShapeBatch.Begin(Editor.graphics);
             ////
 
@@ -198,8 +207,6 @@ namespace Railgun.Editor.App.Controls
 
             ////
             ShapeBatch.End();
-            //Set depth back to default
-            Editor.graphics.DepthStencilState = DepthStencilState.Default;
 
             //Draw DEBUG log
             Editor.spriteBatch.Begin();
@@ -229,6 +236,12 @@ namespace Railgun.Editor.App.Controls
                 //Set initial selection point
                 selectorPoint = input.CurrentMouseState.Position;
             }
+
+            //If not panning or selecting
+            if(!panning && !selecting)
+            {
+                placing = true;
+            }
         }
 
         /// <summary>
@@ -247,6 +260,8 @@ namespace Railgun.Editor.App.Controls
                 //Reset selection
                 selectionRectangle = Rectangle.Empty;
                 selecting = false;
+                //Stop placing
+                placing = false;
             }
         }
 
