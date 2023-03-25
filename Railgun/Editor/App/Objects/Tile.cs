@@ -86,7 +86,7 @@ namespace Railgun.Editor.App.Objects
         /// <summary>
         /// An empty tile
         /// </summary>
-        public static Tile Empty => new Tile(VisualElement.Empty, false);
+        public static Tile Empty => new Tile(TextureVisual.Empty, false);
 
         #endregion
     }

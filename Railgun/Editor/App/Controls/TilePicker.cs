@@ -62,7 +62,7 @@ namespace Railgun.Editor.App.Controls
         {
             //Create tile from selection
             TileManager.Instance.CurrentTile =
-                new Tile(new VisualElement(testure, selectionRectangle),
+                new Tile(new TextureVisual(testure, selectionRectangle),
                 true);
         }
 

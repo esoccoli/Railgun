@@ -14,7 +14,7 @@ namespace Railgun.Editor.App.Objects.Visuals
     /// <para>Author: Jonathan Jan</para>
     /// Date Created: 3/10/2023
     /// </summary>
-    internal struct VisualElement : IVisual
+    internal struct TextureVisual : IVisual
     {
         /// <summary>
         /// The texture of this visual.
@@ -57,7 +57,7 @@ namespace Railgun.Editor.App.Objects.Visuals
         /// <param name="rotation">Rotation</param>
         /// <param name="scale">Scaling size</param>
         /// <param name="flip">Sprite effect for orientation</param>
-        public VisualElement(Texture2D texture = null, Rectangle? source = null,
+        public TextureVisual(Texture2D texture = null, Rectangle? source = null,
             float rotation = 0f, float scale = 1f, SpriteEffects flip = SpriteEffects.None)
         : this(Color.White, texture, source, rotation, scale, flip) { }
 
@@ -70,7 +70,7 @@ namespace Railgun.Editor.App.Objects.Visuals
         /// <param name="rotation">Rotation</param>
         /// <param name="scale">Scaling size</param>
         /// <param name="flip">Sprite effect for orientation</param>
-        public VisualElement(Color tint, Texture2D texture = null, Rectangle? source = null,
+        public TextureVisual(Color tint, Texture2D texture = null, Rectangle? source = null,
             float rotation = 0f, float scale = 1f, SpriteEffects flip = SpriteEffects.None)
         {
             Texture = texture;
@@ -127,7 +127,7 @@ namespace Railgun.Editor.App.Objects.Visuals
         /// <summary>
         /// Creates a new empty visual
         /// </summary>
-        public static VisualElement Empty => new VisualElement(Color.White);
+        public static TextureVisual Empty => new TextureVisual(Color.White);
 
         #endregion
     }
