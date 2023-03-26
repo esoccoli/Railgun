@@ -2,8 +2,10 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using Railgun.Editor.App.Objects;
 using Railgun.Editor.App.Util;
+using static Railgun.Editor.App.DarkTheme;
 
 namespace Railgun.Editor.App
 {
@@ -84,6 +86,37 @@ namespace Railgun.Editor.App
                     }
                     menuStrip.Renderer = new DarkTheme.DarkMenuStripRenderer();
                 }
+                //If button
+                //else if (control is Button)
+                //{
+                //    Button button = control as Button;
+                //    button.BackColor = DarkTheme.Panel;
+                //    button.ForeColor = DarkTheme.Label;
+                //    button.FlatStyle = FlatStyle.System;
+                //    button.FlatAppearance.BorderColor = Color.Red;
+                //    button.FlatAppearance.MouseOverBackColor = Color.Blue;
+                //    button.FlatAppearance.MouseDownBackColor = Color.Yellow;
+                //    //button.FlatAppearance. = Color.Yellow;
+
+
+                //    // Create your custom renderer
+                //    DarkTheme.DarkMenuStripRenderer customRenderer = new DarkMenuStripRenderer();
+
+                //    // Set the button's flat style to system
+                //    button.FlatStyle = FlatStyle.System;
+
+                //    // Set the renderer of the button's visual style renderer to your custom renderer
+                //    button.FlatAppearance.BorderSize = 0;
+                //    button.FlatAppearance.MouseOverBackColor = Color.FromArgb(100, 255, 255, 255);
+                //    button.FlatAppearance.MouseDownBackColor = Color.FromArgb(150, 255, 255, 255);
+                //    button.FlatAppearance.CheckedBackColor = Color.FromArgb(200, 255, 255, 255);
+                //    VisualStyleRenderer renderer = new VisualStyleRenderer(VisualStyleElement.Button.PushButton.Normal);
+                //    renderer.SetParameters(VisualStyleElement);
+                //    button.FlatAppearance.MouseOverBackColor = customRenderer.Colors[(int)CustomButtonColor.MouseOver];
+                //    button.FlatAppearance.MouseDownBackColor = customRenderer.Colors[(int)CustomButtonColor.MouseDown];
+                //    button.FlatAppearance.CheckedBackColor = customRenderer.Colors[(int)CustomButtonColor.Checked];
+                //    button.FlatAppearance.BorderColor = customRenderer.Colors[(int)CustomButtonColor.BorderColor];
+                //}
                 //If label
                 else if (control is Label)
                 {

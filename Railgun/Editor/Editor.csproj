@@ -145,10 +145,9 @@
     <None Include="Resources\Minimize.png" />
     <None Include="Resources\Normal.png" />
     <None Include="Resources\Logo.png" />
+    <Content Include="Resources\clockwise-rotation.png" />
     <Content Include="Resources\High Contrast Logo.ico" />
     <Content Include="Resources\High Contrast Logo.png" />
-    <Content Include="Resources\railgun editor logo large.ico" />
-    <Content Include="Resources\railgun editor logo.png" />
     <Content Include="Resources\railgun transparent.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
