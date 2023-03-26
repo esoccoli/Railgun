@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Forms.Controls;
 using Railgun.Editor.App.Objects;
 using Railgun.Editor.App.Util;
+using System.ComponentModel;
 
 namespace Railgun.Editor.App.Controls
 {
@@ -39,18 +40,17 @@ namespace Railgun.Editor.App.Controls
 
         //If I didn't do this, the designer would try to set a default value
         //before the map is set in initialize
-        [System.ComponentModel.Browsable(false)]
+
         /// <summary>
         /// The map's grid size (always an integer value)
         /// </summary>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override float GridSize
         {
             get => CurrentMap.TileSize;
-            set
-            {
-                if(CurrentMap != null)
-                    CurrentMap.TileSize = (int)value;
-            }
+
+            set => CurrentMap.TileSize = (int)value;
         }
 
         /// <summary>

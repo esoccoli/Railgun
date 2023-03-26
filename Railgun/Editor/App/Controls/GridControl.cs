@@ -5,6 +5,7 @@ using MonoGame.Forms.Controls;
 using Railgun.Editor.App.Objects;
 using Railgun.Editor.App.Util;
 using System;
+using System.ComponentModel;
 
 namespace Railgun.Editor.App.Controls
 {
@@ -25,6 +26,8 @@ namespace Railgun.Editor.App.Controls
         /// <summary>
         /// The size of the grid
         /// </summary>
+        //[Browsable(false)]
+        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public virtual float GridSize
         {
             get => gridSize;
