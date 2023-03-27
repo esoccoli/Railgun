@@ -56,6 +56,18 @@ namespace Railgun.Editor.App
 
             //Set tile size to 16 pixels
             textBox_TileSize.Text = "16";
+
+            //Resize square buttons since the designer doesn't understand how since
+            //it sets the size before it changes the margin size
+            button_Edit_Up.Size = new Size(50, 50);
+            button_Edit_Down.Size = new Size(50, 50);
+            button_Edit_Left.Size = new Size(50, 50);
+            button_Edit_Right.Size = new Size(50, 50);
+            button_Edit_FlipHorizontal.Size = new Size(50, 50);
+            button_Edit_FlipVertical.Size = new Size(50, 50);
+            button_Edit_RotateCW.Size = new Size(50, 50);
+            button_Edit_RotateCCW.Size = new Size(50, 50);
+
         }
 
         /// <summary>
@@ -210,6 +222,20 @@ namespace Railgun.Editor.App
             //Set zoom amount
             toolStripStatusLabel_ValueZoom.Text = mapEditor.Editor.Cam.Zoom
                 .ToString("0.00");
+
+            //DEBUG
+            DebugLog.Instance.AddUpdateMessage(button_Edit_RotateCW.Size.ToString());
+            
+            for(int i = 0; i < tableLayoutPanel_EditTable.RowStyles.Count; i++)
+            {
+                DebugLog.Instance.AddUpdateMessage("=="+tableLayoutPanel_EditTable.RowStyles[i].Height.ToString());
+            }
+
+            for (int i = 0; i < tableLayoutPanel_EditTable.ColumnStyles.Count; i++)
+            {
+                DebugLog.Instance.AddUpdateMessage("||"+tableLayoutPanel_EditTable.ColumnStyles[i].Width.ToString());
+            }
+
         }
 
         /// <summary>
@@ -232,14 +258,88 @@ namespace Railgun.Editor.App
 
         #endregion
 
-        #region Menustrip events
+        #region Menustrip Events
+
+        //Edit
+
+        /// <summary>
+        /// Rotates the current tile 90 degrees clockwise OR
+        /// rotates the current selection by 90 degrees clockwise
+        /// </summary>
+        private void Menu_Edit_Rotate90CW_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Rotates the current tile 90 degrees counter-clockwise OR
+        /// rotates the current selection by 90 degrees counter-clockwise
+        /// </summary>
+        private void Menu_Edit_Rotate90CCW_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Flips the current tile horizontally OR
+        /// Flips the current selection horizontally
+        /// </summary>
+        private void Menu_Edit_FlipHorizontally_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Flips the current tile vertically OR
+        /// Flips the current selection vertically
+        /// </summary>
+        private void Menu_Edit_FlipVertically_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Moves the current tile up OR
+        /// Moves the current selection up
+        /// </summary>
+        private void Menu_Edit_MoveUp_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Moves the current tile down OR
+        /// Moves the current selection down
+        /// </summary>
+        private void Menu_Edit_MoveDown_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Moves the current tile left OR
+        /// Moves the current selection left
+        /// </summary>
+        private void Menu_Edit_MoveLeft_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Moves the current tile right OR
+        /// Moves the current selection right
+        /// </summary>
+        private void Menu_Edit_MoveRight_Click(object sender, EventArgs e)
+        {
+
+        }
 
         //View
 
         /// <summary>
         /// Resets the camera of the editor
         /// </summary>
-        private void ResetCamera_Click(object sender, EventArgs e)
+        private void Menu_View_ResetCamera_Click(object sender, EventArgs e)
         {
             mapEditor.ResetCamera();
         }
@@ -247,15 +347,17 @@ namespace Railgun.Editor.App
         /// <summary>
         /// Resets the zoom when zoom in status or menu bar is clicked
         /// </summary>
-        private void ResetZoom_Click(object sender, EventArgs e)
+        private void Menu_View_ResetZoom_Click(object sender, EventArgs e)
         {
             mapEditor.Editor.Cam.Zoom = 1f;
         }
 
+        //Window
+
         /// <summary>
         /// Called when the exit button is clicked
         /// </summary>
-        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Menu_Exit_Click(object sender, EventArgs e)
         {
             //Try to close, if unsaved, then close event will handle it
             Close();
@@ -264,7 +366,7 @@ namespace Railgun.Editor.App
         /// <summary>
         /// Called when the maximize/minimize button is clicked
         /// </summary>
-        private void MaximizeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Menu_Maximize_Click(object sender, EventArgs e)
         {
             //Switch based on the current state of the window
             if (WindowState == FormWindowState.Maximized)
@@ -280,7 +382,7 @@ namespace Railgun.Editor.App
         /// <summary>
         /// Minimizes the window to the taskbar
         /// </summary>
-        private void MinimizeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Menu_Minimize_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
         }
@@ -319,6 +421,9 @@ namespace Railgun.Editor.App
             (sender as TextBox).Text = tilePicker.GridSize.ToString();
         }
 
+
         #endregion
+
+        
     }
 }
