@@ -14,12 +14,12 @@ namespace Railgun.Editor.App.Objects.Visuals
     /// <para>Author: Jonathan Jan</para>
     /// Date Created: 3/10/2023
     /// </summary>
-    internal struct TextureVisual : IVisual
+    internal struct TextureVisual// : IVisual
     {
         /// <summary>
         /// The texture of this visual.
         /// </summary>
-        public Texture2D Texture {  get; }
+        public Texture2D Texture { get; }
 
         /// <summary>
         /// The source rectangle of this visual's texture

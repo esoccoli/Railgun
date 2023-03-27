@@ -19,7 +19,7 @@ namespace Railgun.Editor.App.Objects
         /// <summary>
         /// The visual of this tile
         /// </summary>
-        public IVisual Visual { get; protected set; }
+        public TextureVisual Visual { get; protected set; }
 
         /// <summary>
         /// TRUE if this tile is solid
@@ -30,14 +30,14 @@ namespace Railgun.Editor.App.Objects
         /// Creates a new solid tile with the specified visual
         /// </summary>
         /// <param name="visual">The visual of this tile</param>
-        public Tile(IVisual visual) : this(visual, true) { }
+        public Tile(TextureVisual visual) : this(visual, true) { }
 
         /// <summary>
         /// Creates a new tile with the specified visual and solid status
         /// </summary>
         /// <param name="visual">The visual of this tile</param>
         /// <param name="isSolid">If this tile is solid or not</param>
-        public Tile(IVisual visual, bool isSolid)
+        public Tile(TextureVisual visual, bool isSolid)
         {
             Visual = visual;
             IsSolid = isSolid;

@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using Railgun.Editor.App.Objects;
+using Railgun.Editor.App.Objects.Visuals;
 using Railgun.Editor.App.Util;
 using static Railgun.Editor.App.DarkTheme;
 
@@ -269,6 +270,16 @@ namespace Railgun.Editor.App
         private void Menu_Edit_Rotate90CW_Click(object sender, EventArgs e)
         {
 
+            TextureVisual visual = TileManager.Instance.CurrentTile.Visual;
+            visual = new TextureVisual(
+                visual.Tint,
+                visual.Texture,
+                visual.Source,
+                visual.Rotation - (float)Math.PI/2,
+                visual.Scale,
+                visual.Flip);
+            TileManager.Instance.CurrentTile = 
+                new Tile(visual, TileManager.Instance.CurrentTile.IsSolid);
         }
 
         /// <summary>
