@@ -19,7 +19,10 @@ namespace Railgun.Editor.App
     {
         #region Properties and Fields EMPTY
 
-        
+        /// <summary>
+        /// The name of the current project
+        /// </summary>
+        public string ProjectName { get; set; }
 
         #endregion
 
@@ -70,7 +73,7 @@ namespace Railgun.Editor.App
             button_Edit_RotateCCW.Size = new Size(50, 50);
             currentTileDisplay.Size = new Size(150, 150);
 
-            //Add shortcut keys for single key presses
+            //Add shortcut strings for single key presses
             toolStripMenuItem_Rotate90CW.ShortcutKeyDisplayString = "E";
             toolStripMenuItem_Rotate90CCW.ShortcutKeyDisplayString = "Q";
             toolStripMenuItem_MoveUp.ShortcutKeyDisplayString = "W";
@@ -419,6 +422,20 @@ namespace Railgun.Editor.App
 
         #endregion
 
-        
+        #region File Events
+
+
+
+        #endregion
+
+        /// <summary>
+        /// Prompts the user to save the current map
+        /// </summary>
+        private void Menu_SaveAs_Click(object sender, EventArgs e)
+        {
+            
+
+
+        }
     }
 }

@@ -17,6 +17,11 @@ namespace Railgun.Editor.App.Objects.Visuals
     internal struct TextureVisual// : IVisual
     {
         /// <summary>
+        /// The path to the texture of this visual
+        /// </summary>
+        public string TexturePath { get; }
+
+        /// <summary>
         /// The texture of this visual.
         /// </summary>
         public Texture2D Texture { get; }

@@ -169,6 +169,7 @@
             | System.Windows.Forms.Keys.S)));
             this.toolStripMenuItem_SaveAs.Size = new System.Drawing.Size(233, 26);
             this.toolStripMenuItem_SaveAs.Text = "Save As";
+            this.toolStripMenuItem_SaveAs.Click += new System.EventHandler(this.Menu_SaveAs_Click);
             // 
             // toolStripMenuItem_Edit
             // 
