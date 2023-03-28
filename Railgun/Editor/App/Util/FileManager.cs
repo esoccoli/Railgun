@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using Railgun.Editor.App.Objects;
 using Railgun.Editor.App.Objects.Visuals;
 using System;
@@ -74,6 +76,17 @@ namespace Railgun.Editor.App.Util
             TextureVisual visual = tile.Visual;
 
             //writer.Write();
+        }
+
+        /// <summary>
+        /// Returns a pathed texture using the specified content manager and texture path
+        /// </summary>
+        /// <param name="content">The content manager to load from</param>
+        /// <param name="path">The path of the texture to use</param>
+        /// <returns>The pathed texture</returns>
+        public static PathedTexture LoadPathedTexture(ContentManager content, string path)
+        {
+            return new PathedTexture(path, content.Load<Texture2D>(path));
         }
     }
 }

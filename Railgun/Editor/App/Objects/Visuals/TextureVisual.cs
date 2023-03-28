@@ -17,14 +17,9 @@ namespace Railgun.Editor.App.Objects.Visuals
     internal struct TextureVisual// : IVisual
     {
         /// <summary>
-        /// The path to the texture of this visual
+        /// The pathed texture of this visual
         /// </summary>
-        public string TexturePath { get; }
-
-        /// <summary>
-        /// The texture of this visual.
-        /// </summary>
-        public Texture2D Texture { get; }
+        public PathedTexture? Texture { get; }
 
         /// <summary>
         /// The source rectangle of this visual's texture
@@ -57,12 +52,12 @@ namespace Railgun.Editor.App.Objects.Visuals
         /// Creates a new visual element with all the specified parameters
         /// <para>Note: No parameters will create a blank visual</para>
         /// </summary>
-        /// <param name="texture">Texture, NULLABLE</param>
+        /// <param name="texture">Texture</param>
         /// <param name="source">Source rectangle of the texture to be used</param>
         /// <param name="rotation">Rotation</param>
         /// <param name="scale">Scaling size</param>
         /// <param name="flip">Sprite effect for orientation</param>
-        public TextureVisual(Texture2D texture = null, Rectangle? source = null,
+        public TextureVisual(PathedTexture? texture = null, Rectangle? source = null,
             float rotation = 0f, float scale = 1f, SpriteEffects flip = SpriteEffects.None)
         : this(Color.White, texture, source, rotation, scale, flip) { }
 
@@ -70,12 +65,12 @@ namespace Railgun.Editor.App.Objects.Visuals
         /// Creates a new visual element with all the specified parameters
         /// </summary>
         /// <param name="tint">Tint color</param>
-        /// <param name="texture">Texture, NULLABLE</param>
+        /// <param name="texture">Texture</param>
         /// <param name="source">Source rectangle of the texture to be used</param>
         /// <param name="rotation">Rotation in radians</param>
         /// <param name="scale">Scaling size</param>
         /// <param name="flip">Sprite effect for orientation</param>
-        public TextureVisual(Color tint, Texture2D texture = null, Rectangle? source = null,
+        public TextureVisual(Color tint, PathedTexture? texture = null, Rectangle? source = null,
             float rotation = 0f, float scale = 1f, SpriteEffects flip = SpriteEffects.None)
         {
             Texture = texture;
@@ -113,7 +108,7 @@ namespace Railgun.Editor.App.Objects.Visuals
                 Vector2 origin = Source.Value.Size.ToVector2() / 2f;
 
                 spriteBatch.Draw(
-                Texture, destination, Source, Tint * opacity,
+                Texture.Value.Texture, destination, Source, Tint * opacity,
                 Rotation, origin, Flip, 0f);
             }
         }
