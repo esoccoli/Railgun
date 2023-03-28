@@ -45,7 +45,7 @@ namespace Railgun.Editor.App
             mapEditor.OnUpdate += UpdateStatus;
 
             //Subscribe current tile change to current tile display
-            TileManager.Instance.OnCurrentTileChange += currentTileContol.Update;
+            TileManager.Instance.OnCurrentTileChange += currentTileDisplay.Update;
 
             //Color the controls to a darker scheme
             ColorControls(Controls);
@@ -59,7 +59,7 @@ namespace Railgun.Editor.App
             textBox_TileSize.Text = "16";
 
             //Resize square buttons since the designer doesn't understand how since
-            //it sets the size before it changes the margin size
+            //it sets the size before it changes the margin size. Also for the display
             button_Edit_Up.Size = new Size(50, 50);
             button_Edit_Down.Size = new Size(50, 50);
             button_Edit_Left.Size = new Size(50, 50);
@@ -68,7 +68,7 @@ namespace Railgun.Editor.App
             button_Edit_FlipVertical.Size = new Size(50, 50);
             button_Edit_RotateCW.Size = new Size(50, 50);
             button_Edit_RotateCCW.Size = new Size(50, 50);
-
+            currentTileDisplay.Size = new Size(150, 150);
         }
 
         /// <summary>
@@ -223,20 +223,6 @@ namespace Railgun.Editor.App
             //Set zoom amount
             toolStripStatusLabel_ValueZoom.Text = mapEditor.Editor.Cam.Zoom
                 .ToString("0.00");
-
-            //DEBUG
-            DebugLog.Instance.AddUpdateMessage(button_Edit_RotateCW.Size.ToString());
-            
-            for(int i = 0; i < tableLayoutPanel_EditTable.RowStyles.Count; i++)
-            {
-                DebugLog.Instance.AddUpdateMessage("=="+tableLayoutPanel_EditTable.RowStyles[i].Height.ToString());
-            }
-
-            for (int i = 0; i < tableLayoutPanel_EditTable.ColumnStyles.Count; i++)
-            {
-                DebugLog.Instance.AddUpdateMessage("||"+tableLayoutPanel_EditTable.ColumnStyles[i].Width.ToString());
-            }
-
         }
 
         /// <summary>

@@ -60,6 +60,7 @@
             this.tableLayoutPanel_Objects = new System.Windows.Forms.TableLayoutPanel();
             this.panel_Objects = new System.Windows.Forms.Panel();
             this.tableLayoutPanel_TilePicker = new System.Windows.Forms.TableLayoutPanel();
+            this.tilePicker = new Railgun.Editor.App.Controls.TilePicker();
             this.panel_TileSettings = new System.Windows.Forms.Panel();
             this.label_TileSize = new System.Windows.Forms.Label();
             this.textBox_TileSize = new System.Windows.Forms.TextBox();
@@ -71,15 +72,14 @@
             this.button_Edit_FlipVertical = new System.Windows.Forms.Button();
             this.button_Edit_RotateCW = new System.Windows.Forms.Button();
             this.button_Edit_RotateCCW = new System.Windows.Forms.Button();
+            this.currentTileDisplay = new Railgun.Editor.App.Controls.CurrentTileDisplay();
             this.button_Edit_Up = new System.Windows.Forms.Button();
             this.button_Edit_Left = new System.Windows.Forms.Button();
             this.button_Edit_Down = new System.Windows.Forms.Button();
             this.button_Edit_Right = new System.Windows.Forms.Button();
             this.label_Edit = new System.Windows.Forms.Label();
-            this.tableLayoutPanel_MainOutline = new System.Windows.Forms.TableLayoutPanel();
-            this.tilePicker = new Railgun.Editor.App.Controls.TilePicker();
-            this.currentTileContol = new Railgun.Editor.App.Controls.CurrentTileDisplay();
             this.mapEditor = new Railgun.Editor.App.Controls.MapEditor();
+            this.tableLayoutPanel_MainOutline = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_MainEditor)).BeginInit();
@@ -199,28 +199,28 @@
             // toolStripMenuItem_Rotate90CW
             // 
             this.toolStripMenuItem_Rotate90CW.Name = "toolStripMenuItem_Rotate90CW";
-            this.toolStripMenuItem_Rotate90CW.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItem_Rotate90CW.Size = new System.Drawing.Size(201, 26);
             this.toolStripMenuItem_Rotate90CW.Text = "Rotate 90 CW";
             this.toolStripMenuItem_Rotate90CW.Click += new System.EventHandler(this.Menu_Edit_Rotate90CW_Click);
             // 
             // toolStripMenuItem_Rotate90CCW
             // 
             this.toolStripMenuItem_Rotate90CCW.Name = "toolStripMenuItem_Rotate90CCW";
-            this.toolStripMenuItem_Rotate90CCW.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItem_Rotate90CCW.Size = new System.Drawing.Size(201, 26);
             this.toolStripMenuItem_Rotate90CCW.Text = "Rotate 90 CCW";
             this.toolStripMenuItem_Rotate90CCW.Click += new System.EventHandler(this.Menu_Edit_Rotate90CCW_Click);
             // 
             // toolStripMenuItem_FlipHorizontally
             // 
             this.toolStripMenuItem_FlipHorizontally.Name = "toolStripMenuItem_FlipHorizontally";
-            this.toolStripMenuItem_FlipHorizontally.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItem_FlipHorizontally.Size = new System.Drawing.Size(201, 26);
             this.toolStripMenuItem_FlipHorizontally.Text = "Flip Horizontally";
             this.toolStripMenuItem_FlipHorizontally.Click += new System.EventHandler(this.Menu_Edit_FlipHorizontally_Click);
             // 
             // toolStripMenuItem_FlipVertically
             // 
             this.toolStripMenuItem_FlipVertically.Name = "toolStripMenuItem_FlipVertically";
-            this.toolStripMenuItem_FlipVertically.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItem_FlipVertically.Size = new System.Drawing.Size(201, 26);
             this.toolStripMenuItem_FlipVertically.Text = "Flip Vertically";
             this.toolStripMenuItem_FlipVertically.Click += new System.EventHandler(this.Menu_Edit_FlipVertically_Click);
             // 
@@ -228,7 +228,7 @@
             // 
             this.toolStripMenuItem_MoveUp.Enabled = false;
             this.toolStripMenuItem_MoveUp.Name = "toolStripMenuItem_MoveUp";
-            this.toolStripMenuItem_MoveUp.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItem_MoveUp.Size = new System.Drawing.Size(201, 26);
             this.toolStripMenuItem_MoveUp.Text = "Move Up";
             this.toolStripMenuItem_MoveUp.Click += new System.EventHandler(this.Menu_Edit_MoveUp_Click);
             // 
@@ -236,7 +236,7 @@
             // 
             this.toolStripMenuItem_MoveDown.Enabled = false;
             this.toolStripMenuItem_MoveDown.Name = "toolStripMenuItem_MoveDown";
-            this.toolStripMenuItem_MoveDown.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItem_MoveDown.Size = new System.Drawing.Size(201, 26);
             this.toolStripMenuItem_MoveDown.Text = "Move Down";
             this.toolStripMenuItem_MoveDown.Click += new System.EventHandler(this.Menu_Edit_MoveDown_Click);
             // 
@@ -244,7 +244,7 @@
             // 
             this.toolStripMenuItem_MoveLeft.Enabled = false;
             this.toolStripMenuItem_MoveLeft.Name = "toolStripMenuItem_MoveLeft";
-            this.toolStripMenuItem_MoveLeft.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItem_MoveLeft.Size = new System.Drawing.Size(201, 26);
             this.toolStripMenuItem_MoveLeft.Text = "Move Left";
             this.toolStripMenuItem_MoveLeft.Click += new System.EventHandler(this.Menu_Edit_MoveLeft_Click);
             // 
@@ -252,7 +252,7 @@
             // 
             this.toolStripMenuItem_MoveRight.Enabled = false;
             this.toolStripMenuItem_MoveRight.Name = "toolStripMenuItem_MoveRight";
-            this.toolStripMenuItem_MoveRight.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItem_MoveRight.Size = new System.Drawing.Size(201, 26);
             this.toolStripMenuItem_MoveRight.Text = "Move Right";
             this.toolStripMenuItem_MoveRight.Click += new System.EventHandler(this.Menu_Edit_MoveRight_Click);
             // 
@@ -260,14 +260,14 @@
             // 
             this.toolStripMenuItem_Deselect.Name = "toolStripMenuItem_Deselect";
             this.toolStripMenuItem_Deselect.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D)));
-            this.toolStripMenuItem_Deselect.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItem_Deselect.Size = new System.Drawing.Size(201, 26);
             this.toolStripMenuItem_Deselect.Text = "Deselect";
             // 
             // toolStripMenuItem_Delete
             // 
             this.toolStripMenuItem_Delete.Name = "toolStripMenuItem_Delete";
             this.toolStripMenuItem_Delete.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.toolStripMenuItem_Delete.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItem_Delete.Size = new System.Drawing.Size(201, 26);
             this.toolStripMenuItem_Delete.Text = "Delete";
             // 
             // toolStripMenuItem_View
@@ -406,7 +406,7 @@
             // splitContainer_MainEditor.Panel1
             // 
             this.splitContainer_MainEditor.Panel1.Controls.Add(this.splitContainer_LeftSideBar);
-            this.splitContainer_MainEditor.Panel1MinSize = 200;
+            this.splitContainer_MainEditor.Panel1MinSize = 300;
             // 
             // splitContainer_MainEditor.Panel2
             // 
@@ -433,6 +433,7 @@
             // 
             this.splitContainer_LeftSideBar.Panel2.Controls.Add(this.tableLayoutPanel_Edit);
             this.splitContainer_LeftSideBar.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.splitContainer_LeftSideBar.Panel2MinSize = 300;
             this.splitContainer_LeftSideBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.splitContainer_LeftSideBar.Size = new System.Drawing.Size(392, 763);
             this.splitContainer_LeftSideBar.SplitterDistance = 369;
@@ -481,6 +482,23 @@
             this.tableLayoutPanel_TilePicker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel_TilePicker.Size = new System.Drawing.Size(392, 349);
             this.tableLayoutPanel_TilePicker.TabIndex = 1;
+            // 
+            // tilePicker
+            // 
+            this.tilePicker.BackColor = System.Drawing.SystemColors.Control;
+            this.tilePicker.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tilePicker.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
+            this.tilePicker.ForeColor = System.Drawing.Color.Black;
+            this.tilePicker.GridSize = 0F;
+            this.tilePicker.Location = new System.Drawing.Point(0, 50);
+            this.tilePicker.Margin = new System.Windows.Forms.Padding(0);
+            this.tilePicker.MaxZoom = 0.1F;
+            this.tilePicker.MinZoom = 0.1F;
+            this.tilePicker.MouseHoverUpdatesOnly = false;
+            this.tilePicker.Name = "tilePicker";
+            this.tilePicker.Size = new System.Drawing.Size(392, 299);
+            this.tilePicker.TabIndex = 1;
+            this.tilePicker.Text = "tilePicker1";
             // 
             // panel_TileSettings
             // 
@@ -573,7 +591,7 @@
             this.tableLayoutPanel_EditTable.Controls.Add(this.button_Edit_FlipVertical, 1, 7);
             this.tableLayoutPanel_EditTable.Controls.Add(this.button_Edit_RotateCW, 7, 1);
             this.tableLayoutPanel_EditTable.Controls.Add(this.button_Edit_RotateCCW, 1, 1);
-            this.tableLayoutPanel_EditTable.Controls.Add(this.currentTileContol, 3, 3);
+            this.tableLayoutPanel_EditTable.Controls.Add(this.currentTileDisplay, 3, 3);
             this.tableLayoutPanel_EditTable.Controls.Add(this.button_Edit_Up, 4, 1);
             this.tableLayoutPanel_EditTable.Controls.Add(this.button_Edit_Left, 1, 4);
             this.tableLayoutPanel_EditTable.Controls.Add(this.button_Edit_Down, 4, 7);
@@ -645,6 +663,21 @@
             this.button_Edit_RotateCCW.UseVisualStyleBackColor = true;
             this.button_Edit_RotateCCW.Click += new System.EventHandler(this.Menu_Edit_Rotate90CCW_Click);
             // 
+            // currentTileDisplay
+            // 
+            this.currentTileDisplay.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.currentTileDisplay.BackColor = System.Drawing.SystemColors.Control;
+            this.tableLayoutPanel_EditTable.SetColumnSpan(this.currentTileDisplay, 3);
+            this.currentTileDisplay.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
+            this.currentTileDisplay.ForeColor = System.Drawing.Color.Black;
+            this.currentTileDisplay.Location = new System.Drawing.Point(120, 110);
+            this.currentTileDisplay.Margin = new System.Windows.Forms.Padding(0);
+            this.currentTileDisplay.Name = "currentTileDisplay";
+            this.tableLayoutPanel_EditTable.SetRowSpan(this.currentTileDisplay, 3);
+            this.currentTileDisplay.Size = new System.Drawing.Size(150, 150);
+            this.currentTileDisplay.TabIndex = 1;
+            this.currentTileDisplay.Text = "currentTileContol1";
+            // 
             // button_Edit_Up
             // 
             this.button_Edit_Up.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -710,54 +743,6 @@
             this.label_Edit.Text = "Edit";
             this.label_Edit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // tableLayoutPanel_MainOutline
-            // 
-            this.tableLayoutPanel_MainOutline.ColumnCount = 1;
-            this.tableLayoutPanel_MainOutline.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_MainOutline.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel_MainOutline.Controls.Add(this.splitContainer_MainEditor, 0, 0);
-            this.tableLayoutPanel_MainOutline.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel_MainOutline.Location = new System.Drawing.Point(0, 45);
-            this.tableLayoutPanel_MainOutline.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tableLayoutPanel_MainOutline.Name = "tableLayoutPanel_MainOutline";
-            this.tableLayoutPanel_MainOutline.RowCount = 1;
-            this.tableLayoutPanel_MainOutline.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_MainOutline.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 771F));
-            this.tableLayoutPanel_MainOutline.Size = new System.Drawing.Size(1343, 771);
-            this.tableLayoutPanel_MainOutline.TabIndex = 6;
-            // 
-            // tilePicker
-            // 
-            this.tilePicker.BackColor = System.Drawing.SystemColors.Control;
-            this.tilePicker.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tilePicker.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
-            this.tilePicker.ForeColor = System.Drawing.Color.Black;
-            this.tilePicker.GridSize = 0F;
-            this.tilePicker.Location = new System.Drawing.Point(0, 50);
-            this.tilePicker.Margin = new System.Windows.Forms.Padding(0);
-            this.tilePicker.MaxZoom = 0.1F;
-            this.tilePicker.MinZoom = 0.1F;
-            this.tilePicker.MouseHoverUpdatesOnly = false;
-            this.tilePicker.Name = "tilePicker";
-            this.tilePicker.Size = new System.Drawing.Size(392, 299);
-            this.tilePicker.TabIndex = 1;
-            this.tilePicker.Text = "tilePicker1";
-            // 
-            // currentTileContol
-            // 
-            this.currentTileContol.BackColor = System.Drawing.SystemColors.Control;
-            this.tableLayoutPanel_EditTable.SetColumnSpan(this.currentTileContol, 3);
-            this.currentTileContol.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.currentTileContol.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
-            this.currentTileContol.ForeColor = System.Drawing.Color.Black;
-            this.currentTileContol.Location = new System.Drawing.Point(120, 110);
-            this.currentTileContol.Margin = new System.Windows.Forms.Padding(0);
-            this.currentTileContol.Name = "currentTileContol";
-            this.tableLayoutPanel_EditTable.SetRowSpan(this.currentTileContol, 3);
-            this.currentTileContol.Size = new System.Drawing.Size(150, 150);
-            this.currentTileContol.TabIndex = 1;
-            this.currentTileContol.Text = "currentTileContol1";
-            // 
             // mapEditor
             // 
             this.mapEditor.BackColor = System.Drawing.SystemColors.Control;
@@ -777,6 +762,22 @@
             this.mapEditor.TabIndex = 1;
             this.mapEditor.Text = "mainEditorPanel";
             // 
+            // tableLayoutPanel_MainOutline
+            // 
+            this.tableLayoutPanel_MainOutline.ColumnCount = 1;
+            this.tableLayoutPanel_MainOutline.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_MainOutline.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_MainOutline.Controls.Add(this.splitContainer_MainEditor, 0, 0);
+            this.tableLayoutPanel_MainOutline.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel_MainOutline.Location = new System.Drawing.Point(0, 45);
+            this.tableLayoutPanel_MainOutline.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tableLayoutPanel_MainOutline.Name = "tableLayoutPanel_MainOutline";
+            this.tableLayoutPanel_MainOutline.RowCount = 1;
+            this.tableLayoutPanel_MainOutline.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_MainOutline.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 771F));
+            this.tableLayoutPanel_MainOutline.Size = new System.Drawing.Size(1343, 771);
+            this.tableLayoutPanel_MainOutline.TabIndex = 6;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -789,7 +790,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.MinimumSize = new System.Drawing.Size(927, 857);
+            this.MinimumSize = new System.Drawing.Size(1200, 850);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
@@ -866,7 +867,7 @@
         private System.Windows.Forms.Label label_TileSize;
         private System.Windows.Forms.TextBox textBox_TileSize;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_EditTable;
-        private Controls.CurrentTileDisplay currentTileContol;
+        private Controls.CurrentTileDisplay currentTileDisplay;
         private System.Windows.Forms.Button button_Edit_RotateCW;
         private System.Windows.Forms.Button button_Edit_FlipHorizontal;
         private System.Windows.Forms.Button button_Edit_Down;
