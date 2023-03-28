@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace Railgun.Editor.App.Objects.Visuals
 {
+    /// <summary>
+    /// A struct that contains a texture and its path
+    /// <para>Author: Jonathan Jan</para>
+    /// Date Created: 3/28/2023
+    /// </summary>
     internal struct PathedTexture
     {
         /// <summary>
