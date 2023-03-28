@@ -325,7 +325,7 @@ namespace Railgun.Editor.App.Controls
         /// </summary>
         private void RotateCW()
         {
-            RotateTile(-MathHelper.PiOver2);
+            RotateTile(MathHelper.PiOver2);
         }
 
         /// <summary>
@@ -334,7 +334,7 @@ namespace Railgun.Editor.App.Controls
         /// </summary>
         private void RotateCCW()
         {
-            RotateTile(MathHelper.PiOver2);
+            RotateTile(-MathHelper.PiOver2);
         }
 
         /// <summary>
