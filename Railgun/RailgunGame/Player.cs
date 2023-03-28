@@ -157,6 +157,12 @@ namespace Railgun.RailgunGame
             PlayerBullets.Add(new Projectile(new Rectangle(Hitbox.X, Hitbox.Y, activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet, new Vector2(
                 xVelocity, 
                 yVelocity)));
+
+            //This creates a velocity vector towards the mouse at the same speed
+            Vector2 velocity = 
+                Vector2.Normalize(
+                    (InputManager.MouseState.Position 
+                    - hitboxTemp.Center).ToVector2()) * 10f;//Where 10f is the speed you want
         }
 
         /// <summary>
