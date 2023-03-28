@@ -3,7 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Forms.Controls;
 using Railgun.Editor.App.Objects;
+using Railgun.Editor.App.Objects.Visuals;
 using Railgun.Editor.App.Util;
+using System;
 using System.ComponentModel;
 
 namespace Railgun.Editor.App.Controls
@@ -150,6 +152,22 @@ namespace Railgun.Editor.App.Controls
                         Place();
                     }
                 }
+            }
+
+            //DEBUG
+            if(input.IsDown(Keys.D5))
+            {
+                //Create new rotated visual
+                TextureVisual visual = TileManager.Instance.CurrentTile.Visual;
+                visual = new TextureVisual(
+                    visual.Tint,
+                    visual.Texture,
+                    visual.Source,
+                    visual.Rotation - 0.1f,
+                    visual.Scale,
+                    visual.Flip);
+                TileManager.Instance.CurrentTile =
+                    new Tile(visual, TileManager.Instance.CurrentTile.IsSolid);
             }
 
             //Invoke update event

@@ -269,7 +269,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_Edit_Rotate90CW_Click(object sender, EventArgs e)
         {
-
+            //Create new rotated visual
             TextureVisual visual = TileManager.Instance.CurrentTile.Visual;
             visual = new TextureVisual(
                 visual.Tint,
