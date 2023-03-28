@@ -56,6 +56,18 @@
 /processorParam:TextureFormat=Color
 /build:tmp/Grass tiles v.2.png
 
+#begin tmp/mainlevbuild.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:tmp/mainlevbuild.png
+
 #begin tmp/Tall Grass hill tiles v.2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -67,4 +79,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:tmp/Tall Grass hill tiles v.2.png
+
+#begin tmp/Tiles.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:tmp/Tiles.png
 
