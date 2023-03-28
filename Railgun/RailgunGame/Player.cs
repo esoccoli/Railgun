@@ -128,6 +128,7 @@ namespace Railgun.RailgunGame
         {
             Health = 100;
             Ammo = 8;
+            ShootCooldown = 2.5;
         }
 
         /// <summary>
@@ -135,12 +136,27 @@ namespace Railgun.RailgunGame
         /// </summary>
         public void Shoot(GameTime gameTime)
         {
+            int xVelocity;
             Ammo--;
             ShootCooldown = 2.5;
 
-            // NEED TO DO MATH TO SEE WHERE MOUSE IS AND WHERE BULLETS SHOULD BE SHOT.
+            if(InputManager.MouseState.X > 100)
+            {
+                xVelocity = ((Hitbox.X + (Hitbox.Width / 2)) + 100 - (Hitbox.X + (Hitbox.Width / 2))) / 20;
+            }
+            else if(InputManager.MouseState.X < 100)
+            {
+                xVelocity = ((Hitbox.X + (Hitbox.Width / 2)) - 100 - (Hitbox.X + (Hitbox.Width / 2))) / 20;
+            }
+            else
+            {
+                xVelocity = (InputManager.MouseState.X - (Hitbox.X + (Hitbox.Width / 2))) / 100;
+            }
+            int yVelocity = 1;
 
-            PlayerBullets.Add(new Projectile(new Rectangle(Hitbox.X, Hitbox.Y, 20, 20), activeBullet, notActiveBullet, new Vector2(3.0f, 3.0f)));
+            PlayerBullets.Add(new Projectile(new Rectangle(Hitbox.X, Hitbox.Y, activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet, new Vector2(
+                xVelocity, 
+                yVelocity)));
         }
 
         /// <summary>
