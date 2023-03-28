@@ -89,23 +89,6 @@ namespace Railgun.Editor.App.Objects.Visuals
         /// <param name="gameTime"></param>
         public void Update(GameTime gameTime) { }
 
-        ///// <summary>
-        ///// Draws this visual to the specified spritebatch and position
-        ///// </summary>
-        ///// <param name="spriteBatch">The spritebatch to draw to</param>
-        ///// <param name="position">The position to draw to</param>
-        ///// <param name="opacity">The opacity of the tint using multiplied color</param>
-        //public void Draw(SpriteBatch spriteBatch, Vector2 position, float opacity = 1f)
-        //{
-        //    //Only draw if not null
-        //    if(Texture != null)
-        //    {
-        //        spriteBatch.Draw(
-        //        Texture, position, Source, Tint * opacity,
-        //        Rotation, Vector2.Zero, Scale, Flip, 0f);
-        //    }
-        //}
-
         /// <summary>
         /// Draws this visual to the specified spritebatch and destination rectangle
         /// <para>Note: scaling property won't work if using this overload</para>
@@ -130,23 +113,6 @@ namespace Railgun.Editor.App.Objects.Visuals
             }
         }
 
-        ///// <summary>
-        ///// Draws this visual to the specified spritebatch and destination rectangle
-        ///// <para>Note: scaling property won't work if using this overload</para>
-        ///// </summary>
-        ///// <param name="spriteBatch">The spritebatch to draw to</param>
-        ///// <param name="destination">The destination rectangle to draw to</param>
-        ///// <param name="opacity">The opacity of the tint using multiplied color</param>
-        //public void Draw(SpriteBatch spriteBatch, Vector2 position, float scale, float opacity = 1f)
-        //{
-        //    //Only draw if not null
-        //    if (Texture != null)
-        //    {
-        //        spriteBatch.Draw(
-        //        Texture, position, Source, Tint * opacity,
-        //        Rotation, Vector2.Zero, Flip, 0f);
-        //    }
-        //}
 
         #region Static Prefabs
 

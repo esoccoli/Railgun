@@ -43,26 +43,6 @@ namespace Railgun.Editor.App.Objects
             IsSolid = isSolid;
         }
 
-        ///// <summary>
-        ///// Draws this tile to the specified sprite batch at 0,0
-        ///// </summary>
-        ///// <param name="spriteBatch">The sprite batch to draw to</param>
-        //public void Draw(SpriteBatch spriteBatch)
-        //{
-        //    Draw(spriteBatch, Vector2.Zero);
-        //}
-
-        ///// <summary>
-        ///// Draws this tile to the specified sprite batch and position
-        ///// </summary>
-        ///// <param name="spriteBatch"></param>
-        ///// <param name="position"></param>
-        ///// <param name="opacity">The opacity of the tint using multiplied color</param>
-        //public void Draw(SpriteBatch spriteBatch, Vector2 position, float opacity = 1f)
-        //{
-        //    Visual.Draw(spriteBatch, position, opacity);
-        //}
-
         /// <summary>
         /// Draws this tile to the specified sprite batch and destination rectangle
         /// </summary>
