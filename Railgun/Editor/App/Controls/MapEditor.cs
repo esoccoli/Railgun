@@ -11,11 +11,6 @@ using System.ComponentModel;
 namespace Railgun.Editor.App.Controls
 {
     /// <summary>
-    /// Represents a delegate that will be invoked every update cycle
-    /// </summary>
-    public delegate void UpdateDelegate();
-
-    /// <summary>
     /// The main control that the editor has allowing most editing functionality
     /// for the current map
     /// <para>Author: Jonathan Jan</para>
@@ -26,25 +21,22 @@ namespace Railgun.Editor.App.Controls
         //DEBUG font
         private SpriteFont consolas20;
 
-        #region Bigger Managing Classes
+        #region Events
 
         /// <summary>
         /// Called every update cycle of this panel
         /// </summary>
-        public event UpdateDelegate OnUpdate;
+        public event GenericDelegate OnUpdate;
+
+        #endregion
 
         /// <summary>
         /// The current map in this editor
         /// </summary>
         public Map CurrentMap { get; set; }
 
-        #endregion
-
-        //If I didn't do this, the designer would try to set a default value
-        //before the map is set in initialize
-
         /// <summary>
-        /// The map's grid size (always an integer value)
+        /// The map's grid size (always an integer value). Invisible to the designer
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -110,6 +102,16 @@ namespace Railgun.Editor.App.Controls
             base.Initialize();
             ////
 
+            //Add all edit events
+            tileManager.OnRotateCW += RotateCW;
+            tileManager.OnRotateCCW += RotateCCW;
+            tileManager.OnFlipHorizontal += FlipHorizontal;
+            tileManager.OnFlipVertical += FlipVertical;
+            tileManager.OnMoveUp += MoveUp;
+            tileManager.OnMoveDown += MoveDown;
+            tileManager.OnMoveLeft += MoveLeft;
+            tileManager.OnMoveRight += MoveRight;
+
             //Set bg color
             Editor.BackgroundColor = new Color(25, 25, 25);
 
@@ -133,6 +135,9 @@ namespace Railgun.Editor.App.Controls
             //Pan and zoom
             PerformUserActions();
 
+            //Check edit keybinds (rotation, move, flip)
+            CheckEditKeys();
+
             //If selecting, select
             if(selecting)
             {
@@ -154,21 +159,6 @@ namespace Railgun.Editor.App.Controls
                 }
             }
 
-            //DEBUG
-            if(input.IsDown(Keys.D5))
-            {
-                //Create new rotated visual
-                TextureVisual visual = TileManager.Instance.CurrentTile.Visual;
-                visual = new TextureVisual(
-                    visual.Tint,
-                    visual.Texture,
-                    visual.Source,
-                    visual.Rotation - 0.1f,
-                    visual.Scale,
-                    visual.Flip);
-                TileManager.Instance.CurrentTile =
-                    new Tile(visual, TileManager.Instance.CurrentTile.IsSolid);
-            }
 
             //Invoke update event
             OnUpdate();
@@ -194,7 +184,7 @@ namespace Railgun.Editor.App.Controls
             if(IsMouseInsideControl && !selecting)
             {
                 //Draw transparent tile preview
-                TileManager.Instance.CurrentTile.Draw(
+                tileManager.CurrentTile.Draw(
                     Editor.spriteBatch,
                     new Rectangle(
                         MouseGridPosition * new Point(CurrentMap.TileSize),
@@ -286,7 +276,7 @@ namespace Railgun.Editor.App.Controls
         /// <summary>
         /// Places the current selected object
         /// </summary>
-        public void Place()
+        private void Place()
         {
             //If placing
             if(input.IsDown(MouseButtonTypes.Left))
@@ -294,7 +284,7 @@ namespace Railgun.Editor.App.Controls
                 //Place current tile at tile point
                 CurrentMap[CurrentMap.GetGridPoint(
                     MouseCameraPosition)]
-                    = TileManager.Instance.CurrentTile;
+                    = tileManager.CurrentTile;
 
                 ////DEBUG log
                 //DebugLog.Instance.AddPersistantMessage(
@@ -303,26 +293,193 @@ namespace Railgun.Editor.App.Controls
                 //    Color.Red);
             }
         }
-        
+
         /// <summary>
         /// Updates for selections using the specified mouse button
         /// </summary>
-        public void SelectObjects()
+        private void SelectObjects()
         {
             //Set selection rectangle
             selectionRectangle = new Rectangle(
                 selectorPoint, input.CurrentMouseState.Position - selectorPoint);
         }
 
+        /// <summary>
+        /// Preforms any actions needed for editing a tile such as rotation or flipping
+        /// </summary>
+        private void CheckEditKeys()
+        {
+            if(input.JustPressed(Keys.E)) ;
+        }
+
         #endregion
 
-        #region Other Methods EMPTY
+        #region Edit
 
-        
+        /// <summary>
+        /// Rotates the current tile 90 degrees clockwise OR
+        /// rotates the current selection by 90 degrees clockwise
+        /// </summary>
+        private void RotateCW()
+        {
+            RotateTile(-MathHelper.PiOver2);
+        }
 
-        
+        /// <summary>
+        /// Rotates the current tile 90 degrees counter-clockwise OR
+        /// rotates the current selection by 90 degrees counter-clockwise
+        /// </summary>
+        private void RotateCCW()
+        {
+            RotateTile(MathHelper.PiOver2);
+        }
+
+        /// <summary>
+        /// Rotates the current tile by the specified amount OR
+        /// rotates the current selection by the specified amount
+        /// </summary>
+        /// <param name="amount"></param>
+        private void RotateTile(float amount)
+        {
+            //Create new rotated visual
+            TextureVisual visual = tileManager.CurrentTile.Visual;
+            visual = new TextureVisual(
+                visual.Tint,
+                visual.Texture,
+                visual.Source,
+                visual.Rotation + amount,
+                visual.Scale,
+                visual.Flip);
+            //Set current tile to clone tile with new visual
+            tileManager.CurrentTile = tileManager.CurrentTile.Clone(visual);
+        }
+
+        /// <summary>
+        /// Flips the current tile horizontally OR
+        /// Flips the current selection horizontally
+        /// </summary>
+        private void FlipHorizontal()
+        {
+            TextureVisual visual = tileManager.CurrentTile.Visual;
+
+            //Effect to apply
+            SpriteEffects effect = SpriteEffects.FlipHorizontally;
+            float rotation = 0f;
+
+            //Check if already flipped
+            switch(visual.Flip)
+            {
+                //If already horizontal, double flipped is none
+                case SpriteEffects.FlipHorizontally:
+                    effect = SpriteEffects.None;
+                    break;
+                //If vertical, it will cancel out with horizontal, so flip 180 deg
+                case SpriteEffects.FlipVertically:
+                    effect = SpriteEffects.None;
+                    rotation = MathHelper.Pi;
+                    break;
+            }
+
+            //Create new flipped visual
+            visual = new TextureVisual(
+                visual.Tint,
+                visual.Texture,
+                visual.Source,
+                visual.Rotation + rotation,
+                visual.Scale,
+                effect);
+            //Set current tile to clone tile with new visual
+            tileManager.CurrentTile = tileManager.CurrentTile.Clone(visual);
+        }
+
+        /// <summary>
+        /// Flips the current tile vertically OR
+        /// Flips the current selection vertically
+        /// </summary>
+        private void FlipVertical()
+        {
+            TextureVisual visual = tileManager.CurrentTile.Visual;
+
+
+            //Check based on the current rotation, flip using the other orientation
+            //if(visual.Rotation == MathHelper.PiOver2)
+            //{
+            //    FlipHorizontal();
+            //    return;
+            //}
+            //else if(visual.Rotation == -MathHelper.PiOver2)
+            //{
+            //    FlipVertical();
+            //    return;
+            //}
+
+
+            //Effect to apply
+            SpriteEffects effect = SpriteEffects.FlipVertically;
+            float rotation = 0f;
+
+            //Check if already flipped
+            switch (visual.Flip)
+            {
+                //If already vertical, double flipped is none
+                case SpriteEffects.FlipVertically:
+                    effect = SpriteEffects.None;
+                    break;
+                //If horizontal, it will cancel out with vertical, so flip 180 deg
+                case SpriteEffects.FlipHorizontally:
+                    effect = SpriteEffects.None;
+                    rotation = MathHelper.Pi;
+                    break;
+            }
+
+            //Create new flipped visual
+            visual = new TextureVisual(
+                visual.Tint,
+                visual.Texture,
+                visual.Source,
+                visual.Rotation + rotation,
+                visual.Scale,
+                effect);
+            //Set current tile to clone tile with new visual
+            tileManager.CurrentTile = tileManager.CurrentTile.Clone(visual);
+        }
+
+        /// <summary>
+        /// Moves the current tile up OR
+        /// Moves the current selection up
+        /// </summary>
+        private void MoveUp()
+        {
+
+        }
+
+        /// <summary>
+        /// Moves the current tile down OR
+        /// Moves the current selection down
+        /// </summary>
+        private void MoveDown()
+        {
+
+        }
+
+        /// <summary>
+        /// Moves the current tile left OR
+        /// Moves the current selection left
+        /// </summary>
+        private void MoveLeft()
+        {
+
+        }
+
+        /// <summary>
+        /// Moves the current tile right OR
+        /// Moves the current selection right
+        /// </summary>
+        private void MoveRight()
+        {
+
+        }
 
         #endregion
-
     }
 }

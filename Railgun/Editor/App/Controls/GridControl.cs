@@ -66,6 +66,11 @@ namespace Railgun.Editor.App.Controls
         protected InputManager input;
 
         /// <summary>
+        /// The tile manager as a field
+        /// </summary>
+        protected TileManager tileManager;
+
+        /// <summary>
         /// TRUE if currently panning
         /// </summary>
         protected bool panning;
@@ -109,8 +114,11 @@ namespace Railgun.Editor.App.Controls
 
         protected override void Initialize()
         {
-            //Shortcut to the input manager
+            //Shortcut to singeltons
             input = InputManager.Instance;
+            tileManager = TileManager.Instance;
+
+            //Grid properties
             GridSize = 100f;
             GridColor = Color.White * 0.5f;
 

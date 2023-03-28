@@ -60,7 +60,6 @@
             this.tableLayoutPanel_Objects = new System.Windows.Forms.TableLayoutPanel();
             this.panel_Objects = new System.Windows.Forms.Panel();
             this.tableLayoutPanel_TilePicker = new System.Windows.Forms.TableLayoutPanel();
-            this.tilePicker = new Railgun.Editor.App.Controls.TilePicker();
             this.panel_TileSettings = new System.Windows.Forms.Panel();
             this.label_TileSize = new System.Windows.Forms.Label();
             this.textBox_TileSize = new System.Windows.Forms.TextBox();
@@ -72,14 +71,15 @@
             this.button_Edit_FlipVertical = new System.Windows.Forms.Button();
             this.button_Edit_RotateCW = new System.Windows.Forms.Button();
             this.button_Edit_RotateCCW = new System.Windows.Forms.Button();
-            this.currentTileContol = new Railgun.Editor.App.Controls.CurrentTileDisplay();
             this.button_Edit_Up = new System.Windows.Forms.Button();
             this.button_Edit_Left = new System.Windows.Forms.Button();
             this.button_Edit_Down = new System.Windows.Forms.Button();
             this.button_Edit_Right = new System.Windows.Forms.Button();
             this.label_Edit = new System.Windows.Forms.Label();
-            this.mapEditor = new Railgun.Editor.App.Controls.MapEditor();
             this.tableLayoutPanel_MainOutline = new System.Windows.Forms.TableLayoutPanel();
+            this.tilePicker = new Railgun.Editor.App.Controls.TilePicker();
+            this.currentTileContol = new Railgun.Editor.App.Controls.CurrentTileDisplay();
+            this.mapEditor = new Railgun.Editor.App.Controls.MapEditor();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_MainEditor)).BeginInit();
@@ -482,23 +482,6 @@
             this.tableLayoutPanel_TilePicker.Size = new System.Drawing.Size(392, 349);
             this.tableLayoutPanel_TilePicker.TabIndex = 1;
             // 
-            // tilePicker
-            // 
-            this.tilePicker.BackColor = System.Drawing.SystemColors.Control;
-            this.tilePicker.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tilePicker.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
-            this.tilePicker.ForeColor = System.Drawing.Color.Black;
-            this.tilePicker.GridSize = 0F;
-            this.tilePicker.Location = new System.Drawing.Point(0, 50);
-            this.tilePicker.Margin = new System.Windows.Forms.Padding(0);
-            this.tilePicker.MaxZoom = 0.1F;
-            this.tilePicker.MinZoom = 0.1F;
-            this.tilePicker.MouseHoverUpdatesOnly = false;
-            this.tilePicker.Name = "tilePicker";
-            this.tilePicker.Size = new System.Drawing.Size(392, 299);
-            this.tilePicker.TabIndex = 1;
-            this.tilePicker.Text = "tilePicker1";
-            // 
             // panel_TileSettings
             // 
             this.panel_TileSettings.Controls.Add(this.label_TileSize);
@@ -623,6 +606,7 @@
             this.button_Edit_FlipHorizontal.TabIndex = 9;
             this.button_Edit_FlipHorizontal.Text = "Flip H";
             this.button_Edit_FlipHorizontal.UseVisualStyleBackColor = true;
+            this.button_Edit_FlipHorizontal.Click += new System.EventHandler(this.Menu_Edit_FlipHorizontally_Click);
             // 
             // button_Edit_FlipVertical
             // 
@@ -634,6 +618,7 @@
             this.button_Edit_FlipVertical.TabIndex = 7;
             this.button_Edit_FlipVertical.Text = "Flip V";
             this.button_Edit_FlipVertical.UseVisualStyleBackColor = true;
+            this.button_Edit_FlipVertical.Click += new System.EventHandler(this.Menu_Edit_FlipVertically_Click);
             // 
             // button_Edit_RotateCW
             // 
@@ -658,6 +643,105 @@
             this.button_Edit_RotateCCW.TabIndex = 3;
             this.button_Edit_RotateCCW.Text = "CCW";
             this.button_Edit_RotateCCW.UseVisualStyleBackColor = true;
+            this.button_Edit_RotateCCW.Click += new System.EventHandler(this.Menu_Edit_Rotate90CCW_Click);
+            // 
+            // button_Edit_Up
+            // 
+            this.button_Edit_Up.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button_Edit_Up.Location = new System.Drawing.Point(170, 30);
+            this.button_Edit_Up.Margin = new System.Windows.Forms.Padding(0);
+            this.button_Edit_Up.Name = "button_Edit_Up";
+            this.button_Edit_Up.Size = new System.Drawing.Size(50, 50);
+            this.button_Edit_Up.TabIndex = 4;
+            this.button_Edit_Up.Text = "Up";
+            this.button_Edit_Up.UseVisualStyleBackColor = true;
+            this.button_Edit_Up.Visible = false;
+            this.button_Edit_Up.Click += new System.EventHandler(this.Menu_Edit_MoveUp_Click);
+            // 
+            // button_Edit_Left
+            // 
+            this.button_Edit_Left.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button_Edit_Left.Location = new System.Drawing.Point(35, 160);
+            this.button_Edit_Left.Margin = new System.Windows.Forms.Padding(0);
+            this.button_Edit_Left.Name = "button_Edit_Left";
+            this.button_Edit_Left.Size = new System.Drawing.Size(50, 50);
+            this.button_Edit_Left.TabIndex = 5;
+            this.button_Edit_Left.Text = "Left";
+            this.button_Edit_Left.UseVisualStyleBackColor = true;
+            this.button_Edit_Left.Visible = false;
+            this.button_Edit_Left.Click += new System.EventHandler(this.Menu_Edit_MoveLeft_Click);
+            // 
+            // button_Edit_Down
+            // 
+            this.button_Edit_Down.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button_Edit_Down.Location = new System.Drawing.Point(170, 290);
+            this.button_Edit_Down.Margin = new System.Windows.Forms.Padding(0);
+            this.button_Edit_Down.Name = "button_Edit_Down";
+            this.button_Edit_Down.Size = new System.Drawing.Size(50, 50);
+            this.button_Edit_Down.TabIndex = 8;
+            this.button_Edit_Down.Text = "Down";
+            this.button_Edit_Down.UseVisualStyleBackColor = true;
+            this.button_Edit_Down.Visible = false;
+            this.button_Edit_Down.Click += new System.EventHandler(this.Menu_Edit_MoveDown_Click);
+            // 
+            // button_Edit_Right
+            // 
+            this.button_Edit_Right.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button_Edit_Right.Location = new System.Drawing.Point(305, 160);
+            this.button_Edit_Right.Margin = new System.Windows.Forms.Padding(0);
+            this.button_Edit_Right.Name = "button_Edit_Right";
+            this.button_Edit_Right.Size = new System.Drawing.Size(50, 50);
+            this.button_Edit_Right.TabIndex = 6;
+            this.button_Edit_Right.Text = "Right";
+            this.button_Edit_Right.UseVisualStyleBackColor = true;
+            this.button_Edit_Right.Visible = false;
+            this.button_Edit_Right.Click += new System.EventHandler(this.Menu_Edit_MoveRight_Click);
+            // 
+            // label_Edit
+            // 
+            this.label_Edit.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label_Edit.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label_Edit.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label_Edit.Location = new System.Drawing.Point(0, 0);
+            this.label_Edit.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
+            this.label_Edit.Name = "label_Edit";
+            this.label_Edit.Size = new System.Drawing.Size(392, 16);
+            this.label_Edit.TabIndex = 4;
+            this.label_Edit.Text = "Edit";
+            this.label_Edit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tableLayoutPanel_MainOutline
+            // 
+            this.tableLayoutPanel_MainOutline.ColumnCount = 1;
+            this.tableLayoutPanel_MainOutline.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_MainOutline.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_MainOutline.Controls.Add(this.splitContainer_MainEditor, 0, 0);
+            this.tableLayoutPanel_MainOutline.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel_MainOutline.Location = new System.Drawing.Point(0, 45);
+            this.tableLayoutPanel_MainOutline.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tableLayoutPanel_MainOutline.Name = "tableLayoutPanel_MainOutline";
+            this.tableLayoutPanel_MainOutline.RowCount = 1;
+            this.tableLayoutPanel_MainOutline.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_MainOutline.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 771F));
+            this.tableLayoutPanel_MainOutline.Size = new System.Drawing.Size(1343, 771);
+            this.tableLayoutPanel_MainOutline.TabIndex = 6;
+            // 
+            // tilePicker
+            // 
+            this.tilePicker.BackColor = System.Drawing.SystemColors.Control;
+            this.tilePicker.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tilePicker.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
+            this.tilePicker.ForeColor = System.Drawing.Color.Black;
+            this.tilePicker.GridSize = 0F;
+            this.tilePicker.Location = new System.Drawing.Point(0, 50);
+            this.tilePicker.Margin = new System.Windows.Forms.Padding(0);
+            this.tilePicker.MaxZoom = 0.1F;
+            this.tilePicker.MinZoom = 0.1F;
+            this.tilePicker.MouseHoverUpdatesOnly = false;
+            this.tilePicker.Name = "tilePicker";
+            this.tilePicker.Size = new System.Drawing.Size(392, 299);
+            this.tilePicker.TabIndex = 1;
+            this.tilePicker.Text = "tilePicker1";
             // 
             // currentTileContol
             // 
@@ -673,67 +757,6 @@
             this.currentTileContol.Size = new System.Drawing.Size(150, 150);
             this.currentTileContol.TabIndex = 1;
             this.currentTileContol.Text = "currentTileContol1";
-            // 
-            // button_Edit_Up
-            // 
-            this.button_Edit_Up.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button_Edit_Up.Location = new System.Drawing.Point(170, 30);
-            this.button_Edit_Up.Margin = new System.Windows.Forms.Padding(0);
-            this.button_Edit_Up.Name = "button_Edit_Up";
-            this.button_Edit_Up.Size = new System.Drawing.Size(50, 50);
-            this.button_Edit_Up.TabIndex = 4;
-            this.button_Edit_Up.Text = "Up";
-            this.button_Edit_Up.UseVisualStyleBackColor = true;
-            this.button_Edit_Up.Visible = false;
-            // 
-            // button_Edit_Left
-            // 
-            this.button_Edit_Left.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button_Edit_Left.Location = new System.Drawing.Point(35, 160);
-            this.button_Edit_Left.Margin = new System.Windows.Forms.Padding(0);
-            this.button_Edit_Left.Name = "button_Edit_Left";
-            this.button_Edit_Left.Size = new System.Drawing.Size(50, 50);
-            this.button_Edit_Left.TabIndex = 5;
-            this.button_Edit_Left.Text = "Left";
-            this.button_Edit_Left.UseVisualStyleBackColor = true;
-            this.button_Edit_Left.Visible = false;
-            // 
-            // button_Edit_Down
-            // 
-            this.button_Edit_Down.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button_Edit_Down.Location = new System.Drawing.Point(170, 290);
-            this.button_Edit_Down.Margin = new System.Windows.Forms.Padding(0);
-            this.button_Edit_Down.Name = "button_Edit_Down";
-            this.button_Edit_Down.Size = new System.Drawing.Size(50, 50);
-            this.button_Edit_Down.TabIndex = 8;
-            this.button_Edit_Down.Text = "Down";
-            this.button_Edit_Down.UseVisualStyleBackColor = true;
-            this.button_Edit_Down.Visible = false;
-            // 
-            // button_Edit_Right
-            // 
-            this.button_Edit_Right.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button_Edit_Right.Location = new System.Drawing.Point(305, 160);
-            this.button_Edit_Right.Margin = new System.Windows.Forms.Padding(0);
-            this.button_Edit_Right.Name = "button_Edit_Right";
-            this.button_Edit_Right.Size = new System.Drawing.Size(50, 50);
-            this.button_Edit_Right.TabIndex = 6;
-            this.button_Edit_Right.Text = "Right";
-            this.button_Edit_Right.UseVisualStyleBackColor = true;
-            this.button_Edit_Right.Visible = false;
-            // 
-            // label_Edit
-            // 
-            this.label_Edit.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label_Edit.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.label_Edit.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label_Edit.Location = new System.Drawing.Point(0, 0);
-            this.label_Edit.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
-            this.label_Edit.Name = "label_Edit";
-            this.label_Edit.Size = new System.Drawing.Size(392, 16);
-            this.label_Edit.TabIndex = 4;
-            this.label_Edit.Text = "Edit";
-            this.label_Edit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // mapEditor
             // 
@@ -753,22 +776,6 @@
             this.mapEditor.Size = new System.Drawing.Size(947, 763);
             this.mapEditor.TabIndex = 1;
             this.mapEditor.Text = "mainEditorPanel";
-            // 
-            // tableLayoutPanel_MainOutline
-            // 
-            this.tableLayoutPanel_MainOutline.ColumnCount = 1;
-            this.tableLayoutPanel_MainOutline.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_MainOutline.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel_MainOutline.Controls.Add(this.splitContainer_MainEditor, 0, 0);
-            this.tableLayoutPanel_MainOutline.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel_MainOutline.Location = new System.Drawing.Point(0, 45);
-            this.tableLayoutPanel_MainOutline.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tableLayoutPanel_MainOutline.Name = "tableLayoutPanel_MainOutline";
-            this.tableLayoutPanel_MainOutline.RowCount = 1;
-            this.tableLayoutPanel_MainOutline.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_MainOutline.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 771F));
-            this.tableLayoutPanel_MainOutline.Size = new System.Drawing.Size(1343, 771);
-            this.tableLayoutPanel_MainOutline.TabIndex = 6;
             // 
             // MainForm
             // 

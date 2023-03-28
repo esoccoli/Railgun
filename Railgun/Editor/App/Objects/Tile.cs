@@ -57,10 +57,11 @@ namespace Railgun.Editor.App.Objects
         /// <summary>
         /// Returns a shallow copy of this tile (not a reference)
         /// </summary>
+        /// <param name="visual">The new visual</param>
         /// <returns>A new Tile with the same parameters as this</returns>
-        public Tile Clone()
+        public Tile Clone(TextureVisual visual)
         {
-            return new Tile(Visual);
+            return new Tile(visual, IsSolid);
         }
 
         #region Static Prefabs

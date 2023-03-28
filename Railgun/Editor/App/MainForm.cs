@@ -269,17 +269,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_Edit_Rotate90CW_Click(object sender, EventArgs e)
         {
-            //Create new rotated visual
-            TextureVisual visual = TileManager.Instance.CurrentTile.Visual;
-            visual = new TextureVisual(
-                visual.Tint,
-                visual.Texture,
-                visual.Source,
-                visual.Rotation - (float)Math.PI/2,
-                visual.Scale,
-                visual.Flip);
-            TileManager.Instance.CurrentTile = 
-                new Tile(visual, TileManager.Instance.CurrentTile.IsSolid);
+            TileManager.Instance.RotateCW();
         }
 
         /// <summary>
@@ -288,7 +278,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_Edit_Rotate90CCW_Click(object sender, EventArgs e)
         {
-
+            TileManager.Instance.RotateCCW();
         }
 
         /// <summary>
@@ -297,7 +287,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_Edit_FlipHorizontally_Click(object sender, EventArgs e)
         {
-
+            TileManager.Instance.FlipHorizontal();
         }
 
         /// <summary>
@@ -306,7 +296,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_Edit_FlipVertically_Click(object sender, EventArgs e)
         {
-
+            TileManager.Instance.FlipVertical();
         }
 
         /// <summary>
@@ -315,7 +305,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_Edit_MoveUp_Click(object sender, EventArgs e)
         {
-
+            TileManager.Instance.MoveUp();
         }
 
         /// <summary>
@@ -324,7 +314,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_Edit_MoveDown_Click(object sender, EventArgs e)
         {
-
+            TileManager.Instance.MoveDown();
         }
 
         /// <summary>
@@ -333,7 +323,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_Edit_MoveLeft_Click(object sender, EventArgs e)
         {
-
+            TileManager.Instance.MoveLeft();
         }
 
         /// <summary>
@@ -342,7 +332,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_Edit_MoveRight_Click(object sender, EventArgs e)
         {
-
+            TileManager.Instance.MoveRight();
         }
 
         //View
