@@ -153,6 +153,10 @@ namespace Railgun.RailgunGame
                     }
 
                     mainPlayer.Update(gameTime);
+                    for(int i = 0; i < mainPlayer.PlayerBullets.Count; i++)
+                    {
+                        //mainPlayer.PlayerBullets[i].Update();
+                    }
                     break;
                 case GameState.Pause:
 

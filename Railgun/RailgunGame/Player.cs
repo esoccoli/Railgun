@@ -72,7 +72,7 @@ namespace Railgun.RailgunGame
             Ammo = 8;
 
             DashCooldown = 0.0;
-            ShootCooldown = 0.0;
+            ShootCooldown = 2.5;
             dashing = false;
             DashTime = 0.0;
 
@@ -82,6 +82,7 @@ namespace Railgun.RailgunGame
             Hitbox = hitbox;
             hitboxTemp = hitbox;
             Texture = texture;
+            PlayerBullets = new List<Projectile>(10);
         }
 
         /// <summary>
@@ -139,7 +140,7 @@ namespace Railgun.RailgunGame
 
             // NEED TO DO MATH TO SEE WHERE MOUSE IS AND WHERE BULLETS SHOULD BE SHOT.
 
-            //PlayerBullets.Add(new Projectile(new Rectangle(Hitbox.X, Hitbox.Y, 20, 20), activeBullet, notActiveBullet, new Vector2(3.0f, 3.0f)));
+            PlayerBullets.Add(new Projectile(new Rectangle(Hitbox.X, Hitbox.Y, 20, 20), activeBullet, notActiveBullet, new Vector2(3.0f, 3.0f)));
         }
 
         /// <summary>
