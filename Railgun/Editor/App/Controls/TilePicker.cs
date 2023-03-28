@@ -136,9 +136,22 @@ namespace Railgun.Editor.App.Controls
 
             Editor.spriteBatch.Draw(testure, Vector2.Zero, Color.White);
 
-            //Highlight selection
+            //Highlight current selection
             Editor.spriteBatch.Draw(whitePixel,
                 selectionRectangle, selectionColor);
+
+            //If inside control
+            if(IsMouseInsideControl)
+            {
+                //Highlight current mouse over
+                Editor.spriteBatch.Draw(
+                    whitePixel,
+                    new Rectangle(
+                        MouseGridPosition * new Point((int)GridSize),
+                        new Point((int)GridSize)),
+                    selectionColor);
+            }
+            
 
             ////
             Editor.spriteBatch.End();
