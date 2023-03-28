@@ -80,7 +80,7 @@ namespace Railgun.RailgunGame
         /// of the projectile
         /// </summary>
         /// <param name="gameTime">GameTime</param>
-        public void Update(GameTime gameTime, Entity check)
+        public void Update(GameTime gameTime)
         {
             switch (CurrentState)
             {
@@ -104,7 +104,7 @@ namespace Railgun.RailgunGame
             switch (CurrentState)
             {
                 case ProjectileStates.IsActive:
-                    sb.Draw(IsActive, new Rectangle(Hitbox.X, Hitbox.Y, IsActive.Width,IsActive.Height), Color.White);
+                    sb.Draw(IsActive, new Rectangle(Hitbox.X, Hitbox.Y, IsActive.Width, IsActive.Height), Color.White);
                     break;
 
                 case ProjectileStates.HasCollided:

@@ -16,17 +16,22 @@ namespace Railgun.RailgunGame
 
         private Player mainPlayer;
 
-        // Menu Textures
+        #region Menu Elements
+        // Textures used to display the Menu.
         private Texture2D menuLogo;        
         private Texture2D menuPlay;
         private Texture2D menuOpti;
         private Texture2D menuQuit;
 
-        // Rectangles to make the Menu usable
+        // Rectangles to make the Menu usable.
         private Rectangle logoRect;
         private Rectangle playRect;
         private Rectangle optiRect;
         private Rectangle quitRect;
+        #endregion
+
+        // Player, enemy, and projectile textures
+        private Texture2D bulletTexture;
 
         // Reticle
         private Texture2D gameReticle;
@@ -34,8 +39,6 @@ namespace Railgun.RailgunGame
         private GameState currentGameState;
 
         private UI userInterface;
-
-        private List<Projectile> playerBullets;
 
         public Game1()
         {
@@ -68,6 +71,14 @@ namespace Railgun.RailgunGame
 
             GameTime gameTime = new GameTime();
 
+            base.Initialize();
+        }
+
+        protected override void LoadContent()
+        {
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            #region Texture Loading
             //UI Stuff
             backgroundHealthUI = Content.Load<Texture2D>("WhiteHealthSquare");
             foregroundHealthUI = Content.Load<Texture2D>("RedHealthSquare");
@@ -81,18 +92,14 @@ namespace Railgun.RailgunGame
             //Game Reticle
             gameReticle = Content.Load<Texture2D>("gameReticle");
 
-            // Player constructor.
-            mainPlayer = new Player(new Rectangle(870, 510, 100, 100), menuLogo, null, null);
+            // Player, bullets, and enemies.
+            bulletTexture = Content.Load<Texture2D>($"bulletTexture");
 
-            userInterface = new UI(backgroundHealthUI, foregroundHealthUI, true, 100, 100, font, 8, 8); //Creates a UI object. Values to be updated later. 
-            base.Initialize();
-        }
+            #endregion
 
-        protected override void LoadContent()
-        {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            //Creates a UI object. Values to be updated later. 
+            userInterface = new UI(backgroundHealthUI, foregroundHealthUI, true, 100, 100, font, 8, 8);
+            mainPlayer = new Player(new Rectangle(870, 510, 100, 100), menuLogo, bulletTexture, null);
         }
 
         protected override void Update(GameTime gameTime)
@@ -155,7 +162,7 @@ namespace Railgun.RailgunGame
                     mainPlayer.Update(gameTime);
                     for(int i = 0; i < mainPlayer.PlayerBullets.Count; i++)
                     {
-                        //mainPlayer.PlayerBullets[i].Update();
+                        mainPlayer.PlayerBullets[i].Update(gameTime);
                     }
                     break;
                 case GameState.Pause:
@@ -233,6 +240,10 @@ namespace Railgun.RailgunGame
                     mainPlayer.Draw(_spriteBatch);
                     _spriteBatch.DrawString(font, "Game", new Vector2(_graphics.PreferredBackBufferWidth - 100, 20), Color.White);
                     userInterface.Draw(_spriteBatch); //Draws UI
+                    for(int i = 0; i < mainPlayer.PlayerBullets.Count; i++)
+                    {
+                        mainPlayer.PlayerBullets[i].Draw(_spriteBatch, gameTime);
+                    }
 
                     break;
                 case GameState.Pause:
