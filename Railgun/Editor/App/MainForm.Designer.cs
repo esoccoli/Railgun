@@ -29,7 +29,6 @@
             this.toolStripMenuItem_Open = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_Save = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_SaveAs = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem_Export = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_Edit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_Rotate90CW = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_Rotate90CCW = new System.Windows.Forms.ToolStripMenuItem();
@@ -136,8 +135,7 @@
             this.toolStripMenuItem_New,
             this.toolStripMenuItem_Open,
             this.toolStripMenuItem_Save,
-            this.toolStripMenuItem_SaveAs,
-            this.toolStripMenuItem_Export});
+            this.toolStripMenuItem_SaveAs});
             this.toolStripMenuItem_File.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.toolStripMenuItem_File.Name = "toolStripMenuItem_File";
             this.toolStripMenuItem_File.Size = new System.Drawing.Size(46, 24);
@@ -172,12 +170,6 @@
             this.toolStripMenuItem_SaveAs.Size = new System.Drawing.Size(233, 26);
             this.toolStripMenuItem_SaveAs.Text = "Save As";
             // 
-            // toolStripMenuItem_Export
-            // 
-            this.toolStripMenuItem_Export.Name = "toolStripMenuItem_Export";
-            this.toolStripMenuItem_Export.Size = new System.Drawing.Size(233, 26);
-            this.toolStripMenuItem_Export.Text = "Export";
-            // 
             // toolStripMenuItem_Edit
             // 
             this.toolStripMenuItem_Edit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -199,28 +191,30 @@
             // toolStripMenuItem_Rotate90CW
             // 
             this.toolStripMenuItem_Rotate90CW.Name = "toolStripMenuItem_Rotate90CW";
-            this.toolStripMenuItem_Rotate90CW.Size = new System.Drawing.Size(201, 26);
+            this.toolStripMenuItem_Rotate90CW.Size = new System.Drawing.Size(247, 26);
             this.toolStripMenuItem_Rotate90CW.Text = "Rotate 90 CW";
             this.toolStripMenuItem_Rotate90CW.Click += new System.EventHandler(this.Menu_Edit_Rotate90CW_Click);
             // 
             // toolStripMenuItem_Rotate90CCW
             // 
             this.toolStripMenuItem_Rotate90CCW.Name = "toolStripMenuItem_Rotate90CCW";
-            this.toolStripMenuItem_Rotate90CCW.Size = new System.Drawing.Size(201, 26);
+            this.toolStripMenuItem_Rotate90CCW.Size = new System.Drawing.Size(247, 26);
             this.toolStripMenuItem_Rotate90CCW.Text = "Rotate 90 CCW";
             this.toolStripMenuItem_Rotate90CCW.Click += new System.EventHandler(this.Menu_Edit_Rotate90CCW_Click);
             // 
             // toolStripMenuItem_FlipHorizontally
             // 
             this.toolStripMenuItem_FlipHorizontally.Name = "toolStripMenuItem_FlipHorizontally";
-            this.toolStripMenuItem_FlipHorizontally.Size = new System.Drawing.Size(201, 26);
+            this.toolStripMenuItem_FlipHorizontally.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.E)));
+            this.toolStripMenuItem_FlipHorizontally.Size = new System.Drawing.Size(247, 26);
             this.toolStripMenuItem_FlipHorizontally.Text = "Flip Horizontally";
             this.toolStripMenuItem_FlipHorizontally.Click += new System.EventHandler(this.Menu_Edit_FlipHorizontally_Click);
             // 
             // toolStripMenuItem_FlipVertically
             // 
             this.toolStripMenuItem_FlipVertically.Name = "toolStripMenuItem_FlipVertically";
-            this.toolStripMenuItem_FlipVertically.Size = new System.Drawing.Size(201, 26);
+            this.toolStripMenuItem_FlipVertically.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Q)));
+            this.toolStripMenuItem_FlipVertically.Size = new System.Drawing.Size(247, 26);
             this.toolStripMenuItem_FlipVertically.Text = "Flip Vertically";
             this.toolStripMenuItem_FlipVertically.Click += new System.EventHandler(this.Menu_Edit_FlipVertically_Click);
             // 
@@ -228,7 +222,7 @@
             // 
             this.toolStripMenuItem_MoveUp.Enabled = false;
             this.toolStripMenuItem_MoveUp.Name = "toolStripMenuItem_MoveUp";
-            this.toolStripMenuItem_MoveUp.Size = new System.Drawing.Size(201, 26);
+            this.toolStripMenuItem_MoveUp.Size = new System.Drawing.Size(247, 26);
             this.toolStripMenuItem_MoveUp.Text = "Move Up";
             this.toolStripMenuItem_MoveUp.Click += new System.EventHandler(this.Menu_Edit_MoveUp_Click);
             // 
@@ -236,7 +230,7 @@
             // 
             this.toolStripMenuItem_MoveDown.Enabled = false;
             this.toolStripMenuItem_MoveDown.Name = "toolStripMenuItem_MoveDown";
-            this.toolStripMenuItem_MoveDown.Size = new System.Drawing.Size(201, 26);
+            this.toolStripMenuItem_MoveDown.Size = new System.Drawing.Size(247, 26);
             this.toolStripMenuItem_MoveDown.Text = "Move Down";
             this.toolStripMenuItem_MoveDown.Click += new System.EventHandler(this.Menu_Edit_MoveDown_Click);
             // 
@@ -244,7 +238,7 @@
             // 
             this.toolStripMenuItem_MoveLeft.Enabled = false;
             this.toolStripMenuItem_MoveLeft.Name = "toolStripMenuItem_MoveLeft";
-            this.toolStripMenuItem_MoveLeft.Size = new System.Drawing.Size(201, 26);
+            this.toolStripMenuItem_MoveLeft.Size = new System.Drawing.Size(247, 26);
             this.toolStripMenuItem_MoveLeft.Text = "Move Left";
             this.toolStripMenuItem_MoveLeft.Click += new System.EventHandler(this.Menu_Edit_MoveLeft_Click);
             // 
@@ -252,22 +246,24 @@
             // 
             this.toolStripMenuItem_MoveRight.Enabled = false;
             this.toolStripMenuItem_MoveRight.Name = "toolStripMenuItem_MoveRight";
-            this.toolStripMenuItem_MoveRight.Size = new System.Drawing.Size(201, 26);
+            this.toolStripMenuItem_MoveRight.Size = new System.Drawing.Size(247, 26);
             this.toolStripMenuItem_MoveRight.Text = "Move Right";
             this.toolStripMenuItem_MoveRight.Click += new System.EventHandler(this.Menu_Edit_MoveRight_Click);
             // 
             // toolStripMenuItem_Deselect
             // 
+            this.toolStripMenuItem_Deselect.Enabled = false;
             this.toolStripMenuItem_Deselect.Name = "toolStripMenuItem_Deselect";
             this.toolStripMenuItem_Deselect.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D)));
-            this.toolStripMenuItem_Deselect.Size = new System.Drawing.Size(201, 26);
+            this.toolStripMenuItem_Deselect.Size = new System.Drawing.Size(247, 26);
             this.toolStripMenuItem_Deselect.Text = "Deselect";
             // 
             // toolStripMenuItem_Delete
             // 
+            this.toolStripMenuItem_Delete.Enabled = false;
             this.toolStripMenuItem_Delete.Name = "toolStripMenuItem_Delete";
             this.toolStripMenuItem_Delete.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.toolStripMenuItem_Delete.Size = new System.Drawing.Size(201, 26);
+            this.toolStripMenuItem_Delete.Size = new System.Drawing.Size(247, 26);
             this.toolStripMenuItem_Delete.Text = "Delete";
             // 
             // toolStripMenuItem_View
@@ -826,7 +822,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_File;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_New;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Open;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Export;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_SaveAs;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_ValueX;

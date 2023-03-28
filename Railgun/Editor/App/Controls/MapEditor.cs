@@ -309,10 +309,12 @@ namespace Railgun.Editor.App.Controls
         /// </summary>
         private void CheckEditKeys()
         {
-            if(input.JustPressed(Keys.E)) tileManager.RotateCW();
-            if(input.JustPressed(Keys.Q)) tileManager.RotateCCW();
-            if(input.JustPressed(Keys.R)) tileManager.FlipHorizontal();
-            if(input.JustPressed(Keys.F)) tileManager.FlipVertical();
+            //Don't preform if alt is down
+            if(!input.IsDown(Keys.LeftAlt))
+            {
+                if (input.JustPressed(Keys.E)) tileManager.RotateCW();
+                if (input.JustPressed(Keys.Q)) tileManager.RotateCCW();
+            }
         }
 
         #endregion

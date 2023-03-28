@@ -69,6 +69,14 @@ namespace Railgun.Editor.App
             button_Edit_RotateCW.Size = new Size(50, 50);
             button_Edit_RotateCCW.Size = new Size(50, 50);
             currentTileDisplay.Size = new Size(150, 150);
+
+            //Add shortcut keys for single key presses
+            toolStripMenuItem_Rotate90CW.ShortcutKeyDisplayString = "E";
+            toolStripMenuItem_Rotate90CCW.ShortcutKeyDisplayString = "Q";
+            toolStripMenuItem_MoveUp.ShortcutKeyDisplayString = "W";
+            toolStripMenuItem_MoveDown.ShortcutKeyDisplayString = "S";
+            toolStripMenuItem_MoveLeft.ShortcutKeyDisplayString = "A";
+            toolStripMenuItem_MoveRight.ShortcutKeyDisplayString = "D";
         }
 
         /// <summary>
