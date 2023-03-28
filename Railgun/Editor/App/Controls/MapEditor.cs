@@ -105,8 +105,8 @@ namespace Railgun.Editor.App.Controls
             //Add all edit events
             tileManager.OnRotateCW += RotateCW;
             tileManager.OnRotateCCW += RotateCCW;
-            tileManager.OnFlipHorizontal += FlipHorizontal;
-            tileManager.OnFlipVertical += FlipVertical;
+            tileManager.OnFlipHorizontal += EditFlipHorizontal;
+            tileManager.OnFlipVertical += EditFlipVertical;
             tileManager.OnMoveUp += MoveUp;
             tileManager.OnMoveDown += MoveDown;
             tileManager.OnMoveLeft += MoveLeft;
@@ -309,7 +309,10 @@ namespace Railgun.Editor.App.Controls
         /// </summary>
         private void CheckEditKeys()
         {
-            if(input.JustPressed(Keys.E)) ;
+            if(input.JustPressed(Keys.E)) tileManager.RotateCW();
+            if(input.JustPressed(Keys.Q)) tileManager.RotateCCW();
+            if(input.JustPressed(Keys.R)) tileManager.FlipHorizontal();
+            if(input.JustPressed(Keys.F)) tileManager.FlipVertical();
         }
 
         #endregion
@@ -355,6 +358,26 @@ namespace Railgun.Editor.App.Controls
         }
 
         /// <summary>
+        /// Flips based on current rotation context of tile
+        /// Flips the current tile horizontally OR
+        /// Flips the current selection horizontally
+        /// </summary>
+        private void EditFlipHorizontal()
+        {
+            TextureVisual visual = tileManager.CurrentTile.Visual;
+
+            //If not normal rotation or 180 deg rotation, flip vertical instead
+            if (visual.Rotation == MathHelper.Pi || visual.Rotation == 0)
+            {
+                FlipHorizontal();
+                return;
+            }
+
+            //If it gets here, flip vertical
+            FlipVertical();
+        }
+
+        /// <summary>
         /// Flips the current tile horizontally OR
         /// Flips the current selection horizontally
         /// </summary>
@@ -367,7 +390,7 @@ namespace Railgun.Editor.App.Controls
             float rotation = 0f;
 
             //Check if already flipped
-            switch(visual.Flip)
+            switch (visual.Flip)
             {
                 //If already horizontal, double flipped is none
                 case SpriteEffects.FlipHorizontally:
@@ -393,26 +416,32 @@ namespace Railgun.Editor.App.Controls
         }
 
         /// <summary>
+        /// Flips based on current rotation context of tile
+        /// Flips the current tile vertically OR
+        /// Flips the current selection vertically
+        /// </summary>
+        private void EditFlipVertical()
+        {
+            TextureVisual visual = tileManager.CurrentTile.Visual;
+
+            //If not normal rotation or 180 deg rotation, flip horizontal instead
+            if (visual.Rotation == MathHelper.Pi || visual.Rotation == 0)
+            {
+                FlipVertical();
+                return;
+            }
+
+            //If it gets here, flip vertical
+            FlipHorizontal();
+        }
+
+        /// <summary>
         /// Flips the current tile vertically OR
         /// Flips the current selection vertically
         /// </summary>
         private void FlipVertical()
         {
             TextureVisual visual = tileManager.CurrentTile.Visual;
-
-
-            //Check based on the current rotation, flip using the other orientation
-            //if(visual.Rotation == MathHelper.PiOver2)
-            //{
-            //    FlipHorizontal();
-            //    return;
-            //}
-            //else if(visual.Rotation == -MathHelper.PiOver2)
-            //{
-            //    FlipVertical();
-            //    return;
-            //}
-
 
             //Effect to apply
             SpriteEffects effect = SpriteEffects.FlipVertically;

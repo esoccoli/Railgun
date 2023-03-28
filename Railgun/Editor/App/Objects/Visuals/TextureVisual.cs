@@ -67,7 +67,7 @@ namespace Railgun.Editor.App.Objects.Visuals
         /// <param name="tint">Tint color</param>
         /// <param name="texture">Texture, NULLABLE</param>
         /// <param name="source">Source rectangle of the texture to be used</param>
-        /// <param name="rotation">Rotation</param>
+        /// <param name="rotation">Rotation in radians</param>
         /// <param name="scale">Scaling size</param>
         /// <param name="flip">Sprite effect for orientation</param>
         public TextureVisual(Color tint, Texture2D texture = null, Rectangle? source = null,
@@ -76,7 +76,7 @@ namespace Railgun.Editor.App.Objects.Visuals
             Texture = texture;
             Source = source;
             Tint = tint;
-            Rotation = rotation;
+            Rotation = MathHelper.WrapAngle(rotation);//Ensure rotation is within normal range
             Scale = scale;
             Flip = flip;
         }
