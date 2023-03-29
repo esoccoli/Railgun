@@ -28,6 +28,11 @@ namespace Railgun.RailgunGame
         public Vector2 Velocity { get; set; }
 
         /// <summary>
+        /// The current position of the bullet. BOY this has a story behind it...
+        /// </summary>
+        public Vector2 Position { get; set; }
+
+        /// <summary>
         /// current state of the projectile:
         /// active or has collided
         /// </summary>
@@ -59,7 +64,7 @@ namespace Railgun.RailgunGame
             this.Velocity = Velocity;
             IsActive = isActiveTexture;
             HasCollided = hasCollidedAnimation;
-
+            Position = Hitbox.Center.ToVector2();
         }
 
         /// <summary>
@@ -85,7 +90,8 @@ namespace Railgun.RailgunGame
             switch (CurrentState)
             {
                 case ProjectileStates.IsActive:
-                    Hitbox = new Rectangle((int)(Hitbox.X + Velocity.X), (int)(Hitbox.Y + Velocity.Y), Hitbox.Width, Hitbox.Height);
+                    Position += Velocity;
+                    //Hitbox = new Rectangle((int)(Hitbox.X + Velocity.X), (int)(Hitbox.Y + Velocity.Y), Hitbox.Width, Hitbox.Height);
                     break;
 
                 case ProjectileStates.HasCollided:
@@ -104,7 +110,7 @@ namespace Railgun.RailgunGame
             switch (CurrentState)
             {
                 case ProjectileStates.IsActive:
-                    sb.Draw(IsActive, new Rectangle(Hitbox.X, Hitbox.Y, IsActive.Width, IsActive.Height), Color.White);
+                    sb.Draw(IsActive, new Rectangle((int)(Position.X - (IsActive.Width / 2)), (int)(Position.Y - (IsActive.Height / 2)), IsActive.Width, IsActive.Height), Color.White);
                     break;
 
                 case ProjectileStates.HasCollided:

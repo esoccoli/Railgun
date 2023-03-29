@@ -152,7 +152,9 @@ namespace Railgun.RailgunGame
             Ammo--;
             ShootCooldown = 0.1f;
 
-            PlayerBullets.Add(new Projectile(new Rectangle(Hitbox.X + (Hitbox.Width / 2) - (activeBullet.Width / 2), Hitbox.Y + (Hitbox.Height / 2) - (activeBullet.Height / 2), activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet, Vector2.Normalize((InputManager.MouseState.Position - Hitbox.Center).ToVector2()) * 10.0f));
+            Vector2 vect = (InputManager.MouseState.Position - Hitbox.Center).ToVector2() / Vector2.Distance(InputManager.MouseState.Position.ToVector2(), Hitbox.Center.ToVector2());
+
+            PlayerBullets.Add(new Projectile(new Rectangle(Hitbox.X + (Hitbox.Width / 2) - (activeBullet.Width / 2), Hitbox.Y + (Hitbox.Height / 2) - (activeBullet.Height / 2), activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet, vect * 10.0f));
         }
 
         /// <summary>
