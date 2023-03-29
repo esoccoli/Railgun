@@ -19,11 +19,6 @@ namespace Railgun.RailgunGame
         public Texture2D Texture { get; set; }
 
         /// <summary>
-        /// x, y, width, and height of tile
-        /// </summary>
-        public Rectangle HitBox { get; set; }
-
-        /// <summary>
         /// source rectangle on sprite sheet
         /// </summary>
         public Rectangle SourceRectangle { get; set; }
@@ -32,11 +27,6 @@ namespace Railgun.RailgunGame
         /// rotation of the tile
         /// </summary>
         public float Rotation { get; set; }
-
-        /// <summary>
-        /// scale to draw tile at
-        /// </summary>
-        public float Scale { get; set; }
 
         /// <summary>
         /// tint to apply to tile
@@ -53,33 +43,27 @@ namespace Railgun.RailgunGame
         /// instantiates a tile with parameters for all values
         /// </summary>
         /// <param name="texture">tile's texture</param>
-        /// <param name="hitbox">location and size of tile drawn on screen</param>
         /// <param name="sourceRectangle">section of texture with desired tile</param>
         /// <param name="rotation">roataion of the tile</param>
         /// <param name="scale">scale of hitbox to draw tile at</param>
         /// <param name="tint">tint of the tile</param>
         /// <param name="flip">which way the tile is flipped</param>
         public Tile(Texture2D texture,
-                    Rectangle hitbox,
                     Rectangle sourceRectangle,
                     float rotation,
-                    float scale,
                     Color tint,
                     SpriteEffects flip)
         {
             Texture = texture;
-            HitBox = hitbox;
             SourceRectangle = sourceRectangle;
             Rotation = rotation;
-            Scale = scale;
             Tint = tint;
             Flip = flip;
         }
 
         /// <summary>
-        /// overload with only texture, hitbox, sourceRectangle, tint, and flip params
+        /// overload with only texture, sourceRectangle, tint, and flip params
         /// rotation = 0.0f
-        /// scale = 1.0f
         /// </summary>
         /// <param name="texture">tile's texture</param>
         /// <param name="hitbox">location and size of tile drawn on the screen</param>
@@ -87,23 +71,19 @@ namespace Railgun.RailgunGame
         /// <param name="tint">tint applied to tile</param>
         /// <param name="flip">which way the tile is flipped</param>
         public Tile(Texture2D texture,
-                    Rectangle hitbox,
                     Rectangle sourceRectangle,
                     Color tint,
                     SpriteEffects flip)
             : this(texture, 
-                   hitbox, 
                    sourceRectangle, 
-                   0.0f, 
-                   1.0f, 
+                   0.0f,  
                    tint, 
                    flip) 
         { }
 
         /// <summary>
-        /// overload with only texture, hitbox, sourceRectangle, and tint
+        /// overload with only texture, sourceRectangle, and tint
         /// rotation = 0.0f
-        /// scale = 1.0f
         /// flip = SpriteEffects.None
         /// </summary>
         /// <param name="texture">tile's texture</param>
@@ -111,22 +91,18 @@ namespace Railgun.RailgunGame
         /// <param name="sourceRectangle">source rectangle of tile on texture</param>
         /// <param name="tint">color of tile</param>
         public Tile(Texture2D texture,
-                    Rectangle hitbox,
                     Rectangle sourceRectangle,
                     Color tint)
             :this(texture, 
-                  hitbox, 
                   sourceRectangle, 
                   0.0f, 
-                  1.0f, 
                   tint, 
                   SpriteEffects.None) 
         { }
 
         /// <summary>
-        /// overload whith only a texture, hitbox, and source rectangle
+        /// overload whith only a texture, and source rectangle
         /// rotation = 0.0f
-        /// scale = 1.0f
         /// tint = Color.White
         /// flip = SpriteEffects.None
         /// </summary>
@@ -138,12 +114,16 @@ namespace Railgun.RailgunGame
                     Rectangle hitbox,
                     Rectangle sourceRectangle)
             : this(texture,
-                   hitbox,
                    sourceRectangle,
                    0.0f,
-                   1.0f,
                    Color.White,
                    SpriteEffects.None)
         { }
+
+
+        public void Draw(SpriteBatch sb, Rectangle destination)
+        {
+            sb.Draw(Texture, destination, SourceRectangle, Tint, Rotation, Vector2.Zero, Flip, 1.0f);
+        }
     }
 }
