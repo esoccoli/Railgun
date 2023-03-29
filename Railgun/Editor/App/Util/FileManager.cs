@@ -42,8 +42,8 @@ namespace Railgun.Editor.App.Util
         /// Saves the specified map to a file specified by the user
         /// </summary>
         /// <param name="map">The map to save as</param>
-        /// <returns>The path to the file, null if canceled by user</returns>
-        public static string SaveMapAs(Map map)
+        /// <returns>TRUE if saved, FALSE if cancelled</returns>
+        public static bool SaveMapAs(Map map)
         {
             //Create a new save file dialog
             SaveFileDialog dialog = new SaveFileDialog();
@@ -52,10 +52,33 @@ namespace Railgun.Editor.App.Util
 
             //If canceled, return null
             if (dialog.ShowDialog() != DialogResult.OK)
-                return null;
+                return false;
+
+            //Set the new map path
+            CurrentMapPath = dialog.FileName;
+
+            //Save the map
+            SaveMap(map);
+
+            //It saved
+            return true;
+        }
+
+        /// <summary>
+        /// Saves the specified map to the current map path
+        /// </summary>
+        /// <param name="map">The map to save</param>
+        public static void SaveMap(Map map)
+        {
+            //If a new file, prompt user to save
+            if(CurrentMapPath == null)
+            {
+                SaveMapAs(map);
+                return;
+            }
 
             //Create a file writer from this path
-            BinaryWriter writer = new BinaryWriter(File.OpenWrite(dialog.FileName));
+            BinaryWriter writer = new BinaryWriter(File.OpenWrite(CurrentMapPath));
 
             //Create an identifier that can make sure this is a valid file
             writer.Write(FileIdentifier);
@@ -72,9 +95,13 @@ namespace Railgun.Editor.App.Util
                 WriteLayer(writer, tileLayer);
             }
 
+            //Close the writer
             writer.Close();
-            //Return the path of the newly written file
-            return dialog.FileName;
+
+            //DEBUG
+            DebugLog.Instance.LogPersistant(
+                "Saved map: " + FileManager.GetFileName(FileManager.CurrentMapPath),
+                Microsoft.Xna.Framework.Color.Yellow, 5f);
         }
 
         /// <summary>
@@ -238,7 +265,16 @@ namespace Railgun.Editor.App.Util
                     "Error:", MessageBoxButtons.OK);
                 return null;
             }
-            finally { reader.Close(); }//Close reader
+            finally
+            {
+                //Close reader
+                reader.Close();
+
+                //DEBUG
+                DebugLog.Instance.LogPersistant(
+                    "Loaded map: " + FileManager.GetFileName(FileManager.CurrentMapPath),
+                    Microsoft.Xna.Framework.Color.Yellow, 5f);
+            }
         }
 
         /// <summary>
@@ -363,9 +399,21 @@ namespace Railgun.Editor.App.Util
         /// </summary>
         /// <param name="path">The path of the file or directory to get its name</param>
         /// <returns>The name of the file or directory</returns>
-        public static string GetPathName(string path)
+        public static string GetFileName(string path)
         {
             return path.Substring(path.LastIndexOf('\\') + 1);
+        }
+
+        /// <summary>
+        /// Returns the name or directory from the specified path without the extension
+        /// <para>(For example ".rgm" )</para>
+        /// </summary>
+        /// <param name="path">The path of the file or directory to get its name</param>
+        /// <returns>The name of the file or directory</returns>
+        public static string GetFileNameNoExtension(string path)
+        {
+            //Cuts off the '.' end of the name
+            return GetFileName(path).Split('.')[0];
         }
 
         #endregion

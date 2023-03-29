@@ -47,6 +47,7 @@
             this.toolStripMenuItem_Exit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_Maximize = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_Minimize = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_Title = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel_LabelX = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel_ValueX = new System.Windows.Forms.ToolStripStatusLabel();
@@ -59,7 +60,6 @@
             this.tableLayoutPanel_Objects = new System.Windows.Forms.TableLayoutPanel();
             this.panel_Objects = new System.Windows.Forms.Panel();
             this.tableLayoutPanel_TilePicker = new System.Windows.Forms.TableLayoutPanel();
-            this.tilePicker = new Railgun.Editor.App.Controls.TilePicker();
             this.panel_TileSettings = new System.Windows.Forms.Panel();
             this.label_TileSize = new System.Windows.Forms.Label();
             this.textBox_TileSize = new System.Windows.Forms.TextBox();
@@ -71,14 +71,15 @@
             this.button_Edit_FlipVertical = new System.Windows.Forms.Button();
             this.button_Edit_RotateCW = new System.Windows.Forms.Button();
             this.button_Edit_RotateCCW = new System.Windows.Forms.Button();
-            this.currentTileDisplay = new Railgun.Editor.App.Controls.CurrentTileDisplay();
             this.button_Edit_Up = new System.Windows.Forms.Button();
             this.button_Edit_Left = new System.Windows.Forms.Button();
             this.button_Edit_Down = new System.Windows.Forms.Button();
             this.button_Edit_Right = new System.Windows.Forms.Button();
             this.label_Edit = new System.Windows.Forms.Label();
-            this.mapEditor = new Railgun.Editor.App.Controls.MapEditor();
             this.tableLayoutPanel_MainOutline = new System.Windows.Forms.TableLayoutPanel();
+            this.tilePicker = new Railgun.Editor.App.Controls.TilePicker();
+            this.currentTileDisplay = new Railgun.Editor.App.Controls.CurrentTileDisplay();
+            this.mapEditor = new Railgun.Editor.App.Controls.MapEditor();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_MainEditor)).BeginInit();
@@ -111,11 +112,12 @@
             this.toolStripMenuItem_Help,
             this.toolStripMenuItem_Exit,
             this.toolStripMenuItem_Maximize,
-            this.toolStripMenuItem_Minimize});
+            this.toolStripMenuItem_Minimize,
+            this.toolStripMenuItem_Title});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Padding = new System.Windows.Forms.Padding(5, 1, 0, 0);
-            this.menuStrip.Size = new System.Drawing.Size(1343, 45);
+            this.menuStrip.Padding = new System.Windows.Forms.Padding(4, 1, 0, 0);
+            this.menuStrip.Size = new System.Drawing.Size(1007, 41);
             this.menuStrip.TabIndex = 2;
             this.menuStrip.Text = "menuStrip";
             this.menuStrip.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MenuStrip_MouseDown);
@@ -138,37 +140,38 @@
             this.toolStripMenuItem_SaveAs});
             this.toolStripMenuItem_File.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.toolStripMenuItem_File.Name = "toolStripMenuItem_File";
-            this.toolStripMenuItem_File.Size = new System.Drawing.Size(46, 24);
+            this.toolStripMenuItem_File.Size = new System.Drawing.Size(37, 20);
             this.toolStripMenuItem_File.Text = "File";
             // 
             // toolStripMenuItem_New
             // 
             this.toolStripMenuItem_New.Name = "toolStripMenuItem_New";
             this.toolStripMenuItem_New.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.toolStripMenuItem_New.Size = new System.Drawing.Size(233, 26);
+            this.toolStripMenuItem_New.Size = new System.Drawing.Size(186, 22);
             this.toolStripMenuItem_New.Text = "New";
             // 
             // toolStripMenuItem_Open
             // 
             this.toolStripMenuItem_Open.Name = "toolStripMenuItem_Open";
             this.toolStripMenuItem_Open.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.toolStripMenuItem_Open.Size = new System.Drawing.Size(233, 26);
+            this.toolStripMenuItem_Open.Size = new System.Drawing.Size(186, 22);
             this.toolStripMenuItem_Open.Text = "Open";
-            this.toolStripMenuItem_Open.Click += new System.EventHandler(this.toolStripMenuItem_Open_Click);
+            this.toolStripMenuItem_Open.Click += new System.EventHandler(this.Menu_Open_Click);
             // 
             // toolStripMenuItem_Save
             // 
             this.toolStripMenuItem_Save.Name = "toolStripMenuItem_Save";
             this.toolStripMenuItem_Save.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.toolStripMenuItem_Save.Size = new System.Drawing.Size(233, 26);
+            this.toolStripMenuItem_Save.Size = new System.Drawing.Size(186, 22);
             this.toolStripMenuItem_Save.Text = "Save";
+            this.toolStripMenuItem_Save.Click += new System.EventHandler(this.Menu_Save_Click);
             // 
             // toolStripMenuItem_SaveAs
             // 
             this.toolStripMenuItem_SaveAs.Name = "toolStripMenuItem_SaveAs";
             this.toolStripMenuItem_SaveAs.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
-            this.toolStripMenuItem_SaveAs.Size = new System.Drawing.Size(233, 26);
+            this.toolStripMenuItem_SaveAs.Size = new System.Drawing.Size(186, 22);
             this.toolStripMenuItem_SaveAs.Text = "Save As";
             this.toolStripMenuItem_SaveAs.Click += new System.EventHandler(this.Menu_SaveAs_Click);
             // 
@@ -187,20 +190,20 @@
             this.toolStripMenuItem_Delete});
             this.toolStripMenuItem_Edit.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.toolStripMenuItem_Edit.Name = "toolStripMenuItem_Edit";
-            this.toolStripMenuItem_Edit.Size = new System.Drawing.Size(49, 24);
+            this.toolStripMenuItem_Edit.Size = new System.Drawing.Size(39, 20);
             this.toolStripMenuItem_Edit.Text = "Edit";
             // 
             // toolStripMenuItem_Rotate90CW
             // 
             this.toolStripMenuItem_Rotate90CW.Name = "toolStripMenuItem_Rotate90CW";
-            this.toolStripMenuItem_Rotate90CW.Size = new System.Drawing.Size(247, 26);
+            this.toolStripMenuItem_Rotate90CW.Size = new System.Drawing.Size(196, 22);
             this.toolStripMenuItem_Rotate90CW.Text = "Rotate 90 CW";
             this.toolStripMenuItem_Rotate90CW.Click += new System.EventHandler(this.Menu_Edit_Rotate90CW_Click);
             // 
             // toolStripMenuItem_Rotate90CCW
             // 
             this.toolStripMenuItem_Rotate90CCW.Name = "toolStripMenuItem_Rotate90CCW";
-            this.toolStripMenuItem_Rotate90CCW.Size = new System.Drawing.Size(247, 26);
+            this.toolStripMenuItem_Rotate90CCW.Size = new System.Drawing.Size(196, 22);
             this.toolStripMenuItem_Rotate90CCW.Text = "Rotate 90 CCW";
             this.toolStripMenuItem_Rotate90CCW.Click += new System.EventHandler(this.Menu_Edit_Rotate90CCW_Click);
             // 
@@ -208,7 +211,7 @@
             // 
             this.toolStripMenuItem_FlipHorizontally.Name = "toolStripMenuItem_FlipHorizontally";
             this.toolStripMenuItem_FlipHorizontally.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.E)));
-            this.toolStripMenuItem_FlipHorizontally.Size = new System.Drawing.Size(247, 26);
+            this.toolStripMenuItem_FlipHorizontally.Size = new System.Drawing.Size(196, 22);
             this.toolStripMenuItem_FlipHorizontally.Text = "Flip Horizontally";
             this.toolStripMenuItem_FlipHorizontally.Click += new System.EventHandler(this.Menu_Edit_FlipHorizontally_Click);
             // 
@@ -216,7 +219,7 @@
             // 
             this.toolStripMenuItem_FlipVertically.Name = "toolStripMenuItem_FlipVertically";
             this.toolStripMenuItem_FlipVertically.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Q)));
-            this.toolStripMenuItem_FlipVertically.Size = new System.Drawing.Size(247, 26);
+            this.toolStripMenuItem_FlipVertically.Size = new System.Drawing.Size(196, 22);
             this.toolStripMenuItem_FlipVertically.Text = "Flip Vertically";
             this.toolStripMenuItem_FlipVertically.Click += new System.EventHandler(this.Menu_Edit_FlipVertically_Click);
             // 
@@ -224,7 +227,7 @@
             // 
             this.toolStripMenuItem_MoveUp.Enabled = false;
             this.toolStripMenuItem_MoveUp.Name = "toolStripMenuItem_MoveUp";
-            this.toolStripMenuItem_MoveUp.Size = new System.Drawing.Size(247, 26);
+            this.toolStripMenuItem_MoveUp.Size = new System.Drawing.Size(196, 22);
             this.toolStripMenuItem_MoveUp.Text = "Move Up";
             this.toolStripMenuItem_MoveUp.Click += new System.EventHandler(this.Menu_Edit_MoveUp_Click);
             // 
@@ -232,7 +235,7 @@
             // 
             this.toolStripMenuItem_MoveDown.Enabled = false;
             this.toolStripMenuItem_MoveDown.Name = "toolStripMenuItem_MoveDown";
-            this.toolStripMenuItem_MoveDown.Size = new System.Drawing.Size(247, 26);
+            this.toolStripMenuItem_MoveDown.Size = new System.Drawing.Size(196, 22);
             this.toolStripMenuItem_MoveDown.Text = "Move Down";
             this.toolStripMenuItem_MoveDown.Click += new System.EventHandler(this.Menu_Edit_MoveDown_Click);
             // 
@@ -240,7 +243,7 @@
             // 
             this.toolStripMenuItem_MoveLeft.Enabled = false;
             this.toolStripMenuItem_MoveLeft.Name = "toolStripMenuItem_MoveLeft";
-            this.toolStripMenuItem_MoveLeft.Size = new System.Drawing.Size(247, 26);
+            this.toolStripMenuItem_MoveLeft.Size = new System.Drawing.Size(196, 22);
             this.toolStripMenuItem_MoveLeft.Text = "Move Left";
             this.toolStripMenuItem_MoveLeft.Click += new System.EventHandler(this.Menu_Edit_MoveLeft_Click);
             // 
@@ -248,7 +251,7 @@
             // 
             this.toolStripMenuItem_MoveRight.Enabled = false;
             this.toolStripMenuItem_MoveRight.Name = "toolStripMenuItem_MoveRight";
-            this.toolStripMenuItem_MoveRight.Size = new System.Drawing.Size(247, 26);
+            this.toolStripMenuItem_MoveRight.Size = new System.Drawing.Size(196, 22);
             this.toolStripMenuItem_MoveRight.Text = "Move Right";
             this.toolStripMenuItem_MoveRight.Click += new System.EventHandler(this.Menu_Edit_MoveRight_Click);
             // 
@@ -257,7 +260,7 @@
             this.toolStripMenuItem_Deselect.Enabled = false;
             this.toolStripMenuItem_Deselect.Name = "toolStripMenuItem_Deselect";
             this.toolStripMenuItem_Deselect.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D)));
-            this.toolStripMenuItem_Deselect.Size = new System.Drawing.Size(247, 26);
+            this.toolStripMenuItem_Deselect.Size = new System.Drawing.Size(196, 22);
             this.toolStripMenuItem_Deselect.Text = "Deselect";
             // 
             // toolStripMenuItem_Delete
@@ -265,7 +268,7 @@
             this.toolStripMenuItem_Delete.Enabled = false;
             this.toolStripMenuItem_Delete.Name = "toolStripMenuItem_Delete";
             this.toolStripMenuItem_Delete.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.toolStripMenuItem_Delete.Size = new System.Drawing.Size(247, 26);
+            this.toolStripMenuItem_Delete.Size = new System.Drawing.Size(196, 22);
             this.toolStripMenuItem_Delete.Text = "Delete";
             // 
             // toolStripMenuItem_View
@@ -275,14 +278,14 @@
             this.toolStripMenuItem_ResetCamera});
             this.toolStripMenuItem_View.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.toolStripMenuItem_View.Name = "toolStripMenuItem_View";
-            this.toolStripMenuItem_View.Size = new System.Drawing.Size(55, 24);
+            this.toolStripMenuItem_View.Size = new System.Drawing.Size(44, 20);
             this.toolStripMenuItem_View.Text = "View";
             // 
             // toolStripMenuItem_ResetZoom
             // 
             this.toolStripMenuItem_ResetZoom.Name = "toolStripMenuItem_ResetZoom";
             this.toolStripMenuItem_ResetZoom.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D0)));
-            this.toolStripMenuItem_ResetZoom.Size = new System.Drawing.Size(233, 26);
+            this.toolStripMenuItem_ResetZoom.Size = new System.Drawing.Size(186, 22);
             this.toolStripMenuItem_ResetZoom.Text = "Reset Zoom";
             this.toolStripMenuItem_ResetZoom.Click += new System.EventHandler(this.Menu_View_ResetZoom_Click);
             // 
@@ -290,7 +293,7 @@
             // 
             this.toolStripMenuItem_ResetCamera.Name = "toolStripMenuItem_ResetCamera";
             this.toolStripMenuItem_ResetCamera.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
-            this.toolStripMenuItem_ResetCamera.Size = new System.Drawing.Size(233, 26);
+            this.toolStripMenuItem_ResetCamera.Size = new System.Drawing.Size(186, 22);
             this.toolStripMenuItem_ResetCamera.Text = "Reset Camera";
             this.toolStripMenuItem_ResetCamera.Click += new System.EventHandler(this.Menu_View_ResetCamera_Click);
             // 
@@ -298,7 +301,7 @@
             // 
             this.toolStripMenuItem_Help.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.toolStripMenuItem_Help.Name = "toolStripMenuItem_Help";
-            this.toolStripMenuItem_Help.Size = new System.Drawing.Size(55, 24);
+            this.toolStripMenuItem_Help.Size = new System.Drawing.Size(44, 20);
             this.toolStripMenuItem_Help.Text = "Help";
             // 
             // toolStripMenuItem_Exit
@@ -328,6 +331,16 @@
             this.toolStripMenuItem_Minimize.Size = new System.Drawing.Size(45, 40);
             this.toolStripMenuItem_Minimize.Click += new System.EventHandler(this.Menu_Minimize_Click);
             // 
+            // toolStripMenuItem_Title
+            // 
+            this.toolStripMenuItem_Title.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripMenuItem_Title.Enabled = false;
+            this.toolStripMenuItem_Title.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.toolStripMenuItem_Title.Name = "toolStripMenuItem_Title";
+            this.toolStripMenuItem_Title.Padding = new System.Windows.Forms.Padding(0);
+            this.toolStripMenuItem_Title.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.toolStripMenuItem_Title.Size = new System.Drawing.Size(4, 40);
+            // 
             // statusStrip
             // 
             this.statusStrip.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -339,10 +352,10 @@
             this.toolStripStatusLabel_ValueY,
             this.toolStripStatusLabel_LabelZoom,
             this.toolStripStatusLabel_ValueZoom});
-            this.statusStrip.Location = new System.Drawing.Point(0, 816);
+            this.statusStrip.Location = new System.Drawing.Point(0, 662);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 13, 0);
-            this.statusStrip.Size = new System.Drawing.Size(1343, 26);
+            this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 10, 0);
+            this.statusStrip.Size = new System.Drawing.Size(1007, 22);
             this.statusStrip.TabIndex = 4;
             this.statusStrip.Text = "statusStrip";
             // 
@@ -350,14 +363,14 @@
             // 
             this.toolStripStatusLabel_LabelX.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripStatusLabel_LabelX.Name = "toolStripStatusLabel_LabelX";
-            this.toolStripStatusLabel_LabelX.Size = new System.Drawing.Size(21, 20);
+            this.toolStripStatusLabel_LabelX.Size = new System.Drawing.Size(17, 17);
             this.toolStripStatusLabel_LabelX.Text = "X:";
             // 
             // toolStripStatusLabel_ValueX
             // 
             this.toolStripStatusLabel_ValueX.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripStatusLabel_ValueX.Name = "toolStripStatusLabel_ValueX";
-            this.toolStripStatusLabel_ValueX.Size = new System.Drawing.Size(35, 20);
+            this.toolStripStatusLabel_ValueX.Size = new System.Drawing.Size(28, 17);
             this.toolStripStatusLabel_ValueX.Text = "000";
             // 
             // toolStripStatusLabel_LabelY
@@ -365,21 +378,21 @@
             this.toolStripStatusLabel_LabelY.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripStatusLabel_LabelY.Margin = new System.Windows.Forms.Padding(20, 4, 0, 2);
             this.toolStripStatusLabel_LabelY.Name = "toolStripStatusLabel_LabelY";
-            this.toolStripStatusLabel_LabelY.Size = new System.Drawing.Size(20, 20);
+            this.toolStripStatusLabel_LabelY.Size = new System.Drawing.Size(17, 16);
             this.toolStripStatusLabel_LabelY.Text = "Y:";
             // 
             // toolStripStatusLabel_ValueY
             // 
             this.toolStripStatusLabel_ValueY.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripStatusLabel_ValueY.Name = "toolStripStatusLabel_ValueY";
-            this.toolStripStatusLabel_ValueY.Size = new System.Drawing.Size(35, 20);
+            this.toolStripStatusLabel_ValueY.Size = new System.Drawing.Size(28, 17);
             this.toolStripStatusLabel_ValueY.Text = "000";
             // 
             // toolStripStatusLabel_LabelZoom
             // 
             this.toolStripStatusLabel_LabelZoom.Margin = new System.Windows.Forms.Padding(20, 4, 0, 2);
             this.toolStripStatusLabel_LabelZoom.Name = "toolStripStatusLabel_LabelZoom";
-            this.toolStripStatusLabel_LabelZoom.Size = new System.Drawing.Size(52, 20);
+            this.toolStripStatusLabel_LabelZoom.Size = new System.Drawing.Size(42, 16);
             this.toolStripStatusLabel_LabelZoom.Text = "Zoom:";
             this.toolStripStatusLabel_LabelZoom.ToolTipText = "Reset Camera Zoom";
             // 
@@ -387,7 +400,7 @@
             // 
             this.toolStripStatusLabel_ValueZoom.Font = new System.Drawing.Font("Courier New", 9F);
             this.toolStripStatusLabel_ValueZoom.Name = "toolStripStatusLabel_ValueZoom";
-            this.toolStripStatusLabel_ValueZoom.Size = new System.Drawing.Size(44, 20);
+            this.toolStripStatusLabel_ValueZoom.Size = new System.Drawing.Size(35, 17);
             this.toolStripStatusLabel_ValueZoom.Text = "0.00";
             this.toolStripStatusLabel_ValueZoom.ToolTipText = "Reset Camera Zoom";
             this.toolStripStatusLabel_ValueZoom.Click += new System.EventHandler(this.Menu_View_ResetZoom_Click);
@@ -397,8 +410,8 @@
             // splitContainer_MainEditor
             // 
             this.splitContainer_MainEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer_MainEditor.Location = new System.Drawing.Point(0, 4);
-            this.splitContainer_MainEditor.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.splitContainer_MainEditor.Location = new System.Drawing.Point(0, 3);
+            this.splitContainer_MainEditor.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.splitContainer_MainEditor.Name = "splitContainer_MainEditor";
             // 
             // splitContainer_MainEditor.Panel1
@@ -410,15 +423,16 @@
             // 
             this.splitContainer_MainEditor.Panel2.Controls.Add(this.mapEditor);
             this.splitContainer_MainEditor.Panel2MinSize = 400;
-            this.splitContainer_MainEditor.Size = new System.Drawing.Size(1343, 763);
-            this.splitContainer_MainEditor.SplitterDistance = 392;
+            this.splitContainer_MainEditor.Size = new System.Drawing.Size(1007, 615);
+            this.splitContainer_MainEditor.SplitterDistance = 300;
+            this.splitContainer_MainEditor.SplitterWidth = 3;
             this.splitContainer_MainEditor.TabIndex = 5;
             // 
             // splitContainer_LeftSideBar
             // 
             this.splitContainer_LeftSideBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer_LeftSideBar.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer_LeftSideBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.splitContainer_LeftSideBar.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainer_LeftSideBar.Name = "splitContainer_LeftSideBar";
             this.splitContainer_LeftSideBar.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -433,36 +447,37 @@
             this.splitContainer_LeftSideBar.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.splitContainer_LeftSideBar.Panel2MinSize = 300;
             this.splitContainer_LeftSideBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.splitContainer_LeftSideBar.Size = new System.Drawing.Size(392, 763);
-            this.splitContainer_LeftSideBar.SplitterDistance = 369;
+            this.splitContainer_LeftSideBar.Size = new System.Drawing.Size(300, 615);
+            this.splitContainer_LeftSideBar.SplitterDistance = 297;
+            this.splitContainer_LeftSideBar.SplitterWidth = 3;
             this.splitContainer_LeftSideBar.TabIndex = 0;
             // 
             // tableLayoutPanel_Objects
             // 
             this.tableLayoutPanel_Objects.ColumnCount = 1;
             this.tableLayoutPanel_Objects.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_Objects.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_Objects.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 15F));
             this.tableLayoutPanel_Objects.Controls.Add(this.panel_Objects, 0, 1);
             this.tableLayoutPanel_Objects.Controls.Add(this.label_Objects, 0, 0);
             this.tableLayoutPanel_Objects.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel_Objects.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel_Objects.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tableLayoutPanel_Objects.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel_Objects.Name = "tableLayoutPanel_Objects";
             this.tableLayoutPanel_Objects.RowCount = 2;
-            this.tableLayoutPanel_Objects.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_Objects.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
             this.tableLayoutPanel_Objects.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_Objects.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel_Objects.Size = new System.Drawing.Size(392, 369);
+            this.tableLayoutPanel_Objects.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
+            this.tableLayoutPanel_Objects.Size = new System.Drawing.Size(300, 297);
             this.tableLayoutPanel_Objects.TabIndex = 6;
             // 
             // panel_Objects
             // 
             this.panel_Objects.Controls.Add(this.tableLayoutPanel_TilePicker);
             this.panel_Objects.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_Objects.Location = new System.Drawing.Point(0, 20);
+            this.panel_Objects.Location = new System.Drawing.Point(0, 16);
             this.panel_Objects.Margin = new System.Windows.Forms.Padding(0);
             this.panel_Objects.Name = "panel_Objects";
-            this.panel_Objects.Size = new System.Drawing.Size(392, 349);
+            this.panel_Objects.Size = new System.Drawing.Size(300, 281);
             this.panel_Objects.TabIndex = 4;
             // 
             // tableLayoutPanel_TilePicker
@@ -476,27 +491,10 @@
             this.tableLayoutPanel_TilePicker.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel_TilePicker.Name = "tableLayoutPanel_TilePicker";
             this.tableLayoutPanel_TilePicker.RowCount = 2;
-            this.tableLayoutPanel_TilePicker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel_TilePicker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41F));
             this.tableLayoutPanel_TilePicker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_TilePicker.Size = new System.Drawing.Size(392, 349);
+            this.tableLayoutPanel_TilePicker.Size = new System.Drawing.Size(300, 281);
             this.tableLayoutPanel_TilePicker.TabIndex = 1;
-            // 
-            // tilePicker
-            // 
-            this.tilePicker.BackColor = System.Drawing.SystemColors.Control;
-            this.tilePicker.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tilePicker.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
-            this.tilePicker.ForeColor = System.Drawing.Color.Black;
-            this.tilePicker.GridSize = 0F;
-            this.tilePicker.Location = new System.Drawing.Point(0, 50);
-            this.tilePicker.Margin = new System.Windows.Forms.Padding(0);
-            this.tilePicker.MaxZoom = 0.1F;
-            this.tilePicker.MinZoom = 0.1F;
-            this.tilePicker.MouseHoverUpdatesOnly = false;
-            this.tilePicker.Name = "tilePicker";
-            this.tilePicker.Size = new System.Drawing.Size(392, 299);
-            this.tilePicker.TabIndex = 1;
-            this.tilePicker.Text = "tilePicker1";
             // 
             // panel_TileSettings
             // 
@@ -506,7 +504,7 @@
             this.panel_TileSettings.Location = new System.Drawing.Point(0, 0);
             this.panel_TileSettings.Margin = new System.Windows.Forms.Padding(0);
             this.panel_TileSettings.Name = "panel_TileSettings";
-            this.panel_TileSettings.Size = new System.Drawing.Size(392, 50);
+            this.panel_TileSettings.Size = new System.Drawing.Size(300, 41);
             this.panel_TileSettings.TabIndex = 0;
             // 
             // label_TileSize
@@ -514,19 +512,20 @@
             this.label_TileSize.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label_TileSize.AutoSize = true;
             this.label_TileSize.BackColor = System.Drawing.Color.Transparent;
-            this.label_TileSize.Location = new System.Drawing.Point(71, 9);
+            this.label_TileSize.Location = new System.Drawing.Point(56, 7);
+            this.label_TileSize.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label_TileSize.Name = "label_TileSize";
-            this.label_TileSize.Size = new System.Drawing.Size(62, 16);
+            this.label_TileSize.Size = new System.Drawing.Size(50, 13);
             this.label_TileSize.TabIndex = 4;
             this.label_TileSize.Text = "Tile Size:";
             // 
             // textBox_TileSize
             // 
             this.textBox_TileSize.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.textBox_TileSize.Location = new System.Drawing.Point(153, 9);
-            this.textBox_TileSize.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBox_TileSize.Location = new System.Drawing.Point(118, 7);
+            this.textBox_TileSize.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_TileSize.Name = "textBox_TileSize";
-            this.textBox_TileSize.Size = new System.Drawing.Size(41, 22);
+            this.textBox_TileSize.Size = new System.Drawing.Size(32, 20);
             this.textBox_TileSize.TabIndex = 3;
             this.textBox_TileSize.TextChanged += new System.EventHandler(this.TileSize_TextChanged);
             this.textBox_TileSize.Leave += new System.EventHandler(this.TileSize_Leave);
@@ -537,9 +536,9 @@
             this.label_Objects.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label_Objects.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label_Objects.Location = new System.Drawing.Point(0, 0);
-            this.label_Objects.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
+            this.label_Objects.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
             this.label_Objects.Name = "label_Objects";
-            this.label_Objects.Size = new System.Drawing.Size(392, 16);
+            this.label_Objects.Size = new System.Drawing.Size(300, 13);
             this.label_Objects.TabIndex = 3;
             this.label_Objects.Text = "Objects";
             this.label_Objects.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -548,28 +547,28 @@
             // 
             this.tableLayoutPanel_Edit.ColumnCount = 1;
             this.tableLayoutPanel_Edit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_Edit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_Edit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 15F));
             this.tableLayoutPanel_Edit.Controls.Add(this.panel_Edit, 0, 1);
             this.tableLayoutPanel_Edit.Controls.Add(this.label_Edit, 0, 0);
             this.tableLayoutPanel_Edit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel_Edit.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel_Edit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tableLayoutPanel_Edit.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel_Edit.Name = "tableLayoutPanel_Edit";
             this.tableLayoutPanel_Edit.RowCount = 2;
-            this.tableLayoutPanel_Edit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_Edit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
             this.tableLayoutPanel_Edit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_Edit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel_Edit.Size = new System.Drawing.Size(392, 390);
+            this.tableLayoutPanel_Edit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
+            this.tableLayoutPanel_Edit.Size = new System.Drawing.Size(300, 315);
             this.tableLayoutPanel_Edit.TabIndex = 7;
             // 
             // panel_Edit
             // 
             this.panel_Edit.Controls.Add(this.tableLayoutPanel_EditTable);
             this.panel_Edit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_Edit.Location = new System.Drawing.Point(0, 20);
+            this.panel_Edit.Location = new System.Drawing.Point(0, 16);
             this.panel_Edit.Margin = new System.Windows.Forms.Padding(0);
             this.panel_Edit.Name = "panel_Edit";
-            this.panel_Edit.Size = new System.Drawing.Size(392, 370);
+            this.panel_Edit.Size = new System.Drawing.Size(300, 299);
             this.panel_Edit.TabIndex = 5;
             // 
             // tableLayoutPanel_EditTable
@@ -609,16 +608,16 @@
             this.tableLayoutPanel_EditTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel_EditTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel_EditTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel_EditTable.Size = new System.Drawing.Size(392, 370);
+            this.tableLayoutPanel_EditTable.Size = new System.Drawing.Size(300, 299);
             this.tableLayoutPanel_EditTable.TabIndex = 0;
             // 
             // button_Edit_FlipHorizontal
             // 
             this.button_Edit_FlipHorizontal.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button_Edit_FlipHorizontal.Location = new System.Drawing.Point(305, 290);
+            this.button_Edit_FlipHorizontal.Location = new System.Drawing.Point(234, 232);
             this.button_Edit_FlipHorizontal.Margin = new System.Windows.Forms.Padding(0);
             this.button_Edit_FlipHorizontal.Name = "button_Edit_FlipHorizontal";
-            this.button_Edit_FlipHorizontal.Size = new System.Drawing.Size(50, 50);
+            this.button_Edit_FlipHorizontal.Size = new System.Drawing.Size(38, 41);
             this.button_Edit_FlipHorizontal.TabIndex = 9;
             this.button_Edit_FlipHorizontal.Text = "Flip H";
             this.button_Edit_FlipHorizontal.UseVisualStyleBackColor = true;
@@ -627,10 +626,10 @@
             // button_Edit_FlipVertical
             // 
             this.button_Edit_FlipVertical.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button_Edit_FlipVertical.Location = new System.Drawing.Point(35, 290);
+            this.button_Edit_FlipVertical.Location = new System.Drawing.Point(28, 232);
             this.button_Edit_FlipVertical.Margin = new System.Windows.Forms.Padding(0);
             this.button_Edit_FlipVertical.Name = "button_Edit_FlipVertical";
-            this.button_Edit_FlipVertical.Size = new System.Drawing.Size(50, 50);
+            this.button_Edit_FlipVertical.Size = new System.Drawing.Size(38, 41);
             this.button_Edit_FlipVertical.TabIndex = 7;
             this.button_Edit_FlipVertical.Text = "Flip V";
             this.button_Edit_FlipVertical.UseVisualStyleBackColor = true;
@@ -640,10 +639,10 @@
             // 
             this.button_Edit_RotateCW.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.button_Edit_RotateCW.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button_Edit_RotateCW.Location = new System.Drawing.Point(305, 30);
+            this.button_Edit_RotateCW.Location = new System.Drawing.Point(234, 23);
             this.button_Edit_RotateCW.Margin = new System.Windows.Forms.Padding(0);
             this.button_Edit_RotateCW.Name = "button_Edit_RotateCW";
-            this.button_Edit_RotateCW.Size = new System.Drawing.Size(50, 50);
+            this.button_Edit_RotateCW.Size = new System.Drawing.Size(38, 41);
             this.button_Edit_RotateCW.TabIndex = 2;
             this.button_Edit_RotateCW.Text = "CW";
             this.button_Edit_RotateCW.UseVisualStyleBackColor = true;
@@ -652,37 +651,22 @@
             // button_Edit_RotateCCW
             // 
             this.button_Edit_RotateCCW.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button_Edit_RotateCCW.Location = new System.Drawing.Point(35, 30);
+            this.button_Edit_RotateCCW.Location = new System.Drawing.Point(28, 23);
             this.button_Edit_RotateCCW.Margin = new System.Windows.Forms.Padding(0);
             this.button_Edit_RotateCCW.Name = "button_Edit_RotateCCW";
-            this.button_Edit_RotateCCW.Size = new System.Drawing.Size(50, 50);
+            this.button_Edit_RotateCCW.Size = new System.Drawing.Size(38, 41);
             this.button_Edit_RotateCCW.TabIndex = 3;
             this.button_Edit_RotateCCW.Text = "CCW";
             this.button_Edit_RotateCCW.UseVisualStyleBackColor = true;
             this.button_Edit_RotateCCW.Click += new System.EventHandler(this.Menu_Edit_Rotate90CCW_Click);
             // 
-            // currentTileDisplay
-            // 
-            this.currentTileDisplay.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.currentTileDisplay.BackColor = System.Drawing.SystemColors.Control;
-            this.tableLayoutPanel_EditTable.SetColumnSpan(this.currentTileDisplay, 3);
-            this.currentTileDisplay.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
-            this.currentTileDisplay.ForeColor = System.Drawing.Color.Black;
-            this.currentTileDisplay.Location = new System.Drawing.Point(120, 110);
-            this.currentTileDisplay.Margin = new System.Windows.Forms.Padding(0);
-            this.currentTileDisplay.Name = "currentTileDisplay";
-            this.tableLayoutPanel_EditTable.SetRowSpan(this.currentTileDisplay, 3);
-            this.currentTileDisplay.Size = new System.Drawing.Size(150, 150);
-            this.currentTileDisplay.TabIndex = 1;
-            this.currentTileDisplay.Text = "currentTileContol1";
-            // 
             // button_Edit_Up
             // 
             this.button_Edit_Up.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button_Edit_Up.Location = new System.Drawing.Point(170, 30);
+            this.button_Edit_Up.Location = new System.Drawing.Point(131, 23);
             this.button_Edit_Up.Margin = new System.Windows.Forms.Padding(0);
             this.button_Edit_Up.Name = "button_Edit_Up";
-            this.button_Edit_Up.Size = new System.Drawing.Size(50, 50);
+            this.button_Edit_Up.Size = new System.Drawing.Size(38, 41);
             this.button_Edit_Up.TabIndex = 4;
             this.button_Edit_Up.Text = "Up";
             this.button_Edit_Up.UseVisualStyleBackColor = true;
@@ -692,10 +676,10 @@
             // button_Edit_Left
             // 
             this.button_Edit_Left.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button_Edit_Left.Location = new System.Drawing.Point(35, 160);
+            this.button_Edit_Left.Location = new System.Drawing.Point(28, 127);
             this.button_Edit_Left.Margin = new System.Windows.Forms.Padding(0);
             this.button_Edit_Left.Name = "button_Edit_Left";
-            this.button_Edit_Left.Size = new System.Drawing.Size(50, 50);
+            this.button_Edit_Left.Size = new System.Drawing.Size(38, 41);
             this.button_Edit_Left.TabIndex = 5;
             this.button_Edit_Left.Text = "Left";
             this.button_Edit_Left.UseVisualStyleBackColor = true;
@@ -705,10 +689,10 @@
             // button_Edit_Down
             // 
             this.button_Edit_Down.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button_Edit_Down.Location = new System.Drawing.Point(170, 290);
+            this.button_Edit_Down.Location = new System.Drawing.Point(131, 232);
             this.button_Edit_Down.Margin = new System.Windows.Forms.Padding(0);
             this.button_Edit_Down.Name = "button_Edit_Down";
-            this.button_Edit_Down.Size = new System.Drawing.Size(50, 50);
+            this.button_Edit_Down.Size = new System.Drawing.Size(38, 41);
             this.button_Edit_Down.TabIndex = 8;
             this.button_Edit_Down.Text = "Down";
             this.button_Edit_Down.UseVisualStyleBackColor = true;
@@ -718,10 +702,10 @@
             // button_Edit_Right
             // 
             this.button_Edit_Right.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button_Edit_Right.Location = new System.Drawing.Point(305, 160);
+            this.button_Edit_Right.Location = new System.Drawing.Point(234, 127);
             this.button_Edit_Right.Margin = new System.Windows.Forms.Padding(0);
             this.button_Edit_Right.Name = "button_Edit_Right";
-            this.button_Edit_Right.Size = new System.Drawing.Size(50, 50);
+            this.button_Edit_Right.Size = new System.Drawing.Size(38, 41);
             this.button_Edit_Right.TabIndex = 6;
             this.button_Edit_Right.Text = "Right";
             this.button_Edit_Right.UseVisualStyleBackColor = true;
@@ -734,12 +718,60 @@
             this.label_Edit.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label_Edit.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label_Edit.Location = new System.Drawing.Point(0, 0);
-            this.label_Edit.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
+            this.label_Edit.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
             this.label_Edit.Name = "label_Edit";
-            this.label_Edit.Size = new System.Drawing.Size(392, 16);
+            this.label_Edit.Size = new System.Drawing.Size(300, 13);
             this.label_Edit.TabIndex = 4;
             this.label_Edit.Text = "Edit";
             this.label_Edit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tableLayoutPanel_MainOutline
+            // 
+            this.tableLayoutPanel_MainOutline.ColumnCount = 1;
+            this.tableLayoutPanel_MainOutline.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_MainOutline.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 15F));
+            this.tableLayoutPanel_MainOutline.Controls.Add(this.splitContainer_MainEditor, 0, 0);
+            this.tableLayoutPanel_MainOutline.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel_MainOutline.Location = new System.Drawing.Point(0, 41);
+            this.tableLayoutPanel_MainOutline.Margin = new System.Windows.Forms.Padding(2);
+            this.tableLayoutPanel_MainOutline.Name = "tableLayoutPanel_MainOutline";
+            this.tableLayoutPanel_MainOutline.RowCount = 1;
+            this.tableLayoutPanel_MainOutline.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_MainOutline.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 621F));
+            this.tableLayoutPanel_MainOutline.Size = new System.Drawing.Size(1007, 621);
+            this.tableLayoutPanel_MainOutline.TabIndex = 6;
+            // 
+            // tilePicker
+            // 
+            this.tilePicker.BackColor = System.Drawing.SystemColors.Control;
+            this.tilePicker.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tilePicker.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
+            this.tilePicker.ForeColor = System.Drawing.Color.Black;
+            this.tilePicker.GridSize = 0F;
+            this.tilePicker.Location = new System.Drawing.Point(0, 41);
+            this.tilePicker.Margin = new System.Windows.Forms.Padding(0);
+            this.tilePicker.MaxZoom = 0.1F;
+            this.tilePicker.MinZoom = 0.1F;
+            this.tilePicker.MouseHoverUpdatesOnly = false;
+            this.tilePicker.Name = "tilePicker";
+            this.tilePicker.Size = new System.Drawing.Size(300, 240);
+            this.tilePicker.TabIndex = 1;
+            this.tilePicker.Text = "tilePicker1";
+            // 
+            // currentTileDisplay
+            // 
+            this.currentTileDisplay.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.currentTileDisplay.BackColor = System.Drawing.SystemColors.Control;
+            this.tableLayoutPanel_EditTable.SetColumnSpan(this.currentTileDisplay, 3);
+            this.currentTileDisplay.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
+            this.currentTileDisplay.ForeColor = System.Drawing.Color.Black;
+            this.currentTileDisplay.Location = new System.Drawing.Point(94, 87);
+            this.currentTileDisplay.Margin = new System.Windows.Forms.Padding(0);
+            this.currentTileDisplay.Name = "currentTileDisplay";
+            this.tableLayoutPanel_EditTable.SetRowSpan(this.currentTileDisplay, 3);
+            this.currentTileDisplay.Size = new System.Drawing.Size(112, 122);
+            this.currentTileDisplay.TabIndex = 1;
+            this.currentTileDisplay.Text = "currentTileContol1";
             // 
             // mapEditor
             // 
@@ -750,45 +782,29 @@
             this.mapEditor.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mapEditor.ForeColor = System.Drawing.Color.Black;
             this.mapEditor.Location = new System.Drawing.Point(0, 0);
-            this.mapEditor.Margin = new System.Windows.Forms.Padding(0, 2, 0, 5);
+            this.mapEditor.Margin = new System.Windows.Forms.Padding(0, 2, 0, 4);
             this.mapEditor.MaxZoom = 0.1F;
             this.mapEditor.MinZoom = 0.1F;
             this.mapEditor.MouseHoverUpdatesOnly = false;
             this.mapEditor.Name = "mapEditor";
             this.mapEditor.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.mapEditor.Size = new System.Drawing.Size(947, 763);
+            this.mapEditor.Size = new System.Drawing.Size(704, 615);
             this.mapEditor.TabIndex = 1;
             this.mapEditor.Text = "mainEditorPanel";
             // 
-            // tableLayoutPanel_MainOutline
-            // 
-            this.tableLayoutPanel_MainOutline.ColumnCount = 1;
-            this.tableLayoutPanel_MainOutline.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_MainOutline.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel_MainOutline.Controls.Add(this.splitContainer_MainEditor, 0, 0);
-            this.tableLayoutPanel_MainOutline.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel_MainOutline.Location = new System.Drawing.Point(0, 45);
-            this.tableLayoutPanel_MainOutline.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tableLayoutPanel_MainOutline.Name = "tableLayoutPanel_MainOutline";
-            this.tableLayoutPanel_MainOutline.RowCount = 1;
-            this.tableLayoutPanel_MainOutline.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_MainOutline.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 771F));
-            this.tableLayoutPanel_MainOutline.Size = new System.Drawing.Size(1343, 771);
-            this.tableLayoutPanel_MainOutline.TabIndex = 6;
-            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1343, 842);
+            this.ClientSize = new System.Drawing.Size(1007, 684);
             this.ControlBox = false;
             this.Controls.Add(this.tableLayoutPanel_MainOutline);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.MinimumSize = new System.Drawing.Size(1200, 850);
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.MinimumSize = new System.Drawing.Size(904, 694);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
@@ -877,5 +893,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_MoveDown;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_MoveLeft;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_MoveRight;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Title;
     }
 }
