@@ -21,14 +21,10 @@ namespace Railgun.Editor.App.Controls
         //DEBUG font
         private SpriteFont consolas20;
 
-        #region Events
-
         /// <summary>
         /// Called every update cycle of this panel
         /// </summary>
         public event GenericDelegate OnUpdate;
-
-        #endregion
 
         /// <summary>
         /// The current map in this editor
@@ -287,11 +283,8 @@ namespace Railgun.Editor.App.Controls
                     MouseCameraPosition)]
                     = tileManager.CurrentTile;
 
-                ////DEBUG log
-                //DebugLog.Instance.AddPersistantMessage(
-                //    $"[Tile placed] Mouse: " +
-                //    $"{CurrentMap.GetGridPoint(MouseCameraPosition)}",
-                //    Color.Red);
+                //Set to modified
+                FileManager.Modified = true;
             }
         }
 

@@ -50,6 +50,9 @@ namespace Railgun.Editor.App
             //Subscribe current tile change to current tile display
             TileManager.Instance.OnCurrentTileChange += currentTileDisplay.Update;
 
+            //Subscribe modify event
+            FileManager.OnModifyInvalidate += ModifyTitle;
+
             //Color the controls to a darker scheme
             ColorControls(Controls);
 
@@ -80,12 +83,13 @@ namespace Railgun.Editor.App
             toolStripMenuItem_MoveDown.ShortcutKeyDisplayString = "S";
             toolStripMenuItem_MoveLeft.ShortcutKeyDisplayString = "A";
             toolStripMenuItem_MoveRight.ShortcutKeyDisplayString = "D";
+            toolStripMenuItem_TitleSave.ShortcutKeyDisplayString = "Ctrl + S";
         }
 
         /// <summary>
         /// Colors each control based on its type
         /// </summary>
-        /// <param name="controls"></param>
+        /// <param name="controls">The controls to color</param>
         private void ColorControls(Control.ControlCollection controls)
         {
             foreach (Control control in controls)
@@ -110,37 +114,6 @@ namespace Railgun.Editor.App
                     }
                     menuStrip.Renderer = new DarkTheme.DarkMenuStripRenderer();
                 }
-                //If button
-                //else if (control is Button)
-                //{
-                //    Button button = control as Button;
-                //    button.BackColor = DarkTheme.Panel;
-                //    button.ForeColor = DarkTheme.Label;
-                //    button.FlatStyle = FlatStyle.System;
-                //    button.FlatAppearance.BorderColor = Color.Red;
-                //    button.FlatAppearance.MouseOverBackColor = Color.Blue;
-                //    button.FlatAppearance.MouseDownBackColor = Color.Yellow;
-                //    //button.FlatAppearance. = Color.Yellow;
-
-
-                //    // Create your custom renderer
-                //    DarkTheme.DarkMenuStripRenderer customRenderer = new DarkMenuStripRenderer();
-
-                //    // Set the button's flat style to system
-                //    button.FlatStyle = FlatStyle.System;
-
-                //    // Set the renderer of the button's visual style renderer to your custom renderer
-                //    button.FlatAppearance.BorderSize = 0;
-                //    button.FlatAppearance.MouseOverBackColor = Color.FromArgb(100, 255, 255, 255);
-                //    button.FlatAppearance.MouseDownBackColor = Color.FromArgb(150, 255, 255, 255);
-                //    button.FlatAppearance.CheckedBackColor = Color.FromArgb(200, 255, 255, 255);
-                //    VisualStyleRenderer renderer = new VisualStyleRenderer(VisualStyleElement.Button.PushButton.Normal);
-                //    renderer.SetParameters(VisualStyleElement);
-                //    button.FlatAppearance.MouseOverBackColor = customRenderer.Colors[(int)CustomButtonColor.MouseOver];
-                //    button.FlatAppearance.MouseDownBackColor = customRenderer.Colors[(int)CustomButtonColor.MouseDown];
-                //    button.FlatAppearance.CheckedBackColor = customRenderer.Colors[(int)CustomButtonColor.Checked];
-                //    button.FlatAppearance.BorderColor = customRenderer.Colors[(int)CustomButtonColor.BorderColor];
-                //}
                 //If label
                 else if (control is Label)
                 {
@@ -182,6 +155,10 @@ namespace Railgun.Editor.App
                 //Recurse for any child controls inside this control
                 ColorControls(control.Controls);
             }
+
+            //Set title to specific scheme
+            toolStripMenuItem_Title.BackColor = DarkTheme.Highlight;
+            toolStripMenuItem_Title.ForeColor = DarkTheme.Label;
 
             //Set background color as an outline
             BackColor = DarkTheme.Outline;
@@ -425,6 +402,31 @@ namespace Railgun.Editor.App
         #region File Events
 
         /// <summary>
+        /// Creates a new Map and prompts user if the current map is unsaved
+        /// </summary>
+        private void Menu_New_Click(object sender, EventArgs e)
+        {
+            //Prompt if there are unsaved changes
+            if (FileManager.Modified)
+            {
+                //Made a local var here just to make it easier to read
+                DialogResult choice = MessageBox.Show(
+                    $"The current map \"" +
+                    $"{FileManager.GetFileNameNoExtension(FileManager.CurrentMapPath)}" +
+                    $"\" has unsaved changes. Are you sure you want to create a new map?",
+                    "Unsaved Changes:", MessageBoxButtons.YesNo);
+                //If not yes, return
+                if (choice != DialogResult.Yes)
+                    return;
+            }
+
+            //Prompt new map
+
+
+            //mapEditor.CurrentMap = new Map();
+        }
+
+        /// <summary>
         /// Saves the current map if possible, if not it will prompt the user to save as
         /// </summary>
         private void Menu_Save_Click(object sender, EventArgs e)
@@ -459,6 +461,24 @@ namespace Railgun.Editor.App
             }
         }
 
+        /// <summary>
+        /// Gives the title a star when the map is changed to modified
+        /// </summary>
+        private void ModifyTitle()
+        {
+            //If just changed to modified, add a star
+            if(FileManager.Modified)
+            {
+                toolStripMenuItem_Title.Text += "*";
+                return;
+            }
+
+            //If not, set the title to the current map name
+            toolStripMenuItem_Title.Text =
+                FileManager.GetFileNameNoExtension(FileManager.CurrentMapPath);
+        }
+
         #endregion
+
     }
 }
