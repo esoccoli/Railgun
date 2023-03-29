@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Railgun.Editor.App.Util
+namespace Railgun.RailgunGame.Util
 {
     /// <summary>
     /// A singelton class for logging debug messages every
     /// frame and persistant messages
     /// <para>Author: Jonathan Jan</para>
-    /// Date Created: 3/24/2023
+    /// Date Created: 3/29/2023
     /// </summary>
     internal class DebugLog
     {
@@ -47,7 +47,7 @@ namespace Railgun.Editor.App.Util
                 Text = text;
                 Color = color;
                 //If message duration is invalid, set to 0
-                if(messageDuration < 0f)
+                if (messageDuration < 0f)
                 {
                     messageDuration = 0f;
                 }
@@ -170,14 +170,15 @@ namespace Railgun.Editor.App.Util
         /// using the specified viewport as an alignment guide
         /// </summary>
         /// <param name="spriteBatch">Sprite batch to draw to</param>
-        /// <param name="viewport">The viewport of the control to draw to</param>
-        public void Draw(SpriteBatch spriteBatch, Viewport viewport)
+        /// <param name="screenHeight">The width of the screen</param>
+        /// <param name="screenWidth">The height of the screen</param>
+        public void Draw(SpriteBatch spriteBatch, int screenWidth, int screenHeight)
         {
             //The starting position
             Vector2 currentPosition = new Vector2(10, 10);
 
             //Draw all update messages
-            foreach(Message message in updateMessages)
+            foreach (Message message in updateMessages)
             {
                 spriteBatch.DrawString(
                     Font, message.Text, currentPosition,
@@ -191,7 +192,7 @@ namespace Railgun.Editor.App.Util
             updateMessages.Clear();
 
             //Set position to top right corner now
-            currentPosition = new Vector2(viewport.Width - 10, 10);
+            currentPosition = new Vector2(screenWidth - 10, 10);
 
             //The amount of messages to get rid of (if overflow off screen)
             int messagesToRemove = 0;
@@ -214,12 +215,12 @@ namespace Railgun.Editor.App.Util
                 currentPosition.Y += Spacing;
 
                 //Check if going off screen
-                if(currentPosition.Y > viewport.Height)
+                if (currentPosition.Y > screenHeight)
                 {
                     messagesToRemove++;
                 }
                 //If current time is greater than the time to clear this message, remove
-                else if(DateTime.Now.TimeOfDay.TotalSeconds > message.ClearTime)
+                else if (DateTime.Now.TimeOfDay.TotalSeconds > message.ClearTime)
                 {
                     clearList.Add(message);
                 }
@@ -229,7 +230,7 @@ namespace Railgun.Editor.App.Util
             persistantMessages.RemoveRange(0, messagesToRemove);
 
             //Remove any messages that have been cleared
-            foreach(Message message in clearList)
+            foreach (Message message in clearList)
             {
                 persistantMessages.Remove(message);
             }

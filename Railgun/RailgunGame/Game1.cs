@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Railgun.RailgunGame.Util;
 using System.Collections.Generic;
 
 namespace Railgun.RailgunGame
@@ -258,6 +259,12 @@ namespace Railgun.RailgunGame
                     break;
             }
 
+            _spriteBatch.End();
+
+            //Draw debug logger
+            _spriteBatch.Begin();
+            DebugLog.Instance.Draw(_spriteBatch,
+                _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
             _spriteBatch.End();
 
             base.Draw(gameTime);
