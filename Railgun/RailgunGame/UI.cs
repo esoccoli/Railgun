@@ -30,6 +30,7 @@ namespace Railgun.RailgunGame
 
         private Texture2D backgroundHealthTexture; //The background health bar that doesn't change size
         private Texture2D foregroundHealthTexture; //The foreground health bar that shows the amount of health left
+        private Texture2D bulletUITexture;
 
         /// <summary>
         /// Gets or sets whether Debug mode is on. When debug mode is on, extra strings are drawn. Turned on and off by other classes/methods 
@@ -48,7 +49,7 @@ namespace Railgun.RailgunGame
         /// <param name="font">Font used for UI</param>
         /// <param name="ammoAmount">Current ammo amount of the player. Should start equal to max</param>
         /// <param name="maxAmmo">Maximum ammo of the player</param>
-        public UI(Texture2D background, Texture2D foreground, bool debugInitial, int healthAmount, int maxHealth, SpriteFont font, int ammoAmount, int maxAmmo)
+        public UI(Texture2D background, Texture2D foreground, Texture2D bulletUI, bool debugInitial, int healthAmount, int maxHealth, SpriteFont font, int ammoAmount, int maxAmmo)
         {
             debugMode = debugInitial;
             this.healthAmount = healthAmount;
@@ -60,6 +61,7 @@ namespace Railgun.RailgunGame
 
             backgroundHealthTexture = background;
             foregroundHealthTexture = foreground;
+            bulletUITexture = bulletUI;
 
             backgroundHealth = new Rectangle(10, 40, maxHealth * 2, 10);
             foregroundHealth = new Rectangle(10, 40, maxHealth * 2, 10);
@@ -112,12 +114,18 @@ namespace Railgun.RailgunGame
             _spriteBatch.Draw(foregroundHealthTexture, foregroundHealth, Color.Red);
 
             _spriteBatch.DrawString(font, "Ammo: " + ammoAmount, new Vector2(10, 50), Color.White);
+            
+            // Draw bullets at 10, 90
+            for (int i = 0; i < ammoAmount; i++)
+            {
+                _spriteBatch.Draw(bulletUITexture, new Rectangle(10 + (i * 35), 90, 30, 42), Color.White);
+            }
 
             //If debug mode is active, prints additional stats (to be added later as need)
             if (debugMode)
             {
-                _spriteBatch.DrawString(font, "Debug Mode", new Vector2(10, 90), Color.White);
-                _spriteBatch.DrawString(font, "Health Amt: " + healthAmount, new Vector2(10, 130), Color.White);
+                _spriteBatch.DrawString(font, "Debug Mode", new Vector2(10, 130), Color.White);
+                _spriteBatch.DrawString(font, "Health Amt: " + healthAmount, new Vector2(10, 170), Color.White);
             }
         }
     }

@@ -13,6 +13,7 @@ namespace Railgun.RailgunGame
 
         private Texture2D backgroundHealthUI;
         private Texture2D foregroundHealthUI;
+        private Texture2D bulletUI;
 
         private Player mainPlayer;
 
@@ -82,6 +83,8 @@ namespace Railgun.RailgunGame
             //UI Stuff
             backgroundHealthUI = Content.Load<Texture2D>("WhiteHealthSquare");
             foregroundHealthUI = Content.Load<Texture2D>("RedHealthSquare");
+            bulletUI = Content.Load<Texture2D>("uiBullet");
+
 
             //Game Menu Stuff
             menuLogo = Content.Load<Texture2D>("menuLogo");
@@ -98,7 +101,7 @@ namespace Railgun.RailgunGame
             #endregion
 
             //Creates a UI object. Values to be updated later. 
-            userInterface = new UI(backgroundHealthUI, foregroundHealthUI, true, 100, 100, font, 8, 8);
+            userInterface = new UI(backgroundHealthUI, foregroundHealthUI, bulletUI, true, 100, 100, font, 8, 8);
             mainPlayer = new Player(new Rectangle(870, 510, 100, 100), menuLogo, bulletTexture, null);
         }
 
