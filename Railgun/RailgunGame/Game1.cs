@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Railgun.RailgunGame.Util;
 using System.Collections.Generic;
 
 namespace Railgun.RailgunGame
@@ -45,7 +46,7 @@ namespace Railgun.RailgunGame
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = false;
+            IsMouseVisible = true;
         }
 
         public enum GameState
@@ -71,6 +72,9 @@ namespace Railgun.RailgunGame
             font = this.Content.Load<SpriteFont>("Mynerve24");
 
             GameTime gameTime = new GameTime();
+
+            //Set debug logger font
+            DebugLog.Instance.Font = font;
 
             base.Initialize();
         }
@@ -103,6 +107,7 @@ namespace Railgun.RailgunGame
             //Creates a UI object. Values to be updated later. 
             userInterface = new UI(backgroundHealthUI, foregroundHealthUI, bulletUI, true, 100, 100, font, 8, 8);
             mainPlayer = new Player(new Rectangle(870, 510, 100, 100), menuLogo, bulletTexture, null);
+            userInterface = new UI(backgroundHealthUI, foregroundHealthUI, true, mainPlayer.Health, mainPlayer.MaxHealth, font, mainPlayer.Ammo, mainPlayer.MaxAmmo);
         }
 
         protected override void Update(GameTime gameTime)
@@ -283,6 +288,12 @@ namespace Railgun.RailgunGame
                     break;
             }
 
+            _spriteBatch.End();
+
+            //Draw debug logger
+            _spriteBatch.Begin();
+            DebugLog.Instance.Draw(_spriteBatch,
+                _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
             _spriteBatch.End();
 
             base.Draw(gameTime);
