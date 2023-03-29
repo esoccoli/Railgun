@@ -83,7 +83,6 @@ namespace Railgun.Editor.App
             toolStripMenuItem_MoveDown.ShortcutKeyDisplayString = "S";
             toolStripMenuItem_MoveLeft.ShortcutKeyDisplayString = "A";
             toolStripMenuItem_MoveRight.ShortcutKeyDisplayString = "D";
-            toolStripMenuItem_Title_Save.ShortcutKeyDisplayString = "Ctrl + S";
         }
 
         /// <summary>
@@ -503,12 +502,13 @@ namespace Railgun.Editor.App
             if(FileManager.Modified)
             {
                 toolStripMenuItem_Title.Text = "*" + toolStripMenuItem_Title.Text;
-                return;
             }
-
-            //If not, set the title to the current map name
-            toolStripMenuItem_Title.Text =
-                FileManager.GetFileNameNoExtension(FileManager.CurrentMapPath);
+            else
+            {
+                //If not, set the title to the current map name
+                toolStripMenuItem_Title.Text =
+                    FileManager.GetFileNameNoExtension(FileManager.CurrentMapPath);
+            }
 
             //Center the new title
             CenterTitle();
