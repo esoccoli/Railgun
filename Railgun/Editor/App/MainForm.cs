@@ -425,27 +425,38 @@ namespace Railgun.Editor.App
         #region File Events
 
         /// <summary>
+        /// Saves the current map if possible, if not it will prompt the user to save as
+        /// </summary>
+        private void Menu_Save_Click(object sender, EventArgs e)
+        {
+            FileManager.SaveMap(mapEditor.CurrentMap);
+        }
+
+        /// <summary>
         /// Prompts the user to save the current map
         /// </summary>
         private void Menu_SaveAs_Click(object sender, EventArgs e)
         {
-
             FileManager.SaveMapAs(mapEditor.CurrentMap);
-
         }
 
-        private void toolStripMenuItem_Open_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Prompts the user to open a map
+        /// </summary>
+        private void Menu_Open_Click(object sender, EventArgs e)
         {
             //Save current map just in case nothing is loaded, get map path
             Map loadedMap = FileManager.LoadMap(mapEditor.Editor.Content);
 
+            //If a map was loaded, set current map to that map
             if(loadedMap != null)
+            {
                 mapEditor.CurrentMap = loadedMap;
 
-            //DEBUG
-            DebugLog.Instance.LogPersistant(
-                "Loaded map: " + FileManager.GetPathName(FileManager.CurrentMapPath),
-                Microsoft.Xna.Framework.Color.Yellow, 5f);
+                //Set current map name on the title
+                toolStripMenuItem_Title.Text =
+                    FileManager.GetFileNameNoExtension(FileManager.CurrentMapPath);
+            }
         }
 
         #endregion
