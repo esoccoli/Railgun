@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 // File: InputManager.cs
@@ -7,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 // Details: Checks keyboard and mouse states and determines whether there is any input
 // Restrictions: Must call the UpdateInputState() method at the end of each frame to update the current and previous states
 
-namespace Railgun.RailgunGame
+namespace Railgun.RailgunGame.Util
 {
     /// <summary>
     /// Stores the mouse buttons that can be used
@@ -17,7 +18,7 @@ namespace Railgun.RailgunGame
         Left,
         Right
     }
-    
+
     /// <summary>
     /// Handles tracking the keyboard and mouse states
     /// and allows other classes to check for and use user input.
@@ -29,22 +30,22 @@ namespace Railgun.RailgunGame
         /// Tracks the current keyboard state
         /// </summary>
         public static KeyboardState KbState { get; private set; }
-        
+
         /// <summary>
         /// Tracks the current mouse state
         /// </summary>
         public static MouseState MouseState { get; private set; }
-        
+
         /// <summary>
         /// Tracks the keyboard state from the previous frame
         /// </summary>
         public static KeyboardState PrevKbState;
-        
+
         /// <summary>
         /// Tracks the mouse state from the previous frame
         /// </summary>
         public static MouseState PrevMouseState;
-    
+
         /// <summary>
         /// Initializes the InputManager class
         /// </summary>
@@ -53,11 +54,11 @@ namespace Railgun.RailgunGame
             // Initializes the current & previous mouse and keyboard states
             KbState = Keyboard.GetState();
             MouseState = Mouse.GetState();
-        
+
             PrevKbState = Keyboard.GetState();
             PrevMouseState = Mouse.GetState();
         }
-    
+
         /// <summary>
         /// Updates the current and previous keyboard and mouse states at the end of each frame
         /// </summary>
@@ -87,7 +88,7 @@ namespace Railgun.RailgunGame
             // Temp variable to store the value that will be returned
             // Using this to make the compiler happy about returning outside switch statement
             bool isDown = false;
-            
+
             switch (button)
             {
                 case MouseButtons.Left:
@@ -107,14 +108,14 @@ namespace Railgun.RailgunGame
         /// <param name="key">Key to check</param>
         /// <returns>True if the key is down this frame and was up last frame, false otherwise</returns>
         public static bool IsKeyPressed(Keys key) => KbState.IsKeyDown(key) && PrevKbState.IsKeyUp(key);
-        
+
         /// <summary>
         /// Checks if the specified key was released this frame
         /// </summary>
         /// <param name="key">Key to check</param>
         /// <returns>True if the key is up this frame and was down last frame, false otherwise</returns>
         public static bool IsKeyReleased(Keys key) => KbState.IsKeyUp(key) && PrevKbState.IsKeyDown(key);
-        
+
         /// <summary>
         /// Checks if the specified mouse button changed from released to pressed this frame
         /// </summary>
@@ -123,7 +124,7 @@ namespace Railgun.RailgunGame
         public static bool MouseButtonPressed(MouseButtons button)
         {
             bool isPressed = false;
-            
+
             switch (button)
             {
                 case MouseButtons.Left:
@@ -136,7 +137,7 @@ namespace Railgun.RailgunGame
 
             return isPressed;
         }
-        
+
         /// <summary>
         /// Checks if the specified mouse button changed from pressed to released this frame
         /// </summary>
@@ -158,5 +159,23 @@ namespace Railgun.RailgunGame
 
             return isReleased;
         }
+
+        /// <summary>
+        /// Checks if a mouse is hovering over a rectangle. Written by Igor
+        /// </summary>
+        /// <param name="mState">The coordinates of the mouse</param>
+        /// <param name="rect">The rectangle area that is being checked</param>
+        /// <returns>True if the mouse is hovering over a rectangle area, false otherwise</returns>
+        public static bool MouseHover(MouseState mState, Rectangle rect)
+        {
+            if (mState.X > rect.X && mState.X < rect.X + rect.Width
+             && mState.Y > rect.Y && mState.Y < rect.Y + rect.Height)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }

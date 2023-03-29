@@ -154,6 +154,7 @@
             this.toolStripMenuItem_Open.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.toolStripMenuItem_Open.Size = new System.Drawing.Size(233, 26);
             this.toolStripMenuItem_Open.Text = "Open";
+            this.toolStripMenuItem_Open.Click += new System.EventHandler(this.toolStripMenuItem_Open_Click);
             // 
             // toolStripMenuItem_Save
             // 
@@ -169,6 +170,7 @@
             | System.Windows.Forms.Keys.S)));
             this.toolStripMenuItem_SaveAs.Size = new System.Drawing.Size(233, 26);
             this.toolStripMenuItem_SaveAs.Text = "Save As";
+            this.toolStripMenuItem_SaveAs.Click += new System.EventHandler(this.Menu_SaveAs_Click);
             // 
             // toolStripMenuItem_Edit
             // 

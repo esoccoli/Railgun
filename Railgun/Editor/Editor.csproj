@@ -100,8 +100,10 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="App\Objects\Visuals\IVisual.cs" />
+    <Compile Include="App\Objects\Visuals\PathedTexture.cs" />
     <Compile Include="App\Objects\Visuals\TextureVisual.cs" />
     <Compile Include="App\Util\DebugLog.cs" />
+    <Compile Include="App\Util\FileManager.cs" />
     <Compile Include="App\Util\ShapeBatch.cs" />
     <Compile Include="App\Util\TileManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

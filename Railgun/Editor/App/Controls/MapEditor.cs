@@ -160,6 +160,7 @@ namespace Railgun.Editor.App.Controls
             }
 
 
+
             //Invoke update event
             OnUpdate();
         }

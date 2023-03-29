@@ -14,7 +14,7 @@ namespace Railgun.Editor.App.Controls
     internal class TilePicker : GridControl
     {
         //DEBUG
-        public Texture2D testure;
+        public PathedTexture testure;
 
         #region Selection
 
@@ -92,7 +92,7 @@ namespace Railgun.Editor.App.Controls
             GridColor = Color.White * 0.5f;
 
             //Load DEBUG texture
-            testure = Editor.Content.Load<Texture2D>("tmp/Grass hill tiles v.2");
+            testure = FileManager.LoadPathedTexture(Editor.Content, "tmp/Grass hill tiles v.2");
         }
 
         protected override void Update(GameTime gameTime)
@@ -134,7 +134,7 @@ namespace Railgun.Editor.App.Controls
             ////
                 
 
-            Editor.spriteBatch.Draw(testure, Vector2.Zero, Color.White);
+            Editor.spriteBatch.Draw(testure.Texture, Vector2.Zero, Color.White);
 
             //Highlight current selection
             Editor.spriteBatch.Draw(whitePixel,
