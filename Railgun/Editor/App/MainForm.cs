@@ -411,19 +411,27 @@ namespace Railgun.Editor.App
             {
                 //Made a local var here just to make it easier to read
                 DialogResult choice = MessageBox.Show(
-                    $"The current map \"" +
-                    $"{FileManager.GetFileNameNoExtension(FileManager.CurrentMapPath)}" +
-                    $"\" has unsaved changes. Are you sure you want to create a new map?",
+                    $"The current map has unsaved changes. Are you sure you want to create a new map?",
                     "Unsaved Changes:", MessageBoxButtons.YesNo);
                 //If not yes, return
                 if (choice != DialogResult.Yes)
                     return;
             }
+            else
+            {
+                //Set modified to true to allow for invalidation
+                FileManager.Modified = true;
+            }
 
-            //Prompt new map
+            //Create new map
+            Map newMap = new Map(128);
 
+            //Prompt user to save as (allowing them to name), if cancel, return
+            if (!FileManager.SaveMapAs(newMap))
+                return;
 
-            //mapEditor.CurrentMap = new Map();
+            //If they do save, set Set current map to new map
+            mapEditor.CurrentMap = newMap;
         }
 
         /// <summary>

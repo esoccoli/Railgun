@@ -37,6 +37,11 @@ namespace Railgun.Editor.App.Util
         public static string CurrentMapPath { get; private set; }
 
         /// <summary>
+        /// Called when the status of modified is changed
+        /// </summary>
+        public static event GenericDelegate OnModifyInvalidate;
+
+        /// <summary>
         /// If the current map has been modified.
         /// <para>Note: when changing the current value to a different value,
         /// the value will be invalidated and the resulting event will be called</para>
@@ -56,11 +61,6 @@ namespace Railgun.Editor.App.Util
             }
         }
         private static bool modified;
-
-        /// <summary>
-        /// Called when the status of modified is changed
-        /// </summary>
-        public static event GenericDelegate OnModifyInvalidate;
 
         #region File Writing
 
@@ -123,10 +123,6 @@ namespace Railgun.Editor.App.Util
 
             //Close the writer
             writer.Close();
-
-            DebugLog.Instance.LogPersistant(
-                "Current modification status: " + Modified,
-                Microsoft.Xna.Framework.Color.Red);
 
             //Set modified to false
             Modified = false;
