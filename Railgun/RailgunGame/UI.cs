@@ -32,6 +32,8 @@ namespace Railgun.RailgunGame
         private Texture2D foregroundHealthTexture; //The foreground health bar that shows the amount of health left
         private Texture2D bulletUITexture;
 
+        private Rectangle dashCooldown;
+
         /// <summary>
         /// Gets or sets whether Debug mode is on. When debug mode is on, extra strings are drawn. Turned on and off by other classes/methods 
         /// outside of UI
@@ -64,6 +66,7 @@ namespace Railgun.RailgunGame
             bulletUITexture = bulletUI;
 
             backgroundHealth = new Rectangle(10, 40, maxHealth * 2, 10);
+            dashCooldown = new Rectangle(10, 170, maxHealth * 2, 10);
             foregroundHealth = new Rectangle(10, 40, maxHealth * 2, 10);
         }
 
@@ -73,7 +76,7 @@ namespace Railgun.RailgunGame
         /// </summary>
         /// <param name="health">The current health of the player</param>
         /// <param name="ammo">The current ammo amount of the player</param>
-        public void Update (int health, int ammo)
+        public void Update(int health, int ammo, double dashTimeLeft)
         {
             healthAmount = health;
             ammoAmount = ammo;
@@ -95,6 +98,15 @@ namespace Railgun.RailgunGame
             {
                 ammoAmount = 0;
             }
+
+            if (dashTimeLeft <= 0.0)
+            {
+                dashCooldown = new Rectangle(10, 170, maxHealth * 2, 10); ;
+            }
+            else
+            {
+                dashCooldown = new Rectangle(10, 170, (int)(((maxHealth * 2) / dashTimeLeft)), 10);
+            }
         }
 
         /// <summary>
@@ -115,17 +127,23 @@ namespace Railgun.RailgunGame
 
             _spriteBatch.DrawString(font, "Ammo: " + ammoAmount, new Vector2(10, 50), Color.White);
             
-            // Draw bullets at 10, 90
+            // Draw bullets at 10 + i, 90
             for (int i = 0; i < ammoAmount; i++)
             {
-                _spriteBatch.Draw(bulletUITexture, new Rectangle(10 + (i * 35), 90, 30, 42), Color.White);
+                _spriteBatch.Draw(bulletUITexture, new Rectangle(10 + (i * 20), 90, 15, 26), Color.White);
             }
+
+            // Dash cooldown
+            _spriteBatch.DrawString(font, "Dash: ", new Vector2(10, 130), Color.White);
+            _spriteBatch.Draw(backgroundHealthTexture, new Rectangle(10, 170, maxHealth * 2, 10), Color.White);
+            _spriteBatch.Draw(backgroundHealthTexture, dashCooldown, Color.Blue);
+
 
             //If debug mode is active, prints additional stats (to be added later as need)
             if (debugMode)
             {
-                _spriteBatch.DrawString(font, "Debug Mode", new Vector2(10, 130), Color.White);
-                _spriteBatch.DrawString(font, "Health Amt: " + healthAmount, new Vector2(10, 170), Color.White);
+                _spriteBatch.DrawString(font, "Debug Mode", new Vector2(10, 210), Color.White);
+                _spriteBatch.DrawString(font, "Health Amt: " + healthAmount, new Vector2(10, 250), Color.White);
             }
         }
     }

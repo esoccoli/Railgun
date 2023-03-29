@@ -107,7 +107,7 @@ namespace Railgun.RailgunGame
             //Creates a UI object. Values to be updated later. 
             userInterface = new UI(backgroundHealthUI, foregroundHealthUI, bulletUI, true, 100, 100, font, 8, 8);
             mainPlayer = new Player(new Rectangle(870, 510, 100, 100), menuLogo, bulletTexture, null);
-            userInterface = new UI(backgroundHealthUI, foregroundHealthUI, true, mainPlayer.Health, mainPlayer.MaxHealth, font, mainPlayer.Ammo, mainPlayer.MaxAmmo);
+            userInterface = new UI(backgroundHealthUI, foregroundHealthUI, bulletUI, true, mainPlayer.Health, mainPlayer.MaxHealth, font, mainPlayer.Ammo, mainPlayer.MaxAmmo);
         }
 
         protected override void Update(GameTime gameTime)
@@ -184,7 +184,7 @@ namespace Railgun.RailgunGame
                     break;
                 case GameState.Game:
 
-                    userInterface.Update(mainPlayer.Health, mainPlayer.Ammo); //Updates the UI. Values to be updated later
+                    userInterface.Update(mainPlayer.Health, mainPlayer.Ammo, mainPlayer.DashTime); //Updates the UI. Values to be updated later
 
                     if (InputManager.IsKeyDown(Keys.R)) // A temporary way to instantly lose the game. Or maybe an unintentional feature!!!
                     {
@@ -224,6 +224,7 @@ namespace Railgun.RailgunGame
 
                     if (InputManager.IsKeyDown(Keys.Enter))
                     {
+                        mainPlayer.ResetPlayer();
                         currentGameState = GameState.Game;
                     }
 
