@@ -14,7 +14,7 @@ namespace Railgun.Editor.App.Objects.Visuals
     /// <para>Author: Jonathan Jan</para>
     /// Date Created: 3/10/2023
     /// </summary>
-    internal struct TextureVisual// : IVisual
+    internal struct TextureVisual
     {
         /// <summary>
         /// The pathed texture of this visual
