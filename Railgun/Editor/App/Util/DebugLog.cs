@@ -9,6 +9,16 @@ using System.Threading.Tasks;
 namespace Railgun.Editor.App.Util
 {
     /// <summary>
+    /// The different message types that a message can be
+    /// </summary>
+    internal enum MessageType
+    {
+        Frame,//Only displayed for one frame
+        Temporary,//Displayed for a specified amount of time
+        Persistant//Displayed until manually cleared or goes off screen
+    }
+
+    /// <summary>
     /// A singelton class for logging debug messages every
     /// frame and persistant messages
     /// <para>Author: Jonathan Jan</para>
@@ -19,27 +29,39 @@ namespace Railgun.Editor.App.Util
         /// <summary>
         /// A class representing a message to be logged
         /// </summary>
-        private class Message
+        private struct Message
         {
             /// <summary>
             /// The text of this message
             /// </summary>
-            public string Text { get; private set; }
+            public string Text { get; }
 
             /// <summary>
             /// The color of this message
             /// </summary>
-            public Color Color { get; private set; }
+            public Color Color { get; }
+
+            /// <summary>
+            /// The time that this message should be cleared
+            /// </summary>
+            public double ClearTime { get; }
 
             /// <summary>
             /// Creates a new message with the specified text and color
             /// </summary>
             /// <param name="text">Text of this message</param>
-            /// <param name="color">Color of this message</param>
-            public Message(string text, Color color)
+            /// <param name="color">Color of this message</param
+            /// <param name="messageDuration">The duration that this message should be displayed in seconds</param>
+            public Message(string text, Color color, float messageDuration = 999999999f)
             {
                 Text = text;
                 Color = color;
+                //If message duration is invalid, set to 0
+                if(messageDuration < 0f)
+                {
+                    messageDuration = 0f;
+                }
+                ClearTime = DateTime.Now.TimeOfDay.TotalSeconds + messageDuration;
             }
         }
 
@@ -103,56 +125,52 @@ namespace Railgun.Editor.App.Util
         #region Logging
 
         /// <summary>
-        /// Adds the specified message to the persistant
-        /// log with a color white (will not clear after a draw cycle)
+        /// Logs a persistant message for a long time
         /// </summary>
         /// <param name="message">Message text</param>
-        public void AddPersistantMessage(string message)
+        public void LogPersistant(string message)
         {
-            AddPersistantMessage(message, Color.White);
+            persistantMessages.Add(new Message(message, Color.White));
         }
 
         /// <summary>
-        /// Adds the specified message to the persistant
-        /// log (will not clear after a draw cycle)
+        /// Logs a persistant message for a long time
         /// </summary>
         /// <param name="message">Message text</param>
-        /// <param name="color">Message color</param>
-        public void AddPersistantMessage(string message, Color color)
+        /// <param name="color">Color of message</param>
+        public void LogPersistant(string message, Color color)
         {
-            AddMessageToLog(message, color, persistantMessages);
+            persistantMessages.Add(new Message(message, color));
         }
 
         /// <summary>
-        /// Adds the specified message to the persistant
-        /// log with a color white (will not clear after a draw cycle)
+        /// Logs a persistant message to display for the specified duration
         /// </summary>
         /// <param name="message">Message text</param>
-        public void AddUpdateMessage(string message)
+        /// <param name="color">Color of message</param>
+        /// <param name="duration">Duration of message</param>
+        public void LogPersistant(string message, Color color, float duration)
         {
-            AddUpdateMessage(message, Color.White);
+            persistantMessages.Add(new Message(message, color, duration));
         }
 
         /// <summary>
-        /// Adds the specified message to the persistant
-        /// log (will not clear after a draw cycle)
+        /// Logs a message for just this frame
         /// </summary>
         /// <param name="message">Message text</param>
-        /// <param name="color">Message color</param>
-        public void AddUpdateMessage(string message, Color color)
+        public void LogFrame(string message)
         {
-            AddMessageToLog(message, color, updateMessages);
+            updateMessages.Add(new Message(message, Color.White));
         }
 
         /// <summary>
-        /// Adds the specified message to the specified log
+        /// Logs a message for just this frame
         /// </summary>
-        /// <param name="message">Text</param>
-        /// <param name="color">Color</param>
-        /// <param name="log">Log to add to</param>
-        private void AddMessageToLog(string message, Color color, List<Message> log)
+        /// <param name="message">Message text</param>
+        /// <param name="color">Color of this message</param>
+        public void LogFrame(string message, Color color)
         {
-            log.Add(new Message(message, color));
+            updateMessages.Add(new Message(message, color));
         }
 
         #endregion
@@ -188,6 +206,9 @@ namespace Railgun.Editor.App.Util
             //The amount of messages to get rid of (if overflow off screen)
             int messagesToRemove = 0;
 
+            //The specific messages to clear
+            List<Message> clearList = new List<Message>();
+
             //Draw all persistant messages
             foreach (Message message in persistantMessages)
             {
@@ -207,10 +228,21 @@ namespace Railgun.Editor.App.Util
                 {
                     messagesToRemove++;
                 }
+                //If current time is greater than the time to clear this message, remove
+                else if(DateTime.Now.TimeOfDay.TotalSeconds > message.ClearTime)
+                {
+                    clearList.Add(message);
+                }
             }
 
             //Remove any messages if need be
             persistantMessages.RemoveRange(0, messagesToRemove);
+
+            //Remove any messages that have been cleared
+            foreach(Message message in clearList)
+            {
+                persistantMessages.Remove(message);
+            }
         }
 
     }

@@ -443,8 +443,9 @@ namespace Railgun.Editor.App
                 mapEditor.CurrentMap = loadedMap;
 
             //DEBUG
-            DebugLog.Instance.AddPersistantMessage(
-                "Loaded map: " + FileManager.GetPathName(FileManager.CurrentMapPath));
+            DebugLog.Instance.LogPersistant(
+                "Loaded map: " + FileManager.GetPathName(FileManager.CurrentMapPath),
+                Microsoft.Xna.Framework.Color.Yellow, 5f);
         }
 
         #endregion
