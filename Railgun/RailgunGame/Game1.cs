@@ -45,7 +45,7 @@ namespace Railgun.RailgunGame
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = false;
+            IsMouseVisible = true;
         }
 
         public enum GameState
@@ -102,8 +102,8 @@ namespace Railgun.RailgunGame
             #endregion
 
             //Creates a UI object. Values to be updated later. 
-            userInterface = new UI(backgroundHealthUI, foregroundHealthUI, true, 100, 100, font, 8, 8);
             mainPlayer = new Player(new Rectangle(870, 510, 100, 100), menuLogo, bulletTexture, null);
+            userInterface = new UI(backgroundHealthUI, foregroundHealthUI, true, mainPlayer.Health, mainPlayer.MaxHealth, font, mainPlayer.Ammo, mainPlayer.MaxAmmo);
         }
 
         protected override void Update(GameTime gameTime)
