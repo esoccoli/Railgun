@@ -34,9 +34,19 @@ namespace Railgun.RailgunGame
         public int Health { get; set; }
 
         /// <summary>
+        /// The maximum health of the player.
+        /// </summary>
+        public int MaxHealth { get; set; }
+
+        /// <summary>
         /// This is the amount of the bullets that the player has.
         /// </summary>
         public int Ammo { get; set; }
+
+        /// <summary>
+        /// This is the max amount of bullets that the player can hold.
+        /// </summary>
+        public int MaxAmmo { get; set; }
 
         /// <summary>
         /// This is the amount of time before the dash is available again.
@@ -67,12 +77,14 @@ namespace Railgun.RailgunGame
         {
             // I'm only setting the health to 100 as a default value. We can come back and change this if we need to adjust it later.
             Health = 100;
+            MaxHealth = Health;
             speed = 5;
             dashSpeed = 10;
-            Ammo = 8;
+            Ammo = 24;
+            MaxAmmo = 24;
 
             DashCooldown = 0.0;
-            ShootCooldown = 2.5;
+            ShootCooldown = 0.15;
             dashing = false;
             DashTime = 0.0;
 
@@ -136,31 +148,14 @@ namespace Railgun.RailgunGame
         /// </summary>
         public void Shoot(GameTime gameTime)
         {
-            int xVelocity;
             Ammo--;
-            ShootCooldown = 2.5;
+            ShootCooldown = 0.1f;
 
-            if(InputManager.MouseState.X > 100)
-            {
-                xVelocity = ((Hitbox.X + (Hitbox.Width / 2)) + 100 - (Hitbox.X + (Hitbox.Width / 2))) / 20;
-            }
-            else if(InputManager.MouseState.X < 100)
-            {
-                xVelocity = ((Hitbox.X + (Hitbox.Width / 2)) - 100 - (Hitbox.X + (Hitbox.Width / 2))) / 20;
-            }
-            else
-            {
-                xVelocity = (InputManager.MouseState.X - (Hitbox.X + (Hitbox.Width / 2))) / 100;
-            }
-            int yVelocity = 1;
-
-            PlayerBullets.Add(new Projectile(new Rectangle(Hitbox.X, Hitbox.Y, activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet, new Vector2(
-                xVelocity, 
-                yVelocity)));
+            PlayerBullets.Add(new Projectile(new Rectangle(Hitbox.X + (Hitbox.Width / 2) - (activeBullet.Width / 2), Hitbox.Y + (Hitbox.Height / 2) - (activeBullet.Height / 2), activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet, Vector2.Normalize((InputManager.MouseState.Position - Hitbox.Center).ToVector2()) * 10.0f));
         }
 
         /// <summary>
-        /// Dashes in the direction that the player was not facing.
+        /// Dashes in the direction that the player was facing.
         /// </summary>
         public void Dash(GameTime gameTime)
         {
@@ -176,7 +171,7 @@ namespace Railgun.RailgunGame
             if(DashTime >= .75) 
             {
                 DashTime = 0.0;
-                DashCooldown = 10.0;
+                DashCooldown = 3.5;
                 dashing = false;
             }
         }        
@@ -220,7 +215,7 @@ namespace Railgun.RailgunGame
         public void Reload()
         {
             Damage(20); // The player takes 20 damage for reloading. This can be adjusted later.
-            Ammo = 8;
+            Ammo = MaxAmmo;
         }
     }                                        
 }                                            
