@@ -80,7 +80,6 @@
             this.tilePicker = new Railgun.Editor.App.Controls.TilePicker();
             this.currentTileDisplay = new Railgun.Editor.App.Controls.CurrentTileDisplay();
             this.mapEditor = new Railgun.Editor.App.Controls.MapEditor();
-            this.toolStripMenuItem_TitleSave = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_MainEditor)).BeginInit();
@@ -122,6 +121,7 @@
             this.menuStrip.TabIndex = 2;
             this.menuStrip.Text = "menuStrip";
             this.menuStrip.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MenuStrip_MouseDown);
+            this.menuStrip.Resize += new System.EventHandler(this.Menu_Resize);
             // 
             // toolStripMenuItem_Logo
             // 
@@ -335,13 +335,14 @@
             // 
             // toolStripMenuItem_Title
             // 
-            this.toolStripMenuItem_Title.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem_TitleSave});
+            this.toolStripMenuItem_Title.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripMenuItem_Title.CheckOnClick = true;
+            this.toolStripMenuItem_Title.Enabled = false;
             this.toolStripMenuItem_Title.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.toolStripMenuItem_Title.Margin = new System.Windows.Forms.Padding(100, 10, 0, 10);
+            this.toolStripMenuItem_Title.Margin = new System.Windows.Forms.Padding(0, 10, 300, 10);
             this.toolStripMenuItem_Title.Name = "toolStripMenuItem_Title";
             this.toolStripMenuItem_Title.Padding = new System.Windows.Forms.Padding(0);
-            this.toolStripMenuItem_Title.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.toolStripMenuItem_Title.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.toolStripMenuItem_Title.Size = new System.Drawing.Size(100, 24);
             this.toolStripMenuItem_Title.Text = "Untitled Map";
             // 
@@ -793,13 +794,6 @@
             this.mapEditor.TabIndex = 1;
             this.mapEditor.Text = "mainEditorPanel";
             // 
-            // toolStripMenuItem_TitleSave
-            // 
-            this.toolStripMenuItem_TitleSave.Name = "toolStripMenuItem_TitleSave";
-            this.toolStripMenuItem_TitleSave.Size = new System.Drawing.Size(224, 26);
-            this.toolStripMenuItem_TitleSave.Text = "Save";
-            this.toolStripMenuItem_TitleSave.Click += new System.EventHandler(this.Menu_Save_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -902,6 +896,5 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_MoveLeft;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_MoveRight;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Title;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_TitleSave;
     }
 }

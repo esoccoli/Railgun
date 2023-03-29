@@ -83,7 +83,7 @@ namespace Railgun.Editor.App
             toolStripMenuItem_MoveDown.ShortcutKeyDisplayString = "S";
             toolStripMenuItem_MoveLeft.ShortcutKeyDisplayString = "A";
             toolStripMenuItem_MoveRight.ShortcutKeyDisplayString = "D";
-            toolStripMenuItem_TitleSave.ShortcutKeyDisplayString = "Ctrl + S";
+            toolStripMenuItem_Title_Save.ShortcutKeyDisplayString = "Ctrl + S";
         }
 
         /// <summary>
@@ -362,6 +362,31 @@ namespace Railgun.Editor.App
             WindowState = FormWindowState.Minimized;
         }
 
+        /// <summary>
+        /// Called when the menu strip resisizes, adjusts the margin on the title
+        /// </summary>
+        private void Menu_Resize(object sender, EventArgs e)
+        {
+            CenterTitle();
+        }
+
+        /// <summary>
+        /// Adjusts the margin on the title
+        /// </summary>
+        private void CenterTitle()
+        {
+            Padding oldMargin = toolStripMenuItem_Title.Margin;
+
+            //Change the margin to center the title
+            toolStripMenuItem_Title.Margin =
+                new Padding(oldMargin.Left,
+                    oldMargin.Top,
+                    menuStrip.Width / 2 - //Compute margin distance
+                        (toolStripMenuItem_Exit.Width + toolStripMenuItem_Maximize.Width +
+                        toolStripMenuItem_Minimize.Width + toolStripMenuItem_Title.Width / 2),
+                    oldMargin.Bottom);
+        }
+
         #endregion
 
         #region Tile Picker Events
@@ -477,16 +502,18 @@ namespace Railgun.Editor.App
             //If just changed to modified, add a star
             if(FileManager.Modified)
             {
-                toolStripMenuItem_Title.Text += "*";
+                toolStripMenuItem_Title.Text = "*" + toolStripMenuItem_Title.Text;
                 return;
             }
 
             //If not, set the title to the current map name
             toolStripMenuItem_Title.Text =
                 FileManager.GetFileNameNoExtension(FileManager.CurrentMapPath);
+
+            //Center the new title
+            CenterTitle();
         }
 
         #endregion
-
     }
 }
