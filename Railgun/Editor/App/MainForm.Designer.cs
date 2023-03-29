@@ -337,7 +337,6 @@
             // 
             this.toolStripMenuItem_Title.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripMenuItem_Title.CheckOnClick = true;
-            this.toolStripMenuItem_Title.Enabled = false;
             this.toolStripMenuItem_Title.ForeColor = System.Drawing.SystemColors.ControlText;
             this.toolStripMenuItem_Title.Margin = new System.Windows.Forms.Padding(0, 10, 300, 10);
             this.toolStripMenuItem_Title.Name = "toolStripMenuItem_Title";

@@ -43,5 +43,7 @@ namespace Railgun.Editor.App
         {
             public DarkMenuStripRenderer() : base(new DarkTheme()) { }
         }
+
+
     }
 }
