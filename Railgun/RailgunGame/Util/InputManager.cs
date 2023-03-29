@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 // File: InputManager.cs
@@ -158,5 +159,23 @@ namespace Railgun.RailgunGame.Util
 
             return isReleased;
         }
+
+        /// <summary>
+        /// Checks if a mouse is hovering over a rectangle. Written by Igor
+        /// </summary>
+        /// <param name="mState">The coordinates of the mouse</param>
+        /// <param name="rect">The rectangle area that is being checked</param>
+        /// <returns>True if the mouse is hovering over a rectangle area, false otherwise</returns>
+        public static bool MouseHover(MouseState mState, Rectangle rect)
+        {
+            if (mState.X > rect.X && mState.X < rect.X + rect.Width
+             && mState.Y > rect.Y && mState.Y < rect.Y + rect.Height)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }
