@@ -424,18 +424,29 @@ namespace Railgun.Editor.App
 
         #region File Events
 
-
-
-        #endregion
-
         /// <summary>
         /// Prompts the user to save the current map
         /// </summary>
         private void Menu_SaveAs_Click(object sender, EventArgs e)
         {
-            
 
+            FileManager.SaveMapAs(mapEditor.CurrentMap);
 
         }
+
+        private void toolStripMenuItem_Open_Click(object sender, EventArgs e)
+        {
+            //Save current map just in case nothing is loaded, get map path
+            Map loadedMap = FileManager.LoadMap(mapEditor.Editor.Content);
+
+            if(loadedMap != null)
+                mapEditor.CurrentMap = loadedMap;
+
+            //DEBUG
+            DebugLog.Instance.AddPersistantMessage(
+                "Loaded map: " + FileManager.GetPathName(FileManager.CurrentMapPath));
+        }
+
+        #endregion
     }
 }

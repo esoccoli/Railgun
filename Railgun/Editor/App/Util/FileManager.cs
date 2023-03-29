@@ -32,6 +32,13 @@ namespace Railgun.Editor.App.Util
         private static ContentManager content;
 
         /// <summary>
+        /// The path of the current map
+        /// </summary>
+        public static string CurrentMapPath { get; private set; }
+
+        #region File Writing
+
+        /// <summary>
         /// Saves the specified map to a file specified by the user
         /// </summary>
         /// <param name="map">The map to save as</param>
@@ -69,63 +76,6 @@ namespace Railgun.Editor.App.Util
             //Return the path of the newly written file
             return dialog.FileName;
         }
-
-        /// <summary>
-        /// Loads a map from the specified path
-        /// </summary>
-        /// <param name="content">The content manager to load textures from</param>
-        /// <returns>The map loaded, null if cancelled or unreadable</returns>
-        public static Map LoadMap(ContentManager contentManager)
-        {
-            //New load file dialog with file extension
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "Railgun Map files (*.rgm)|*.rgm";
-            dialog.Title = "Save map as:";
-
-            //If the user cancels, return null
-            if (dialog.ShowDialog() != DialogResult.OK)
-                return null;
-
-            //Set content manager
-            content = contentManager;
-
-            //Create file reader
-            BinaryReader reader = new BinaryReader(File.OpenRead(dialog.FileName));
-
-            try
-            {
-                //Check if the file is valid, if not return null
-                if (reader.ReadString() != FileIdentifier)
-                {
-                    //Show error dialog
-                    MessageBox.Show("File was unreadable: Incorrect identifier",
-                        "Error Reading File:", MessageBoxButtons.OK);
-                    return null;
-                }
-
-                //Begin actually reading the map
-                Map map = new Map(reader.Read());
-
-                //Read and add each layer
-                for(int i = 0; i < reader.Read(); i++)
-                {
-                    map.Layers.Add(ReadLayer(reader));
-                }
-
-                
-                return map;
-            }
-            catch (Exception e)
-            {
-                //Show error dialog
-                MessageBox.Show("An error occured: " + e.Message,
-                    "Error:", MessageBoxButtons.OK);
-                return null;
-            }
-            finally { reader.Close(); }//Close reader
-        }
-
-        #region Object Writer Methods
 
         /// <summary>
         /// Writes all attributes of the specified layer
@@ -227,7 +177,69 @@ namespace Railgun.Editor.App.Util
 
         #endregion
 
-        #region Object Reader Methods
+        #region File Reading
+
+        /// <summary>
+        /// Loads a map from the specified path
+        /// </summary>
+        /// <param name="content">The content manager to load textures from</param>
+        /// <returns>The map loaded, null if cancelled or unreadable</returns>
+        public static Map LoadMap(ContentManager contentManager)
+        {
+            //New load file dialog with file extension
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Railgun Map files (*.rgm)|*.rgm";
+            dialog.Title = "Save map as:";
+
+            //If the user cancels, return null
+            if (dialog.ShowDialog() != DialogResult.OK)
+            {
+                return null;
+            }
+
+            //Update current path
+            CurrentMapPath = dialog.FileName;
+
+            //Set content manager
+            content = contentManager;
+
+            //Create file reader
+            BinaryReader reader = new BinaryReader(File.OpenRead(dialog.FileName));
+
+            try
+            {
+                //Check if the file is valid, if not return null
+                if (reader.ReadString() != FileIdentifier)
+                {
+                    //Show error dialog
+                    MessageBox.Show("File was unreadable: Incorrect identifier",
+                        "Error Reading File:", MessageBoxButtons.OK);
+                    return null;
+                }
+
+                //Begin actually reading the map
+                Map map = new Map(reader.ReadInt32());
+
+                int layerCount = reader.ReadInt32();
+
+                //Read and add each layer
+                for (int i = 0; i < layerCount; i++)
+                {
+                    map.Layers.Add(ReadLayer(reader));
+                }
+
+
+                return map;
+            }
+            catch (Exception e)
+            {
+                //Show error dialog
+                MessageBox.Show("An error occured: " + e.Message,
+                    "Error:", MessageBoxButtons.OK);
+                return null;
+            }
+            finally { reader.Close(); }//Close reader
+        }
 
         /// <summary>
         /// Reads all attributes of the specified layer from the reader
@@ -238,8 +250,10 @@ namespace Railgun.Editor.App.Util
         {
             Dictionary<Vector2, Tile> layer = new Dictionary<Vector2, Tile>();
 
+            int tileCount = reader.ReadInt32();
+
             //Repeat for the count of the layer
-            for(int i = 0; i < reader.Read(); i++)
+            for(int i = 0; i < tileCount; i++)
             {
                 //Add tile coordinate pair
                 KeyValuePair<Vector2, Tile> tilePair = ReadTilePair(reader);
@@ -285,7 +299,7 @@ namespace Railgun.Editor.App.Util
                 ReadRectangle(reader),//source rect
                 reader.ReadSingle(),//Rotation
                 reader.ReadSingle(),//Scale
-                (SpriteEffects)reader.Read());//Flip
+                (SpriteEffects)reader.ReadInt32());//Flip
         }
 
         /// <summary>
@@ -319,10 +333,10 @@ namespace Railgun.Editor.App.Util
             if(reader.ReadBoolean())
             {
                 return new Rectangle(
-                    reader.Read(),//x
-                    reader.Read(),//y
-                    reader.Read(),//width
-                    reader.Read());//height
+                    reader.ReadInt32(),//x
+                    reader.ReadInt32(),//y
+                    reader.ReadInt32(),//width
+                    reader.ReadInt32());//height
             }
 
             //If not, return null
@@ -330,6 +344,8 @@ namespace Railgun.Editor.App.Util
         }
 
         #endregion
+
+        #region Utility
 
         /// <summary>
         /// Returns a pathed texture using the specified content manager and texture path
@@ -341,5 +357,17 @@ namespace Railgun.Editor.App.Util
         {
             return new PathedTexture(path, content.Load<Texture2D>(path));
         }
+
+        /// <summary>
+        /// Returns the name or directory from the specified path
+        /// </summary>
+        /// <param name="path">The path of the file or directory to get its name</param>
+        /// <returns>The name of the file or directory</returns>
+        public static string GetPathName(string path)
+        {
+            return path.Substring(path.LastIndexOf('\\') + 1);
+        }
+
+        #endregion
     }
 }
