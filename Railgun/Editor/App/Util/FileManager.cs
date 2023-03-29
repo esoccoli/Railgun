@@ -21,7 +21,8 @@ namespace Railgun.Editor.App.Util
     {
         Layer,
         Tile,
-        Entity
+        Entity,
+        End//Indicating the end of a type
     }
 
     /// <summary>
@@ -60,6 +61,9 @@ namespace Railgun.Editor.App.Util
 
             //Write tile size
             writer.Write(map.TileSize);
+
+            //Write layer count
+            writer.Write(map.Layers.Count);
 
             //Repeat for each layer of tiles
             foreach (Dictionary<Vector2, Tile> tileLayer in map.Layers)
@@ -109,7 +113,7 @@ namespace Railgun.Editor.App.Util
                 int indicator = reader.Read();
 
                 //While it hasn't finished, read the next data type
-                while(indicator != -1)
+                while(indicator != (int)TypeIndicator.End)
                 {
                     //Try each type
                     switch(indicator)
@@ -154,6 +158,9 @@ namespace Railgun.Editor.App.Util
         /// <param name="layer">Layer to write</param>
         private static void WriteLayer(BinaryWriter writer, Dictionary<Vector2, Tile> layer)
         {
+            //Write tile coordinate count
+            writer.Write(layer.Count);
+
             //Put indicator for where we are
             writer.Write((int)TypeIndicator.Layer);
 
@@ -168,7 +175,7 @@ namespace Railgun.Editor.App.Util
         /// Writes all attributes of the specified tile coordinate pair
         /// </summary>
         /// <param name="writer">Writer to write to</param>
-        /// <param name="layer">Tile coordinate pair to write</param>
+        /// <param name="tilePair">Tile coordinate pair to write</param>
         private static void WriteTilePair(BinaryWriter writer, KeyValuePair<Vector2,Tile> tilePair)
         {
             //Put intdicator for tile
@@ -255,102 +262,95 @@ namespace Railgun.Editor.App.Util
         /// <summary>
         /// Reads all attributes of the specified layer
         /// </summary>
-        /// <param name="writer">Writer to write to</param>
+        /// <param name="reader">The reader to read with</param>
         /// <param name="layer">Layer to write</param>
-        private static void ReadLayer(BinaryWriter writer, Dictionary<Vector2, Tile> layer)
+        private static void ReadLayer(BinaryReader reader, Dictionary<Vector2, Tile> layer)
         {
-            //Put indicator for where we are
-            writer.Write((int)TypeIndicator.Layer);
-
-            //Repeat for each tile in the layer
-            foreach (KeyValuePair<Vector2, Tile> tilePair in layer)
-            {
-                ReadTilePair(writer, tilePair);
-            }
+            
         }
 
         /// <summary>
         /// Reads all attributes of the specified tile coordinate pair
         /// </summary>
-        /// <param name="writer">Writer to write to</param>
-        /// <param name="layer">Tile coordinate pair to write</param>
-        private static void ReadTilePair(BinaryWriter writer, KeyValuePair<Vector2, Tile> tilePair)
+        /// <param name="reader">The reader to read with</param>
+        /// <param name="tilePair">Tile coordinate pair to write</param>
+        private static void ReadTilePair(BinaryReader reader, KeyValuePair<Vector2, Tile> tilePair)
         {
-            //Put intdicator for tile
-            writer.Write((int)TypeIndicator.Tile);
+            ////Put intdicator for tile
+            //writer.Write((int)TypeIndicator.Tile);
 
-            //Define the key and value
-            Vector2 position = tilePair.Key;
+            ////Define the key and value
+            //Vector2 position = tilePair.Key;
 
-            //Write position of tile
-            writer.Write(position.X);
-            writer.Write(position.Y);
-            ReadTile(writer, tilePair.Value);
+            ////Write position of tile
+            //writer.Write(position.X);
+            //writer.Write(position.Y);
+            //ReadTile(writer, tilePair.Value);
         }
 
         /// <summary>
         /// Reads all attributes of the specified tile
         /// </summary>
-        /// <param name="writer">Writer to write to</param>
+        /// <param name="reader">The reader to read with</param>
         /// <param name="tile">Tile to write</param>
-        private static void ReadTile(BinaryWriter writer, Tile tile)
+        private static void ReadTile(BinaryReader reader, Tile tile)
         {
-            writer.Write(tile.IsSolid);
-            WriteVisual(writer, tile.Visual);
+            //writer.Write(tile.IsSolid);
+            //WriteVisual(writer, tile.Visual);
         }
 
         /// <summary>
         /// Reads all attributes of the specified visual
         /// </summary>
-        /// <param name="writer">Writer to write to</param>
+        /// <param name="reader">The reader to read with</param>
         /// <param name="visual">Visual to write</param>
-        private static void ReadVisual(BinaryWriter writer, TextureVisual visual)
+        private static void ReadVisual(BinaryReader reader, TextureVisual visual)
         {
-            //Write the texture'sits path
-            WritePathedTexture(writer, visual.Texture);
-            WriteRectangle(writer, visual.Source);
-            writer.Write(visual.Tint.PackedValue);//Write as packed val
-            writer.Write(visual.Rotation);
-            writer.Write(visual.Scale);
-            writer.Write((int)visual.Flip);//The enum as an int value
+            ////Write the texture'sits path
+            //WritePathedTexture(writer, visual.Texture);
+            //WriteRectangle(writer, visual.Source);
+            //writer.Write(visual.Tint.PackedValue);//Write as packed val
+            //writer.Write(visual.Rotation);
+            //writer.Write(visual.Scale);
+            //writer.Write((int)visual.Flip);//The enum as an int value
         }
 
         /// <summary>
         /// Reads all attributes of the specified pathed texture
         /// </summary>
-        /// <param name="writer">The writer to write to</param>
+        /// <param name="reader">The reader to read with</param>
         /// <param name="texture">The pathed texture to write</param>
-        private static void ReadPathedTexture(BinaryWriter writer, PathedTexture? texture)
+        private static void ReadPathedTexture(BinaryReader reader, PathedTexture? texture)
         {
-            //If not null, write path
-            if (texture.HasValue)
-            {
-                writer.Write(texture.Value.Path);
-                return;
-            }
-            //If null path, write an invalid character
-            writer.Write("*");
+            ////If not null, write path
+            //if (texture.HasValue)
+            //{
+            //    writer.Write(texture.Value.Path);
+            //    return;
+            //}
+            ////If null path, write an invalid character
+            //writer.Write("*");
         }
 
         /// <summary>
         /// Reads all attributes of the specified nullable rectangle
         /// </summary>
-        /// <param name="writer">The writer to write to</param>
+        /// <param name="reader">The reader to read with</param>
         /// <param name="rectangle">The nullable rectangle to write</param>
-        private static void ReadRectangle(BinaryWriter writer, Rectangle? rectangle)
+        private static void ReadRectangle(BinaryReader reader, Rectangle? rectangle)
         {
-            //If not null, write path
-            if (rectangle.HasValue)
-            {
-                writer.Write(true);
-                writer.Write(rectangle.Value.X);
-                writer.Write(rectangle.Value.Y);
-                writer.Write(rectangle.Value.Width);
-                writer.Write(rectangle.Value.Height);
-                return;
-            }
-            //If null, return false and move on
-            writer.Write(false);
+            ////If not null, write path
+            //if (rectangle.HasValue)
+            //{
+            //    writer.Write(true);
+            //    writer.Write(rectangle.Value.X);
+            //    writer.Write(rectangle.Value.Y);
+            //    writer.Write(rectangle.Value.Width);
+            //    writer.Write(rectangle.Value.Height);
+            //    return;
+            //}
+            ////If null, return false and move on
+            //writer.Write(false);
         }
 
         #endregion
