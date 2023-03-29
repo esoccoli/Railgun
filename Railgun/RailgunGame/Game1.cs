@@ -72,6 +72,9 @@ namespace Railgun.RailgunGame
 
             GameTime gameTime = new GameTime();
 
+            //Set debug logger font
+            DebugLog.Instance.Font = font;
+
             base.Initialize();
         }
 
