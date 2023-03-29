@@ -15,17 +15,6 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 namespace Railgun.Editor.App.Util
 {
     /// <summary>
-    /// An enum that defines the type of data being written
-    /// </summary>
-    internal enum TypeIndicator
-    {
-        Layer,
-        Tile,
-        Entity,
-        End//Indicating the end of a type
-    }
-
-    /// <summary>
     /// A manager that preforms common file tasks
     /// <para>Author: Jonathan Jan</para>
     /// Date Created: 3/28/2023
@@ -36,6 +25,11 @@ namespace Railgun.Editor.App.Util
         /// The identifier for a Railgun map file
         /// </summary>
         private const string FileIdentifier = "RailgunMapRGM";
+
+        /// <summary>
+        /// The content manager to be used for loading textures
+        /// </summary>
+        private static ContentManager content;
 
         /// <summary>
         /// Saves the specified map to a file specified by the user
@@ -79,9 +73,9 @@ namespace Railgun.Editor.App.Util
         /// <summary>
         /// Loads a map from the specified path
         /// </summary>
-        /// <param name="path">The path to load from</param>
+        /// <param name="content">The content manager to load textures from</param>
         /// <returns>The map loaded, null if cancelled or unreadable</returns>
-        public static Map LoadMap(string path)
+        public static Map LoadMap(ContentManager contentManager)
         {
             //New load file dialog with file extension
             OpenFileDialog dialog = new OpenFileDialog();
@@ -91,6 +85,9 @@ namespace Railgun.Editor.App.Util
             //If the user cancels, return null
             if (dialog.ShowDialog() != DialogResult.OK)
                 return null;
+
+            //Set content manager
+            content = contentManager;
 
             //Create file reader
             BinaryReader reader = new BinaryReader(File.OpenRead(dialog.FileName));
@@ -109,31 +106,10 @@ namespace Railgun.Editor.App.Util
                 //Begin actually reading the map
                 Map map = new Map(reader.Read());
 
-                //Set initial indicator
-                int indicator = reader.Read();
-
-                //While it hasn't finished, read the next data type
-                while(indicator != (int)TypeIndicator.End)
+                //Read and add each layer
+                for(int i = 0; i < reader.Read(); i++)
                 {
-                    //Try each type
-                    switch(indicator)
-                    {
-                        case (int)TypeIndicator.Layer:
-                            
-                            break;
-                        case (int)TypeIndicator.Tile:
-
-                            break;
-                        case (int)TypeIndicator.Entity:
-                            
-                            break;
-                        default:
-                            //Show error dialog
-                            MessageBox.Show("File was unreadable: " +
-                                "Invalid type indicator",
-                                "Error Reading File:", MessageBoxButtons.OK);
-                            return null;
-                    }
+                    map.Layers.Add(ReadLayer(reader));
                 }
 
                 
@@ -161,9 +137,6 @@ namespace Railgun.Editor.App.Util
             //Write tile coordinate count
             writer.Write(layer.Count);
 
-            //Put indicator for where we are
-            writer.Write((int)TypeIndicator.Layer);
-
             //Repeat for each tile in the layer
             foreach (KeyValuePair<Vector2, Tile> tilePair in layer)
             {
@@ -178,9 +151,6 @@ namespace Railgun.Editor.App.Util
         /// <param name="tilePair">Tile coordinate pair to write</param>
         private static void WriteTilePair(BinaryWriter writer, KeyValuePair<Vector2,Tile> tilePair)
         {
-            //Put intdicator for tile
-            writer.Write((int)TypeIndicator.Tile);
-
             //Define the key and value
             Vector2 position = tilePair.Key;
 
@@ -197,8 +167,8 @@ namespace Railgun.Editor.App.Util
         /// <param name="tile">Tile to write</param>
         private static void WriteTile(BinaryWriter writer, Tile tile)
         {
-            writer.Write(tile.IsSolid);
             WriteVisual(writer, tile.Visual);
+            writer.Write(tile.IsSolid);
         }
 
         /// <summary>
@@ -208,10 +178,10 @@ namespace Railgun.Editor.App.Util
         /// <param name="visual">Visual to write</param>
         private static void WriteVisual(BinaryWriter writer, TextureVisual visual)
         {
-            //Write the texture'sits path
+            //write in order of constructor
+            writer.Write(visual.Tint.PackedValue);//Write as packed val
             WritePathedTexture(writer, visual.Texture);
             WriteRectangle(writer, visual.Source);
-            writer.Write(visual.Tint.PackedValue);//Write as packed val
             writer.Write(visual.Rotation);
             writer.Write(visual.Scale);
             writer.Write((int)visual.Flip);//The enum as an int value
@@ -260,97 +230,103 @@ namespace Railgun.Editor.App.Util
         #region Object Reader Methods
 
         /// <summary>
-        /// Reads all attributes of the specified layer
+        /// Reads all attributes of the specified layer from the reader
         /// </summary>
         /// <param name="reader">The reader to read with</param>
-        /// <param name="layer">Layer to write</param>
-        private static void ReadLayer(BinaryReader reader, Dictionary<Vector2, Tile> layer)
+        /// <returns>The layer (dictionary) of the </returns>
+        private static Dictionary<Vector2, Tile> ReadLayer(BinaryReader reader)
         {
-            
+            Dictionary<Vector2, Tile> layer = new Dictionary<Vector2, Tile>();
+
+            //Repeat for the count of the layer
+            for(int i = 0; i < reader.Read(); i++)
+            {
+                //Add tile coordinate pair
+                KeyValuePair<Vector2, Tile> tilePair = ReadTilePair(reader);
+                layer[tilePair.Key] = tilePair.Value;
+            }
+
+            return layer;
         }
 
         /// <summary>
-        /// Reads all attributes of the specified tile coordinate pair
+        /// Reads all attributes of the specified tile coordinate pair from the reader
         /// </summary>
         /// <param name="reader">The reader to read with</param>
-        /// <param name="tilePair">Tile coordinate pair to write</param>
-        private static void ReadTilePair(BinaryReader reader, KeyValuePair<Vector2, Tile> tilePair)
+        /// <returns>The tile coordinate pair</returns>
+        private static KeyValuePair<Vector2, Tile> ReadTilePair(BinaryReader reader)
         {
-            ////Put intdicator for tile
-            //writer.Write((int)TypeIndicator.Tile);
-
-            ////Define the key and value
-            //Vector2 position = tilePair.Key;
-
-            ////Write position of tile
-            //writer.Write(position.X);
-            //writer.Write(position.Y);
-            //ReadTile(writer, tilePair.Value);
+            //Create position from next two floats (singles), then read tile
+            return new KeyValuePair<Vector2, Tile>(
+                new Vector2(reader.ReadSingle(), reader.ReadSingle()),
+                ReadTile(reader));
         }
 
         /// <summary>
-        /// Reads all attributes of the specified tile
+        /// Reads all attributes of the specified tile from the reader
         /// </summary>
         /// <param name="reader">The reader to read with</param>
-        /// <param name="tile">Tile to write</param>
-        private static void ReadTile(BinaryReader reader, Tile tile)
+        /// <returns>The tile to read</returns>
+        private static Tile ReadTile(BinaryReader reader)
         {
-            //writer.Write(tile.IsSolid);
-            //WriteVisual(writer, tile.Visual);
+            return new Tile(ReadVisual(reader), reader.ReadBoolean());
         }
 
         /// <summary>
-        /// Reads all attributes of the specified visual
+        /// Reads all attributes of the specified visual from the reader
         /// </summary>
         /// <param name="reader">The reader to read with</param>
-        /// <param name="visual">Visual to write</param>
-        private static void ReadVisual(BinaryReader reader, TextureVisual visual)
+        /// <returns>The texture visual read in</returns>
+        private static TextureVisual ReadVisual(BinaryReader reader)
         {
-            ////Write the texture'sits path
-            //WritePathedTexture(writer, visual.Texture);
-            //WriteRectangle(writer, visual.Source);
-            //writer.Write(visual.Tint.PackedValue);//Write as packed val
-            //writer.Write(visual.Rotation);
-            //writer.Write(visual.Scale);
-            //writer.Write((int)visual.Flip);//The enum as an int value
+            return new TextureVisual(
+                new Color(reader.ReadUInt32()),//Unpack color
+                ReadPathedTexture(reader),//Read texture
+                ReadRectangle(reader),//source rect
+                reader.ReadSingle(),//Rotation
+                reader.ReadSingle(),//Scale
+                (SpriteEffects)reader.Read());//Flip
         }
 
         /// <summary>
-        /// Reads all attributes of the specified pathed texture
+        /// Reads all attributes of the specified pathed texture from the reader
         /// </summary>
         /// <param name="reader">The reader to read with</param>
         /// <param name="texture">The pathed texture to write</param>
-        private static void ReadPathedTexture(BinaryReader reader, PathedTexture? texture)
+        private static PathedTexture? ReadPathedTexture(BinaryReader reader)
         {
-            ////If not null, write path
-            //if (texture.HasValue)
-            //{
-            //    writer.Write(texture.Value.Path);
-            //    return;
-            //}
-            ////If null path, write an invalid character
-            //writer.Write("*");
+            //Read in as string
+            string path = reader.ReadString();
+
+            //If null texture
+            if(path == "*")
+            {
+                return null;
+            }
+
+            //Else, return load in pathed texture
+            return LoadPathedTexture(content, path);
         }
 
         /// <summary>
-        /// Reads all attributes of the specified nullable rectangle
+        /// Reads all attributes of the specified nullable rectangle from the reader
         /// </summary>
         /// <param name="reader">The reader to read with</param>
-        /// <param name="rectangle">The nullable rectangle to write</param>
-        private static void ReadRectangle(BinaryReader reader, Rectangle? rectangle)
+        /// <returns>The read in rectangle</returns>
+        private static Rectangle? ReadRectangle(BinaryReader reader)
         {
-            ////If not null, write path
-            //if (rectangle.HasValue)
-            //{
-            //    writer.Write(true);
-            //    writer.Write(rectangle.Value.X);
-            //    writer.Write(rectangle.Value.Y);
-            //    writer.Write(rectangle.Value.Width);
-            //    writer.Write(rectangle.Value.Height);
-            //    return;
-            //}
-            ////If null, return false and move on
-            //writer.Write(false);
+            //If has value, read in rectangle
+            if(reader.ReadBoolean())
+            {
+                return new Rectangle(
+                    reader.Read(),//x
+                    reader.Read(),//y
+                    reader.Read(),//width
+                    reader.Read());//height
+            }
+
+            //If not, return null
+            return null;
         }
 
         #endregion
