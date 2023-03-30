@@ -129,7 +129,7 @@ namespace Railgun.Editor.App.Util
             //DEBUG
             DebugLog.Instance.LogPersistant(
                 "Saved map: " + GetFileName(CurrentMapPath),
-                Color.Yellow, 5f);
+                Color.LawnGreen, 5f);
         }
 
         /// <summary>

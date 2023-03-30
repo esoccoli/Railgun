@@ -497,10 +497,15 @@ namespace Railgun.Editor.App
             //If just changed to modified, add a star
             if(FileManager.Modified)
             {
+                //Change to italics
+                toolStripMenuItem_Title.Font = new Font(toolStripMenuItem_Title.Font, FontStyle.Italic);
+                //Add star
                 toolStripMenuItem_Title.Text = "*" + toolStripMenuItem_Title.Text;
             }
             else
             {
+                //Change to regular
+                toolStripMenuItem_Title.Font = new Font(toolStripMenuItem_Title.Font, FontStyle.Regular);
                 //If not, set the title to the current map name
                 toolStripMenuItem_Title.Text =
                     FileManager.GetFileNameNoExtension(FileManager.CurrentMapPath);
