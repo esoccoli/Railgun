@@ -206,6 +206,9 @@ namespace Railgun.Editor.App
             //Set zoom amount
             toolStripStatusLabel_ValueZoom.Text = mapEditor.Editor.Cam.Zoom
                 .ToString("0.00");
+
+            //DEBUG
+            DebugLog.Instance.LogFrame("Layer Count: " + mapEditor.CurrentMap.Layers.Count);
         }
 
         /// <summary>
@@ -225,6 +228,8 @@ namespace Railgun.Editor.App
             //Set color to brighter
             (sender as ToolStripStatusLabel).BackColor = DarkTheme.Highlight;
         }
+
+        
 
         #endregion
 
@@ -517,5 +522,22 @@ namespace Railgun.Editor.App
         }
 
         #endregion
+
+        /// <summary>
+        /// Called when the form is closing, prompts the user if there are unsaved changes
+        /// </summary>
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(FileManager.Modified)
+            {
+                //Made a local var here just to make it easier to read
+                DialogResult choice = MessageBox.Show(
+                    $"The current map has unsaved changes. Are you sure you want to exit?",
+                    "Unsaved Changes:", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                //If not yes, close the form
+                if (choice != DialogResult.Yes)
+                    e.Cancel = true;
+            }
+        }
     }
 }
