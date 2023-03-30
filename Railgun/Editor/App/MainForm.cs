@@ -155,10 +155,6 @@ namespace Railgun.Editor.App
                 ColorControls(control.Controls);
             }
 
-            //Set title to specific scheme
-            toolStripMenuItem_Title.BackColor = DarkTheme.Highlight;
-            toolStripMenuItem_Title.ForeColor = DarkTheme.Label;
-
             //Set background color as an outline
             BackColor = DarkTheme.Outline;
         }
@@ -326,7 +322,7 @@ namespace Railgun.Editor.App
             mapEditor.Editor.Cam.Zoom = 1f;
         }
 
-        //Window
+        //Control Box
 
         /// <summary>
         /// Called when the exit button is clicked
