@@ -504,6 +504,7 @@ namespace Railgun.Editor.App
                 //If not, set the title to the current map name
                 toolStripMenuItem_Title.Text =
                     FileManager.GetFileNameNoExtension(FileManager.CurrentMapPath);
+
             }
 
             //Center the new title

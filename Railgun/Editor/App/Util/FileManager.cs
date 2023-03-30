@@ -10,7 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace Railgun.Editor.App.Util
 {
@@ -129,7 +128,7 @@ namespace Railgun.Editor.App.Util
 
             //DEBUG
             DebugLog.Instance.LogPersistant(
-                "Saved map: " + FileManager.GetFileName(FileManager.CurrentMapPath),
+                "Saved map: " + GetFileName(CurrentMapPath),
                 Color.Yellow, 5f);
         }
 
@@ -293,15 +292,15 @@ namespace Railgun.Editor.App.Util
                     map.Layers.Add(ReadLayer(reader));
                 }
 
-                //Set modified to false
-                Modified = false;
-
                 //Update current path if it makes it all the way through
                 CurrentMapPath = dialog.FileName;
 
+                //Set modified to false
+                Modified = false;
+
                 //DEBUG
                 DebugLog.Instance.LogPersistant(
-                    "Loaded map: " + FileManager.GetFileName(FileManager.CurrentMapPath),
+                    "Loaded map: " + GetFileName(CurrentMapPath),
                     Microsoft.Xna.Framework.Color.Yellow, 5f);
 
                 return map;
@@ -450,6 +449,10 @@ namespace Railgun.Editor.App.Util
         /// <returns>The name of the file or directory</returns>
         public static string GetFileName(string path)
         {
+            //If no path, return null
+            if(path == null)
+                return null;
+
             return path.Substring(path.LastIndexOf('\\') + 1);
         }
 
@@ -461,6 +464,10 @@ namespace Railgun.Editor.App.Util
         /// <returns>The name of the file or directory</returns>
         public static string GetFileNameNoExtension(string path)
         {
+            //If no path, return null
+            if (path == null)
+                return null;
+
             //Cuts off the '.' end of the name
             return GetFileName(path).Split('.')[0];
         }
