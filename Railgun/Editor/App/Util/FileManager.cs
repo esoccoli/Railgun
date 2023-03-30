@@ -284,6 +284,7 @@ namespace Railgun.Editor.App.Util
                 //Begin actually reading the map
                 Map map = new Map(reader.ReadInt32());
 
+                //Store tile layer count
                 int layerCount = reader.ReadInt32();
 
                 //Read and add each layer

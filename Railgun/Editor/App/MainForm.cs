@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -229,8 +230,6 @@ namespace Railgun.Editor.App
             (sender as ToolStripStatusLabel).BackColor = DarkTheme.Highlight;
         }
 
-        
-
         #endregion
 
         #region Menustrip Events
@@ -450,6 +449,7 @@ namespace Railgun.Editor.App
 
             //Create new map
             Map newMap = new Map(128);
+            newMap.Layers.Add(new Dictionary<Microsoft.Xna.Framework.Vector2, Tile>());
 
             //Prompt user to save as (allowing them to name), if cancel, return
             if (!FileManager.SaveMapAs(newMap))
@@ -521,14 +521,12 @@ namespace Railgun.Editor.App
             CenterTitle();
         }
 
-        #endregion
-
         /// <summary>
         /// Called when the form is closing, prompts the user if there are unsaved changes
         /// </summary>
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(FileManager.Modified)
+            if (FileManager.Modified)
             {
                 //Made a local var here just to make it easier to read
                 DialogResult choice = MessageBox.Show(
@@ -539,5 +537,7 @@ namespace Railgun.Editor.App
                     e.Cancel = true;
             }
         }
+
+        #endregion
     }
 }

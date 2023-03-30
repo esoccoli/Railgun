@@ -6,6 +6,7 @@ using Railgun.Editor.App.Objects;
 using Railgun.Editor.App.Objects.Visuals;
 using Railgun.Editor.App.Util;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Railgun.Editor.App.Controls
@@ -89,6 +90,7 @@ namespace Railgun.Editor.App.Controls
 
             //Start in a new map
             CurrentMap = new Map(128);
+            CurrentMap.Layers.Add(new Dictionary<Vector2, Tile>());
 
             //Set max and min zoom
             MinZoom = 0.1f;

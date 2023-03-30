@@ -67,10 +67,7 @@ namespace Railgun.Editor.App.Objects
         public Map(int tileSize)
         {
             TileSize = tileSize;
-            Layers = new List<Dictionary<Vector2, Tile>>
-            {
-                new Dictionary<Vector2, Tile>()//Add default layer 0
-            };
+            Layers = new List<Dictionary<Vector2, Tile>>();
             Entities = new List<Entity>();
         }
 
