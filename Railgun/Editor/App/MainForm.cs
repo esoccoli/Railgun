@@ -432,7 +432,7 @@ namespace Railgun.Editor.App
                 //Made a local var here just to make it easier to read
                 DialogResult choice = MessageBox.Show(
                     $"The current map has unsaved changes. Are you sure you want to create a new map?",
-                    "Unsaved Changes:", MessageBoxButtons.YesNo);
+                    "Unsaved Changes:", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 //If not yes, return
                 if (choice != DialogResult.Yes)
                     return;

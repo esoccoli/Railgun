@@ -130,7 +130,7 @@ namespace Railgun.Editor.App.Util
             //DEBUG
             DebugLog.Instance.LogPersistant(
                 "Saved map: " + FileManager.GetFileName(FileManager.CurrentMapPath),
-                Microsoft.Xna.Framework.Color.Yellow, 5f);
+                Color.Yellow, 5f);
         }
 
         /// <summary>
@@ -242,6 +242,18 @@ namespace Railgun.Editor.App.Util
         /// <returns>The map loaded, null if cancelled or unreadable</returns>
         public static Map LoadMap(ContentManager contentManager)
         {
+            //Prompt if there are unsaved changes
+            if (Modified)
+            {
+                //Made a local var here just to make it easier to read
+                DialogResult choice = MessageBox.Show(
+                    $"The current map has unsaved changes. Are you sure you want to open a diferrent map?",
+                    "Unsaved Changes:", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                //If not yes, return
+                if (choice != DialogResult.Yes)
+                    return null;
+            }
+
             //New load file dialog with file extension
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Railgun Map files (*.rgm)|*.rgm";
@@ -252,9 +264,6 @@ namespace Railgun.Editor.App.Util
             {
                 return null;
             }
-
-            //Update current path
-            CurrentMapPath = dialog.FileName;
 
             //Set content manager
             content = contentManager;
@@ -269,7 +278,7 @@ namespace Railgun.Editor.App.Util
                 {
                     //Show error dialog
                     MessageBox.Show("File was unreadable: Incorrect identifier",
-                        "Error Reading File:", MessageBoxButtons.OK);
+                        "Error Reading File:", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return null;
                 }
 
@@ -287,24 +296,33 @@ namespace Railgun.Editor.App.Util
                 //Set modified to false
                 Modified = false;
 
+                //Update current path if it makes it all the way through
+                CurrentMapPath = dialog.FileName;
+
+                //DEBUG
+                DebugLog.Instance.LogPersistant(
+                    "Loaded map: " + FileManager.GetFileName(FileManager.CurrentMapPath),
+                    Microsoft.Xna.Framework.Color.Yellow, 5f);
+
                 return map;
             }
             catch (Exception e)
             {
                 //Show error dialog
                 MessageBox.Show("An error occured: " + e.Message,
-                    "Error:", MessageBoxButtons.OK);
+                    "Error:", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                //DEBUG
+                DebugLog.Instance.LogPersistant(
+                    "Error loading map!",
+                    Microsoft.Xna.Framework.Color.Red, 5f);
+
                 return null;
             }
             finally
             {
                 //Close reader
                 reader.Close();
-
-                //DEBUG
-                DebugLog.Instance.LogPersistant(
-                    "Loaded map: " + FileManager.GetFileName(FileManager.CurrentMapPath),
-                    Microsoft.Xna.Framework.Color.Yellow, 5f);
             }
         }
 

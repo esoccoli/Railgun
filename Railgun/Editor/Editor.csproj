@@ -8,6 +8,9 @@
     <None Include="Content\obj\Windows\Content\.mgcontent" />
     <None Include="Content\obj\Windows\Content\.mgstats" />
     <None Include="Content\obj\Windows\Content\TestDir\IMG_4658.mgcontent" />
+    <None Include="Resources\Corrupted.rgm" />
+    <None Include="Resources\Test Map 2.rgm" />
+    <None Include="Resources\Test Map 3.rgm" />
     <None Include="Resources\Test Map.rgm" />
     <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.1.303" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
