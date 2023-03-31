@@ -209,7 +209,7 @@ namespace Railgun.Editor.App
                 .ToString("0.00");
 
             //DEBUG
-            DebugLog.Instance.LogFrame("Layer Count: " + mapEditor.CurrentMap.Layers.Count);
+            //DebugLog.Instance.LogFrame("Layer Count: " + mapEditor.CurrentMap.Layers.Count);
         }
 
         /// <summary>

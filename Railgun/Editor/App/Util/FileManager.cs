@@ -254,9 +254,13 @@ namespace Railgun.Editor.App.Util
             }
 
             //New load file dialog with file extension
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "Railgun Map files (*.rgm)|*.rgm";
-            dialog.Title = "Save map as:";
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Filter = "Railgun Map files (*.rgm)|*.rgm",
+                Title = "Save map as:",
+                InitialDirectory = Path.GetFullPath("../../Resources/")
+            };
+
 
             //If the user cancels, return null
             if (dialog.ShowDialog() != DialogResult.OK)
