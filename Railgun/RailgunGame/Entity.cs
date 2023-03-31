@@ -19,18 +19,12 @@ namespace Railgun.RailgunGame
         public Rectangle Hitbox { get; set; }
 
         /// <summary>
-        /// entity's primary, static sprite
-        /// </summary>
-        public Texture2D Texture { get; set; }
-
-        /// <summary>
         /// intatntiates a geenric entity with a 
         /// location, hitbox, and sprite
         /// </summary>
-        public Entity(Rectangle hitbox, Texture2D texture)
+        public Entity(Rectangle hitbox)
         {
             Hitbox = hitbox;
-            Texture = texture;
         }
 
         /// <summary>
@@ -38,15 +32,6 @@ namespace Railgun.RailgunGame
         /// </summary>
         /// <param name="gameTime">time of the game</param>
         public virtual void Update(GameTime gameTime) { }
-
-        /// <summary>
-        /// draws the object
-        /// </summary>
-        /// <param name="sb">_spritebatch</param>
-        public virtual void Draw(SpriteBatch sb)
-        {
-            sb.Draw(Texture, Hitbox, Color.White);
-        }
     }
 
 }

@@ -56,10 +56,7 @@ namespace Railgun.RailgunGame
         public Projectile(Rectangle hitbox,
                           Texture2D isActiveTexture,
                           Animation hasCollidedAnimation,
-                          Vector2 Velocity)
-
-            : base(hitbox,
-                   isActiveTexture)
+                          Vector2 Velocity) : base(hitbox)
         {
             this.Velocity = Velocity;
             IsActive = isActiveTexture;
@@ -116,7 +113,7 @@ namespace Railgun.RailgunGame
                 case ProjectileStates.HasCollided:
                     if (HasCollided.CurrentFrame != HasCollided.TotalFrames)
                     {
-                        HasCollided.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y));
+                        HasCollided.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y), Color.White, SpriteEffects.None);
                     }
                     break;
             }
