@@ -84,6 +84,10 @@ namespace Railgun.Editor.App
             toolStripMenuItem_MoveDown.ShortcutKeyDisplayString = "S";
             toolStripMenuItem_MoveLeft.ShortcutKeyDisplayString = "A";
             toolStripMenuItem_MoveRight.ShortcutKeyDisplayString = "D";
+            toolStripMenuItem_ShowHitboxes.ShortcutKeyDisplayString = "H";
+
+            //Set selected layer
+            comboBox_Layers.SelectedIndex = 0;
         }
 
         /// <summary>
@@ -145,6 +149,13 @@ namespace Railgun.Editor.App
                 {
                     Panel panel = control as Panel;
                     panel.BackColor = DarkTheme.Panel;
+                }
+                //If checkbox
+                else if (control is CheckBox)
+                {
+                    CheckBox checkBox = control as CheckBox;
+                    checkBox.BackColor = DarkTheme.Panel;
+                    checkBox.ForeColor = DarkTheme.Label;
                 }
                 else
                 {
