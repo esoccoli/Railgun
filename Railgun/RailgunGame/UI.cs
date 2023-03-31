@@ -53,13 +53,13 @@ namespace Railgun.RailgunGame
         /// <param name="maxAmmo">Maximum ammo of the player</param>
         public UI(Texture2D background, Texture2D foreground, Texture2D bulletUI, bool debugInitial, int healthAmount, int maxHealth, SpriteFont font, int ammoAmount, int maxAmmo)
         {
-            debugMode = debugInitial;
+            //debugMode = debugInitial;
             this.healthAmount = healthAmount;
             this.maxHealth = maxHealth;
             this.font = font;
             this.ammoAmount = ammoAmount;
             this.maxAmmo = maxAmmo;
-            DebugMode = debugMode;
+            DebugMode = debugInitial;
 
             backgroundHealthTexture = background;
             foregroundHealthTexture = foreground;
@@ -134,13 +134,13 @@ namespace Railgun.RailgunGame
             }
 
             // Dash cooldown
-            _spriteBatch.DrawString(font, "Dash: ", new Vector2(10, 130), Color.White);
-            _spriteBatch.Draw(backgroundHealthTexture, new Rectangle(10, 170, maxHealth * 2, 10), Color.White);
-            _spriteBatch.Draw(backgroundHealthTexture, dashCooldown, Color.Blue);
+            // _spriteBatch.DrawString(font, "Dash: ", new Vector2(10, 130), Color.White);
+            // _spriteBatch.Draw(backgroundHealthTexture, new Rectangle(10, 170, maxHealth * 2, 10), Color.White);
+            // _spriteBatch.Draw(backgroundHealthTexture, dashCooldown, Color.Blue);
 
 
             //If debug mode is active, prints additional stats (to be added later as need)
-            if (debugMode)
+            if(DebugMode)
             {
                 _spriteBatch.DrawString(font, "Debug Mode", new Vector2(10, 210), Color.White);
                 _spriteBatch.DrawString(font, "Health Amt: " + healthAmount, new Vector2(10, 250), Color.White);
