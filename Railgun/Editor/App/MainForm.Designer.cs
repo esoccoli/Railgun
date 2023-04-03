@@ -314,7 +314,7 @@
             // 
             this.toolStripMenuItem_ResetZoom.Name = "toolStripMenuItem_ResetZoom";
             this.toolStripMenuItem_ResetZoom.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D0)));
-            this.toolStripMenuItem_ResetZoom.Size = new System.Drawing.Size(233, 26);
+            this.toolStripMenuItem_ResetZoom.Size = new System.Drawing.Size(277, 26);
             this.toolStripMenuItem_ResetZoom.Text = "Reset Zoom";
             this.toolStripMenuItem_ResetZoom.Click += new System.EventHandler(this.Menu_View_ResetZoom_Click);
             // 
@@ -322,15 +322,19 @@
             // 
             this.toolStripMenuItem_ResetCamera.Name = "toolStripMenuItem_ResetCamera";
             this.toolStripMenuItem_ResetCamera.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
-            this.toolStripMenuItem_ResetCamera.Size = new System.Drawing.Size(233, 26);
+            this.toolStripMenuItem_ResetCamera.Size = new System.Drawing.Size(277, 26);
             this.toolStripMenuItem_ResetCamera.Text = "Reset Camera";
             this.toolStripMenuItem_ResetCamera.Click += new System.EventHandler(this.Menu_View_ResetCamera_Click);
             // 
             // toolStripMenuItem_ShowHitboxes
             // 
+            this.toolStripMenuItem_ShowHitboxes.CheckOnClick = true;
             this.toolStripMenuItem_ShowHitboxes.Name = "toolStripMenuItem_ShowHitboxes";
-            this.toolStripMenuItem_ShowHitboxes.Size = new System.Drawing.Size(233, 26);
+            this.toolStripMenuItem_ShowHitboxes.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.toolStripMenuItem_ShowHitboxes.Size = new System.Drawing.Size(277, 26);
             this.toolStripMenuItem_ShowHitboxes.Text = "Show Hitboxes";
+            this.toolStripMenuItem_ShowHitboxes.CheckedChanged += new System.EventHandler(this.Menu_View_ShowHitboxes_CheckedChanged);
             // 
             // toolStripMenuItem_Help
             // 
@@ -943,6 +947,7 @@
             this.checkBox_ShowHitboxes.TabIndex = 1;
             this.checkBox_ShowHitboxes.Text = "Show Hitboxes";
             this.checkBox_ShowHitboxes.UseVisualStyleBackColor = true;
+            this.checkBox_ShowHitboxes.CheckedChanged += new System.EventHandler(this.CheckBox_ShowHitboxes_CheckedChanged);
             // 
             // tableLayoutPanel_MainOutline
             // 

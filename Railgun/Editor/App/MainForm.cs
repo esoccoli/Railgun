@@ -47,8 +47,10 @@ namespace Railgun.Editor.App
             //Subscribe update status to update event in main editor control
             mapEditor.OnUpdate += UpdateStatus;
 
-            //Subscribe current tile change to current tile display
+            //Subscribe invalidation events
             TileManager.Instance.OnCurrentTileChange += currentTileDisplay.Update;
+            TileManager.Instance.OnCurrentHitboxChange += UpdateCurrentHitbox;
+            TileManager.Instance.OnViewHitboxesChange += UpdateViewHitbox;
 
             //Subscribe modify event
             FileManager.OnModifyInvalidate += ModifyTitle;
@@ -83,7 +85,6 @@ namespace Railgun.Editor.App
             toolStripMenuItem_MoveDown.ShortcutKeyDisplayString = "S";
             toolStripMenuItem_MoveLeft.ShortcutKeyDisplayString = "A";
             toolStripMenuItem_MoveRight.ShortcutKeyDisplayString = "D";
-            toolStripMenuItem_ShowHitboxes.ShortcutKeyDisplayString = "H";
 
             //Set selected layer
             comboBox_Layers.SelectedIndex = 1;
@@ -324,23 +325,28 @@ namespace Railgun.Editor.App
         }
 
         /// <summary>
-        /// Syncs the check state with the tile manager and menu item
+        /// Updates the checkboxes of the current hitbox
         /// </summary>
-        private void CheckBox_Solid_CheckedChanged(object sender, EventArgs e)
+        private void UpdateCurrentHitbox()
         {
-            bool check = (sender as CheckBox).Checked;
-            toolStripMenuItem_Solid.Checked = check;
-            TileManager.Instance.CurrentHitbox = check;
+            toolStripMenuItem_Solid.Checked = TileManager.Instance.CurrentHitbox;
+            checkBox_Solid.Checked = TileManager.Instance.CurrentHitbox;
         }
 
         /// <summary>
-        /// Syncs the check state with the tile manager and edit checkbox
+        /// Sets the current hitbox to the check
+        /// </summary>
+        private void CheckBox_Solid_CheckedChanged(object sender, EventArgs e)
+        {
+            TileManager.Instance.CurrentHitbox = (sender as CheckBox).Checked;
+        }
+
+        /// <summary>
+        /// Sets the current hitbox to the check
         /// </summary>
         private void Menu_Edit_Solid_CheckedChanged(object sender, EventArgs e)
         {
-            bool check = (sender as ToolStripMenuItem).Checked;
-            checkBox_Solid.Checked = check;
-            TileManager.Instance.CurrentHitbox = check;
+            TileManager.Instance.CurrentHitbox = (sender as ToolStripMenuItem).Checked;
         }
 
         #endregion
@@ -361,6 +367,31 @@ namespace Railgun.Editor.App
         private void Menu_View_ResetZoom_Click(object sender, EventArgs e)
         {
             mapEditor.Editor.Cam.Zoom = 1f;
+        }
+
+        /// <summary>
+        /// Updates the checkboxes of the hitbox view
+        /// </summary>
+        private void UpdateViewHitbox()
+        {
+            toolStripMenuItem_ShowHitboxes.Checked = TileManager.Instance.ViewHitboxes;
+            checkBox_ShowHitboxes.Checked = TileManager.Instance.ViewHitboxes;
+        }
+
+        /// <summary>
+        /// Sets showing the hitbox to the check
+        /// </summary>
+        private void CheckBox_ShowHitboxes_CheckedChanged(object sender, EventArgs e)
+        {
+            TileManager.Instance.ViewHitboxes = (sender as CheckBox).Checked;
+        }
+
+        /// <summary>
+        /// Sets showing the hitbox to the check
+        /// </summary>
+        private void Menu_View_ShowHitboxes_CheckedChanged(object sender, EventArgs e)
+        {
+            TileManager.Instance.ViewHitboxes = (sender as ToolStripMenuItem).Checked;
         }
 
         #endregion
@@ -586,5 +617,6 @@ namespace Railgun.Editor.App
         }
 
         #endregion
+
     }
 }

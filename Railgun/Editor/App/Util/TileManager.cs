@@ -56,7 +56,7 @@ namespace Railgun.Editor.App.Util
 
         #endregion
 
-        #region Tile Placing
+        #region Tile Properties
 
         /// <summary>
         /// The current tile to be placed
@@ -85,10 +85,39 @@ namespace Railgun.Editor.App.Util
         /// </summary>
         public int CurrentLayer { get; set; }
 
+        #region Hitbox Properties
+
         /// <summary>
         /// Whether or not a hitbox is being placed or removed
         /// </summary>
-        public bool CurrentHitbox { get; set; }
+        public bool CurrentHitbox
+        {
+            get => currentHitbox;
+            set
+            {
+                currentHitbox = value;
+                //Invalidates current tile display if not null
+                OnCurrentHitboxChange?.Invoke();
+            }
+        }
+        private bool currentHitbox;
+
+        /// <summary>
+        /// Whether or not the hitboxes of tiles should be displayed
+        /// </summary>
+        public bool ViewHitboxes
+        {
+            get => viewHitboxes;
+            set
+            {
+                viewHitboxes = value;
+                //Invalidates current tile display if not null
+                OnViewHitboxesChange?.Invoke();
+            }
+        }
+        private bool viewHitboxes;
+
+        #endregion
 
         #region Edit Invokers
 
@@ -141,14 +170,26 @@ namespace Railgun.Editor.App.Util
 
         #endregion
 
-        #region Events
+        #region Invalidation Events
 
         /// <summary>
         /// An event that is called when the current tile is changed
         /// </summary>
         public event GenericDelegate OnCurrentTileChange;
 
-        //Edit events
+        /// <summary>
+        /// An event that is called when the current hitbox is changed
+        /// </summary>
+        public event GenericDelegate OnCurrentHitboxChange;
+
+        /// <summary>
+        /// An event that is called when the viewing ability of hitboxes is changed
+        /// </summary>
+        public event GenericDelegate OnViewHitboxesChange;
+
+        #endregion
+
+        #region Editing Events
 
         /// <summary>
         /// Rotates the current tile 90 degrees clockwise OR
