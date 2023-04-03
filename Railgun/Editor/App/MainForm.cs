@@ -86,7 +86,7 @@ namespace Railgun.Editor.App
             toolStripMenuItem_ShowHitboxes.ShortcutKeyDisplayString = "H";
 
             //Set selected layer
-            comboBox_Layers.SelectedIndex = 0;
+            comboBox_Layers.SelectedIndex = 1;
         }
 
         /// <summary>
@@ -155,6 +155,13 @@ namespace Railgun.Editor.App
                     CheckBox checkBox = control as CheckBox;
                     checkBox.BackColor = DarkTheme.Panel;
                     checkBox.ForeColor = DarkTheme.Label;
+                }
+                //If combobox
+                else if (control is ComboBox)
+                {
+                    ComboBox comboBox = control as ComboBox;
+                    comboBox.BackColor = DarkTheme.Base;
+                    comboBox.ForeColor = DarkTheme.Label;
                 }
                 else
                 {
@@ -398,7 +405,7 @@ namespace Railgun.Editor.App
 
         #endregion
 
-        #region Tile Picker Events
+        #region Tile Picker and Related Events
 
         /// <summary>
         /// Changes the tile size when the text box is changed
@@ -430,6 +437,21 @@ namespace Railgun.Editor.App
             (sender as TextBox).Text = tilePicker.GridSize.ToString();
         }
 
+        /// <summary>
+        /// Called when the layer is changed
+        /// </summary>
+        private void ComboBox_Layers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //If hitboxes
+            if(comboBox_Layers.SelectedIndex == 0)
+            {
+
+                return;
+            }
+
+            //If normal
+            //TileManager.Instance = comboBox_Layers.SelectedIndex - 1;
+        }
 
         #endregion
 

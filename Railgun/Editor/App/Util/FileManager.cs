@@ -112,11 +112,19 @@ namespace Railgun.Editor.App.Util
 
             //Write layer count
             writer.Write(map.Layers.Count);
-
             //Repeat for each layer of tiles
-            foreach (Dictionary<Vector2, Tile> tileLayer in map.Layers)
+            foreach(Dictionary<Vector2, Tile> tileLayer in map.Layers)
             {
                 WriteLayer(writer, tileLayer);
+            }
+
+            //Write hitbox count
+            writer.Write(map.Hitboxes.Count);
+            //Write hitboxes
+            foreach(KeyValuePair<Vector2, bool> hitbox in map.Hitboxes)
+            {
+                WriteVector(writer, hitbox.Key);
+                writer.Write(hitbox.Value);
             }
 
             //Close the writer
@@ -155,13 +163,19 @@ namespace Railgun.Editor.App.Util
         /// <param name="tilePair">Tile coordinate pair to write</param>
         private static void WriteTilePair(BinaryWriter writer, KeyValuePair<Vector2,Tile> tilePair)
         {
-            //Define the key and value
-            Vector2 position = tilePair.Key;
+            WriteVector(writer, tilePair.Key);
+            WriteTile(writer, tilePair.Value);
+        }
 
-            //Write position of tile
+        /// <summary>
+        /// Writes the specified vector to the writer
+        /// </summary>
+        /// <param name="writer">Writer to write to</param>
+        /// <param name="position">Vector to write</param>
+        private static void WriteVector(BinaryWriter writer, Vector2 position)
+        {
             writer.Write(position.X);
             writer.Write(position.Y);
-            WriteTile(writer, tilePair.Value);
         }
 
         /// <summary>
@@ -277,11 +291,18 @@ namespace Railgun.Editor.App.Util
 
                 //Store tile layer count
                 int layerCount = reader.ReadInt32();
-
                 //Read and add each layer
                 for (int i = 0; i < layerCount; i++)
                 {
                     map.Layers.Add(ReadLayer(reader));
+                }
+
+                //Store hitbox count
+                int hitboxCount = reader.ReadInt32();
+                //Read and add each hitbox
+                for (int i = 0; i < hitboxCount; i++)
+                {
+                    map.Hitboxes[ReadVector(reader)] = reader.ReadBoolean();
                 }
 
                 //Update current path if it makes it all the way through
@@ -340,6 +361,16 @@ namespace Railgun.Editor.App.Util
         }
 
         /// <summary>
+        /// Reads the next two floats (singles) from the reader and returns a vector2
+        /// </summary>
+        /// <param name="reader">Reader to read with</param>
+        /// <returns>The vector2</returns>
+        private static Vector2 ReadVector(BinaryReader reader)
+        {
+            return new Vector2(reader.ReadSingle(), reader.ReadSingle());
+        }
+
+        /// <summary>
         /// Reads all attributes of the specified tile coordinate pair from the reader
         /// </summary>
         /// <param name="reader">The reader to read with</param>
@@ -347,9 +378,7 @@ namespace Railgun.Editor.App.Util
         private static KeyValuePair<Vector2, Tile> ReadTilePair(BinaryReader reader)
         {
             //Create position from next two floats (singles), then read tile
-            return new KeyValuePair<Vector2, Tile>(
-                new Vector2(reader.ReadSingle(), reader.ReadSingle()),
-                ReadTile(reader));
+            return new KeyValuePair<Vector2, Tile>(ReadVector(reader), ReadTile(reader));
         }
 
         /// <summary>

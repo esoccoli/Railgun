@@ -76,8 +76,6 @@ namespace Railgun.Editor.App.Util
         /// </summary>
         public List<Tile> SelectedTiles { get; private set; }
 
-        
-
         #region Edit Invokers
 
         /// <summary>

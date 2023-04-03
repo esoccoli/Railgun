@@ -41,14 +41,9 @@ namespace Railgun.Editor.App.Objects
         public List<Dictionary<Vector2, Tile>> Layers { get; protected set; }
 
         /// <summary>
-        /// The entities in this map
-        /// </summary>
-        public List<Entity> Entities { get; protected set; }
-
-        /// <summary>
         /// The hitboxes of each tile in this map
         /// </summary>
-        public List<Rectangle> Hitboxes { get; protected set; }
+        public Dictionary<Vector2, bool> Hitboxes { get; protected set; }
 
         /// <summary>
         /// The tile at the specified grid position and layer
@@ -70,8 +65,7 @@ namespace Railgun.Editor.App.Objects
         {
             TileSize = tileSize;
             Layers = new List<Dictionary<Vector2, Tile>>();
-            Entities = new List<Entity>();
-            Hitboxes = new List<Rectangle>();
+            Hitboxes = new Dictionary<Vector2, bool>();
         }
 
         #region Drawing
