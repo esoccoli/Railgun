@@ -279,6 +279,8 @@ namespace Railgun.Editor.App.Controls
             //If placing
             if(input.IsDown(MouseButtonTypes.Left))
             {
+                
+
                 //Place current tile at tile point
                 CurrentMap[CurrentMap.GetGridPoint(
                     MouseCameraPosition)]

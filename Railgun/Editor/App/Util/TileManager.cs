@@ -56,6 +56,8 @@ namespace Railgun.Editor.App.Util
 
         #endregion
 
+        #region Tile Placing
+
         /// <summary>
         /// The current tile to be placed
         /// </summary>
@@ -76,11 +78,17 @@ namespace Railgun.Editor.App.Util
         /// </summary>
         public List<Tile> SelectedTiles { get; private set; }
 
-        #region Methods
-
-        
-
         #endregion
+
+        /// <summary>
+        /// The current layer to be edited where -1 is the hitbox layer
+        /// </summary>
+        public int CurrentLayer { get; set; }
+
+        /// <summary>
+        /// Whether or not a hitbox is being placed or removed
+        /// </summary>
+        public bool CurrentHitbox { get; set; }
 
         #region Edit Invokers
 

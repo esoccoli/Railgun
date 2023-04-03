@@ -249,9 +249,7 @@ namespace Railgun.Editor.App
 
         #endregion
 
-        #region Menustrip Events
-
-        //Edit
+        #region Edit Events
 
         /// <summary>
         /// Rotates the current tile 90 degrees clockwise OR
@@ -325,7 +323,29 @@ namespace Railgun.Editor.App
             TileManager.Instance.MoveRight();
         }
 
-        //View
+        /// <summary>
+        /// Syncs the check state with the tile manager and menu item
+        /// </summary>
+        private void CheckBox_Solid_CheckedChanged(object sender, EventArgs e)
+        {
+            bool check = (sender as CheckBox).Checked;
+            toolStripMenuItem_Solid.Checked = check;
+            TileManager.Instance.CurrentHitbox = check;
+        }
+
+        /// <summary>
+        /// Syncs the check state with the tile manager and edit checkbox
+        /// </summary>
+        private void Menu_Edit_Solid_CheckedChanged(object sender, EventArgs e)
+        {
+            bool check = (sender as ToolStripMenuItem).Checked;
+            checkBox_Solid.Checked = check;
+            TileManager.Instance.CurrentHitbox = check;
+        }
+
+        #endregion
+
+        #region View Events
 
         /// <summary>
         /// Resets the camera of the editor
@@ -343,7 +363,9 @@ namespace Railgun.Editor.App
             mapEditor.Editor.Cam.Zoom = 1f;
         }
 
-        //Control Box
+        #endregion
+
+        #region Fake Control Box Events
 
         /// <summary>
         /// Called when the exit button is clicked
@@ -442,15 +464,8 @@ namespace Railgun.Editor.App
         /// </summary>
         private void ComboBox_Layers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //If hitboxes
-            if(comboBox_Layers.SelectedIndex == 0)
-            {
-
-                return;
-            }
-
-            //If normal
-            //TileManager.Instance = comboBox_Layers.SelectedIndex - 1;
+            //Set current layer where the hitbox layer is -1
+            TileManager.Instance.CurrentLayer = comboBox_Layers.SelectedIndex - 1;
         }
 
         #endregion

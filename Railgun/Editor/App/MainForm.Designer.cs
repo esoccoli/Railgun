@@ -219,6 +219,7 @@
             this.toolStripMenuItem_Solid.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.S)));
             this.toolStripMenuItem_Solid.Size = new System.Drawing.Size(247, 26);
             this.toolStripMenuItem_Solid.Text = "Solid";
+            this.toolStripMenuItem_Solid.CheckedChanged += new System.EventHandler(this.Menu_Edit_Solid_CheckedChanged);
             // 
             // toolStripMenuItem_Rotate90CW
             // 
@@ -832,12 +833,13 @@
             this.checkBox_Solid.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBox_Solid.AutoSize = true;
             this.checkBox_Solid.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.checkBox_Solid.Location = new System.Drawing.Point(18, 13);
+            this.checkBox_Solid.Location = new System.Drawing.Point(42, 13);
             this.checkBox_Solid.Name = "checkBox_Solid";
-            this.checkBox_Solid.Size = new System.Drawing.Size(163, 24);
+            this.checkBox_Solid.Size = new System.Drawing.Size(115, 24);
             this.checkBox_Solid.TabIndex = 0;
-            this.checkBox_Solid.Text = "Solid (Place Hitbox)";
+            this.checkBox_Solid.Text = "Place Hitbox";
             this.checkBox_Solid.UseVisualStyleBackColor = true;
+            this.checkBox_Solid.CheckedChanged += new System.EventHandler(this.CheckBox_Solid_CheckedChanged);
             // 
             // tableLayoutPanel_MainEditor
             // 
