@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Railgun.Editor.App.Controls;
 using Railgun.Editor.App.Objects;
-using Railgun.Editor.App.Objects.Visuals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,6 +75,8 @@ namespace Railgun.Editor.App.Util
         /// A list of selected tiles to be edited
         /// </summary>
         public List<Tile> SelectedTiles { get; private set; }
+
+        
 
         #region Edit Invokers
 

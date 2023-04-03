@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Railgun.Editor.App.Objects.Visuals
+namespace Railgun.Editor.App.Objects
 {
     /// <summary>
     /// A struct that contains a texture and its path

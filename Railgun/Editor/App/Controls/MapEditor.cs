@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Forms.Controls;
 using Railgun.Editor.App.Objects;
-using Railgun.Editor.App.Objects.Visuals;
 using Railgun.Editor.App.Util;
 using System;
 using System.Collections.Generic;
@@ -103,8 +102,8 @@ namespace Railgun.Editor.App.Controls
             //Add all edit events
             tileManager.OnRotateCW += RotateCW;
             tileManager.OnRotateCCW += RotateCCW;
-            tileManager.OnFlipHorizontal += EditFlipHorizontal;
-            tileManager.OnFlipVertical += EditFlipVertical;
+            tileManager.OnFlipHorizontal += FlipHorizontal;
+            tileManager.OnFlipVertical += FlipVertical;
             tileManager.OnMoveUp += MoveUp;
             tileManager.OnMoveDown += MoveDown;
             tileManager.OnMoveLeft += MoveLeft;
@@ -323,7 +322,8 @@ namespace Railgun.Editor.App.Controls
         /// </summary>
         private void RotateCW()
         {
-            RotateTile(MathHelper.PiOver2);
+            tileManager.CurrentTile = 
+                tileManager.CurrentTile.Rotate(1);
         }
 
         /// <summary>
@@ -332,144 +332,49 @@ namespace Railgun.Editor.App.Controls
         /// </summary>
         private void RotateCCW()
         {
-            RotateTile(-MathHelper.PiOver2);
-        }
-
-        /// <summary>
-        /// Rotates the current tile by the specified amount OR
-        /// rotates the current selection by the specified amount
-        /// </summary>
-        /// <param name="amount"></param>
-        private void RotateTile(float amount)
-        {
-            //Create new rotated visual
-            TextureVisual visual = tileManager.CurrentTile.Visual;
-            visual = new TextureVisual(
-                visual.Tint,
-                visual.Texture,
-                visual.Source,
-                visual.Rotation + amount,
-                visual.Scale,
-                visual.Flip);
-            //Set current tile to clone tile with new visual
-            tileManager.CurrentTile = tileManager.CurrentTile.Clone(visual);
+            tileManager.CurrentTile = 
+                tileManager.CurrentTile.Rotate(-1);
         }
 
         /// <summary>
         /// Flips based on current rotation context of tile
-        /// Flips the current tile horizontally OR
-        /// Flips the current selection horizontally
-        /// </summary>
-        private void EditFlipHorizontal()
-        {
-            TextureVisual visual = tileManager.CurrentTile.Visual;
-
-            //If not normal rotation or 180 deg rotation, flip vertical instead
-            if (visual.Rotation == MathHelper.Pi || visual.Rotation == 0)
-            {
-                FlipHorizontal();
-                return;
-            }
-
-            //If it gets here, flip vertical
-            FlipVertical();
-        }
-
-        /// <summary>
         /// Flips the current tile horizontally OR
         /// Flips the current selection horizontally
         /// </summary>
         private void FlipHorizontal()
         {
-            TextureVisual visual = tileManager.CurrentTile.Visual;
-
-            //Effect to apply
-            SpriteEffects effect = SpriteEffects.FlipHorizontally;
-            float rotation = 0f;
-
-            //Check if already flipped
-            switch (visual.Flip)
+            //If not normal rotation or 180 deg rotation, flip vertical instead
+            if (tileManager.CurrentTile.Rotation == MathHelper.Pi 
+                || tileManager.CurrentTile.Rotation == 0)
             {
-                //If already horizontal, double flipped is none
-                case SpriteEffects.FlipHorizontally:
-                    effect = SpriteEffects.None;
-                    break;
-                //If vertical, it will cancel out with horizontal, so flip 180 deg
-                case SpriteEffects.FlipVertically:
-                    effect = SpriteEffects.None;
-                    rotation = MathHelper.Pi;
-                    break;
+                tileManager.CurrentTile = tileManager.CurrentTile.FlipHorizontally();
+                return;
             }
 
-            //Create new flipped visual
-            visual = new TextureVisual(
-                visual.Tint,
-                visual.Texture,
-                visual.Source,
-                visual.Rotation + rotation,
-                visual.Scale,
-                effect);
-            //Set current tile to clone tile with new visual
-            tileManager.CurrentTile = tileManager.CurrentTile.Clone(visual);
+            //If it gets here, flip vertical
+            tileManager.CurrentTile = tileManager.CurrentTile.FlipVertically();
         }
+
 
         /// <summary>
         /// Flips based on current rotation context of tile
         /// Flips the current tile vertically OR
         /// Flips the current selection vertically
         /// </summary>
-        private void EditFlipVertical()
+        private void FlipVertical()
         {
-            TextureVisual visual = tileManager.CurrentTile.Visual;
-
             //If not normal rotation or 180 deg rotation, flip horizontal instead
-            if (visual.Rotation == MathHelper.Pi || visual.Rotation == 0)
+            if (tileManager.CurrentTile.Rotation == MathHelper.Pi
+                || tileManager.CurrentTile.Rotation == 0)
             {
-                FlipVertical();
+                tileManager.CurrentTile = tileManager.CurrentTile.FlipVertically();
                 return;
             }
 
             //If it gets here, flip vertical
-            FlipHorizontal();
+            tileManager.CurrentTile = tileManager.CurrentTile.FlipHorizontally();
         }
 
-        /// <summary>
-        /// Flips the current tile vertically OR
-        /// Flips the current selection vertically
-        /// </summary>
-        private void FlipVertical()
-        {
-            TextureVisual visual = tileManager.CurrentTile.Visual;
-
-            //Effect to apply
-            SpriteEffects effect = SpriteEffects.FlipVertically;
-            float rotation = 0f;
-
-            //Check if already flipped
-            switch (visual.Flip)
-            {
-                //If already vertical, double flipped is none
-                case SpriteEffects.FlipVertically:
-                    effect = SpriteEffects.None;
-                    break;
-                //If horizontal, it will cancel out with vertical, so flip 180 deg
-                case SpriteEffects.FlipHorizontally:
-                    effect = SpriteEffects.None;
-                    rotation = MathHelper.Pi;
-                    break;
-            }
-
-            //Create new flipped visual
-            visual = new TextureVisual(
-                visual.Tint,
-                visual.Texture,
-                visual.Source,
-                visual.Rotation + rotation,
-                visual.Scale,
-                effect);
-            //Set current tile to clone tile with new visual
-            tileManager.CurrentTile = tileManager.CurrentTile.Clone(visual);
-        }
 
         /// <summary>
         /// Moves the current tile up OR

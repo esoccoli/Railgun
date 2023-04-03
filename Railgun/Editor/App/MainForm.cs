@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using Railgun.Editor.App.Objects;
-using Railgun.Editor.App.Objects.Visuals;
 using Railgun.Editor.App.Util;
 using static Railgun.Editor.App.DarkTheme;
 

@@ -8,10 +8,6 @@
     <None Include="Content\obj\Windows\Content\.mgcontent" />
     <None Include="Content\obj\Windows\Content\.mgstats" />
     <None Include="Content\obj\Windows\Content\TestDir\IMG_4658.mgcontent" />
-    <None Include="Resources\Corrupted.rgm" />
-    <None Include="Resources\Test Map 2.rgm" />
-    <None Include="Resources\Test Map 3.rgm" />
-    <None Include="Resources\Test Map.rgm" />
     <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.1.303" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
     <PackageReference Include="MonoGame.Forms.DX" Version="3.0.0" />
@@ -95,7 +91,6 @@
     </Compile>
     <Compile Include="App\DarkTheme.cs" />
     <Compile Include="App\Objects\Entity.cs" />
-    <Compile Include="App\Objects\Tile.cs" />
     <Compile Include="App\Objects\Map.cs" />
     <Compile Include="App\MainForm.cs">
       <SubType>Form</SubType>
@@ -103,8 +98,8 @@
     <Compile Include="App\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="App\Objects\Visuals\PathedTexture.cs" />
-    <Compile Include="App\Objects\Visuals\TextureVisual.cs" />
+    <Compile Include="App\Objects\PathedTexture.cs" />
+    <Compile Include="App\Objects\Tile.cs" />
     <Compile Include="App\Util\DebugLog.cs" />
     <Compile Include="App\Util\FileManager.cs" />
     <Compile Include="App\Util\ShapeBatch.cs" />
@@ -157,6 +152,7 @@
     <Content Include="Resources\High Contrast Logo.png" />
     <Content Include="Resources\railgun transparent.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MonoGame.Forms.DX.3.0.0\build\MonoGame.Forms.DX.targets" Condition="Exists('..\packages\MonoGame.Forms.DX.3.0.0\build\MonoGame.Forms.DX.targets')" />
   <!--Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

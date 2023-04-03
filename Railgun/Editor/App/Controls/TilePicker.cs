@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Railgun.Editor.App.Objects;
-using Railgun.Editor.App.Objects.Visuals;
 using Railgun.Editor.App.Util;
 
 namespace Railgun.Editor.App.Controls
@@ -61,9 +60,7 @@ namespace Railgun.Editor.App.Controls
         private void CreateTileSelection()
         {
             //Create tile from selection
-            TileManager.Instance.CurrentTile =
-                new Tile(new TextureVisual(testure, selectionRectangle),
-                true);
+            TileManager.Instance.CurrentTile = new Tile(testure, selectionRectangle);
         }
 
         #endregion

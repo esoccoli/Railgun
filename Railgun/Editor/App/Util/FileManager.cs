@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Railgun.Editor.App.Objects;
-using Railgun.Editor.App.Objects.Visuals;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -172,24 +171,12 @@ namespace Railgun.Editor.App.Util
         /// <param name="tile">Tile to write</param>
         private static void WriteTile(BinaryWriter writer, Tile tile)
         {
-            WriteVisual(writer, tile.Visual);
-            writer.Write(tile.IsSolid);
-        }
-
-        /// <summary>
-        /// Writes all attributes of the specified visual
-        /// </summary>
-        /// <param name="writer">Writer to write to</param>
-        /// <param name="visual">Visual to write</param>
-        private static void WriteVisual(BinaryWriter writer, TextureVisual visual)
-        {
             //write in order of constructor
-            writer.Write(visual.Tint.PackedValue);//Write as packed val
-            WritePathedTexture(writer, visual.Texture);
-            WriteRectangle(writer, visual.Source);
-            writer.Write(visual.Rotation);
-            writer.Write(visual.Scale);
-            writer.Write((int)visual.Flip);//The enum as an int value
+            writer.Write(tile.Tint.PackedValue);//Write as packed val
+            WritePathedTexture(writer, tile.Texture);
+            WriteRectangle(writer, tile.Source);
+            writer.Write(tile.Rotation);
+            writer.Write((int)tile.SpriteEffect);//The enum as an int value
         }
 
         /// <summary>
@@ -372,22 +359,11 @@ namespace Railgun.Editor.App.Util
         /// <returns>The tile to read</returns>
         private static Tile ReadTile(BinaryReader reader)
         {
-            return new Tile(ReadVisual(reader), reader.ReadBoolean());
-        }
-
-        /// <summary>
-        /// Reads all attributes of the specified visual from the reader
-        /// </summary>
-        /// <param name="reader">The reader to read with</param>
-        /// <returns>The texture visual read in</returns>
-        private static TextureVisual ReadVisual(BinaryReader reader)
-        {
-            return new TextureVisual(
+            return new Tile(
                 new Color(reader.ReadUInt32()),//Unpack color
                 ReadPathedTexture(reader),//Read texture
                 ReadRectangle(reader),//source rect
                 reader.ReadSingle(),//Rotation
-                reader.ReadSingle(),//Scale
                 (SpriteEffects)reader.ReadInt32());//Flip
         }
 

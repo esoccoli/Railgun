@@ -1,8 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Railgun.Editor.App.Objects.Visuals;
-using Railgun.Editor.App.Util;
-using SharpDX.Direct2D1.Effects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +46,11 @@ namespace Railgun.Editor.App.Objects
         public List<Entity> Entities { get; protected set; }
 
         /// <summary>
+        /// The hitboxes of each tile in this map
+        /// </summary>
+        public List<Rectangle> Hitboxes { get; protected set; }
+
+        /// <summary>
         /// The tile at the specified grid position and layer
         /// </summary>
         /// <param name="gridPosition">The position relative to the grid</param>
@@ -69,6 +71,7 @@ namespace Railgun.Editor.App.Objects
             TileSize = tileSize;
             Layers = new List<Dictionary<Vector2, Tile>>();
             Entities = new List<Entity>();
+            Hitboxes = new List<Rectangle>();
         }
 
         #region Drawing
