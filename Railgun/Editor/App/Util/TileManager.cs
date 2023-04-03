@@ -76,6 +76,12 @@ namespace Railgun.Editor.App.Util
         /// </summary>
         public List<Tile> SelectedTiles { get; private set; }
 
+        #region Methods
+
+        
+
+        #endregion
+
         #region Edit Invokers
 
         /// <summary>
