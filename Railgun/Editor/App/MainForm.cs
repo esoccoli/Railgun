@@ -50,7 +50,9 @@ namespace Railgun.Editor.App
             //Subscribe invalidation events
             TileManager.Instance.OnCurrentTileChange += currentTileDisplay.Update;
             TileManager.Instance.OnCurrentHitboxChange += UpdateCurrentHitbox;
+            TileManager.Instance.OnCurrentHitboxChange += currentTileDisplay.Update;
             TileManager.Instance.OnViewHitboxesChange += UpdateViewHitbox;
+            TileManager.Instance.OnViewHitboxesChange += currentTileDisplay.Update;
 
             //Subscribe modify event
             FileManager.OnModifyInvalidate += ModifyTitle;
