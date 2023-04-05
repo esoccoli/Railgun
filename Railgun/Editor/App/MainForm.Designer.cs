@@ -30,7 +30,7 @@
             this.toolStripMenuItem_Save = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_SaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_Edit = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem_Solid = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_PlaceHitbox = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_Rotate90CW = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_Rotate90CCW = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_FlipHorizontally = new System.Windows.Forms.ToolStripMenuItem();
@@ -196,7 +196,7 @@
             // toolStripMenuItem_Edit
             // 
             this.toolStripMenuItem_Edit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem_Solid,
+            this.toolStripMenuItem_PlaceHitbox,
             this.toolStripMenuItem_Rotate90CW,
             this.toolStripMenuItem_Rotate90CCW,
             this.toolStripMenuItem_FlipHorizontally,
@@ -212,14 +212,13 @@
             this.toolStripMenuItem_Edit.Size = new System.Drawing.Size(49, 24);
             this.toolStripMenuItem_Edit.Text = "Edit";
             // 
-            // toolStripMenuItem_Solid
+            // toolStripMenuItem_PlaceHitbox
             // 
-            this.toolStripMenuItem_Solid.CheckOnClick = true;
-            this.toolStripMenuItem_Solid.Name = "toolStripMenuItem_Solid";
-            this.toolStripMenuItem_Solid.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.S)));
-            this.toolStripMenuItem_Solid.Size = new System.Drawing.Size(247, 26);
-            this.toolStripMenuItem_Solid.Text = "Solid";
-            this.toolStripMenuItem_Solid.CheckedChanged += new System.EventHandler(this.Menu_Edit_Solid_CheckedChanged);
+            this.toolStripMenuItem_PlaceHitbox.CheckOnClick = true;
+            this.toolStripMenuItem_PlaceHitbox.Name = "toolStripMenuItem_PlaceHitbox";
+            this.toolStripMenuItem_PlaceHitbox.Size = new System.Drawing.Size(247, 26);
+            this.toolStripMenuItem_PlaceHitbox.Text = "Place Hitbox";
+            this.toolStripMenuItem_PlaceHitbox.CheckedChanged += new System.EventHandler(this.Menu_Edit_Solid_CheckedChanged);
             // 
             // toolStripMenuItem_Rotate90CW
             // 
@@ -314,7 +313,7 @@
             // 
             this.toolStripMenuItem_ResetZoom.Name = "toolStripMenuItem_ResetZoom";
             this.toolStripMenuItem_ResetZoom.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D0)));
-            this.toolStripMenuItem_ResetZoom.Size = new System.Drawing.Size(277, 26);
+            this.toolStripMenuItem_ResetZoom.Size = new System.Drawing.Size(233, 26);
             this.toolStripMenuItem_ResetZoom.Text = "Reset Zoom";
             this.toolStripMenuItem_ResetZoom.Click += new System.EventHandler(this.Menu_View_ResetZoom_Click);
             // 
@@ -322,7 +321,7 @@
             // 
             this.toolStripMenuItem_ResetCamera.Name = "toolStripMenuItem_ResetCamera";
             this.toolStripMenuItem_ResetCamera.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
-            this.toolStripMenuItem_ResetCamera.Size = new System.Drawing.Size(277, 26);
+            this.toolStripMenuItem_ResetCamera.Size = new System.Drawing.Size(233, 26);
             this.toolStripMenuItem_ResetCamera.Text = "Reset Camera";
             this.toolStripMenuItem_ResetCamera.Click += new System.EventHandler(this.Menu_View_ResetCamera_Click);
             // 
@@ -330,9 +329,7 @@
             // 
             this.toolStripMenuItem_ShowHitboxes.CheckOnClick = true;
             this.toolStripMenuItem_ShowHitboxes.Name = "toolStripMenuItem_ShowHitboxes";
-            this.toolStripMenuItem_ShowHitboxes.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.S)));
-            this.toolStripMenuItem_ShowHitboxes.Size = new System.Drawing.Size(277, 26);
+            this.toolStripMenuItem_ShowHitboxes.Size = new System.Drawing.Size(233, 26);
             this.toolStripMenuItem_ShowHitboxes.Text = "Show Hitboxes";
             this.toolStripMenuItem_ShowHitboxes.CheckedChanged += new System.EventHandler(this.Menu_View_ShowHitboxes_CheckedChanged);
             // 
@@ -1080,7 +1077,7 @@
         private System.Windows.Forms.Panel panel_TileSizeSettings;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_ObjectSettings;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_EditSettings;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Solid;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_PlaceHitbox;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_ShowHitboxes;
         private System.Windows.Forms.CheckBox checkBox_ShowHitboxes;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_MainEditor;

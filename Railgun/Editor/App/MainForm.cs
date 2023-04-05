@@ -88,6 +88,8 @@ namespace Railgun.Editor.App
             toolStripMenuItem_MoveDown.ShortcutKeyDisplayString = "S";
             toolStripMenuItem_MoveLeft.ShortcutKeyDisplayString = "A";
             toolStripMenuItem_MoveRight.ShortcutKeyDisplayString = "D";
+            toolStripMenuItem_ShowHitboxes.ShortcutKeyDisplayString = "X";
+            toolStripMenuItem_PlaceHitbox.ShortcutKeyDisplayString = "C";
 
             //Set selected layer
             comboBox_Layers.SelectedIndex = 1;
@@ -336,7 +338,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void UpdateCurrentHitbox()
         {
-            toolStripMenuItem_Solid.Checked = TileManager.Instance.PlaceHitbox;
+            toolStripMenuItem_PlaceHitbox.Checked = TileManager.Instance.PlaceHitbox;
             checkBox_Solid.Checked = TileManager.Instance.PlaceHitbox;
         }
 

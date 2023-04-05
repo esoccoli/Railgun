@@ -132,7 +132,7 @@ namespace Railgun.Editor.App.Controls
             PerformUserActions();
 
             //Check edit keybinds (rotation, move, flip)
-            CheckEditKeys();
+            CheckKeybinds();
 
             //If selecting, select
             if(selecting)
@@ -360,13 +360,17 @@ namespace Railgun.Editor.App.Controls
         /// <summary>
         /// Preforms any actions needed for editing a tile such as rotation or flipping
         /// </summary>
-        private void CheckEditKeys()
+        private void CheckKeybinds()
         {
             //Don't preform if alt is down
             if(!input.IsDown(Keys.LeftAlt))
             {
-                if (input.JustPressed(Keys.E)) tileManager.RotateCW();
-                if (input.JustPressed(Keys.Q)) tileManager.RotateCCW();
+                if(input.JustPressed(Keys.E)) tileManager.RotateCW();
+                if(input.JustPressed(Keys.Q)) tileManager.RotateCCW();
+                if(input.JustPressed(Keys.X))
+                   tileManager.ViewHitboxes = !tileManager.ViewHitboxes;//Toggle view hitbox
+                if(input.JustPressed(Keys.C))
+                    tileManager.PlaceHitbox = !tileManager.PlaceHitbox;//Toggle place hitbox
             }
         }
 
