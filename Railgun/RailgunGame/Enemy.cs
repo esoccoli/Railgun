@@ -11,8 +11,13 @@ public abstract class Enemy
 {
     public int MaxHealth { get; set; }
     public int CurrHealth { get; set; }
-    
-    public Texture2D Texture { get; set; }
+   
+    public Animation Move { get; set; }
+
+    public Animation Idle { get; set; }
+
+    public Animation Death { get; set; }
+
     public Rectangle Hitbox { get; set; }
     
     /// <summary>
@@ -26,9 +31,11 @@ public abstract class Enemy
     /// <param name="texture">Texture file of the enemy</param>
     /// <param name="hitbox">Enemy's position rectangle</param>
     /// <param name="maxHealth">Maximum health of the enemy</param>
-    public Enemy(Texture2D texture, Rectangle hitbox, int maxHealth)
+    public Enemy(Animation move, Animation idle, Animation death, Rectangle hitbox, int maxHealth)
     {
-        Texture = texture;
+        Move = move;
+        Idle = idle;
+        Death = death;
         Hitbox = hitbox;
         MaxHealth = maxHealth;
         CurrHealth = MaxHealth;
@@ -37,7 +44,7 @@ public abstract class Enemy
     /// <summary>
     /// Each enemy type will have a different way of moving
     /// </summary>
-    public abstract void Move();
+    public abstract void Walk();
     
     /// <summary>
     /// Reduces the enemy's health by the specified amount
@@ -60,7 +67,7 @@ public abstract class Enemy
     
     public virtual void Update()
     {
-        Move();
+        Walk();
         Shoot();
         
         // If enemy collides with bullet
