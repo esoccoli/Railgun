@@ -59,6 +59,20 @@ namespace Railgun.Editor.App.Util
         #region Tile Properties
 
         /// <summary>
+        /// The current layer to be edited where -1 is the hitbox layer
+        /// </summary>
+        public int CurrentLayer
+        {
+            get => currentLayer;
+            set
+            {
+                currentLayer = value;
+                OnLayerChange?.Invoke();
+            }
+        }
+        private int currentLayer;
+
+        /// <summary>
         /// The current tile to be placed
         /// </summary>
         public Tile CurrentTile
@@ -68,7 +82,7 @@ namespace Railgun.Editor.App.Util
             {
                 currentTile = value;
                 //Invalidates current tile display if not null
-                OnCurrentTileChange?.Invoke();
+                OnTileChange?.Invoke();
             }
         }
         private Tile currentTile;
@@ -79,11 +93,6 @@ namespace Railgun.Editor.App.Util
         public List<Tile> SelectedTiles { get; private set; }
 
         #endregion
-
-        /// <summary>
-        /// The current layer to be edited where -1 is the hitbox layer
-        /// </summary>
-        public int CurrentLayer { get; set; }
 
         #region Hitbox Properties
 
@@ -96,8 +105,7 @@ namespace Railgun.Editor.App.Util
             set
             {
                 currentHitbox = value;
-                //Invalidates current tile display if not null
-                OnCurrentHitboxChange?.Invoke();
+                OnHitboxChange?.Invoke();
             }
         }
         private bool currentHitbox;
@@ -111,7 +119,6 @@ namespace Railgun.Editor.App.Util
             set
             {
                 viewHitboxes = value;
-                //Invalidates current tile display if not null
                 OnViewHitboxesChange?.Invoke();
             }
         }
@@ -175,12 +182,17 @@ namespace Railgun.Editor.App.Util
         /// <summary>
         /// An event that is called when the current tile is changed
         /// </summary>
-        public event GenericDelegate OnCurrentTileChange;
+        public event GenericDelegate OnLayerChange;
+
+        /// <summary>
+        /// An event that is called when the current tile is changed
+        /// </summary>
+        public event GenericDelegate OnTileChange;
 
         /// <summary>
         /// An event that is called when the current hitbox is changed
         /// </summary>
-        public event GenericDelegate OnCurrentHitboxChange;
+        public event GenericDelegate OnHitboxChange;
 
         /// <summary>
         /// An event that is called when the viewing ability of hitboxes is changed

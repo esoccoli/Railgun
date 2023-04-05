@@ -291,14 +291,16 @@ namespace Railgun.Editor.App.Controls
                 //Get current grid point
                 Vector2 gridPoint = CurrentMap.GetGridPoint(MouseCameraPosition);
 
-                //Place current tile at tile point
-                CurrentMap[gridPoint] = tileManager.CurrentTile;
-
-                //If hitboxes enabled, place hitbox
-                if(tileManager.PlaceHitbox)
+                //If current layer is a tile layer
+                if (tileManager.CurrentLayer > -1)
                 {
-                    CurrentMap.Hitboxes[gridPoint] = true;
+                    //Place current tile at tile point
+                    CurrentMap[gridPoint, tileManager.CurrentLayer] =
+                        tileManager.CurrentTile;
                 }
+
+                //If hitboxes enabled, place hitbox, else remove it
+                CurrentMap.Hitboxes[gridPoint] = tileManager.PlaceHitbox;
 
                 //Set to modified
                 FileManager.Modified = true;

@@ -48,11 +48,12 @@ namespace Railgun.Editor.App
             mapEditor.OnUpdate += UpdateStatus;
 
             //Subscribe invalidation events
-            TileManager.Instance.OnCurrentTileChange += currentTileDisplay.Update;
-            TileManager.Instance.OnCurrentHitboxChange += UpdateCurrentHitbox;
-            TileManager.Instance.OnCurrentHitboxChange += currentTileDisplay.Update;
+            TileManager.Instance.OnTileChange += currentTileDisplay.Update;
+            TileManager.Instance.OnHitboxChange += UpdateCurrentHitbox;
+            TileManager.Instance.OnHitboxChange += currentTileDisplay.Update;
             TileManager.Instance.OnViewHitboxesChange += UpdateViewHitbox;
             TileManager.Instance.OnViewHitboxesChange += currentTileDisplay.Update;
+            TileManager.Instance.OnLayerChange += UpdateLayerDisplay;
 
             //Subscribe modify event
             FileManager.OnModifyInvalidate += ModifyTitle;
@@ -494,6 +495,22 @@ namespace Railgun.Editor.App
         private void TileSize_Leave(object sender, EventArgs e)
         {
             (sender as TextBox).Text = tilePicker.GridSize.ToString();
+        }
+
+        /// <summary>
+        /// Updates the tile display based on the layer
+        /// </summary>
+        private void UpdateLayerDisplay()
+        {
+            //Set current tile to nothing if on a non-tile layer
+            if(TileManager.Instance.CurrentLayer < 0)
+            {
+                TileManager.Instance.CurrentTile = Tile.Empty;
+                return;
+            }
+
+            //Else set to current selection
+            tilePicker.CreateTileSelection();
         }
 
         /// <summary>

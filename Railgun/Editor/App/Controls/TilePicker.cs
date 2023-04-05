@@ -55,9 +55,9 @@ namespace Railgun.Editor.App.Controls
         private Color selectionOutlineColor;
 
         /// <summary>
-        /// Creates a tile from the current selection
+        /// Creates a tile from the current selection and adds it to the tile manager
         /// </summary>
-        private void CreateTileSelection()
+        public void CreateTileSelection()
         {
             //Create tile from selection
             TileManager.Instance.CurrentTile = new Tile(testure, selectionRectangle);
