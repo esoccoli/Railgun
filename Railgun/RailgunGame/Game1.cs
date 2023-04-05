@@ -33,6 +33,12 @@ namespace Railgun.RailgunGame
         #endregion
 
         // Player, enemy, and projectile textures
+        private Texture2D playerIdle;
+        private Animation playerIdleAnim;
+        private Texture2D playerRun;
+        private Animation playerRunAnim;
+        private Texture2D playerDeath;
+        private Animation playerDeathAnim;
         private Texture2D bulletTexture;
 
         // Reticle
@@ -46,7 +52,7 @@ namespace Railgun.RailgunGame
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            IsMouseVisible = false;
         }
 
         public enum GameState
@@ -64,7 +70,7 @@ namespace Railgun.RailgunGame
 
             _graphics.PreferredBackBufferHeight = 1080;
             _graphics.PreferredBackBufferWidth = 1920;
-            //_graphics.IsFullScreen = true;
+            _graphics.IsFullScreen = true;
             _graphics.ApplyChanges();
             #endregion
 
@@ -100,14 +106,20 @@ namespace Railgun.RailgunGame
             gameReticle = Content.Load<Texture2D>("gameReticle");
 
             // Player, bullets, and enemies.
+            playerIdle = Content.Load<Texture2D>("mainCharIdle");
+            playerRun = Content.Load<Texture2D>("mainCharRun");
+            playerDeath = Content.Load<Texture2D>("mainCharDeath");
             bulletTexture = Content.Load<Texture2D>($"bulletTexture");
 
             #endregion
 
+            playerIdleAnim = new Animation(playerIdle, 1, 6, 11.0f);
+            playerRunAnim = new Animation(playerRun, 1, 8, 13.0f);
+
+
             //Creates a UI object. Values to be updated later. 
-            userInterface = new UI(backgroundHealthUI, foregroundHealthUI, bulletUI, true, 100, 100, font, 8, 8);
-            mainPlayer = new Player(new Rectangle(870, 510, 100, 100), menuLogo, bulletTexture, null);
-            userInterface = new UI(backgroundHealthUI, foregroundHealthUI, bulletUI, true, mainPlayer.Health, mainPlayer.MaxHealth, font, mainPlayer.Ammo, mainPlayer.MaxAmmo);
+            mainPlayer = new Player(new Rectangle(870, 510, 100, 100), playerIdleAnim, playerRunAnim, bulletTexture, null);
+            userInterface = new UI(backgroundHealthUI, foregroundHealthUI, bulletUI, false, mainPlayer.Health, mainPlayer.MaxHealth, font, mainPlayer.Ammo, mainPlayer.MaxAmmo);
         }
 
         protected override void Update(GameTime gameTime)
@@ -265,7 +277,7 @@ namespace Railgun.RailgunGame
                     break;
                 case GameState.Game:
                     MouseState mStateGame = Mouse.GetState();
-                    mainPlayer.Draw(_spriteBatch);
+                    mainPlayer.Draw(_spriteBatch, gameTime);
                     _spriteBatch.DrawString(font, "Game", new Vector2(_graphics.PreferredBackBufferWidth - 100, 20), Color.White);
                     userInterface.Draw(_spriteBatch); //Draws UI
                     for (int i = 0; i < mainPlayer.PlayerBullets.Count; i++)

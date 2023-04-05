@@ -149,13 +149,15 @@ namespace Railgun.Editor.App.Controls
 
             //Compute the offset to draw the grid
 
-            //Create a new vector that offsets origin from cam transflation
+            //Create a new vector that offsets origin from cam translation
             Vector2 offset = new Vector2(
                 Editor.Cam.Transform.Translation.X,
                 Editor.Cam.Transform.Translation.Y);
             offset /= cameraGridSize;//Get offset based on grid size
             offset -= Vector2.Floor(offset);//Get the decimal part only
             offset *= cameraGridSize;//Multiply by grid size to get offset in pixels
+
+
 
             //Draw vertical grid lines
             for (float x = offset.X; x < Editor.graphics.Viewport.Width; x += cameraGridSize)

@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using Railgun.Editor.App.Objects;
-using Railgun.Editor.App.Objects.Visuals;
 using Railgun.Editor.App.Util;
 using static Railgun.Editor.App.DarkTheme;
 
@@ -47,8 +47,16 @@ namespace Railgun.Editor.App
             //Subscribe update status to update event in main editor control
             mapEditor.OnUpdate += UpdateStatus;
 
-            //Subscribe current tile change to current tile display
-            TileManager.Instance.OnCurrentTileChange += currentTileDisplay.Update;
+            //Subscribe invalidation events
+            TileManager.Instance.OnTileChange += currentTileDisplay.Update;
+            TileManager.Instance.OnHitboxChange += UpdateCurrentHitbox;
+            TileManager.Instance.OnHitboxChange += currentTileDisplay.Update;
+            TileManager.Instance.OnViewHitboxesChange += UpdateViewHitbox;
+            TileManager.Instance.OnViewHitboxesChange += currentTileDisplay.Update;
+            TileManager.Instance.OnLayerChange += UpdateLayerDisplay;
+
+            //Subscribe modify event
+            FileManager.OnModifyInvalidate += ModifyTitle;
 
             //Color the controls to a darker scheme
             ColorControls(Controls);
@@ -80,12 +88,19 @@ namespace Railgun.Editor.App
             toolStripMenuItem_MoveDown.ShortcutKeyDisplayString = "S";
             toolStripMenuItem_MoveLeft.ShortcutKeyDisplayString = "A";
             toolStripMenuItem_MoveRight.ShortcutKeyDisplayString = "D";
+
+            //Set selected layer
+            comboBox_Layers.SelectedIndex = 1;
+
+            //Set hitboxes to checked
+            checkBox_ShowHitboxes.Checked = true;
+            checkBox_Solid.Checked = true;
         }
 
         /// <summary>
         /// Colors each control based on its type
         /// </summary>
-        /// <param name="controls"></param>
+        /// <param name="controls">The controls to color</param>
         private void ColorControls(Control.ControlCollection controls)
         {
             foreach (Control control in controls)
@@ -110,37 +125,6 @@ namespace Railgun.Editor.App
                     }
                     menuStrip.Renderer = new DarkTheme.DarkMenuStripRenderer();
                 }
-                //If button
-                //else if (control is Button)
-                //{
-                //    Button button = control as Button;
-                //    button.BackColor = DarkTheme.Panel;
-                //    button.ForeColor = DarkTheme.Label;
-                //    button.FlatStyle = FlatStyle.System;
-                //    button.FlatAppearance.BorderColor = Color.Red;
-                //    button.FlatAppearance.MouseOverBackColor = Color.Blue;
-                //    button.FlatAppearance.MouseDownBackColor = Color.Yellow;
-                //    //button.FlatAppearance. = Color.Yellow;
-
-
-                //    // Create your custom renderer
-                //    DarkTheme.DarkMenuStripRenderer customRenderer = new DarkMenuStripRenderer();
-
-                //    // Set the button's flat style to system
-                //    button.FlatStyle = FlatStyle.System;
-
-                //    // Set the renderer of the button's visual style renderer to your custom renderer
-                //    button.FlatAppearance.BorderSize = 0;
-                //    button.FlatAppearance.MouseOverBackColor = Color.FromArgb(100, 255, 255, 255);
-                //    button.FlatAppearance.MouseDownBackColor = Color.FromArgb(150, 255, 255, 255);
-                //    button.FlatAppearance.CheckedBackColor = Color.FromArgb(200, 255, 255, 255);
-                //    VisualStyleRenderer renderer = new VisualStyleRenderer(VisualStyleElement.Button.PushButton.Normal);
-                //    renderer.SetParameters(VisualStyleElement);
-                //    button.FlatAppearance.MouseOverBackColor = customRenderer.Colors[(int)CustomButtonColor.MouseOver];
-                //    button.FlatAppearance.MouseDownBackColor = customRenderer.Colors[(int)CustomButtonColor.MouseDown];
-                //    button.FlatAppearance.CheckedBackColor = customRenderer.Colors[(int)CustomButtonColor.Checked];
-                //    button.FlatAppearance.BorderColor = customRenderer.Colors[(int)CustomButtonColor.BorderColor];
-                //}
                 //If label
                 else if (control is Label)
                 {
@@ -172,6 +156,20 @@ namespace Railgun.Editor.App
                 {
                     Panel panel = control as Panel;
                     panel.BackColor = DarkTheme.Panel;
+                }
+                //If checkbox
+                else if (control is CheckBox)
+                {
+                    CheckBox checkBox = control as CheckBox;
+                    checkBox.BackColor = DarkTheme.Panel;
+                    checkBox.ForeColor = DarkTheme.Label;
+                }
+                //If combobox
+                else if (control is ComboBox)
+                {
+                    ComboBox comboBox = control as ComboBox;
+                    comboBox.BackColor = DarkTheme.Base;
+                    comboBox.ForeColor = DarkTheme.Label;
                 }
                 else
                 {
@@ -234,6 +232,9 @@ namespace Railgun.Editor.App
             //Set zoom amount
             toolStripStatusLabel_ValueZoom.Text = mapEditor.Editor.Cam.Zoom
                 .ToString("0.00");
+
+            //DEBUG
+            //DebugLog.Instance.LogFrame("Layer Count: " + mapEditor.CurrentMap.Layers.Count);
         }
 
         /// <summary>
@@ -256,9 +257,7 @@ namespace Railgun.Editor.App
 
         #endregion
 
-        #region Menustrip Events
-
-        //Edit
+        #region Edit Events
 
         /// <summary>
         /// Rotates the current tile 90 degrees clockwise OR
@@ -332,7 +331,34 @@ namespace Railgun.Editor.App
             TileManager.Instance.MoveRight();
         }
 
-        //View
+        /// <summary>
+        /// Updates the checkboxes of the current hitbox
+        /// </summary>
+        private void UpdateCurrentHitbox()
+        {
+            toolStripMenuItem_Solid.Checked = TileManager.Instance.PlaceHitbox;
+            checkBox_Solid.Checked = TileManager.Instance.PlaceHitbox;
+        }
+
+        /// <summary>
+        /// Sets the current hitbox to the check
+        /// </summary>
+        private void CheckBox_Solid_CheckedChanged(object sender, EventArgs e)
+        {
+            TileManager.Instance.PlaceHitbox = (sender as CheckBox).Checked;
+        }
+
+        /// <summary>
+        /// Sets the current hitbox to the check
+        /// </summary>
+        private void Menu_Edit_Solid_CheckedChanged(object sender, EventArgs e)
+        {
+            TileManager.Instance.PlaceHitbox = (sender as ToolStripMenuItem).Checked;
+        }
+
+        #endregion
+
+        #region View Events
 
         /// <summary>
         /// Resets the camera of the editor
@@ -350,7 +376,34 @@ namespace Railgun.Editor.App
             mapEditor.Editor.Cam.Zoom = 1f;
         }
 
-        //Window
+        /// <summary>
+        /// Updates the checkboxes of the hitbox view
+        /// </summary>
+        private void UpdateViewHitbox()
+        {
+            toolStripMenuItem_ShowHitboxes.Checked = TileManager.Instance.ViewHitboxes;
+            checkBox_ShowHitboxes.Checked = TileManager.Instance.ViewHitboxes;
+        }
+
+        /// <summary>
+        /// Sets showing the hitbox to the check
+        /// </summary>
+        private void CheckBox_ShowHitboxes_CheckedChanged(object sender, EventArgs e)
+        {
+            TileManager.Instance.ViewHitboxes = (sender as CheckBox).Checked;
+        }
+
+        /// <summary>
+        /// Sets showing the hitbox to the check
+        /// </summary>
+        private void Menu_View_ShowHitboxes_CheckedChanged(object sender, EventArgs e)
+        {
+            TileManager.Instance.ViewHitboxes = (sender as ToolStripMenuItem).Checked;
+        }
+
+        #endregion
+
+        #region Fake Control Box Events
 
         /// <summary>
         /// Called when the exit button is clicked
@@ -385,9 +438,34 @@ namespace Railgun.Editor.App
             WindowState = FormWindowState.Minimized;
         }
 
+        /// <summary>
+        /// Called when the menu strip resisizes, adjusts the margin on the title
+        /// </summary>
+        private void Menu_Resize(object sender, EventArgs e)
+        {
+            CenterTitle();
+        }
+
+        /// <summary>
+        /// Adjusts the margin on the title
+        /// </summary>
+        private void CenterTitle()
+        {
+            Padding oldMargin = toolStripMenuItem_Title.Margin;
+
+            //Change the margin to center the title
+            toolStripMenuItem_Title.Margin =
+                new Padding(oldMargin.Left,
+                    oldMargin.Top,
+                    menuStrip.Width / 2 - //Compute margin distance
+                        (toolStripMenuItem_Exit.Width + toolStripMenuItem_Maximize.Width +
+                        toolStripMenuItem_Minimize.Width + toolStripMenuItem_Title.Width / 2),
+                    oldMargin.Bottom);
+        }
+
         #endregion
 
-        #region Tile Picker Events
+        #region Tile Picker and Related Events
 
         /// <summary>
         /// Changes the tile size when the text box is changed
@@ -419,10 +497,68 @@ namespace Railgun.Editor.App
             (sender as TextBox).Text = tilePicker.GridSize.ToString();
         }
 
+        /// <summary>
+        /// Updates the tile display based on the layer
+        /// </summary>
+        private void UpdateLayerDisplay()
+        {
+            //Set current tile to nothing if on a non-tile layer
+            if(TileManager.Instance.CurrentLayer < 0)
+            {
+                TileManager.Instance.CurrentTile = Tile.Empty;
+                return;
+            }
+
+            //Else set to current selection
+            tilePicker.CreateTileSelection();
+        }
+
+        /// <summary>
+        /// Called when the layer is changed
+        /// </summary>
+        private void ComboBox_Layers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Set current layer where the hitbox layer is -1
+            TileManager.Instance.CurrentLayer = comboBox_Layers.SelectedIndex - 1;
+        }
 
         #endregion
 
         #region File Events
+
+        /// <summary>
+        /// Creates a new Map and prompts user if the current map is unsaved
+        /// </summary>
+        private void Menu_New_Click(object sender, EventArgs e)
+        {
+            //Prompt if there are unsaved changes
+            if (FileManager.Modified)
+            {
+                //Made a local var here just to make it easier to read
+                DialogResult choice = MessageBox.Show(
+                    $"The current map has unsaved changes. Are you sure you want to create a new map?",
+                    "Unsaved Changes:", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                //If not yes, return
+                if (choice != DialogResult.Yes)
+                    return;
+            }
+            else
+            {
+                //Set modified to true to allow for invalidation
+                FileManager.Modified = true;
+            }
+
+            //Create new map
+            Map newMap = new Map(128);
+            newMap.Layers.Add(new Dictionary<Microsoft.Xna.Framework.Vector2, Tile>());
+
+            //Prompt user to save as (allowing them to name), if cancel, return
+            if (!FileManager.SaveMapAs(newMap))
+                return;
+
+            //If they do save, set Set current map to new map
+            mapEditor.CurrentMap = newMap;
+        }
 
         /// <summary>
         /// Saves the current map if possible, if not it will prompt the user to save as
@@ -459,6 +595,51 @@ namespace Railgun.Editor.App
             }
         }
 
+        /// <summary>
+        /// Gives the title a star when the map is changed to modified
+        /// </summary>
+        private void ModifyTitle()
+        {
+            //If just changed to modified, add a star
+            if(FileManager.Modified)
+            {
+                //Change to italics
+                toolStripMenuItem_Title.Font = new Font(toolStripMenuItem_Title.Font, FontStyle.Italic);
+                //Add star
+                toolStripMenuItem_Title.Text = "*" + toolStripMenuItem_Title.Text;
+            }
+            else
+            {
+                //Change to regular
+                toolStripMenuItem_Title.Font = new Font(toolStripMenuItem_Title.Font, FontStyle.Regular);
+                //If not, set the title to the current map name
+                toolStripMenuItem_Title.Text =
+                    FileManager.GetFileNameNoExtension(FileManager.CurrentMapPath);
+
+            }
+
+            //Center the new title
+            CenterTitle();
+        }
+
+        /// <summary>
+        /// Called when the form is closing, prompts the user if there are unsaved changes
+        /// </summary>
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (FileManager.Modified)
+            {
+                //Made a local var here just to make it easier to read
+                DialogResult choice = MessageBox.Show(
+                    $"The current map has unsaved changes. Are you sure you want to exit?",
+                    "Unsaved Changes:", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                //If not yes, close the form
+                if (choice != DialogResult.Yes)
+                    e.Cancel = true;
+            }
+        }
+
         #endregion
+
     }
 }

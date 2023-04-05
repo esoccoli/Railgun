@@ -26,6 +26,8 @@ namespace Railgun.RailgunGame
 
         private Texture2D activeBullet;
         private Animation notActiveBullet;
+        private Animation playerIdle;
+        private Animation playerRun;
 
         // I will organize this later.
         
@@ -64,6 +66,8 @@ namespace Railgun.RailgunGame
         /// </summary>
         public double DashTime { get; set; }
 
+        public Vector2 prevPos { get; set; }
+
         /// <summary>
         /// This is where the player's bullets are stored.
         /// </summary>
@@ -74,7 +78,7 @@ namespace Railgun.RailgunGame
         /// </summary>
         /// <param name="hitbox"> The rectangle that defines where the player is, and where they can be injured. </param>
         /// <param name="texture"> The texture used to show what our player looks like. </param>
-        public Player(Rectangle hitbox, Texture2D texture, Texture2D activeBullet, Animation notActiveBullet) : base(hitbox, texture)
+        public Player(Rectangle hitbox, Animation playerIdle, Animation playerRun, Texture2D activeBullet, Animation notActiveBullet) : base(hitbox)
         {
             // I'm only setting the health to 100 as a default value. We can come back and change this if we need to adjust it later.
             Health = 100;
@@ -89,12 +93,14 @@ namespace Railgun.RailgunGame
             dashing = false;
             DashTime = 0.0;
 
+            this.playerIdle = playerIdle;
+            this.playerRun = playerRun;
+
             this.activeBullet = activeBullet;
             this.notActiveBullet = notActiveBullet;
             
             Hitbox = hitbox;
             hitboxTemp = hitbox;
-            Texture = texture;
             PlayerBullets = new List<Projectile>(10);
         }
 
@@ -112,6 +118,8 @@ namespace Railgun.RailgunGame
             {
                 ShootCooldown -= gameTime.ElapsedGameTime.TotalSeconds;
             } // Adjusts the cooldown on shooting accordingly.
+
+            prevPos = new Vector2(Hitbox.X, Hitbox.Y); // This stores the previous position of the player. It's used for checking whether or not to do the idle animation.
 
             // Handles the movement of the player. All of this is run if they're not currently dashing.
             if (!dashing)
@@ -183,15 +191,28 @@ namespace Railgun.RailgunGame
         /// This is where the player is drawn. Might not need to edit this but when the animation object is made, I might.
         /// </summary>
         /// <param name="sb"> The spritebatch being drawn with. </param>
-        public void Draw(SpriteBatch sb)
+        public void Draw(SpriteBatch sb, GameTime gameTime)
         {
-            if (!dashing)
+            SpriteEffects effect = SpriteEffects.None;
+            if(InputManager.MouseState.Position.X < Hitbox.X + (Hitbox.Width / 2))
             {
-                sb.Draw(Texture, Hitbox, Color.White);
+                effect = SpriteEffects.FlipHorizontally;
+            }
+
+            if(prevPos.X == Hitbox.X && prevPos.Y == Hitbox.Y)
+            {
+                playerIdle.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y), Color.White, effect);
             }
             else
             {
-                sb.Draw(Texture, Hitbox, Color.Blue);
+                if (!dashing)
+                {
+                    playerRun.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y), Color.White, effect);
+                }
+                else
+                {
+                    playerRun.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y), Color.Blue, effect);
+                }
             }
         }
 

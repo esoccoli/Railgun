@@ -1,11 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGame.Forms.Controls;
 using Railgun.Editor.App.Objects;
-using Railgun.Editor.App.Objects.Visuals;
 using Railgun.Editor.App.Util;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Railgun.Editor.App.Controls
@@ -21,14 +20,10 @@ namespace Railgun.Editor.App.Controls
         //DEBUG font
         private SpriteFont consolas20;
 
-        #region Events
-
         /// <summary>
         /// Called every update cycle of this panel
         /// </summary>
         public event GenericDelegate OnUpdate;
-
-        #endregion
 
         /// <summary>
         /// The current map in this editor
@@ -93,6 +88,7 @@ namespace Railgun.Editor.App.Controls
 
             //Start in a new map
             CurrentMap = new Map(128);
+            CurrentMap.Layers.Add(new Dictionary<Vector2, Tile>());
 
             //Set max and min zoom
             MinZoom = 0.1f;
@@ -105,8 +101,8 @@ namespace Railgun.Editor.App.Controls
             //Add all edit events
             tileManager.OnRotateCW += RotateCW;
             tileManager.OnRotateCCW += RotateCCW;
-            tileManager.OnFlipHorizontal += EditFlipHorizontal;
-            tileManager.OnFlipVertical += EditFlipVertical;
+            tileManager.OnFlipHorizontal += FlipHorizontal;
+            tileManager.OnFlipVertical += FlipVertical;
             tileManager.OnMoveUp += MoveUp;
             tileManager.OnMoveDown += MoveDown;
             tileManager.OnMoveLeft += MoveLeft;
@@ -168,6 +164,9 @@ namespace Railgun.Editor.App.Controls
         protected override void Draw()
         {
             base.Draw();
+
+            #region Bottom drawings
+
             //Things affected by the camera
             Editor.spriteBatch.Begin(SpriteSortMode.Deferred,
                 BlendState.AlphaBlend,//Better transparency
@@ -179,7 +178,7 @@ namespace Railgun.Editor.App.Controls
             ////
 
             //Draw map
-            CurrentMap.Draw(Editor.spriteBatch);
+            CurrentMap.DrawTiles(Editor.spriteBatch);
 
             //Only show if mouse is inside this control and not selecting
             if(IsMouseInsideControl && !selecting)
@@ -202,8 +201,53 @@ namespace Railgun.Editor.App.Controls
             ShapeBatch.Begin(Editor.graphics);
             ////
 
+
+            //If hitboxes are visible, draw them
+            if (tileManager.ViewHitboxes)
+            {
+                //Draw hitboxes with the camera's offset and zoom
+                CurrentMap.DrawHitboxes(new Vector2(
+                    Editor.Cam.Transform.Translation.X,
+                    Editor.Cam.Transform.Translation.Y), Editor.Cam.Zoom);
+            }
+
+            ShapeBatch.End();
+
+            #endregion
+
+            #region Top Drawings
+
+            ShapeBatch.Begin(Editor.graphics);
+            ////
+
+            //Draw placing preview if placing a hitbox
+            if(tileManager.ViewHitboxes && tileManager.PlaceHitbox)
+            {
+                //The size of the hitbox
+                Vector2 sizeVector = new Vector2(GridSize * Editor.Cam.Zoom);
+
+                //Compute dimensions of hitbox preview
+                Vector2 topLeftCorner = 
+                    MouseGridPosition.ToVector2() * sizeVector + 
+                    new Vector2(Editor.Cam.Transform.Translation.X,
+                        Editor.Cam.Transform.Translation.Y);
+                Vector2 bottomRightCorner = topLeftCorner + sizeVector;
+
+                //Draw box of bounds
+                ShapeBatch.BoxOutline(
+                    new Rectangle(
+                        topLeftCorner.ToPoint(),
+                        sizeVector.ToPoint()), Color.Red);
+                //Draw x in the middle
+                ShapeBatch.Line(topLeftCorner, bottomRightCorner, 2f, Color.Red);
+                ShapeBatch.Line(
+                    new Vector2(topLeftCorner.X, bottomRightCorner.Y),
+                    new Vector2(bottomRightCorner.X, topLeftCorner.Y), 2f, Color.Red);
+
+            }
+
             //Draw selection rectangle
-            if (selecting)
+            if(selecting)
             {
                 //Solid rectangle
                 ShapeBatch.Box(selectionRectangle, selectorColorFill);
@@ -221,6 +265,8 @@ namespace Railgun.Editor.App.Controls
             Editor.spriteBatch.Begin();
             DebugLog.Instance.Draw(Editor.spriteBatch, GraphicsDevice.Viewport);
             Editor.spriteBatch.End();
+
+            #endregion
         }
 
         #endregion
@@ -282,16 +328,22 @@ namespace Railgun.Editor.App.Controls
             //If placing
             if(input.IsDown(MouseButtonTypes.Left))
             {
-                //Place current tile at tile point
-                CurrentMap[CurrentMap.GetGridPoint(
-                    MouseCameraPosition)]
-                    = tileManager.CurrentTile;
+                //Get current grid point
+                Vector2 gridPoint = CurrentMap.GetGridPoint(MouseCameraPosition);
 
-                ////DEBUG log
-                //DebugLog.Instance.AddPersistantMessage(
-                //    $"[Tile placed] Mouse: " +
-                //    $"{CurrentMap.GetGridPoint(MouseCameraPosition)}",
-                //    Color.Red);
+                //If current layer is a tile layer
+                if (tileManager.CurrentLayer > -1)
+                {
+                    //Place current tile at tile point
+                    CurrentMap[gridPoint, tileManager.CurrentLayer] =
+                        tileManager.CurrentTile;
+                }
+
+                //If hitboxes enabled, place hitbox, else remove it
+                CurrentMap.Hitboxes[gridPoint] = tileManager.PlaceHitbox;
+
+                //Set to modified
+                FileManager.Modified = true;
             }
         }
 
@@ -328,7 +380,8 @@ namespace Railgun.Editor.App.Controls
         /// </summary>
         private void RotateCW()
         {
-            RotateTile(MathHelper.PiOver2);
+            tileManager.CurrentTile = 
+                tileManager.CurrentTile.Rotate(1);
         }
 
         /// <summary>
@@ -337,144 +390,49 @@ namespace Railgun.Editor.App.Controls
         /// </summary>
         private void RotateCCW()
         {
-            RotateTile(-MathHelper.PiOver2);
-        }
-
-        /// <summary>
-        /// Rotates the current tile by the specified amount OR
-        /// rotates the current selection by the specified amount
-        /// </summary>
-        /// <param name="amount"></param>
-        private void RotateTile(float amount)
-        {
-            //Create new rotated visual
-            TextureVisual visual = tileManager.CurrentTile.Visual;
-            visual = new TextureVisual(
-                visual.Tint,
-                visual.Texture,
-                visual.Source,
-                visual.Rotation + amount,
-                visual.Scale,
-                visual.Flip);
-            //Set current tile to clone tile with new visual
-            tileManager.CurrentTile = tileManager.CurrentTile.Clone(visual);
+            tileManager.CurrentTile = 
+                tileManager.CurrentTile.Rotate(-1);
         }
 
         /// <summary>
         /// Flips based on current rotation context of tile
-        /// Flips the current tile horizontally OR
-        /// Flips the current selection horizontally
-        /// </summary>
-        private void EditFlipHorizontal()
-        {
-            TextureVisual visual = tileManager.CurrentTile.Visual;
-
-            //If not normal rotation or 180 deg rotation, flip vertical instead
-            if (visual.Rotation == MathHelper.Pi || visual.Rotation == 0)
-            {
-                FlipHorizontal();
-                return;
-            }
-
-            //If it gets here, flip vertical
-            FlipVertical();
-        }
-
-        /// <summary>
         /// Flips the current tile horizontally OR
         /// Flips the current selection horizontally
         /// </summary>
         private void FlipHorizontal()
         {
-            TextureVisual visual = tileManager.CurrentTile.Visual;
-
-            //Effect to apply
-            SpriteEffects effect = SpriteEffects.FlipHorizontally;
-            float rotation = 0f;
-
-            //Check if already flipped
-            switch (visual.Flip)
+            //If not normal rotation or 180 deg rotation, flip vertical instead
+            if (tileManager.CurrentTile.Rotation == MathHelper.Pi 
+                || tileManager.CurrentTile.Rotation == 0)
             {
-                //If already horizontal, double flipped is none
-                case SpriteEffects.FlipHorizontally:
-                    effect = SpriteEffects.None;
-                    break;
-                //If vertical, it will cancel out with horizontal, so flip 180 deg
-                case SpriteEffects.FlipVertically:
-                    effect = SpriteEffects.None;
-                    rotation = MathHelper.Pi;
-                    break;
+                tileManager.CurrentTile = tileManager.CurrentTile.FlipHorizontally();
+                return;
             }
 
-            //Create new flipped visual
-            visual = new TextureVisual(
-                visual.Tint,
-                visual.Texture,
-                visual.Source,
-                visual.Rotation + rotation,
-                visual.Scale,
-                effect);
-            //Set current tile to clone tile with new visual
-            tileManager.CurrentTile = tileManager.CurrentTile.Clone(visual);
+            //If it gets here, flip vertical
+            tileManager.CurrentTile = tileManager.CurrentTile.FlipVertically();
         }
+
 
         /// <summary>
         /// Flips based on current rotation context of tile
         /// Flips the current tile vertically OR
         /// Flips the current selection vertically
         /// </summary>
-        private void EditFlipVertical()
+        private void FlipVertical()
         {
-            TextureVisual visual = tileManager.CurrentTile.Visual;
-
             //If not normal rotation or 180 deg rotation, flip horizontal instead
-            if (visual.Rotation == MathHelper.Pi || visual.Rotation == 0)
+            if (tileManager.CurrentTile.Rotation == MathHelper.Pi
+                || tileManager.CurrentTile.Rotation == 0)
             {
-                FlipVertical();
+                tileManager.CurrentTile = tileManager.CurrentTile.FlipVertically();
                 return;
             }
 
             //If it gets here, flip vertical
-            FlipHorizontal();
+            tileManager.CurrentTile = tileManager.CurrentTile.FlipHorizontally();
         }
 
-        /// <summary>
-        /// Flips the current tile vertically OR
-        /// Flips the current selection vertically
-        /// </summary>
-        private void FlipVertical()
-        {
-            TextureVisual visual = tileManager.CurrentTile.Visual;
-
-            //Effect to apply
-            SpriteEffects effect = SpriteEffects.FlipVertically;
-            float rotation = 0f;
-
-            //Check if already flipped
-            switch (visual.Flip)
-            {
-                //If already vertical, double flipped is none
-                case SpriteEffects.FlipVertically:
-                    effect = SpriteEffects.None;
-                    break;
-                //If horizontal, it will cancel out with vertical, so flip 180 deg
-                case SpriteEffects.FlipHorizontally:
-                    effect = SpriteEffects.None;
-                    rotation = MathHelper.Pi;
-                    break;
-            }
-
-            //Create new flipped visual
-            visual = new TextureVisual(
-                visual.Tint,
-                visual.Texture,
-                visual.Source,
-                visual.Rotation + rotation,
-                visual.Scale,
-                effect);
-            //Set current tile to clone tile with new visual
-            tileManager.CurrentTile = tileManager.CurrentTile.Clone(visual);
-        }
 
         /// <summary>
         /// Moves the current tile up OR

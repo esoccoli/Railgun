@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Railgun.Editor.App.Controls;
 using Railgun.Editor.App.Objects;
-using Railgun.Editor.App.Objects.Visuals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,6 +56,22 @@ namespace Railgun.Editor.App.Util
 
         #endregion
 
+        #region Tile Properties
+
+        /// <summary>
+        /// The current layer to be edited where -1 is the hitbox layer
+        /// </summary>
+        public int CurrentLayer
+        {
+            get => currentLayer;
+            set
+            {
+                currentLayer = value;
+                OnLayerChange?.Invoke();
+            }
+        }
+        private int currentLayer;
+
         /// <summary>
         /// The current tile to be placed
         /// </summary>
@@ -67,7 +82,7 @@ namespace Railgun.Editor.App.Util
             {
                 currentTile = value;
                 //Invalidates current tile display if not null
-                OnCurrentTileChange?.Invoke();
+                OnTileChange?.Invoke();
             }
         }
         private Tile currentTile;
@@ -76,6 +91,40 @@ namespace Railgun.Editor.App.Util
         /// A list of selected tiles to be edited
         /// </summary>
         public List<Tile> SelectedTiles { get; private set; }
+
+        #endregion
+
+        #region Hitbox Properties
+
+        /// <summary>
+        /// Whether or not a hitbox is being placed or removed
+        /// </summary>
+        public bool PlaceHitbox
+        {
+            get => currentHitbox;
+            set
+            {
+                currentHitbox = value;
+                OnHitboxChange?.Invoke();
+            }
+        }
+        private bool currentHitbox;
+
+        /// <summary>
+        /// Whether or not the hitboxes of tiles should be displayed
+        /// </summary>
+        public bool ViewHitboxes
+        {
+            get => viewHitboxes;
+            set
+            {
+                viewHitboxes = value;
+                OnViewHitboxesChange?.Invoke();
+            }
+        }
+        private bool viewHitboxes;
+
+        #endregion
 
         #region Edit Invokers
 
@@ -128,14 +177,31 @@ namespace Railgun.Editor.App.Util
 
         #endregion
 
-        #region Events
+        #region Invalidation Events
 
         /// <summary>
         /// An event that is called when the current tile is changed
         /// </summary>
-        public event GenericDelegate OnCurrentTileChange;
+        public event GenericDelegate OnLayerChange;
 
-        //Edit events
+        /// <summary>
+        /// An event that is called when the current tile is changed
+        /// </summary>
+        public event GenericDelegate OnTileChange;
+
+        /// <summary>
+        /// An event that is called when the current hitbox is changed
+        /// </summary>
+        public event GenericDelegate OnHitboxChange;
+
+        /// <summary>
+        /// An event that is called when the viewing ability of hitboxes is changed
+        /// </summary>
+        public event GenericDelegate OnViewHitboxesChange;
+
+        #endregion
+
+        #region Editing Events
 
         /// <summary>
         /// Rotates the current tile 90 degrees clockwise OR
