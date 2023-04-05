@@ -125,7 +125,7 @@ namespace Railgun.RailgunGame
         public void Update(int health, int ammo, double dashTimeLeft)
         {
             healthAmount = health;
-            ammoAmount = ammo;
+            ammoAmount = ammo; //comment
 
             if (healthAmount > maxHealth)
             {

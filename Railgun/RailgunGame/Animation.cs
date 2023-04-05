@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Input;
 //Class responsible for animating all objects
 namespace Railgun.RailgunGame
 {
-    internal class Animation
+    public class Animation
     {
 
         // animation elements
