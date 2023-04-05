@@ -233,16 +233,19 @@ namespace Railgun.Editor.App.Controls
                         Editor.Cam.Transform.Translation.Y);
                 Vector2 bottomRightCorner = topLeftCorner + sizeVector;
 
+                //Transparent red for hitbox
+                Color hitboxColor = Color.MediumVioletRed * 0.7f;
+
                 //Draw box of bounds
                 ShapeBatch.BoxOutline(
                     new Rectangle(
                         topLeftCorner.ToPoint(),
-                        sizeVector.ToPoint()), Color.Red);
+                        sizeVector.ToPoint()), hitboxColor);
                 //Draw x in the middle
-                ShapeBatch.Line(topLeftCorner, bottomRightCorner, 2f, Color.Red);
+                ShapeBatch.Line(topLeftCorner, bottomRightCorner, 2f, hitboxColor);
                 ShapeBatch.Line(
                     new Vector2(topLeftCorner.X, bottomRightCorner.Y),
-                    new Vector2(bottomRightCorner.X, topLeftCorner.Y), 2f, Color.Red);
+                    new Vector2(bottomRightCorner.X, topLeftCorner.Y), 2f, hitboxColor);
 
             }
 
