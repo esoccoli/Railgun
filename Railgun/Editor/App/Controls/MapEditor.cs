@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGame.Forms.Controls;
 using Railgun.Editor.App.Objects;
 using Railgun.Editor.App.Util;
 using System;
@@ -165,6 +164,9 @@ namespace Railgun.Editor.App.Controls
         protected override void Draw()
         {
             base.Draw();
+
+            #region Bottom drawings
+
             //Things affected by the camera
             Editor.spriteBatch.Begin(SpriteSortMode.Deferred,
                 BlendState.AlphaBlend,//Better transparency
@@ -199,13 +201,49 @@ namespace Railgun.Editor.App.Controls
             ShapeBatch.Begin(Editor.graphics);
             ////
 
-            //If view hitboxes draw them
-            if(tileManager.ViewHitboxes)
+
+            //If hitboxes are visible, draw them
+            if (tileManager.ViewHitboxes)
             {
                 //Draw hitboxes with the camera's offset and zoom
                 CurrentMap.DrawHitboxes(new Vector2(
                     Editor.Cam.Transform.Translation.X,
                     Editor.Cam.Transform.Translation.Y), Editor.Cam.Zoom);
+            }
+
+            ShapeBatch.End();
+
+            #endregion
+
+            #region Top Drawings
+
+            ShapeBatch.Begin(Editor.graphics);
+            ////
+
+            //Draw placing preview if placing a hitbox
+            if(tileManager.ViewHitboxes && tileManager.PlaceHitbox)
+            {
+                //The size of the hitbox
+                Vector2 sizeVector = new Vector2(GridSize * Editor.Cam.Zoom);
+
+                //Compute dimensions of hitbox preview
+                Vector2 topLeftCorner = 
+                    MouseGridPosition.ToVector2() * sizeVector + 
+                    new Vector2(Editor.Cam.Transform.Translation.X,
+                        Editor.Cam.Transform.Translation.Y);
+                Vector2 bottomRightCorner = topLeftCorner + sizeVector;
+
+                //Draw box of bounds
+                ShapeBatch.BoxOutline(
+                    new Rectangle(
+                        topLeftCorner.ToPoint(),
+                        sizeVector.ToPoint()), Color.Red);
+                //Draw x in the middle
+                ShapeBatch.Line(topLeftCorner, bottomRightCorner, 2f, Color.Red);
+                ShapeBatch.Line(
+                    new Vector2(topLeftCorner.X, bottomRightCorner.Y),
+                    new Vector2(bottomRightCorner.X, topLeftCorner.Y), 2f, Color.Red);
+
             }
 
             //Draw selection rectangle
@@ -227,6 +265,8 @@ namespace Railgun.Editor.App.Controls
             Editor.spriteBatch.Begin();
             DebugLog.Instance.Draw(Editor.spriteBatch, GraphicsDevice.Viewport);
             Editor.spriteBatch.End();
+
+            #endregion
         }
 
         #endregion

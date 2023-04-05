@@ -105,7 +105,7 @@ namespace Railgun.Editor.App.Objects
         public void DrawHitboxes(Vector2 cameraOffset, float cameraZoom)
         {
             //Define constants for every hitbox
-            Vector2 sizeVector = new Vector2(TileSize) * cameraZoom;
+            Vector2 sizeVector = new Vector2(TileSize * cameraZoom);
 
             foreach (KeyValuePair<Vector2, bool> hitbox in Hitboxes)
             {
@@ -113,7 +113,7 @@ namespace Railgun.Editor.App.Objects
                 if(hitbox.Value)
                 {
                     //Compute position to draw
-                    Vector2 topLeftCorner = (hitbox.Key * sizeVector + cameraOffset);
+                    Vector2 topLeftCorner = hitbox.Key * sizeVector + cameraOffset;
                     Vector2 bottomRightCorner = topLeftCorner + sizeVector;
 
                     //Draw box of bounds
