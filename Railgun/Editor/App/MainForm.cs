@@ -90,6 +90,10 @@ namespace Railgun.Editor.App
 
             //Set selected layer
             comboBox_Layers.SelectedIndex = 1;
+
+            //Set hitboxes to checked
+            checkBox_ShowHitboxes.Checked = true;
+            checkBox_Solid.Checked = true;
         }
 
         /// <summary>
@@ -331,8 +335,8 @@ namespace Railgun.Editor.App
         /// </summary>
         private void UpdateCurrentHitbox()
         {
-            toolStripMenuItem_Solid.Checked = TileManager.Instance.CurrentHitbox;
-            checkBox_Solid.Checked = TileManager.Instance.CurrentHitbox;
+            toolStripMenuItem_Solid.Checked = TileManager.Instance.PlaceHitbox;
+            checkBox_Solid.Checked = TileManager.Instance.PlaceHitbox;
         }
 
         /// <summary>
@@ -340,7 +344,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void CheckBox_Solid_CheckedChanged(object sender, EventArgs e)
         {
-            TileManager.Instance.CurrentHitbox = (sender as CheckBox).Checked;
+            TileManager.Instance.PlaceHitbox = (sender as CheckBox).Checked;
         }
 
         /// <summary>
@@ -348,7 +352,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_Edit_Solid_CheckedChanged(object sender, EventArgs e)
         {
-            TileManager.Instance.CurrentHitbox = (sender as ToolStripMenuItem).Checked;
+            TileManager.Instance.PlaceHitbox = (sender as ToolStripMenuItem).Checked;
         }
 
         #endregion

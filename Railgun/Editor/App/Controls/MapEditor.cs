@@ -176,7 +176,7 @@ namespace Railgun.Editor.App.Controls
             ////
 
             //Draw map
-            CurrentMap.Draw(Editor.spriteBatch);
+            CurrentMap.DrawTiles(Editor.spriteBatch);
 
             //Only show if mouse is inside this control and not selecting
             if(IsMouseInsideControl && !selecting)
@@ -199,8 +199,17 @@ namespace Railgun.Editor.App.Controls
             ShapeBatch.Begin(Editor.graphics);
             ////
 
+            //If view hitboxes draw them
+            if(tileManager.ViewHitboxes)
+            {
+                //Draw hitboxes with the camera's offset and zoom
+                CurrentMap.DrawHitboxes(new Vector2(
+                    Editor.Cam.Transform.Translation.X,
+                    Editor.Cam.Transform.Translation.Y), Editor.Cam.Zoom);
+            }
+
             //Draw selection rectangle
-            if (selecting)
+            if(selecting)
             {
                 //Solid rectangle
                 ShapeBatch.Box(selectionRectangle, selectorColorFill);
@@ -279,12 +288,17 @@ namespace Railgun.Editor.App.Controls
             //If placing
             if(input.IsDown(MouseButtonTypes.Left))
             {
-                
+                //Get current grid point
+                Vector2 gridPoint = CurrentMap.GetGridPoint(MouseCameraPosition);
 
                 //Place current tile at tile point
-                CurrentMap[CurrentMap.GetGridPoint(
-                    MouseCameraPosition)]
-                    = tileManager.CurrentTile;
+                CurrentMap[gridPoint] = tileManager.CurrentTile;
+
+                //If hitboxes enabled, place hitbox
+                if(tileManager.PlaceHitbox)
+                {
+                    CurrentMap.Hitboxes[gridPoint] = true;
+                }
 
                 //Set to modified
                 FileManager.Modified = true;

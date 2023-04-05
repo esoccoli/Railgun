@@ -54,7 +54,7 @@ namespace Railgun.Editor.App.Controls
             Editor.spriteBatch.End();
 
             //Draw hitbox if on and visable
-            if (TileManager.Instance.CurrentHitbox && TileManager.Instance.ViewHitboxes)
+            if (TileManager.Instance.PlaceHitbox && TileManager.Instance.ViewHitboxes)
             {
                 //Begin shapebatch without depth (so that shapes are drawn to the top)
                 Editor.graphics.DepthStencilState = DepthStencilState.None;
