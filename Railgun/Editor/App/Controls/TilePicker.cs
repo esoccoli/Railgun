@@ -15,16 +15,21 @@ namespace Railgun.Editor.App.Controls
         /// <summary>
         /// The tileset of this tile picker
         /// </summary>
-        private PathedTexture tileSetTexture;
+        private PathedTexture? tileSetTexture;
 
         /// <summary>
-        /// Creates a new tile picker with the specified tileset texture
+        /// The name of the tileset texture staring from the Content directory
         /// </summary>
-        /// <param name="tileSetTextureArg">The texture to generate tiles from</param>
-        public TilePicker(PathedTexture tileSetTextureArg)
+        private string textureName;
+
+        /// <summary>
+        /// Creates a new tile picker with the specified tileset texture path.
+        /// <para>Note: Texture is not created until after initialized</para>
+        /// </summary>
+        /// <param name="textureNameArg">The texture path to generate tiles from</param>
+        public TilePicker(string textureNameArg)
         {
-            //This is why I would rather name it "_tileSetTexture"
-            tileSetTexture = tileSetTextureArg;
+            textureName = textureNameArg;
         }
 
         #region Selection
@@ -70,8 +75,11 @@ namespace Railgun.Editor.App.Controls
         /// </summary>
         public void CreateTileSelection()
         {
-            //Create tile from selection
-            TileManager.Instance.CurrentTile = new Tile(tileSetTexture, selectionRectangle);
+            //Create tile from selection (if there is a texture)
+            //if(tileSetTexture == null)
+            {
+                TileManager.Instance.CurrentTile = new Tile(tileSetTexture, selectionRectangle);
+            }
         }
 
         #endregion
@@ -98,6 +106,9 @@ namespace Railgun.Editor.App.Controls
 
             //Set grid color
             GridColor = Color.White * 0.5f;
+
+            //Load tileset texture
+            tileSetTexture = FileManager.LoadPathedTexture(Editor.Content, textureName);
         }
 
         protected override void Update(GameTime gameTime)
@@ -130,7 +141,7 @@ namespace Railgun.Editor.App.Controls
 
             //Find the change in position when clamping to bounds
             Vector2 changeInPosition = viewportCenter - Vector2.Clamp(viewportCenter, Vector2.Zero,
-                new Vector2(tileSetTexture.Texture.Width, tileSetTexture.Texture.Height));
+                new Vector2(tileSetTexture.Value.Texture.Width, tileSetTexture.Value.Texture.Height));
 
             //Move camera in opposite direction of change
             Editor.Cam.Move(-changeInPosition);
@@ -152,7 +163,7 @@ namespace Railgun.Editor.App.Controls
             ////
                 
 
-            Editor.spriteBatch.Draw(tileSetTexture.Texture, Vector2.Zero, Color.White);
+            Editor.spriteBatch.Draw(tileSetTexture.Value.Texture, Vector2.Zero, Color.White);
 
             //Highlight current selection
             Editor.spriteBatch.Draw(whitePixel,

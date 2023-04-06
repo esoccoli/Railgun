@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
@@ -30,16 +31,15 @@ namespace Railgun.Editor.App
         private TileManager tileManager;
 
         /// <summary>
-        /// The different tilesets
-        /// </summary>
-        private List<TilePicker> tilesets;
-
-        /// <summary>
         /// The index of the current tileset
         /// </summary>
         private int currentTilesetIndex;
 
-        public TilePicker CurrentTileset => tilesets[currentTilesetIndex];
+        /// <summary>
+        /// Returns the current tile picker control
+        /// </summary>
+        public TilePicker CurrentTileset 
+            => tabControl_Tileset.TabPages[currentTilesetIndex].Controls[0] as TilePicker;
 
         #endregion
 
@@ -58,6 +58,24 @@ namespace Railgun.Editor.App
         /// </summary>
         private void MainForm_Load(object sender, EventArgs e)
         {
+            //Create tile pickers for every tileset in the tiles folder
+            string[] fileNames = Directory.GetFiles(Path.GetFullPath("../../Content/Tiles/"));
+            for(int i = 0; i < fileNames.Length; i++)
+            {
+                string tilesetName = FileManager.GetFileNameNoExtension(fileNames[i]);
+
+                TilePicker picker = new TilePicker("Tiles/" + tilesetName)
+                {
+                    Dock = DockStyle.Fill
+                };
+
+                //Add tileset to tab control
+                tabControl_Tileset.TabPages.Add(tilesetName);
+                tabControl_Tileset.TabPages[i].Controls.Add(picker);
+                
+            }
+
+
             //Add tile manager singelton to field
             tileManager = TileManager.Instance;
 

@@ -479,7 +479,8 @@ namespace Railgun.Editor.App.Util
                 return null;
 
             //Cuts off the '.' end of the name
-            return GetFileName(path).Split('.')[0];
+            string fileName = GetFileName(path);
+            return fileName.Substring(0, fileName.LastIndexOf('.'));
         }
 
         #endregion

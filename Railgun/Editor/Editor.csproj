@@ -133,6 +133,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Tiles\Grass hill tiles v.2.png" />
+    <Content Include="Content\Tiles\Grass tiles v.2.png" />
+    <Content Include="Content\Tiles\mainlevbuild.png" />
+    <Content Include="Content\Tiles\Tall Grass hill tiles v.2.png" />
+    <Content Include="Content\Tiles\Tiles.png" />
     <Content Include="Content\tmp\Grass hill tiles v.2.png" />
     <Content Include="Content\tmp\Grass tiles v.2.png" />
     <Content Include="Content\tmp\mainlevbuild.png" />

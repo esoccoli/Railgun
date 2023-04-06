@@ -91,6 +91,8 @@
             this.comboBox_Layers = new System.Windows.Forms.ComboBox();
             this.checkBox_ShowHitboxes = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel_MainOutline = new System.Windows.Forms.TableLayoutPanel();
+            this.panel_TilePicker = new System.Windows.Forms.Panel();
+            this.tabControl_Tileset = new System.Windows.Forms.TabControl();
             this.currentTileDisplay = new Railgun.Editor.App.Controls.CurrentTileDisplay();
             this.mapEditor = new Railgun.Editor.App.Controls.MapEditor();
             this.menuStrip.SuspendLayout();
@@ -117,6 +119,7 @@
             this.tableLayoutPanel_MainEditorSettings.SuspendLayout();
             this.panel_LayerSettings.SuspendLayout();
             this.tableLayoutPanel_MainOutline.SuspendLayout();
+            this.panel_TilePicker.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -524,6 +527,7 @@
             this.tableLayoutPanel_TilePicker.ColumnCount = 1;
             this.tableLayoutPanel_TilePicker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel_TilePicker.Controls.Add(this.tableLayoutPanel_ObjectSettings, 0, 0);
+            this.tableLayoutPanel_TilePicker.Controls.Add(this.panel_TilePicker, 0, 1);
             this.tableLayoutPanel_TilePicker.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel_TilePicker.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel_TilePicker.Margin = new System.Windows.Forms.Padding(0);
@@ -948,6 +952,28 @@
             this.tableLayoutPanel_MainOutline.Size = new System.Drawing.Size(1343, 771);
             this.tableLayoutPanel_MainOutline.TabIndex = 6;
             // 
+            // panel_TilePicker
+            // 
+            this.panel_TilePicker.Controls.Add(this.tabControl_Tileset);
+            this.panel_TilePicker.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_TilePicker.Location = new System.Drawing.Point(3, 53);
+            this.panel_TilePicker.Name = "panel_TilePicker";
+            this.panel_TilePicker.Size = new System.Drawing.Size(394, 292);
+            this.panel_TilePicker.TabIndex = 3;
+            // 
+            // tabControl_Tileset
+            // 
+            this.tabControl_Tileset.Alignment = System.Windows.Forms.TabAlignment.Bottom;
+            this.tabControl_Tileset.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl_Tileset.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.tabControl_Tileset.Location = new System.Drawing.Point(0, 0);
+            this.tabControl_Tileset.Margin = new System.Windows.Forms.Padding(0);
+            this.tabControl_Tileset.Multiline = true;
+            this.tabControl_Tileset.Name = "tabControl_Tileset";
+            this.tabControl_Tileset.SelectedIndex = 0;
+            this.tabControl_Tileset.Size = new System.Drawing.Size(394, 292);
+            this.tabControl_Tileset.TabIndex = 4;
+            // 
             // currentTileDisplay
             // 
             this.currentTileDisplay.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -1032,6 +1058,7 @@
             this.panel_LayerSettings.ResumeLayout(false);
             this.panel_LayerSettings.PerformLayout();
             this.tableLayoutPanel_MainOutline.ResumeLayout(false);
+            this.panel_TilePicker.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1109,5 +1136,7 @@
         private System.Windows.Forms.Panel panel_Tileset;
         private System.Windows.Forms.Label label_Tileset;
         private System.Windows.Forms.ComboBox comboBox_Tileset;
+        private System.Windows.Forms.Panel panel_TilePicker;
+        private System.Windows.Forms.TabControl tabControl_Tileset;
     }
 }
