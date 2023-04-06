@@ -12,7 +12,7 @@ namespace Railgun.Editor.App.Objects
     /// <para>Author: Jonathan Jan</para>
     /// Date Created: 3/28/2023
     /// </summary>
-    internal struct PathedTexture
+    public struct PathedTexture
     {
         /// <summary>
         /// The path of this texture relative to the content folder

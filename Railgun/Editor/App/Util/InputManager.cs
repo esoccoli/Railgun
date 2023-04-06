@@ -23,7 +23,7 @@ namespace Railgun.Editor.App.Util
     /// <para>Author: Jonathan Jan</para>
     /// Date Created: 3/7/2023
     /// </summary>
-    internal class InputManager
+    public class InputManager
     {
         #region Singleton Design
 

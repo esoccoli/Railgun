@@ -62,8 +62,10 @@
             this.tableLayoutPanel_Objects = new System.Windows.Forms.TableLayoutPanel();
             this.panel_Objects = new System.Windows.Forms.Panel();
             this.tableLayoutPanel_TilePicker = new System.Windows.Forms.TableLayoutPanel();
-            this.tilePicker = new Railgun.Editor.App.Controls.TilePicker();
             this.tableLayoutPanel_ObjectSettings = new System.Windows.Forms.TableLayoutPanel();
+            this.panel_Tileset = new System.Windows.Forms.Panel();
+            this.label_Tileset = new System.Windows.Forms.Label();
+            this.comboBox_Tileset = new System.Windows.Forms.ComboBox();
             this.panel_TileSizeSettings = new System.Windows.Forms.Panel();
             this.label_TileSize = new System.Windows.Forms.Label();
             this.textBox_TileSize = new System.Windows.Forms.TextBox();
@@ -75,7 +77,6 @@
             this.button_Edit_FlipVertical = new System.Windows.Forms.Button();
             this.button_Edit_RotateCW = new System.Windows.Forms.Button();
             this.button_Edit_RotateCCW = new System.Windows.Forms.Button();
-            this.currentTileDisplay = new Railgun.Editor.App.Controls.CurrentTileDisplay();
             this.button_Edit_Up = new System.Windows.Forms.Button();
             this.button_Edit_Left = new System.Windows.Forms.Button();
             this.button_Edit_Down = new System.Windows.Forms.Button();
@@ -84,16 +85,14 @@
             this.tableLayoutPanel_EditSettings = new System.Windows.Forms.TableLayoutPanel();
             this.checkBox_Solid = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel_MainEditor = new System.Windows.Forms.TableLayoutPanel();
-            this.mapEditor = new Railgun.Editor.App.Controls.MapEditor();
             this.tableLayoutPanel_MainEditorSettings = new System.Windows.Forms.TableLayoutPanel();
             this.panel_LayerSettings = new System.Windows.Forms.Panel();
             this.label_Layers = new System.Windows.Forms.Label();
             this.comboBox_Layers = new System.Windows.Forms.ComboBox();
             this.checkBox_ShowHitboxes = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel_MainOutline = new System.Windows.Forms.TableLayoutPanel();
-            this.panel_Tileset = new System.Windows.Forms.Panel();
-            this.label_Tileset = new System.Windows.Forms.Label();
-            this.comboBox_Tileset = new System.Windows.Forms.ComboBox();
+            this.currentTileDisplay = new Railgun.Editor.App.Controls.CurrentTileDisplay();
+            this.mapEditor = new Railgun.Editor.App.Controls.MapEditor();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_MainEditor)).BeginInit();
@@ -108,6 +107,7 @@
             this.panel_Objects.SuspendLayout();
             this.tableLayoutPanel_TilePicker.SuspendLayout();
             this.tableLayoutPanel_ObjectSettings.SuspendLayout();
+            this.panel_Tileset.SuspendLayout();
             this.panel_TileSizeSettings.SuspendLayout();
             this.tableLayoutPanel_Edit.SuspendLayout();
             this.panel_Edit.SuspendLayout();
@@ -117,7 +117,6 @@
             this.tableLayoutPanel_MainEditorSettings.SuspendLayout();
             this.panel_LayerSettings.SuspendLayout();
             this.tableLayoutPanel_MainOutline.SuspendLayout();
-            this.panel_Tileset.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -524,7 +523,6 @@
             // 
             this.tableLayoutPanel_TilePicker.ColumnCount = 1;
             this.tableLayoutPanel_TilePicker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_TilePicker.Controls.Add(this.tilePicker, 0, 1);
             this.tableLayoutPanel_TilePicker.Controls.Add(this.tableLayoutPanel_ObjectSettings, 0, 0);
             this.tableLayoutPanel_TilePicker.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel_TilePicker.Location = new System.Drawing.Point(0, 0);
@@ -535,23 +533,6 @@
             this.tableLayoutPanel_TilePicker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel_TilePicker.Size = new System.Drawing.Size(400, 348);
             this.tableLayoutPanel_TilePicker.TabIndex = 1;
-            // 
-            // tilePicker
-            // 
-            this.tilePicker.BackColor = System.Drawing.SystemColors.Control;
-            this.tilePicker.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tilePicker.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
-            this.tilePicker.ForeColor = System.Drawing.Color.Black;
-            this.tilePicker.GridSize = 0F;
-            this.tilePicker.Location = new System.Drawing.Point(0, 50);
-            this.tilePicker.Margin = new System.Windows.Forms.Padding(0);
-            this.tilePicker.MaxZoom = 0.1F;
-            this.tilePicker.MinZoom = 0.1F;
-            this.tilePicker.MouseHoverUpdatesOnly = false;
-            this.tilePicker.Name = "tilePicker";
-            this.tilePicker.Size = new System.Drawing.Size(400, 298);
-            this.tilePicker.TabIndex = 1;
-            this.tilePicker.Text = "tilePicker";
             // 
             // tableLayoutPanel_ObjectSettings
             // 
@@ -569,6 +550,41 @@
             this.tableLayoutPanel_ObjectSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel_ObjectSettings.Size = new System.Drawing.Size(400, 50);
             this.tableLayoutPanel_ObjectSettings.TabIndex = 2;
+            // 
+            // panel_Tileset
+            // 
+            this.panel_Tileset.Controls.Add(this.label_Tileset);
+            this.panel_Tileset.Controls.Add(this.comboBox_Tileset);
+            this.panel_Tileset.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_Tileset.Location = new System.Drawing.Point(140, 0);
+            this.panel_Tileset.Margin = new System.Windows.Forms.Padding(0);
+            this.panel_Tileset.Name = "panel_Tileset";
+            this.panel_Tileset.Size = new System.Drawing.Size(260, 50);
+            this.panel_Tileset.TabIndex = 8;
+            // 
+            // label_Tileset
+            // 
+            this.label_Tileset.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label_Tileset.AutoSize = true;
+            this.label_Tileset.BackColor = System.Drawing.Color.Transparent;
+            this.label_Tileset.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label_Tileset.Location = new System.Drawing.Point(9, 15);
+            this.label_Tileset.Name = "label_Tileset";
+            this.label_Tileset.Size = new System.Drawing.Size(61, 20);
+            this.label_Tileset.TabIndex = 5;
+            this.label_Tileset.Text = "Tile Set:";
+            // 
+            // comboBox_Tileset
+            // 
+            this.comboBox_Tileset.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.comboBox_Tileset.BackColor = System.Drawing.SystemColors.Window;
+            this.comboBox_Tileset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_Tileset.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.comboBox_Tileset.FormattingEnabled = true;
+            this.comboBox_Tileset.Location = new System.Drawing.Point(75, 11);
+            this.comboBox_Tileset.Name = "comboBox_Tileset";
+            this.comboBox_Tileset.Size = new System.Drawing.Size(177, 28);
+            this.comboBox_Tileset.TabIndex = 3;
             // 
             // panel_TileSizeSettings
             // 
@@ -736,21 +752,6 @@
             this.button_Edit_RotateCCW.UseVisualStyleBackColor = true;
             this.button_Edit_RotateCCW.Click += new System.EventHandler(this.Menu_Edit_Rotate90CCW_Click);
             // 
-            // currentTileDisplay
-            // 
-            this.currentTileDisplay.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.currentTileDisplay.BackColor = System.Drawing.SystemColors.Control;
-            this.tableLayoutPanel_EditTable.SetColumnSpan(this.currentTileDisplay, 3);
-            this.currentTileDisplay.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
-            this.currentTileDisplay.ForeColor = System.Drawing.Color.Black;
-            this.currentTileDisplay.Location = new System.Drawing.Point(125, 84);
-            this.currentTileDisplay.Margin = new System.Windows.Forms.Padding(0);
-            this.currentTileDisplay.Name = "currentTileDisplay";
-            this.tableLayoutPanel_EditTable.SetRowSpan(this.currentTileDisplay, 3);
-            this.currentTileDisplay.Size = new System.Drawing.Size(149, 150);
-            this.currentTileDisplay.TabIndex = 1;
-            this.currentTileDisplay.Text = "currentTileDisplay";
-            // 
             // button_Edit_Up
             // 
             this.button_Edit_Up.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -862,25 +863,6 @@
             this.tableLayoutPanel_MainEditor.Size = new System.Drawing.Size(939, 763);
             this.tableLayoutPanel_MainEditor.TabIndex = 2;
             // 
-            // mapEditor
-            // 
-            this.mapEditor.BackColor = System.Drawing.SystemColors.Control;
-            this.mapEditor.CurrentMap = null;
-            this.mapEditor.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.mapEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mapEditor.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mapEditor.ForeColor = System.Drawing.Color.Black;
-            this.mapEditor.Location = new System.Drawing.Point(0, 52);
-            this.mapEditor.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.mapEditor.MaxZoom = 0.1F;
-            this.mapEditor.MinZoom = 0.1F;
-            this.mapEditor.MouseHoverUpdatesOnly = false;
-            this.mapEditor.Name = "mapEditor";
-            this.mapEditor.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.mapEditor.Size = new System.Drawing.Size(939, 711);
-            this.mapEditor.TabIndex = 1;
-            this.mapEditor.Text = "mainEditorPanel";
-            // 
             // tableLayoutPanel_MainEditorSettings
             // 
             this.tableLayoutPanel_MainEditorSettings.BackColor = System.Drawing.Color.Transparent;
@@ -966,40 +948,39 @@
             this.tableLayoutPanel_MainOutline.Size = new System.Drawing.Size(1343, 771);
             this.tableLayoutPanel_MainOutline.TabIndex = 6;
             // 
-            // panel_Tileset
+            // currentTileDisplay
             // 
-            this.panel_Tileset.Controls.Add(this.label_Tileset);
-            this.panel_Tileset.Controls.Add(this.comboBox_Tileset);
-            this.panel_Tileset.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_Tileset.Location = new System.Drawing.Point(140, 0);
-            this.panel_Tileset.Margin = new System.Windows.Forms.Padding(0);
-            this.panel_Tileset.Name = "panel_Tileset";
-            this.panel_Tileset.Size = new System.Drawing.Size(260, 50);
-            this.panel_Tileset.TabIndex = 8;
+            this.currentTileDisplay.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.currentTileDisplay.BackColor = System.Drawing.SystemColors.Control;
+            this.tableLayoutPanel_EditTable.SetColumnSpan(this.currentTileDisplay, 3);
+            this.currentTileDisplay.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
+            this.currentTileDisplay.ForeColor = System.Drawing.Color.Black;
+            this.currentTileDisplay.Location = new System.Drawing.Point(125, 84);
+            this.currentTileDisplay.Margin = new System.Windows.Forms.Padding(0);
+            this.currentTileDisplay.Name = "currentTileDisplay";
+            this.tableLayoutPanel_EditTable.SetRowSpan(this.currentTileDisplay, 3);
+            this.currentTileDisplay.Size = new System.Drawing.Size(149, 150);
+            this.currentTileDisplay.TabIndex = 1;
+            this.currentTileDisplay.Text = "currentTileDisplay";
             // 
-            // label_Tileset
+            // mapEditor
             // 
-            this.label_Tileset.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label_Tileset.AutoSize = true;
-            this.label_Tileset.BackColor = System.Drawing.Color.Transparent;
-            this.label_Tileset.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.label_Tileset.Location = new System.Drawing.Point(9, 15);
-            this.label_Tileset.Name = "label_Tileset";
-            this.label_Tileset.Size = new System.Drawing.Size(61, 20);
-            this.label_Tileset.TabIndex = 5;
-            this.label_Tileset.Text = "Tile Set:";
-            // 
-            // comboBox_Tileset
-            // 
-            this.comboBox_Tileset.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.comboBox_Tileset.BackColor = System.Drawing.SystemColors.Window;
-            this.comboBox_Tileset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_Tileset.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.comboBox_Tileset.FormattingEnabled = true;
-            this.comboBox_Tileset.Location = new System.Drawing.Point(75, 11);
-            this.comboBox_Tileset.Name = "comboBox_Tileset";
-            this.comboBox_Tileset.Size = new System.Drawing.Size(177, 28);
-            this.comboBox_Tileset.TabIndex = 3;
+            this.mapEditor.BackColor = System.Drawing.SystemColors.Control;
+            this.mapEditor.CurrentMap = null;
+            this.mapEditor.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.mapEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mapEditor.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mapEditor.ForeColor = System.Drawing.Color.Black;
+            this.mapEditor.Location = new System.Drawing.Point(0, 52);
+            this.mapEditor.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.mapEditor.MaxZoom = 0.1F;
+            this.mapEditor.MinZoom = 0.1F;
+            this.mapEditor.MouseHoverUpdatesOnly = false;
+            this.mapEditor.Name = "mapEditor";
+            this.mapEditor.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.mapEditor.Size = new System.Drawing.Size(939, 711);
+            this.mapEditor.TabIndex = 1;
+            this.mapEditor.Text = "mainEditorPanel";
             // 
             // MainForm
             // 
@@ -1036,6 +1017,8 @@
             this.tableLayoutPanel_TilePicker.ResumeLayout(false);
             this.tableLayoutPanel_ObjectSettings.ResumeLayout(false);
             this.tableLayoutPanel_ObjectSettings.PerformLayout();
+            this.panel_Tileset.ResumeLayout(false);
+            this.panel_Tileset.PerformLayout();
             this.panel_TileSizeSettings.ResumeLayout(false);
             this.panel_TileSizeSettings.PerformLayout();
             this.tableLayoutPanel_Edit.ResumeLayout(false);
@@ -1049,8 +1032,6 @@
             this.panel_LayerSettings.ResumeLayout(false);
             this.panel_LayerSettings.PerformLayout();
             this.tableLayoutPanel_MainOutline.ResumeLayout(false);
-            this.panel_Tileset.ResumeLayout(false);
-            this.panel_Tileset.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1096,7 +1077,6 @@
         private Controls.MapEditor mapEditor;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_MainOutline;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_TilePicker;
-        private Controls.TilePicker tilePicker;
         private System.Windows.Forms.Label label_TileSize;
         private System.Windows.Forms.TextBox textBox_TileSize;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_EditTable;

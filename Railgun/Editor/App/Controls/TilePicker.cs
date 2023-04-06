@@ -10,12 +10,22 @@ namespace Railgun.Editor.App.Controls
     /// <para>Author: Jonathan Jan</para>
     /// Date Created: 3/19/2023
     /// </summary>
-    internal class TilePicker : AbstractGridControl
+    public class TilePicker : AbstractGridControl
     {
         /// <summary>
         /// The tileset of this tile picker
         /// </summary>
-        public PathedTexture tileSetTexture;
+        private PathedTexture tileSetTexture;
+
+        /// <summary>
+        /// Creates a new tile picker with the specified tileset texture
+        /// </summary>
+        /// <param name="tileSetTextureArg">The texture to generate tiles from</param>
+        public TilePicker(PathedTexture tileSetTextureArg)
+        {
+            //This is why I would rather name it "_tileSetTexture"
+            tileSetTexture = tileSetTextureArg;
+        }
 
         #region Selection
 
@@ -88,9 +98,6 @@ namespace Railgun.Editor.App.Controls
 
             //Set grid color
             GridColor = Color.White * 0.5f;
-
-            //Load DEBUG texture
-            tileSetTexture = FileManager.LoadPathedTexture(Editor.Content, "tmp/Grass hill tiles v.2");
         }
 
         protected override void Update(GameTime gameTime)

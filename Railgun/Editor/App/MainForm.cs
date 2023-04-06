@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using Railgun.Editor.App.Controls;
 using Railgun.Editor.App.Objects;
 using Railgun.Editor.App.Util;
-using static Railgun.Editor.App.DarkTheme;
 
 namespace Railgun.Editor.App
 {
@@ -28,6 +28,18 @@ namespace Railgun.Editor.App
         /// The tile manager without the instance
         /// </summary>
         private TileManager tileManager;
+
+        /// <summary>
+        /// The different tilesets
+        /// </summary>
+        private List<TilePicker> tilesets;
+
+        /// <summary>
+        /// The index of the current tileset
+        /// </summary>
+        private int currentTilesetIndex;
+
+        public TilePicker CurrentTileset => tilesets[currentTilesetIndex];
 
         #endregion
 
@@ -487,12 +499,12 @@ namespace Railgun.Editor.App
             //If valid, set the tile size
             if(int.TryParse(textBox.Text, out int tileSize) && tileSize > 0)
             {
-                tilePicker.GridSize = tileSize;
+                CurrentTileset.GridSize = tileSize;
             }
             //If not valid number an not empty, set it to previous valid number
             else if (textBox.Text != string.Empty)
             {
-                textBox.Text = tilePicker.GridSize.ToString();
+                textBox.Text = CurrentTileset.GridSize.ToString();
                 //Set cursor to end of text
                 textBox.SelectionStart = textBox.TextLength;
             }
@@ -504,7 +516,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void TileSize_Leave(object sender, EventArgs e)
         {
-            (sender as TextBox).Text = tilePicker.GridSize.ToString();
+            (sender as TextBox).Text = CurrentTileset.GridSize.ToString();
         }
 
         /// <summary>
@@ -520,7 +532,7 @@ namespace Railgun.Editor.App
             }
 
             //Else set to current selection
-            tilePicker.CreateTileSelection();
+            CurrentTileset.CreateTileSelection();
         }
 
         /// <summary>

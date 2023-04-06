@@ -26,7 +26,7 @@ namespace Railgun.Editor.App.Util
     /// <para>Author: Jonathan Jan</para>
     /// Date Created: 3/23/2023
     /// </summary>
-    internal class TileManager
+    public class TileManager
     {
 
         #region Singleton Design

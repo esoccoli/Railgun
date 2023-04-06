@@ -15,7 +15,7 @@ namespace Railgun.Editor.App.Objects
     /// <para>Author: Jonathan Jan</para>
     /// Date Created: 3/10/2023
     /// </summary>
-    internal struct Tile
+    public struct Tile
     {
         /// <summary>
         /// The pathed texture of this visual
