@@ -33,7 +33,6 @@ namespace Railgun.Editor.App.Controls
 
                     //Reset selection rectangle
                     selectionRectangle = new Rectangle(0, 0, (int)value, (int)value);
-
                     CreateTileSelection();
                 }
             }
@@ -114,6 +113,9 @@ namespace Railgun.Editor.App.Controls
                     CreateTileSelection();
                 }
             }
+
+            //Make sure camera is within reasonable bounds
+            
         }
 
         protected override void Draw()

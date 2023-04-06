@@ -17,12 +17,17 @@ namespace Railgun.Editor.App
     /// </summary>
     public partial class MainForm : Form
     {
-        #region Properties and Fields EMPTY
+        #region Properties and Fields
 
         /// <summary>
         /// The name of the current project
         /// </summary>
         public string ProjectName { get; set; }
+
+        /// <summary>
+        /// The tile manager without the instance
+        /// </summary>
+        private TileManager tileManager;
 
         #endregion
 
@@ -41,6 +46,9 @@ namespace Railgun.Editor.App
         /// </summary>
         private void MainForm_Load(object sender, EventArgs e)
         {
+            //Add tile manager singelton to field
+            tileManager = TileManager.Instance;
+
             //Subscribe input update to main editor update event
             mapEditor.OnUpdate += InputManager.Instance.Update;
 
@@ -48,12 +56,12 @@ namespace Railgun.Editor.App
             mapEditor.OnUpdate += UpdateStatus;
 
             //Subscribe invalidation events
-            TileManager.Instance.OnTileChange += currentTileDisplay.Update;
-            TileManager.Instance.OnHitboxChange += UpdateCurrentHitbox;
-            TileManager.Instance.OnHitboxChange += currentTileDisplay.Update;
-            TileManager.Instance.OnViewHitboxesChange += UpdateViewHitbox;
-            TileManager.Instance.OnViewHitboxesChange += currentTileDisplay.Update;
-            TileManager.Instance.OnLayerChange += UpdateLayerDisplay;
+            tileManager.OnTileChange += currentTileDisplay.Update;
+            tileManager.OnHitboxChange += UpdateCurrentHitbox;
+            tileManager.OnHitboxChange += currentTileDisplay.Update;
+            tileManager.OnViewHitboxesChange += UpdateViewHitbox;
+            tileManager.OnViewHitboxesChange += currentTileDisplay.Update;
+            tileManager.OnLayerChange += UpdateLayerDisplay;
 
             //Subscribe modify event
             FileManager.OnModifyInvalidate += ModifyTitle;
@@ -267,7 +275,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_Edit_Rotate90CW_Click(object sender, EventArgs e)
         {
-            TileManager.Instance.RotateCW();
+            tileManager.RotateCW();
         }
 
         /// <summary>
@@ -276,7 +284,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_Edit_Rotate90CCW_Click(object sender, EventArgs e)
         {
-            TileManager.Instance.RotateCCW();
+            tileManager.RotateCCW();
         }
 
         /// <summary>
@@ -285,7 +293,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_Edit_FlipHorizontally_Click(object sender, EventArgs e)
         {
-            TileManager.Instance.FlipHorizontal();
+            tileManager.FlipHorizontal();
         }
 
         /// <summary>
@@ -294,7 +302,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_Edit_FlipVertically_Click(object sender, EventArgs e)
         {
-            TileManager.Instance.FlipVertical();
+            tileManager.FlipVertical();
         }
 
         /// <summary>
@@ -303,7 +311,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_Edit_MoveUp_Click(object sender, EventArgs e)
         {
-            TileManager.Instance.MoveUp();
+            tileManager.MoveUp();
         }
 
         /// <summary>
@@ -312,7 +320,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_Edit_MoveDown_Click(object sender, EventArgs e)
         {
-            TileManager.Instance.MoveDown();
+            tileManager.MoveDown();
         }
 
         /// <summary>
@@ -321,7 +329,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_Edit_MoveLeft_Click(object sender, EventArgs e)
         {
-            TileManager.Instance.MoveLeft();
+            tileManager.MoveLeft();
         }
 
         /// <summary>
@@ -330,7 +338,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_Edit_MoveRight_Click(object sender, EventArgs e)
         {
-            TileManager.Instance.MoveRight();
+            tileManager.MoveRight();
         }
 
         /// <summary>
@@ -338,8 +346,8 @@ namespace Railgun.Editor.App
         /// </summary>
         private void UpdateCurrentHitbox()
         {
-            toolStripMenuItem_PlaceHitbox.Checked = TileManager.Instance.PlaceHitbox;
-            checkBox_Solid.Checked = TileManager.Instance.PlaceHitbox;
+            toolStripMenuItem_PlaceHitbox.Checked = tileManager.PlaceHitbox;
+            checkBox_Solid.Checked = tileManager.PlaceHitbox;
         }
 
         /// <summary>
@@ -347,7 +355,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void CheckBox_Solid_CheckedChanged(object sender, EventArgs e)
         {
-            TileManager.Instance.PlaceHitbox = (sender as CheckBox).Checked;
+            tileManager.PlaceHitbox = (sender as CheckBox).Checked;
         }
 
         /// <summary>
@@ -355,7 +363,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_Edit_Solid_CheckedChanged(object sender, EventArgs e)
         {
-            TileManager.Instance.PlaceHitbox = (sender as ToolStripMenuItem).Checked;
+            tileManager.PlaceHitbox = (sender as ToolStripMenuItem).Checked;
         }
 
         #endregion
@@ -383,8 +391,8 @@ namespace Railgun.Editor.App
         /// </summary>
         private void UpdateViewHitbox()
         {
-            toolStripMenuItem_ShowHitboxes.Checked = TileManager.Instance.ViewHitboxes;
-            checkBox_ShowHitboxes.Checked = TileManager.Instance.ViewHitboxes;
+            toolStripMenuItem_ShowHitboxes.Checked = tileManager.ViewHitboxes;
+            checkBox_ShowHitboxes.Checked = tileManager.ViewHitboxes;
         }
 
         /// <summary>
@@ -392,7 +400,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void CheckBox_ShowHitboxes_CheckedChanged(object sender, EventArgs e)
         {
-            TileManager.Instance.ViewHitboxes = (sender as CheckBox).Checked;
+            tileManager.ViewHitboxes = (sender as CheckBox).Checked;
         }
 
         /// <summary>
@@ -400,7 +408,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_View_ShowHitboxes_CheckedChanged(object sender, EventArgs e)
         {
-            TileManager.Instance.ViewHitboxes = (sender as ToolStripMenuItem).Checked;
+            tileManager.ViewHitboxes = (sender as ToolStripMenuItem).Checked;
         }
 
         #endregion
@@ -505,9 +513,9 @@ namespace Railgun.Editor.App
         private void UpdateLayerDisplay()
         {
             //Set current tile to nothing if on a non-tile layer
-            if(TileManager.Instance.CurrentLayer < 0)
+            if(tileManager.CurrentLayer < 0)
             {
-                TileManager.Instance.CurrentTile = Tile.Empty;
+                tileManager.CurrentTile = Tile.Empty;
                 return;
             }
 
@@ -521,7 +529,7 @@ namespace Railgun.Editor.App
         private void ComboBox_Layers_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Set current layer where the hitbox layer is -1
-            TileManager.Instance.CurrentLayer = comboBox_Layers.SelectedIndex - 1;
+            tileManager.CurrentLayer = comboBox_Layers.SelectedIndex - 1;
         }
 
         #endregion
