@@ -10,7 +10,7 @@ namespace Railgun.Editor.App.Controls
     /// <para>Author: Jonathan Jan</para>
     /// Date Created: 3/19/2023
     /// </summary>
-    internal class TilePicker : GridControl
+    internal class TilePicker : AbstractGridControl
     {
         //DEBUG
         public PathedTexture testure;

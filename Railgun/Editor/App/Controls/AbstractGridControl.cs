@@ -14,7 +14,7 @@ namespace Railgun.Editor.App.Controls
     /// <para>Author: Jonathan Jan</para>
     /// Date Created: 2/22/2023=
     /// </summary>
-    internal abstract class GridControl : MonoGameControl
+    internal abstract class AbstractGridControl : MonoGameControl
     {
         /// <summary>
         /// A white square used for drawing rectangles

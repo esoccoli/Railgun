@@ -15,7 +15,7 @@ namespace Railgun.Editor.App.Controls
     /// <para>Author: Jonathan Jan</para>
     /// Date Created: 3/6/2023
     /// </summary>
-    internal class MapEditor : GridControl
+    internal class MapEditor : AbstractGridControl
     {
         //DEBUG font
         private SpriteFont consolas20;

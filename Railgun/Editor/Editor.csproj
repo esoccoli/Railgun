@@ -77,7 +77,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App\Controls\GridControl.cs">
+    <Compile Include="App\Controls\AbstractGridControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="App\Controls\CurrentTileDisplay.cs">
