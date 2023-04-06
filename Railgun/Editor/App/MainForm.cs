@@ -71,9 +71,11 @@ namespace Railgun.Editor.App
 
                 //Add tileset to tab control
                 tabControl_Tileset.TabPages.Add(tilesetName);
-                tabControl_Tileset.TabPages[i].Controls.Add(picker);
+                tabControl_Tileset.TabPages[i + 1].Controls.Add(picker);
                 
             }
+            //Remove landing page for propor initialization of tileset
+            tabControl_Tileset.TabPages.RemoveAt(0);
 
 
             //Add tile manager singelton to field
