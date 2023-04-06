@@ -249,13 +249,20 @@ namespace Railgun.Editor.App.Controls
         public void ComputeMousePosition()
         {
             //The mouse pos transformed by the inverse cam matrix
-            MouseCameraPosition = Vector2.Transform(
-                input.CurrentMouseState.Position.ToVector2(),
-                Matrix.Invert(Editor.Cam.Transform));
+            MouseCameraPosition = 
+                ComputePointToCamera(input.CurrentMouseState.Position.ToVector2());
 
             //Transform absolute mouse position by cam, get grid point of that
             MouseGridPosition = Map.GetGridPoint(MouseCameraPosition, GridSize).ToPoint();
         }
+
+        /// <summary>
+        /// Returns the specified absolute point in the camera space
+        /// </summary>
+        /// <param name="point">Absolute position</param>
+        /// <returns>Camera position of point</returns>
+        public Vector2 ComputePointToCamera(Vector2 point)
+            => Vector2.Transform(point, Matrix.Invert(Editor.Cam.Transform));
 
         #endregion
 

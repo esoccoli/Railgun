@@ -220,8 +220,8 @@ namespace Railgun.Editor.App.Controls
             ShapeBatch.Begin(Editor.graphics);
             ////
 
-            //Draw placing preview if placing a hitbox
-            if(tileManager.ViewHitboxes && tileManager.PlaceHitbox)
+            //Draw placing preview if placing a hitbox and mouse is withing control
+            if(tileManager.ViewHitboxes && tileManager.PlaceHitbox && IsMouseInsideControl)
             {
                 //The size of the hitbox
                 Vector2 sizeVector = new Vector2(GridSize * Editor.Cam.Zoom);

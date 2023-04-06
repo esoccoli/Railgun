@@ -12,8 +12,10 @@ namespace Railgun.Editor.App.Controls
     /// </summary>
     internal class TilePicker : AbstractGridControl
     {
-        //DEBUG
-        public PathedTexture testure;
+        /// <summary>
+        /// The tileset of this tile picker
+        /// </summary>
+        public PathedTexture tileSetTexture;
 
         #region Selection
 
@@ -59,7 +61,7 @@ namespace Railgun.Editor.App.Controls
         public void CreateTileSelection()
         {
             //Create tile from selection
-            TileManager.Instance.CurrentTile = new Tile(testure, selectionRectangle);
+            TileManager.Instance.CurrentTile = new Tile(tileSetTexture, selectionRectangle);
         }
 
         #endregion
@@ -88,7 +90,7 @@ namespace Railgun.Editor.App.Controls
             GridColor = Color.White * 0.5f;
 
             //Load DEBUG texture
-            testure = FileManager.LoadPathedTexture(Editor.Content, "tmp/Grass hill tiles v.2");
+            tileSetTexture = FileManager.LoadPathedTexture(Editor.Content, "tmp/Grass hill tiles v.2");
         }
 
         protected override void Update(GameTime gameTime)
@@ -114,8 +116,18 @@ namespace Railgun.Editor.App.Controls
                 }
             }
 
-            //Make sure camera is within reasonable bounds
-            
+
+            //Find the center of the viewport in camera space
+            Vector2 viewportCenter = 
+                ComputePointToCamera(new Vector2(Width / 2, Height / 2));
+
+            //Find the change in position when clamping to bounds
+            Vector2 changeInPosition = viewportCenter - Vector2.Clamp(viewportCenter, Vector2.Zero,
+                new Vector2(tileSetTexture.Texture.Width, tileSetTexture.Texture.Height));
+
+            //Move camera in opposite direction of change
+            Editor.Cam.Move(-changeInPosition);
+
         }
 
         protected override void Draw()
@@ -133,7 +145,7 @@ namespace Railgun.Editor.App.Controls
             ////
                 
 
-            Editor.spriteBatch.Draw(testure.Texture, Vector2.Zero, Color.White);
+            Editor.spriteBatch.Draw(tileSetTexture.Texture, Vector2.Zero, Color.White);
 
             //Highlight current selection
             Editor.spriteBatch.Draw(whitePixel,
@@ -151,7 +163,6 @@ namespace Railgun.Editor.App.Controls
                     selectionColor);
             }
             
-
             ////
             Editor.spriteBatch.End();
 

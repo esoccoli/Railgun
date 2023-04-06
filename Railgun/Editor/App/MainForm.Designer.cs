@@ -67,7 +67,7 @@
             this.panel_TileSizeSettings = new System.Windows.Forms.Panel();
             this.label_TileSize = new System.Windows.Forms.Label();
             this.textBox_TileSize = new System.Windows.Forms.TextBox();
-            this.label_Objects = new System.Windows.Forms.Label();
+            this.label_TilePicker = new System.Windows.Forms.Label();
             this.tableLayoutPanel_Edit = new System.Windows.Forms.TableLayoutPanel();
             this.panel_Edit = new System.Windows.Forms.Panel();
             this.tableLayoutPanel_EditTable = new System.Windows.Forms.TableLayoutPanel();
@@ -498,7 +498,7 @@
             this.tableLayoutPanel_Objects.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel_Objects.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel_Objects.Controls.Add(this.panel_Objects, 0, 1);
-            this.tableLayoutPanel_Objects.Controls.Add(this.label_Objects, 0, 0);
+            this.tableLayoutPanel_Objects.Controls.Add(this.label_TilePicker, 0, 0);
             this.tableLayoutPanel_Objects.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel_Objects.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel_Objects.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -605,18 +605,18 @@
             this.textBox_TileSize.TextChanged += new System.EventHandler(this.TileSize_TextChanged);
             this.textBox_TileSize.Leave += new System.EventHandler(this.TileSize_Leave);
             // 
-            // label_Objects
+            // label_TilePicker
             // 
-            this.label_Objects.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label_Objects.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.label_Objects.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label_Objects.Location = new System.Drawing.Point(0, 0);
-            this.label_Objects.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
-            this.label_Objects.Name = "label_Objects";
-            this.label_Objects.Size = new System.Drawing.Size(400, 16);
-            this.label_Objects.TabIndex = 3;
-            this.label_Objects.Text = "Objects";
-            this.label_Objects.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label_TilePicker.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label_TilePicker.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label_TilePicker.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label_TilePicker.Location = new System.Drawing.Point(0, 0);
+            this.label_TilePicker.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
+            this.label_TilePicker.Name = "label_TilePicker";
+            this.label_TilePicker.Size = new System.Drawing.Size(400, 16);
+            this.label_TilePicker.TabIndex = 3;
+            this.label_TilePicker.Text = "Tile Picker:";
+            this.label_TilePicker.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // tableLayoutPanel_Edit
             // 
@@ -1089,7 +1089,7 @@
         private System.Windows.Forms.SplitContainer splitContainer_LeftSideBar;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Objects;
         private System.Windows.Forms.Panel panel_Objects;
-        private System.Windows.Forms.Label label_Objects;
+        private System.Windows.Forms.Label label_TilePicker;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Edit;
         private System.Windows.Forms.Panel panel_Edit;
         private System.Windows.Forms.Label label_Edit;
