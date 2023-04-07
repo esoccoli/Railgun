@@ -80,6 +80,18 @@
 /processorParam:TextureFormat=Color
 /build:Tiles/Tall Grass hill tiles v.2.png
 
+#begin Tiles/Textures-16.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tiles/Textures-16.png
+
 #begin Tiles/Tiles.png
 /importer:TextureImporter
 /processor:TextureProcessor
