@@ -107,6 +107,9 @@ namespace Railgun.Editor.App.Controls
             base.Initialize();
             ////
 
+            //Set grid size
+            GridSize = 16f;
+
             //Set background color to panel
             Editor.BackgroundColor = new Color(51, 51, 51);
 

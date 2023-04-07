@@ -31,15 +31,10 @@ namespace Railgun.Editor.App
         private TileManager tileManager;
 
         /// <summary>
-        /// The index of the current tileset
-        /// </summary>
-        private int currentTilesetIndex;
-
-        /// <summary>
         /// Returns the current tile picker control
         /// </summary>
         public TilePicker CurrentTileset
-            => tabControl_Tileset.TabPages[currentTilesetIndex].Controls[0] as TilePicker;
+            => tabControl_Tileset.SelectedTab.Controls[0] as TilePicker;
 
 
         #endregion
@@ -694,5 +689,13 @@ namespace Railgun.Editor.App
 
         #endregion
 
+        /// <summary>
+        /// Called when the tileset tab is changed
+        /// </summary>
+        private void TabControl_Tileset_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Set tile size to current tileset's tile size
+            textBox_TileSize.Text = CurrentTileset.GridSize.ToString();
+        }
     }
 }

@@ -612,6 +612,7 @@
             this.tabControl_Tileset.SelectedIndex = 0;
             this.tabControl_Tileset.Size = new System.Drawing.Size(394, 292);
             this.tabControl_Tileset.TabIndex = 4;
+            this.tabControl_Tileset.SelectedIndexChanged += new System.EventHandler(this.TabControl_Tileset_SelectedIndexChanged);
             // 
             // tabPage_EmptyTileset
             // 
