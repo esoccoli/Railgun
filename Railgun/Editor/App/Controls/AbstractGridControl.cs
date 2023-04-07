@@ -244,7 +244,6 @@ namespace Railgun.Editor.App.Controls
         public virtual void ZoomEditor(float zoom)
         {
             //Zoom by adding a multiplied version of the current
-            //zoom by a positive or negative 1/15
             //doing this ensures that the scroll is almost constant
             //Clamp at values too big or small
             Editor.Cam.Zoom = MathHelper.Clamp(
