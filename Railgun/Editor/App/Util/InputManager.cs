@@ -74,6 +74,8 @@ namespace Railgun.Editor.App.Util
         /// </summary>
         public void Update()
         {
+            //DEBUG
+            DebugLog.Instance.LogFrame("Input updated", Microsoft.Xna.Framework.Color.Red);
             PrevMouseState = Mouse.GetState();
             PrevKeyboardState = Keyboard.GetState();
         }
@@ -173,7 +175,7 @@ namespace Railgun.Editor.App.Util
         /// 0 = no scrolling,
         /// </summary>
         /// <returns>The direction of scrolling</returns>
-        public float GetScrollDirection()
+        public int GetScrollDirection()
         {
             //Subtract last
             return Math.Sign(

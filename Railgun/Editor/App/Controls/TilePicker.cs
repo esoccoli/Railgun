@@ -26,11 +26,17 @@ namespace Railgun.Editor.App.Controls
         /// Creates a new tile picker with the specified tileset texture path.
         /// <para>Note: Texture is not created until after initialized</para>
         /// </summary>
-        /// <param name="textureNameArg">The texture path to generate tiles from</param>
+        /// <param name="textureNameArg">The texture path to generate tiles from.
+        /// If set to null, will not generate a texture</param>
         public TilePicker(string textureNameArg)
         {
             textureName = textureNameArg;
         }
+
+        /// <summary>
+        /// Default constructor for tile picker
+        /// </summary>
+        public TilePicker() : this(null) { }
 
         #region Selection
 
@@ -107,8 +113,11 @@ namespace Railgun.Editor.App.Controls
             //Set grid color
             GridColor = Color.White * 0.5f;
 
-            //Load tileset texture
-            tileSetTexture = FileManager.LoadPathedTexture(Editor.Content, textureName);
+            //Load tileset texture if not null
+            if(textureName != null)
+            {
+                tileSetTexture = FileManager.LoadPathedTexture(Editor.Content, textureName);
+            }
         }
 
         protected override void Update(GameTime gameTime)
@@ -116,35 +125,42 @@ namespace Railgun.Editor.App.Controls
             base.Update(gameTime);
             ////
 
-            PerformUserActions();
-
-            //If inside control
-            if(IsMouseInsideControl)
+            //Only update if there is a texture
+            if(tileSetTexture != null)
             {
-                //If selecting a tile
-                if(!panning && input.JustPressed(MouseButtonTypes.Left))
+                //DEBUG
+                DebugLog.Instance.LogFrame(textureName + " " + panning.ToString());
+
+                PerformUserActions();
+
+                //If inside control
+                if (IsMouseInsideControl)
                 {
-                    //Calculate selection rectangle to fit on grid
-                    selectionRectangle = 
-                        new Rectangle(
-                            MouseGridPosition * new Point((int)GridSize),
-                            new Point((int)GridSize));
+                    //If selecting a tile
+                    if (!panning && input.JustPressed(MouseButtonTypes.Left))
+                    {
+                        //Calculate selection rectangle to fit on grid
+                        selectionRectangle =
+                            new Rectangle(
+                                MouseGridPosition * new Point((int)GridSize),
+                                new Point((int)GridSize));
 
-                    CreateTileSelection();
+                        CreateTileSelection();
+                    }
                 }
+
+
+                //Find the center of the viewport in camera space
+                Vector2 viewportCenter =
+                    ComputePointToCamera(new Vector2(Width / 2, Height / 2));
+
+                //Find the change in position when clamping to bounds
+                Vector2 changeInPosition = viewportCenter - Vector2.Clamp(viewportCenter, Vector2.Zero,
+                    new Vector2(tileSetTexture.Value.Texture.Width, tileSetTexture.Value.Texture.Height));
+
+                //Move camera in opposite direction of change
+                Editor.Cam.Move(-changeInPosition);
             }
-
-
-            //Find the center of the viewport in camera space
-            Vector2 viewportCenter = 
-                ComputePointToCamera(new Vector2(Width / 2, Height / 2));
-
-            //Find the change in position when clamping to bounds
-            Vector2 changeInPosition = viewportCenter - Vector2.Clamp(viewportCenter, Vector2.Zero,
-                new Vector2(tileSetTexture.Value.Texture.Width, tileSetTexture.Value.Texture.Height));
-
-            //Move camera in opposite direction of change
-            Editor.Cam.Move(-changeInPosition);
 
         }
 
@@ -153,61 +169,65 @@ namespace Railgun.Editor.App.Controls
             base.Draw();
             ////
 
-            Editor.spriteBatch.Begin(SpriteSortMode.Deferred,
+            //Only draw if there is a valid texture
+            if(tileSetTexture != null)
+            {
+                Editor.spriteBatch.Begin(SpriteSortMode.Deferred,
                 BlendState.AlphaBlend,//Better transparency
                 SamplerState.PointClamp,//Perfect Pixelation
                 DepthStencilState.Default,
                 RasterizerState.CullNone,
                 null,//No shaders
                 Editor.Cam.Transform);//Transform by camera
-            ////
-                
+                                      ////
 
-            Editor.spriteBatch.Draw(tileSetTexture.Value.Texture, Vector2.Zero, Color.White);
 
-            //Highlight current selection
-            Editor.spriteBatch.Draw(whitePixel,
-                selectionRectangle, selectionColor);
+                Editor.spriteBatch.Draw(tileSetTexture.Value.Texture, Vector2.Zero, Color.White);
 
-            //If inside control
-            if(IsMouseInsideControl)
-            {
-                //Highlight current mouse over
-                Editor.spriteBatch.Draw(
-                    whitePixel,
-                    new Rectangle(
-                        MouseGridPosition * new Point((int)GridSize),
-                        new Point((int)GridSize)),
-                    selectionColor);
+                //Highlight current selection
+                Editor.spriteBatch.Draw(whitePixel,
+                    selectionRectangle, selectionColor);
+
+                //If inside control
+                if (IsMouseInsideControl)
+                {
+                    //Highlight current mouse over
+                    Editor.spriteBatch.Draw(
+                        whitePixel,
+                        new Rectangle(
+                            MouseGridPosition * new Point((int)GridSize),
+                            new Point((int)GridSize)),
+                        selectionColor);
+                }
+
+                ////
+                Editor.spriteBatch.End();
+
+                //Draw grid and other shapebatch visuals
+
+                //Begin shapebatch without depth (so that shapes are drawn to the top)
+                Editor.graphics.DepthStencilState = DepthStencilState.None;
+                Editor.graphics.BlendState = BlendState.NonPremultiplied;//For shapebatch transparency
+                ShapeBatch.Begin(Editor.graphics);
+                ////
+
+                DrawGrid();
+
+
+                //The grid size relative to the camera's zoom
+                float cameraGridSize = GridSize * Editor.Cam.Zoom;
+
+                //Compute selection rectangle based on cam transformation
+                ShapeBatch.BoxOutline(
+                    selectionRectangle.X * Editor.Cam.Zoom + Editor.Cam.Transform.Translation.X,
+                    selectionRectangle.Y * Editor.Cam.Zoom + Editor.Cam.Transform.Translation.Y,
+                    cameraGridSize, cameraGridSize, selectionOutlineColor);
+
+                ////
+                ShapeBatch.End();
+                //Set depth back to default
+                Editor.graphics.DepthStencilState = DepthStencilState.Default;
             }
-            
-            ////
-            Editor.spriteBatch.End();
-
-            //Draw grid and other shapebatch visuals
-
-            //Begin shapebatch without depth (so that shapes are drawn to the top)
-            Editor.graphics.DepthStencilState = DepthStencilState.None;
-            Editor.graphics.BlendState = BlendState.NonPremultiplied;//For shapebatch transparency
-            ShapeBatch.Begin(Editor.graphics);
-            ////
-
-            DrawGrid();
-
-
-            //The grid size relative to the camera's zoom
-            float cameraGridSize = GridSize * Editor.Cam.Zoom;
-
-            //Compute selection rectangle based on cam transformation
-            ShapeBatch.BoxOutline(
-                selectionRectangle.X * Editor.Cam.Zoom + Editor.Cam.Transform.Translation.X,
-                selectionRectangle.Y * Editor.Cam.Zoom + Editor.Cam.Transform.Translation.Y,
-                cameraGridSize, cameraGridSize, selectionOutlineColor);
-
-            ////
-            ShapeBatch.End();
-            //Set depth back to default
-            Editor.graphics.DepthStencilState = DepthStencilState.Default;
         }
 
         #endregion

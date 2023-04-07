@@ -38,8 +38,9 @@ namespace Railgun.Editor.App
         /// <summary>
         /// Returns the current tile picker control
         /// </summary>
-        public TilePicker CurrentTileset 
+        public TilePicker CurrentTileset
             => tabControl_Tileset.TabPages[currentTilesetIndex].Controls[0] as TilePicker;
+
 
         #endregion
 
@@ -50,7 +51,32 @@ namespace Railgun.Editor.App
         /// </summary>
         public MainForm()
         {
+            //Initialize components from designer
             InitializeComponent();
+
+            //Create tile pickers for every tileset in the tiles folder
+            string[] fileNames = Directory.GetFiles(Path.GetFullPath("../../Content/Tiles/"));
+
+            //If there are any files within Tiles
+            if(fileNames.Length < 0 )
+            {
+                for (int i = 0; i < fileNames.Length; i++)
+                {
+                    string tilesetName = FileManager.GetFileNameNoExtension(fileNames[i]);
+
+                    TilePicker picker = new TilePicker("Tiles/" + tilesetName)
+                    {
+                        Dock = DockStyle.Fill
+                    };
+
+                    //Add tileset to tab control
+                    tabControl_Tileset.TabPages.Add(tilesetName);
+                    tabControl_Tileset.TabPages[i + 1].Controls.Add(picker);
+
+                }
+                //Remove landing page
+                tabControl_Tileset.TabPages.RemoveAt(0);
+            }
         }
 
         /// <summary>
@@ -58,26 +84,6 @@ namespace Railgun.Editor.App
         /// </summary>
         private void MainForm_Load(object sender, EventArgs e)
         {
-            //Create tile pickers for every tileset in the tiles folder
-            string[] fileNames = Directory.GetFiles(Path.GetFullPath("../../Content/Tiles/"));
-            for(int i = 0; i < fileNames.Length; i++)
-            {
-                string tilesetName = FileManager.GetFileNameNoExtension(fileNames[i]);
-
-                TilePicker picker = new TilePicker("Tiles/" + tilesetName)
-                {
-                    Dock = DockStyle.Fill
-                };
-
-                //Add tileset to tab control
-                tabControl_Tileset.TabPages.Add(tilesetName);
-                tabControl_Tileset.TabPages[i + 1].Controls.Add(picker);
-                
-            }
-            //Remove landing page for propor initialization of tileset
-            tabControl_Tileset.TabPages.RemoveAt(0);
-
-
             //Add tile manager singelton to field
             tileManager = TileManager.Instance;
 
@@ -223,8 +229,9 @@ namespace Railgun.Editor.App
                 ColorControls(control.Controls);
             }
 
-            //Set background color as an outline
+            //Set other colors manually
             BackColor = DarkTheme.Outline;
+            label_NoTilesets.BackColor = DarkTheme.Panel;
         }
 
         #endregion

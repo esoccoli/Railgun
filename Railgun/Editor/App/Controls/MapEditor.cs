@@ -158,7 +158,7 @@ namespace Railgun.Editor.App.Controls
 
 
             //Invoke update event
-            OnUpdate();
+            OnUpdate?.Invoke();
         }
 
         protected override void Draw()
@@ -284,7 +284,7 @@ namespace Railgun.Editor.App.Controls
             base.OnMouseDown(e);
 
             //If alt dragging or middle dragging
-            if (e.Button == System.Windows.Forms.MouseButtons.Right ||
+            if(e.Button == System.Windows.Forms.MouseButtons.Right ||
                 (input.IsDown(Keys.LeftShift) &&
                 e.Button == System.Windows.Forms.MouseButtons.Left))
             {

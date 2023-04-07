@@ -111,6 +111,10 @@ namespace Railgun.Editor.App.Controls
         }
         private float maxZoom;
 
+        public void INITIALIZEE()
+        {
+            Initialize();
+        }
 
         protected override void Initialize()
         {
@@ -129,7 +133,6 @@ namespace Railgun.Editor.App.Controls
             //Create generic white pixel
             whitePixel = new Texture2D(GraphicsDevice, 1, 1);
             whitePixel.SetData(new Color[] { Color.White });
-
         }
 
         protected override void Update(GameTime gameTime)
@@ -193,6 +196,11 @@ namespace Railgun.Editor.App.Controls
                     (input.PrevMouseState.Position -
                     input.CurrentMouseState.Position)
                     .ToVector2() / Editor.Cam.Zoom);
+
+                //DEBUG
+                DebugLog.Instance.LogFrame("Last pos:"+input.PrevMouseState.Position.ToString());
+                DebugLog.Instance.LogFrame("Current pos:" + input.CurrentMouseState.Position.ToString());
+                DebugLog.Instance.LogFrame("Difference:" + (input.PrevMouseState.Position - input.CurrentMouseState.Position).ToString());
             }
 
             //Only perform if mouse is inside this control
