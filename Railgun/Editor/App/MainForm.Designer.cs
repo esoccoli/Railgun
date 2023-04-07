@@ -95,6 +95,13 @@
             this.comboBox_Layers = new System.Windows.Forms.ComboBox();
             this.checkBox_ShowHitboxes = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel_MainOutline = new System.Windows.Forms.TableLayoutPanel();
+            this.toolStripStatusLabel_LabelRotation = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel_ValueRotation = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel_LabelFlip = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel_ValueFlip = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel_Spring = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel_ValueFPS = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_MainEditor)).BeginInit();
@@ -396,7 +403,14 @@
             this.toolStripStatusLabel_LabelY,
             this.toolStripStatusLabel_ValueY,
             this.toolStripStatusLabel_LabelZoom,
-            this.toolStripStatusLabel_ValueZoom});
+            this.toolStripStatusLabel_ValueZoom,
+            this.toolStripStatusLabel_LabelRotation,
+            this.toolStripStatusLabel_ValueRotation,
+            this.toolStripStatusLabel_LabelFlip,
+            this.toolStripStatusLabel_ValueFlip,
+            this.toolStripStatusLabel_Spring,
+            this.toolStripStatusLabel1,
+            this.toolStripStatusLabel_ValueFPS});
             this.statusStrip.Location = new System.Drawing.Point(0, 816);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 13, 0);
@@ -408,8 +422,8 @@
             // 
             this.toolStripStatusLabel_LabelX.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripStatusLabel_LabelX.Name = "toolStripStatusLabel_LabelX";
-            this.toolStripStatusLabel_LabelX.Size = new System.Drawing.Size(21, 20);
-            this.toolStripStatusLabel_LabelX.Text = "X:";
+            this.toolStripStatusLabel_LabelX.Size = new System.Drawing.Size(69, 20);
+            this.toolStripStatusLabel_LabelX.Text = "Mouse X:";
             // 
             // toolStripStatusLabel_ValueX
             // 
@@ -423,8 +437,8 @@
             this.toolStripStatusLabel_LabelY.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripStatusLabel_LabelY.Margin = new System.Windows.Forms.Padding(20, 4, 0, 2);
             this.toolStripStatusLabel_LabelY.Name = "toolStripStatusLabel_LabelY";
-            this.toolStripStatusLabel_LabelY.Size = new System.Drawing.Size(20, 20);
-            this.toolStripStatusLabel_LabelY.Text = "Y:";
+            this.toolStripStatusLabel_LabelY.Size = new System.Drawing.Size(68, 20);
+            this.toolStripStatusLabel_LabelY.Text = "Mouse Y:";
             // 
             // toolStripStatusLabel_ValueY
             // 
@@ -439,7 +453,6 @@
             this.toolStripStatusLabel_LabelZoom.Name = "toolStripStatusLabel_LabelZoom";
             this.toolStripStatusLabel_LabelZoom.Size = new System.Drawing.Size(52, 20);
             this.toolStripStatusLabel_LabelZoom.Text = "Zoom:";
-            this.toolStripStatusLabel_LabelZoom.ToolTipText = "Reset Camera Zoom";
             // 
             // toolStripStatusLabel_ValueZoom
             // 
@@ -1015,6 +1028,54 @@
             this.tableLayoutPanel_MainOutline.Size = new System.Drawing.Size(1343, 771);
             this.tableLayoutPanel_MainOutline.TabIndex = 6;
             // 
+            // toolStripStatusLabel_LabelRotation
+            // 
+            this.toolStripStatusLabel_LabelRotation.Margin = new System.Windows.Forms.Padding(20, 4, 0, 2);
+            this.toolStripStatusLabel_LabelRotation.Name = "toolStripStatusLabel_LabelRotation";
+            this.toolStripStatusLabel_LabelRotation.Size = new System.Drawing.Size(121, 20);
+            this.toolStripStatusLabel_LabelRotation.Text = "Current Rotation:";
+            // 
+            // toolStripStatusLabel_ValueRotation
+            // 
+            this.toolStripStatusLabel_ValueRotation.Font = new System.Drawing.Font("Courier New", 9F);
+            this.toolStripStatusLabel_ValueRotation.Name = "toolStripStatusLabel_ValueRotation";
+            this.toolStripStatusLabel_ValueRotation.Size = new System.Drawing.Size(35, 20);
+            this.toolStripStatusLabel_ValueRotation.Text = "000";
+            // 
+            // toolStripStatusLabel_LabelFlip
+            // 
+            this.toolStripStatusLabel_LabelFlip.Margin = new System.Windows.Forms.Padding(20, 4, 0, 2);
+            this.toolStripStatusLabel_LabelFlip.Name = "toolStripStatusLabel_LabelFlip";
+            this.toolStripStatusLabel_LabelFlip.Size = new System.Drawing.Size(88, 20);
+            this.toolStripStatusLabel_LabelFlip.Text = "Current Flip:";
+            // 
+            // toolStripStatusLabel_ValueFlip
+            // 
+            this.toolStripStatusLabel_ValueFlip.Font = new System.Drawing.Font("Courier New", 9F);
+            this.toolStripStatusLabel_ValueFlip.Name = "toolStripStatusLabel_ValueFlip";
+            this.toolStripStatusLabel_ValueFlip.Size = new System.Drawing.Size(44, 20);
+            this.toolStripStatusLabel_ValueFlip.Text = "None";
+            // 
+            // toolStripStatusLabel_Spring
+            // 
+            this.toolStripStatusLabel_Spring.Name = "toolStripStatusLabel_Spring";
+            this.toolStripStatusLabel_Spring.Size = new System.Drawing.Size(502, 20);
+            this.toolStripStatusLabel_Spring.Spring = true;
+            // 
+            // toolStripStatusLabel_ValueFPS
+            // 
+            this.toolStripStatusLabel_ValueFPS.Font = new System.Drawing.Font("Courier New", 9F);
+            this.toolStripStatusLabel_ValueFPS.Name = "toolStripStatusLabel_ValueFPS";
+            this.toolStripStatusLabel_ValueFPS.Size = new System.Drawing.Size(62, 20);
+            this.toolStripStatusLabel_ValueFPS.Text = "000.00";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Margin = new System.Windows.Forms.Padding(20, 4, 0, 2);
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(35, 20);
+            this.toolStripStatusLabel1.Text = "FPS:";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1146,5 +1207,12 @@
         private System.Windows.Forms.TabPage tabPage_EmptyTileset;
         private Controls.TilePicker tilePicker_Empty;
         private System.Windows.Forms.Label label_NoTilesets;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_LabelRotation;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_ValueRotation;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_LabelFlip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_ValueFlip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_Spring;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_ValueFPS;
     }
 }
