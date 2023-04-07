@@ -280,9 +280,16 @@ namespace Railgun.Editor.App
             //Set zoom amount
             toolStripStatusLabel_ValueZoom.Text = mapEditor.Editor.Cam.Zoom
                 .ToString("0.00");
-
-            //DEBUG
-            //DebugLog.Instance.LogFrame("Layer Count: " + mapEditor.CurrentMap.Layers.Count);
+            //Rotation of current tile in degrees
+            toolStripStatusLabel_ValueRotation.Text = 
+                Microsoft.Xna.Framework.MathHelper.ToDegrees(
+                    tileManager.CurrentTile.Rotation).ToString(" 000;-000");
+            //Current flip of tile
+            toolStripStatusLabel_ValueFlip.Text =
+                tileManager.CurrentTile.SpriteEffect.ToString().PadRight(16);
+            //Current fps
+            toolStripStatusLabel_ValueFPS.Text = 
+                mapEditor.Editor.GetFrameRate.ToString("000");
         }
 
         /// <summary>
@@ -546,6 +553,15 @@ namespace Railgun.Editor.App
         }
 
         /// <summary>
+        /// Called when the tileset tab is changed
+        /// </summary>
+        private void TabControl_Tileset_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Set tile size to current tileset's tile size
+            textBox_TileSize.Text = CurrentTileset.GridSize.ToString();
+        }
+
+        /// <summary>
         /// Updates the tile display based on the layer
         /// </summary>
         private void UpdateLayerDisplay()
@@ -688,14 +704,5 @@ namespace Railgun.Editor.App
         }
 
         #endregion
-
-        /// <summary>
-        /// Called when the tileset tab is changed
-        /// </summary>
-        private void TabControl_Tileset_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //Set tile size to current tileset's tile size
-            textBox_TileSize.Text = CurrentTileset.GridSize.ToString();
-        }
     }
 }

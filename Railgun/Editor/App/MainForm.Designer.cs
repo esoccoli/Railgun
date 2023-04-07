@@ -69,7 +69,6 @@
             this.panel_TilePicker = new System.Windows.Forms.Panel();
             this.tabControl_Tileset = new System.Windows.Forms.TabControl();
             this.tabPage_EmptyTileset = new System.Windows.Forms.TabPage();
-            this.tilePicker_Empty = new Railgun.Editor.App.Controls.TilePicker();
             this.label_NoTilesets = new System.Windows.Forms.Label();
             this.label_TilePicker = new System.Windows.Forms.Label();
             this.tableLayoutPanel_Edit = new System.Windows.Forms.TableLayoutPanel();
@@ -79,7 +78,6 @@
             this.button_Edit_FlipVertical = new System.Windows.Forms.Button();
             this.button_Edit_RotateCW = new System.Windows.Forms.Button();
             this.button_Edit_RotateCCW = new System.Windows.Forms.Button();
-            this.currentTileDisplay = new Railgun.Editor.App.Controls.CurrentTileDisplay();
             this.button_Edit_Up = new System.Windows.Forms.Button();
             this.button_Edit_Left = new System.Windows.Forms.Button();
             this.button_Edit_Down = new System.Windows.Forms.Button();
@@ -88,7 +86,6 @@
             this.tableLayoutPanel_EditSettings = new System.Windows.Forms.TableLayoutPanel();
             this.checkBox_Solid = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel_MainEditor = new System.Windows.Forms.TableLayoutPanel();
-            this.mapEditor = new Railgun.Editor.App.Controls.MapEditor();
             this.tableLayoutPanel_MainEditorSettings = new System.Windows.Forms.TableLayoutPanel();
             this.panel_LayerSettings = new System.Windows.Forms.Panel();
             this.label_Layers = new System.Windows.Forms.Label();
@@ -101,7 +98,10 @@
             this.toolStripStatusLabel_ValueFlip = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel_Spring = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel_ValueFPS = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel_LabelFPS = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tilePicker_Empty = new Railgun.Editor.App.Controls.TilePicker();
+            this.currentTileDisplay = new Railgun.Editor.App.Controls.CurrentTileDisplay();
+            this.mapEditor = new Railgun.Editor.App.Controls.MapEditor();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_MainEditor)).BeginInit();
@@ -409,7 +409,7 @@
             this.toolStripStatusLabel_LabelFlip,
             this.toolStripStatusLabel_ValueFlip,
             this.toolStripStatusLabel_Spring,
-            this.toolStripStatusLabel1,
+            this.toolStripStatusLabel_LabelFPS,
             this.toolStripStatusLabel_ValueFPS});
             this.statusStrip.Location = new System.Drawing.Point(0, 816);
             this.statusStrip.Name = "statusStrip";
@@ -638,22 +638,6 @@
             this.tabPage_EmptyTileset.Text = "Error";
             this.tabPage_EmptyTileset.UseVisualStyleBackColor = true;
             // 
-            // tilePicker_Empty
-            // 
-            this.tilePicker_Empty.BackColor = System.Drawing.Color.White;
-            this.tilePicker_Empty.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
-            this.tilePicker_Empty.ForeColor = System.Drawing.Color.Black;
-            this.tilePicker_Empty.GridSize = 0F;
-            this.tilePicker_Empty.Location = new System.Drawing.Point(3, 3);
-            this.tilePicker_Empty.MaxZoom = 0.1F;
-            this.tilePicker_Empty.MinZoom = 0.1F;
-            this.tilePicker_Empty.MouseHoverUpdatesOnly = false;
-            this.tilePicker_Empty.Name = "tilePicker_Empty";
-            this.tilePicker_Empty.Size = new System.Drawing.Size(93, 45);
-            this.tilePicker_Empty.TabIndex = 2;
-            this.tilePicker_Empty.Text = "tilePicker1";
-            this.tilePicker_Empty.Visible = false;
-            // 
             // label_NoTilesets
             // 
             this.label_NoTilesets.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -799,21 +783,6 @@
             this.button_Edit_RotateCCW.UseVisualStyleBackColor = true;
             this.button_Edit_RotateCCW.Click += new System.EventHandler(this.Menu_Edit_Rotate90CCW_Click);
             // 
-            // currentTileDisplay
-            // 
-            this.currentTileDisplay.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.currentTileDisplay.BackColor = System.Drawing.SystemColors.Control;
-            this.tableLayoutPanel_EditTable.SetColumnSpan(this.currentTileDisplay, 3);
-            this.currentTileDisplay.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
-            this.currentTileDisplay.ForeColor = System.Drawing.Color.Black;
-            this.currentTileDisplay.Location = new System.Drawing.Point(125, 84);
-            this.currentTileDisplay.Margin = new System.Windows.Forms.Padding(0);
-            this.currentTileDisplay.Name = "currentTileDisplay";
-            this.tableLayoutPanel_EditTable.SetRowSpan(this.currentTileDisplay, 3);
-            this.currentTileDisplay.Size = new System.Drawing.Size(149, 150);
-            this.currentTileDisplay.TabIndex = 1;
-            this.currentTileDisplay.Text = "currentTileDisplay";
-            // 
             // button_Edit_Up
             // 
             this.button_Edit_Up.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -923,25 +892,6 @@
             this.tableLayoutPanel_MainEditor.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel_MainEditor.Size = new System.Drawing.Size(939, 763);
             this.tableLayoutPanel_MainEditor.TabIndex = 2;
-            // 
-            // mapEditor
-            // 
-            this.mapEditor.BackColor = System.Drawing.SystemColors.Control;
-            this.mapEditor.CurrentMap = null;
-            this.mapEditor.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.mapEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mapEditor.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mapEditor.ForeColor = System.Drawing.Color.Black;
-            this.mapEditor.Location = new System.Drawing.Point(0, 52);
-            this.mapEditor.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.mapEditor.MaxZoom = 0.1F;
-            this.mapEditor.MinZoom = 0.1F;
-            this.mapEditor.MouseHoverUpdatesOnly = false;
-            this.mapEditor.Name = "mapEditor";
-            this.mapEditor.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.mapEditor.Size = new System.Drawing.Size(939, 711);
-            this.mapEditor.TabIndex = 1;
-            this.mapEditor.Text = "mainEditorPanel";
             // 
             // tableLayoutPanel_MainEditorSettings
             // 
@@ -1059,22 +1009,72 @@
             // toolStripStatusLabel_Spring
             // 
             this.toolStripStatusLabel_Spring.Name = "toolStripStatusLabel_Spring";
-            this.toolStripStatusLabel_Spring.Size = new System.Drawing.Size(502, 20);
+            this.toolStripStatusLabel_Spring.Size = new System.Drawing.Size(529, 20);
             this.toolStripStatusLabel_Spring.Spring = true;
             // 
             // toolStripStatusLabel_ValueFPS
             // 
             this.toolStripStatusLabel_ValueFPS.Font = new System.Drawing.Font("Courier New", 9F);
             this.toolStripStatusLabel_ValueFPS.Name = "toolStripStatusLabel_ValueFPS";
-            this.toolStripStatusLabel_ValueFPS.Size = new System.Drawing.Size(62, 20);
-            this.toolStripStatusLabel_ValueFPS.Text = "000.00";
+            this.toolStripStatusLabel_ValueFPS.Size = new System.Drawing.Size(35, 20);
+            this.toolStripStatusLabel_ValueFPS.Text = "000";
             // 
-            // toolStripStatusLabel1
+            // toolStripStatusLabel_LabelFPS
             // 
-            this.toolStripStatusLabel1.Margin = new System.Windows.Forms.Padding(20, 4, 0, 2);
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(35, 20);
-            this.toolStripStatusLabel1.Text = "FPS:";
+            this.toolStripStatusLabel_LabelFPS.Margin = new System.Windows.Forms.Padding(20, 4, 0, 2);
+            this.toolStripStatusLabel_LabelFPS.Name = "toolStripStatusLabel_LabelFPS";
+            this.toolStripStatusLabel_LabelFPS.Size = new System.Drawing.Size(35, 20);
+            this.toolStripStatusLabel_LabelFPS.Text = "FPS:";
+            // 
+            // tilePicker_Empty
+            // 
+            this.tilePicker_Empty.BackColor = System.Drawing.Color.White;
+            this.tilePicker_Empty.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
+            this.tilePicker_Empty.ForeColor = System.Drawing.Color.Black;
+            this.tilePicker_Empty.GridSize = 0F;
+            this.tilePicker_Empty.Location = new System.Drawing.Point(3, 3);
+            this.tilePicker_Empty.MaxZoom = 0.1F;
+            this.tilePicker_Empty.MinZoom = 0.1F;
+            this.tilePicker_Empty.MouseHoverUpdatesOnly = false;
+            this.tilePicker_Empty.Name = "tilePicker_Empty";
+            this.tilePicker_Empty.Size = new System.Drawing.Size(93, 45);
+            this.tilePicker_Empty.TabIndex = 2;
+            this.tilePicker_Empty.Text = "tilePicker1";
+            this.tilePicker_Empty.Visible = false;
+            // 
+            // currentTileDisplay
+            // 
+            this.currentTileDisplay.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.currentTileDisplay.BackColor = System.Drawing.SystemColors.Control;
+            this.tableLayoutPanel_EditTable.SetColumnSpan(this.currentTileDisplay, 3);
+            this.currentTileDisplay.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
+            this.currentTileDisplay.ForeColor = System.Drawing.Color.Black;
+            this.currentTileDisplay.Location = new System.Drawing.Point(125, 84);
+            this.currentTileDisplay.Margin = new System.Windows.Forms.Padding(0);
+            this.currentTileDisplay.Name = "currentTileDisplay";
+            this.tableLayoutPanel_EditTable.SetRowSpan(this.currentTileDisplay, 3);
+            this.currentTileDisplay.Size = new System.Drawing.Size(149, 150);
+            this.currentTileDisplay.TabIndex = 1;
+            this.currentTileDisplay.Text = "currentTileDisplay";
+            // 
+            // mapEditor
+            // 
+            this.mapEditor.BackColor = System.Drawing.SystemColors.Control;
+            this.mapEditor.CurrentMap = null;
+            this.mapEditor.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.mapEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mapEditor.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mapEditor.ForeColor = System.Drawing.Color.Black;
+            this.mapEditor.Location = new System.Drawing.Point(0, 52);
+            this.mapEditor.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.mapEditor.MaxZoom = 0.1F;
+            this.mapEditor.MinZoom = 0.1F;
+            this.mapEditor.MouseHoverUpdatesOnly = false;
+            this.mapEditor.Name = "mapEditor";
+            this.mapEditor.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.mapEditor.Size = new System.Drawing.Size(939, 711);
+            this.mapEditor.TabIndex = 1;
+            this.mapEditor.Text = "mainEditorPanel";
             // 
             // MainForm
             // 
@@ -1212,7 +1212,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_LabelFlip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_ValueFlip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_Spring;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_LabelFPS;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_ValueFPS;
     }
 }
