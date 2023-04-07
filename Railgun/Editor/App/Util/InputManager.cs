@@ -46,13 +46,13 @@ namespace Railgun.Editor.App.Util
         #endregion
 
         /// <summary>
-        /// Returns the current mouse state
+        /// The current mouse state based on the last update cycle
         /// </summary>
-        public MouseState CurrentMouseState { get => Mouse.GetState(); }
+        public MouseState CurrentMouseState { get; private set; }
         /// <summary>
-        /// Returns the current keyboard state
+        /// The current keyboard state based on the last update cycle
         /// </summary>
-        public KeyboardState CurrentKeyboardState { get => Keyboard.GetState(); }
+        public KeyboardState CurrentKeyboardState { get; private set; }
         /// <summary>
         /// The mouse state of the pevious update cycle
         /// </summary>
@@ -74,10 +74,15 @@ namespace Railgun.Editor.App.Util
         /// </summary>
         public void Update()
         {
+            PrevMouseState = CurrentMouseState;
+            PrevKeyboardState = CurrentKeyboardState;
+
+            //Set the current as well for more consistancy
+            CurrentMouseState = Mouse.GetState();
+            CurrentKeyboardState = Keyboard.GetState();
+
             //DEBUG
             DebugLog.Instance.LogFrame("Input updated", Microsoft.Xna.Framework.Color.Red);
-            PrevMouseState = Mouse.GetState();
-            PrevKeyboardState = Keyboard.GetState();
         }
 
         /// <summary>
