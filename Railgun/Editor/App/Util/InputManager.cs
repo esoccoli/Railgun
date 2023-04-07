@@ -174,18 +174,13 @@ namespace Railgun.Editor.App.Util
             => !IsDown(button) && WasDown(button);
 
         /// <summary>
-        /// Returns 1,0,-1 representing the scroll wheel direction
-        /// 1 = up,
-        /// -1 = down,
-        /// 0 = no scrolling,
+        /// Returns the change in the scroll wheel/trackpad since the last update
         /// </summary>
-        /// <returns>The direction of scrolling</returns>
-        public int GetScrollDirection()
+        /// <returns>The scroll change</returns>
+        public int GetScrollChange()
         {
-            //Subtract last
-            return Math.Sign(
-                CurrentMouseState.ScrollWheelValue -
-                PrevMouseState.ScrollWheelValue);
+            return CurrentMouseState.ScrollWheelValue -
+                PrevMouseState.ScrollWheelValue;
         }
     }
 }

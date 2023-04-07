@@ -207,7 +207,7 @@ namespace Railgun.Editor.App.Controls
             if(IsMouseInsideControl)
             {
                 //Zoom based on scrolling
-                ZoomEditor(input.GetScrollDirection());
+                ZoomEditor(input.GetScrollChange() * 0.05f);
 
                 //Zoom if minus or plus is pressed
                 if (input.IsDown(Keys.OemMinus))
