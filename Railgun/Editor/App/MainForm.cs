@@ -54,29 +54,33 @@ namespace Railgun.Editor.App
             //Initialize components from designer
             InitializeComponent();
 
-            //Create tile pickers for every tileset in the tiles folder
-            string[] fileNames = Directory.GetFiles(Path.GetFullPath("../../Content/Tiles/"));
-
-            //If there are any files within Tiles
-            if(fileNames.Length < 0 )
+            try
             {
-                for (int i = 0; i < fileNames.Length; i++)
+                //Create tile pickers for every tileset in the tiles folder
+                string[] fileNames = Directory.GetFiles(Path.GetFullPath("../../Content/Tiles/"));
+
+                //If there are any files within Tiles
+                if (fileNames.Length > 0)
                 {
-                    string tilesetName = FileManager.GetFileNameNoExtension(fileNames[i]);
-
-                    TilePicker picker = new TilePicker("Tiles/" + tilesetName)
+                    for (int i = 0; i < fileNames.Length; i++)
                     {
-                        Dock = DockStyle.Fill
-                    };
+                        string tilesetName = FileManager.GetFileNameNoExtension(fileNames[i]);
 
-                    //Add tileset to tab control
-                    tabControl_Tileset.TabPages.Add(tilesetName);
-                    tabControl_Tileset.TabPages[i + 1].Controls.Add(picker);
+                        TilePicker picker = new TilePicker("Tiles/" + tilesetName)
+                        {
+                            Dock = DockStyle.Fill
+                        };
 
+                        //Add tileset to tab control
+                        tabControl_Tileset.TabPages.Add(tilesetName);
+                        tabControl_Tileset.TabPages[i + 1].Controls.Add(picker);
+
+                    }
+                    //Remove landing page
+                    tabControl_Tileset.TabPages.RemoveAt(0);
                 }
-                //Remove landing page
-                tabControl_Tileset.TabPages.RemoveAt(0);
             }
+            catch { }//If error, it will show the error landing page
         }
 
         /// <summary>
