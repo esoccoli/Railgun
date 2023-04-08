@@ -21,6 +21,7 @@ namespace Railgun.Editor.App
         public static Color Label => Color.White;//Color.FromArgb(224, 224, 224);
         public static Color Panel => Color.FromArgb(51, 51, 51);
         public static Color Highlight => Color.FromArgb(80, 80, 80);
+        //public static Color Button => Color.FromArgb(64, 64, 64);
 
         //Set color table
         public override Color MenuItemSelected => Highlight;

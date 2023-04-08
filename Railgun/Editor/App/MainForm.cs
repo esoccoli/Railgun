@@ -209,6 +209,9 @@ namespace Railgun.Editor.App
                     CheckBox checkBox = control as CheckBox;
                     checkBox.BackColor = DarkTheme.Panel;
                     checkBox.ForeColor = DarkTheme.Label;
+                    checkBox.FlatAppearance.BorderColor = DarkTheme.Base;
+                    checkBox.FlatAppearance.MouseOverBackColor = DarkTheme.Highlight;
+                    checkBox.FlatAppearance.MouseDownBackColor = DarkTheme.Base;
                 }
                 //If combobox
                 else if (control is ComboBox)
@@ -216,6 +219,16 @@ namespace Railgun.Editor.App
                     ComboBox comboBox = control as ComboBox;
                     comboBox.BackColor = DarkTheme.Base;
                     comboBox.ForeColor = DarkTheme.Label;
+                }
+                //If button
+                else if (control is Button)
+                {
+                    Button button = control as Button;
+                    button.BackColor = DarkTheme.Panel;
+                    button.ForeColor = DarkTheme.Label;
+                    button.FlatAppearance.BorderColor = DarkTheme.Highlight;
+                    button.FlatAppearance.MouseOverBackColor = DarkTheme.Highlight;
+                    button.FlatAppearance.MouseDownBackColor = DarkTheme.Base;
                 }
                 else
                 {
@@ -578,15 +591,12 @@ namespace Railgun.Editor.App
             {
                 //Hide tile picker
                 tableLayoutPanel_TilePicker.Visible = false;
-                //panel_Objects.Visible = false;
-                //Set current tile to empty texture
                 tileManager.CurrentTile = Tile.Empty;
                 return;
             }
 
             //Show tile picker
             tableLayoutPanel_TilePicker.Visible = true;
-
 
             //Else set to current selection
             CurrentTileset.CreateTileSelection();

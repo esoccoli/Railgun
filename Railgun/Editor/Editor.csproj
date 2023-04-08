@@ -161,8 +161,16 @@
     <None Include="Resources\Normal.png" />
     <None Include="Resources\Logo.png" />
     <Content Include="Resources\clockwise-rotation.png" />
+    <None Include="Resources\Clockwise.png" />
+    <None Include="Resources\Counter Clockwise.png" />
+    <None Include="Resources\Flip Horizontal.png" />
+    <None Include="Resources\Flip Vertical.png" />
     <Content Include="Resources\High Contrast Logo.ico" />
     <Content Include="Resources\High Contrast Logo.png" />
+    <None Include="Resources\Move Up.png" />
+    <None Include="Resources\Move Right.png" />
+    <None Include="Resources\Move Down.png" />
+    <None Include="Resources\Move Left.png" />
     <Content Include="Resources\railgun transparent.ico" />
   </ItemGroup>
   <ItemGroup />
