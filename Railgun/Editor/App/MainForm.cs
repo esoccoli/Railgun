@@ -517,6 +517,14 @@ namespace Railgun.Editor.App
                     oldMargin.Bottom);
         }
 
+        /// <summary>
+        /// Called when the help button is clicked and shows help window
+        /// </summary>
+        private void ToolStripMenuItem_Help_Click(object sender, EventArgs e)
+        {
+            HelperForm.Instance.ShowDialog();
+        }
+
         #endregion
 
         #region Tile Picker and Related Events
@@ -568,9 +576,17 @@ namespace Railgun.Editor.App
             //Set current tile to nothing if on a non-tile layer
             if(tileManager.CurrentLayer < 0)
             {
+                //Hide tile picker
+                tableLayoutPanel_TilePicker.Visible = false;
+                //panel_Objects.Visible = false;
+                //Set current tile to empty texture
                 tileManager.CurrentTile = Tile.Empty;
                 return;
             }
+
+            //Show tile picker
+            tableLayoutPanel_TilePicker.Visible = true;
+
 
             //Else set to current selection
             CurrentTileset.CreateTileSelection();
@@ -703,13 +719,5 @@ namespace Railgun.Editor.App
         }
 
         #endregion
-
-        /// <summary>
-        /// Called when the help button is clicked and shows help window
-        /// </summary>
-        private void ToolStripMenuItem_Help_Click(object sender, EventArgs e)
-        {
-            HelperForm.Instance.ShowDialog();
-        }
     }
 }

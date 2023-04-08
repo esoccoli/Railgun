@@ -80,9 +80,6 @@ namespace Railgun.Editor.App.Util
             //Set the current as well for more consistancy
             CurrentMouseState = Mouse.GetState();
             CurrentKeyboardState = Keyboard.GetState();
-
-            //DEBUG
-            DebugLog.Instance.LogFrame("Input updated", Microsoft.Xna.Framework.Color.Red);
         }
 
         /// <summary>

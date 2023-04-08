@@ -10,6 +10,11 @@ using System.Windows.Forms;
 
 namespace Railgun.Editor.App.Util
 {
+    /// <summary>
+    /// A singleton form that shows helpful information to the user
+    /// <para>Author: Jonathan Jan</para>
+    /// Date Created: 4/7/2023
+    /// </summary>
     public partial class HelperForm : Form
     {
         private HelperForm()

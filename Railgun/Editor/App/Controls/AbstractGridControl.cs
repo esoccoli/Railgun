@@ -26,8 +26,6 @@ namespace Railgun.Editor.App.Controls
         /// <summary>
         /// The size of the grid
         /// </summary>
-        //[Browsable(false)]
-        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public virtual float GridSize
         {
             get => gridSize;
@@ -111,11 +109,6 @@ namespace Railgun.Editor.App.Controls
         }
         private float maxZoom;
 
-        public void INITIALIZEE()
-        {
-            Initialize();
-        }
-
         protected override void Initialize()
         {
             //Shortcut to singeltons
@@ -196,11 +189,6 @@ namespace Railgun.Editor.App.Controls
                     (input.PrevMouseState.Position -
                     input.CurrentMouseState.Position)
                     .ToVector2() / Editor.Cam.Zoom);
-
-                //DEBUG
-                DebugLog.Instance.LogFrame("Last pos:"+input.PrevMouseState.Position.ToString());
-                DebugLog.Instance.LogFrame("Current pos:" + input.CurrentMouseState.Position.ToString());
-                DebugLog.Instance.LogFrame("Difference:" + (input.PrevMouseState.Position - input.CurrentMouseState.Position).ToString());
             }
 
             //Only perform if mouse is inside this control

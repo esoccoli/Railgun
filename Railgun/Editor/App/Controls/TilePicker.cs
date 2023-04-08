@@ -95,7 +95,7 @@ namespace Railgun.Editor.App.Controls
         protected override void Initialize()
         {
             //Set max and min zoom
-            MinZoom = 0.1f;
+            MinZoom = 0.5f;
             MaxZoom = 20f;
 
             //Set selection rectangle to a default value
@@ -131,9 +131,6 @@ namespace Railgun.Editor.App.Controls
             //Only update if there is a texture
             if(tileSetTexture != null)
             {
-                //DEBUG
-                DebugLog.Instance.LogFrame(textureName + " " + panning.ToString());
-
                 PerformUserActions();
 
                 //If inside control
