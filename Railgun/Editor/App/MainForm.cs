@@ -36,7 +36,6 @@ namespace Railgun.Editor.App
         public TilePicker CurrentTileset
             => tabControl_Tileset.SelectedTab.Controls[0] as TilePicker;
 
-
         #endregion
 
         #region Initial Methods
@@ -289,7 +288,7 @@ namespace Railgun.Editor.App
                 tileManager.CurrentTile.SpriteEffect.ToString().PadRight(16);
             //Current fps
             toolStripStatusLabel_ValueFPS.Text = 
-                mapEditor.Editor.GetFrameRate.ToString("000");
+                mapEditor.Editor.GetFrameRate.ToString("#00");
         }
 
         /// <summary>
@@ -704,5 +703,13 @@ namespace Railgun.Editor.App
         }
 
         #endregion
+
+        /// <summary>
+        /// Called when the help button is clicked and shows help window
+        /// </summary>
+        private void ToolStripMenuItem_Help_Click(object sender, EventArgs e)
+        {
+            HelperForm.Instance.ShowDialog();
+        }
     }
 }

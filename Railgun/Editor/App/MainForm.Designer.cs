@@ -102,6 +102,7 @@
             this.tilePicker_Empty = new Railgun.Editor.App.Controls.TilePicker();
             this.currentTileDisplay = new Railgun.Editor.App.Controls.CurrentTileDisplay();
             this.mapEditor = new Railgun.Editor.App.Controls.MapEditor();
+            this.toolStripStatusLabel_End = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_MainEditor)).BeginInit();
@@ -353,6 +354,7 @@
             this.toolStripMenuItem_Help.Name = "toolStripMenuItem_Help";
             this.toolStripMenuItem_Help.Size = new System.Drawing.Size(55, 24);
             this.toolStripMenuItem_Help.Text = "Help";
+            this.toolStripMenuItem_Help.Click += new System.EventHandler(this.ToolStripMenuItem_Help_Click);
             // 
             // toolStripMenuItem_Exit
             // 
@@ -410,7 +412,8 @@
             this.toolStripStatusLabel_ValueFlip,
             this.toolStripStatusLabel_Spring,
             this.toolStripStatusLabel_LabelFPS,
-            this.toolStripStatusLabel_ValueFPS});
+            this.toolStripStatusLabel_ValueFPS,
+            this.toolStripStatusLabel_End});
             this.statusStrip.Location = new System.Drawing.Point(0, 816);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 13, 0);
@@ -1009,7 +1012,7 @@
             // toolStripStatusLabel_Spring
             // 
             this.toolStripStatusLabel_Spring.Name = "toolStripStatusLabel_Spring";
-            this.toolStripStatusLabel_Spring.Size = new System.Drawing.Size(529, 20);
+            this.toolStripStatusLabel_Spring.Size = new System.Drawing.Size(553, 20);
             this.toolStripStatusLabel_Spring.Spring = true;
             // 
             // toolStripStatusLabel_ValueFPS
@@ -1075,6 +1078,12 @@
             this.mapEditor.Size = new System.Drawing.Size(939, 711);
             this.mapEditor.TabIndex = 1;
             this.mapEditor.Text = "mainEditorPanel";
+            // 
+            // toolStripStatusLabel_End
+            // 
+            this.toolStripStatusLabel_End.Name = "toolStripStatusLabel_End";
+            this.toolStripStatusLabel_End.Size = new System.Drawing.Size(15, 20);
+            this.toolStripStatusLabel_End.Text = "-";
             // 
             // MainForm
             // 
@@ -1214,5 +1223,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_Spring;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_LabelFPS;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_ValueFPS;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_End;
     }
 }
