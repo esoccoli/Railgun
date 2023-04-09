@@ -172,15 +172,11 @@ namespace Railgun.Editor.App.Controls
             //Only draw if there is a valid texture
             if(tileSetTexture != null)
             {
-                Editor.spriteBatch.Begin(SpriteSortMode.Deferred,
-                BlendState.AlphaBlend,//Better transparency
-                SamplerState.PointClamp,//Perfect Pixelation
-                DepthStencilState.Default,
-                RasterizerState.CullNone,
-                null,//No shaders
-                Editor.Cam.Transform);//Transform by camera
-                                      ////
-
+                Editor.spriteBatch.Begin(
+                    blendState: BlendState.AlphaBlend,//Better transparency
+                    samplerState: SamplerState.PointClamp,//Perfect Pixelation
+                    transformMatrix: Editor.Cam.Transform);//Camera matrix
+                ////
 
                 Editor.spriteBatch.Draw(tileSetTexture.Value.Texture, Vector2.Zero, Color.White);
 

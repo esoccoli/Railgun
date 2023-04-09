@@ -297,6 +297,15 @@ namespace Railgun.RailgunGame
                     //Draws reticle
                     _spriteBatch.Draw(gameReticle, new Rectangle(mStateGame.X - 25, mStateGame.Y - 25, 50, 50), Color.White);
 
+                    //Note: we should re structure sprite batch calls to be within
+                    //each FSM so that it can be drawn with different params and shapebatch
+                    _spriteBatch.End();
+
+                    _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+                    //Draw test map
+                    testMap.DrawTiles(_spriteBatch);
+                    
+
                     break;
                 case GameState.Pause:
 

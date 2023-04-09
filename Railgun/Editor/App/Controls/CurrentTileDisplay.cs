@@ -37,11 +37,9 @@ namespace Railgun.Editor.App.Controls
         protected override void Draw()
         {
             base.Draw();
-            Editor.spriteBatch.Begin(SpriteSortMode.Deferred,
-                BlendState.AlphaBlend,//Better transparency
-                SamplerState.PointClamp,//Perfect Pixelation
-                DepthStencilState.Default,
-                RasterizerState.CullNone);
+            Editor.spriteBatch.Begin(
+                blendState: BlendState.AlphaBlend,//Better transparency
+                samplerState: SamplerState.PointClamp);//Perfect Pixelation
             ////
 
             //Store the viewport

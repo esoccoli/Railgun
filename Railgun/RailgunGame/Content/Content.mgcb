@@ -93,24 +93,16 @@
 /build:mainCharRun.png
 
 #begin Maps/Example Tilesets.rgm
-/importer:
-/processor:
-/build:Maps/Example Tilesets.rgm
+/copy:Maps/Example Tilesets.rgm
 
 #begin Maps/More Tilesets.rgm
-/importer:
-/processor:
-/build:Maps/More Tilesets.rgm
+/copy:Maps/More Tilesets.rgm
 
 #begin Maps/ppp.rgm
-/importer:
-/processor:
-/build:Maps/ppp.rgm
+/copy:Maps/ppp.rgm
 
 #begin Maps/Test Map with collision.rgm
-/importer:
-/processor:
-/build:Maps/Test Map with collision.rgm
+/copy:Maps/Test Map with collision.rgm
 
 #begin menuLogo.png
 /importer:TextureImporter

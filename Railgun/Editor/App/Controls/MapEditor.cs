@@ -167,14 +167,10 @@ namespace Railgun.Editor.App.Controls
 
             #region Bottom drawings
 
-            //Things affected by the camera
-            Editor.spriteBatch.Begin(SpriteSortMode.Deferred,
-                BlendState.AlphaBlend,//Better transparency
-                SamplerState.PointClamp,//Perfect Pixelation
-                DepthStencilState.Default,
-                RasterizerState.CullNone,
-                null,//No shaders
-                Editor.Cam.Transform);//Transform by camera
+            Editor.spriteBatch.Begin(
+                blendState: BlendState.AlphaBlend,//Better transparency
+                samplerState: SamplerState.PointClamp,//Perfect Pixelation
+                transformMatrix: Editor.Cam.Transform);//Camera matrix
             ////
 
             //Draw map
