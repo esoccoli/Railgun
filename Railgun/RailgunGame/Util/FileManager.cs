@@ -53,9 +53,9 @@ namespace Railgun.RailgunGame.Util
                 //Check if the file is valid, if not return null
                 if (reader.ReadString() != FileIdentifier)
                 {
-                    //Show error dialog
+                    //Show error log
                     DebugLog.Instance.LogPersistant(
-                        $"Map: {mapName} was unreadable: Incorrect identifier",
+                        $"Loading Map: {mapName} was unreadable: Incorrect identifier",
                         Color.Red, 10f);
                     return null;
                 }
@@ -79,29 +79,16 @@ namespace Railgun.RailgunGame.Util
                     map.Hitboxes[ReadVector(reader)] = reader.ReadBoolean();
                 }
 
-                //Update current path if it makes it all the way through
-                CurrentMapPath = dialog.FileName;
-
-                //Set modified to false
-                Modified = false;
-
-                //DEBUG
-                DebugLog.Instance.LogPersistant(
-                    "Loaded map: " + GetFileName(CurrentMapPath),
-                    Microsoft.Xna.Framework.Color.Yellow, 5f);
-
                 return map;
             }
             catch (Exception e)
             {
-                //Show error dialog
-                MessageBox.Show("An error occured: " + e.Message,
-                    "Error:", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                //DEBUG
+                //Show error log
                 DebugLog.Instance.LogPersistant(
-                    "Error loading map!",
-                    Microsoft.Xna.Framework.Color.Red, 5f);
+                    $"Loading Map: {mapName}, an error occured: Check Debug Console",
+                    Color.Red, 10f);
+                System.Diagnostics.Debug.WriteLine(
+                    $"Loading Map: {mapName}, an error occured: {e.Message}");
 
                 return null;
             }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Railgun.RailgunGame.Tilemapping;
 using Railgun.RailgunGame.Util;
 using System.Collections.Generic;
 
@@ -63,6 +64,11 @@ namespace Railgun.RailgunGame
             GameOver
         }
 
+        /// <summary>
+        /// A map to be used for testing out map loading
+        /// </summary>
+        private Map testMap;
+
         protected override void Initialize()
         {
             #region Set Screen Resolution
@@ -78,9 +84,6 @@ namespace Railgun.RailgunGame
             font = this.Content.Load<SpriteFont>("Mynerve24");
 
             GameTime gameTime = new GameTime();
-
-            //Set debug logger font
-            DebugLog.Instance.Font = font;
 
             base.Initialize();
         }
@@ -120,6 +123,12 @@ namespace Railgun.RailgunGame
             //Creates a UI object. Values to be updated later. 
             mainPlayer = new Player(new Rectangle(870, 510, 100, 100), playerIdleAnim, playerRunAnim, bulletTexture, null);
             userInterface = new UI(backgroundHealthUI, foregroundHealthUI, bulletUI, false, mainPlayer.Health, mainPlayer.MaxHealth, font, mainPlayer.Ammo, mainPlayer.MaxAmmo);
+
+            //Set debug logger
+            DebugLog.Instance.Font = Content.Load<SpriteFont>("Consolas20");
+
+            //Load test map
+            testMap = FileManager.LoadMap(Content, "Example Tilesets");
         }
 
         protected override void Update(GameTime gameTime)

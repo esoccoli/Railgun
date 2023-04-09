@@ -103,7 +103,7 @@ namespace Railgun.RailgunGame.Util
         public float Spacing { get; set; }
 
         /// <summary>
-        /// The scaling of the message
+        /// The scaling of the messages
         /// </summary>
         public float Scale { get; set; }
 

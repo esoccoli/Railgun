@@ -70,9 +70,12 @@ namespace Railgun.Editor.App.Util
         public static bool SaveMapAs(Map map)
         {
             //Create a new save file dialog
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Filter = "Railgun Map files (*.rgm)|*.rgm";
-            dialog.Title = "Save map as:";
+            SaveFileDialog dialog = new SaveFileDialog()
+            {
+                Filter = "Railgun Map files (*.rgm)|*.rgm",
+                Title = "Save map as:",
+                InitialDirectory = Path.GetFullPath("../../../RailgunGame/Content/Maps")
+            };
 
             //If canceled, return null
             if (dialog.ShowDialog() != DialogResult.OK)
@@ -259,7 +262,7 @@ namespace Railgun.Editor.App.Util
             {
                 Filter = "Railgun Map files (*.rgm)|*.rgm",
                 Title = "Save map as:",
-                InitialDirectory = Path.GetFullPath("../../Resources/")
+                InitialDirectory = Path.GetFullPath("../../../RailgunGame/Content/Maps")
             };
 
 
