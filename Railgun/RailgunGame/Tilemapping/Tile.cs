@@ -21,7 +21,7 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <summary>
         /// source rectangle on sprite sheet
         /// </summary>
-        public Rectangle SourceRectangle { get; set; }
+        public Rectangle? SourceRectangle { get; set; }
 
         /// <summary>
         /// rotation of the tile
@@ -49,7 +49,7 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <param name="tint">tint of the tile</param>
         /// <param name="flip">which way the tile is flipped</param>
         public Tile(Texture2D texture,
-                    Rectangle sourceRectangle,
+                    Rectangle? sourceRectangle,
                     float rotation,
                     Color tint,
                     SpriteEffects flip)
@@ -71,7 +71,7 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <param name="tint">tint applied to tile</param>
         /// <param name="flip">which way the tile is flipped</param>
         public Tile(Texture2D texture,
-                    Rectangle sourceRectangle,
+                    Rectangle? sourceRectangle,
                     Color tint,
                     SpriteEffects flip)
             : this(texture,
@@ -91,7 +91,7 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <param name="sourceRectangle">source rectangle of tile on texture</param>
         /// <param name="tint">color of tile</param>
         public Tile(Texture2D texture,
-                    Rectangle sourceRectangle,
+                    Rectangle? sourceRectangle,
                     Color tint)
             : this(texture,
                   sourceRectangle,
@@ -112,7 +112,7 @@ namespace Railgun.RailgunGame.Tilemapping
         /// desired tile on the texture</param>
         public Tile(Texture2D texture,
                     Rectangle hitbox,
-                    Rectangle sourceRectangle)
+                    Rectangle? sourceRectangle)
             : this(texture,
                    sourceRectangle,
                    0.0f,

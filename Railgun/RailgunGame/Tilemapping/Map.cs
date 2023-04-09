@@ -88,9 +88,6 @@ namespace Railgun.RailgunGame.Tilemapping
                         spriteBatch, new Rectangle(
                             (tile.Key * TileSize).ToPoint(),
                             new Point(TileSize)));
-
-                    ////DEBUG
-                    //DebugLog.Instance.AddUpdateMessage(tile.Key.ToString());
                 }
             }
         }
