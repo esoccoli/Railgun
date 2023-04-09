@@ -238,7 +238,7 @@ namespace Railgun.Editor.App.Util
         /// <summary>
         /// Loads a map from the specified path
         /// </summary>
-        /// <param name="content">The content manager to load textures from</param>
+        /// <param name="contentManager">The content manager to load textures from</param>
         /// <returns>The map loaded, null if cancelled or unreadable</returns>
         public static Map LoadMap(ContentManager contentManager)
         {

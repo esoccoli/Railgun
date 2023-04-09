@@ -207,6 +207,13 @@ namespace Railgun.RailgunGame.Util
                 Vector2 origin = Font.MeasureString(message.Text);
                 origin.Y = 0;//Still align at top
 
+                //Compute opacity amount for text (less than 2 seconds to clear, fade)
+                float opacity =
+                    (float)(message.ClearTime * 1000f
+                    - DateTime.Now.TimeOfDay.TotalMilliseconds)
+                    / 2000f;
+
+                //Draw message to content but fade as it gets older
                 spriteBatch.DrawString(
                     Font, message.Text, currentPosition,
                     message.Color, 0f, origin, Scale,
