@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Railgun.RailgunGame.Tilemapping;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -161,20 +162,21 @@ namespace Railgun.RailgunGame.Util
         /// <returns>The tile to read</returns>
         private static Tile ReadTile(BinaryReader reader)
         {
-            return new Tile(
-                new Color(reader.ReadUInt32()),//Unpack color
-                ReadPathedTexture(reader),//Read texture
-                ReadRectangle(reader),//source rect
-                reader.ReadSingle(),//Rotation
-                (SpriteEffects)reader.ReadInt32());//Flip
+            Color tint = new Color(reader.ReadUInt32());//Unpack color
+            Texture2D texture = ReadPathedTexture(reader);//Read texture
+            Rectangle? sourceRect = ReadRectangle(reader);//Read source rect
+            float rotation = reader.ReadSingle();//Read rotation
+            SpriteEffects flip = (SpriteEffects)reader.ReadInt32();//Read flip
+
+            return new Tile(texture, sourceRect, rotation, tint, flip);
         }
 
         /// <summary>
         /// Reads all attributes of the specified pathed texture from the reader
         /// </summary>
         /// <param name="reader">The reader to read with</param>
-        /// <param name="texture">The pathed texture to write</param>
-        private static PathedTexture? ReadPathedTexture(BinaryReader reader)
+        /// <returns>The read in texture</returns>
+        private static Texture2D ReadPathedTexture(BinaryReader reader)
         {
             //Read in as string
             string path = reader.ReadString();
@@ -185,8 +187,8 @@ namespace Railgun.RailgunGame.Util
                 return null;
             }
 
-            //Else, return load in pathed texture
-            return LoadPathedTexture(content, path);
+            //Else, return load in texture
+            return content.Load<Texture2D>(path);
         }
 
         /// <summary>
@@ -213,17 +215,6 @@ namespace Railgun.RailgunGame.Util
         #endregion
 
         #region Utility
-
-        /// <summary>
-        /// Returns a pathed texture using the specified content manager and texture path
-        /// </summary>
-        /// <param name="content">The content manager to load from</param>
-        /// <param name="path">The path of the texture to use</param>
-        /// <returns>The pathed texture</returns>
-        public static PathedTexture LoadPathedTexture(ContentManager content, string path)
-        {
-            return new PathedTexture(path, content.Load<Texture2D>(path));
-        }
 
         /// <summary>
         /// Returns the name or directory from the specified path

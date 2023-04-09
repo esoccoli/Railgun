@@ -400,7 +400,7 @@ namespace Railgun.Editor.App.Util
         /// Reads all attributes of the specified pathed texture from the reader
         /// </summary>
         /// <param name="reader">The reader to read with</param>
-        /// <param name="texture">The pathed texture to write</param>
+        /// <returns>The read in pathed texture</returns></returns>
         private static PathedTexture? ReadPathedTexture(BinaryReader reader)
         {
             //Read in as string

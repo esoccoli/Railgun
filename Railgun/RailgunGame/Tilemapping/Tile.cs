@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 //Nathan McAndrew
 //Class that holds all tiles in the game
-namespace Railgun.RailgunGame
+namespace Railgun.RailgunGame.Tilemapping
 {
     internal class Tile
     {
@@ -74,11 +74,11 @@ namespace Railgun.RailgunGame
                     Rectangle sourceRectangle,
                     Color tint,
                     SpriteEffects flip)
-            : this(texture, 
-                   sourceRectangle, 
-                   0.0f,  
-                   tint, 
-                   flip) 
+            : this(texture,
+                   sourceRectangle,
+                   0.0f,
+                   tint,
+                   flip)
         { }
 
         /// <summary>
@@ -93,11 +93,11 @@ namespace Railgun.RailgunGame
         public Tile(Texture2D texture,
                     Rectangle sourceRectangle,
                     Color tint)
-            :this(texture, 
-                  sourceRectangle, 
-                  0.0f, 
-                  tint, 
-                  SpriteEffects.None) 
+            : this(texture,
+                  sourceRectangle,
+                  0.0f,
+                  tint,
+                  SpriteEffects.None)
         { }
 
         /// <summary>

@@ -90,8 +90,12 @@ namespace Railgun.Editor.App.Objects
                 //Offset destination by center of texture for origin to be at center of tile
                 destination.Location = destination.Center;
 
-                //Create origin from source rectangle size
-                Vector2 origin = Source.Value.Size.ToVector2() / 2f;
+                Vector2 origin = Texture.Value.Texture.Bounds.Size.ToVector2() / 2f;
+
+                //If source is specified, create origin from source rectangle size
+                if (Source != null)
+                    origin = Source.Value.Size.ToVector2() / 2f;
+
 
                 spriteBatch.Draw(
                 Texture.Value.Texture, destination, Source, Tint * opacity,
