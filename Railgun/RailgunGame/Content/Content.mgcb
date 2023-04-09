@@ -104,6 +104,9 @@
 #begin Maps/Test Map with collision.rgm
 /copy:Maps/Test Map with collision.rgm
 
+#begin Maps/TestMap.rgm
+/copy:Maps/TestMap.rgm
+
 #begin menuLogo.png
 /importer:TextureImporter
 /processor:TextureProcessor

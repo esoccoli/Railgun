@@ -76,7 +76,7 @@ namespace Railgun.RailgunGame
 
             _graphics.PreferredBackBufferHeight = 1080;
             _graphics.PreferredBackBufferWidth = 1920;
-            _graphics.IsFullScreen = true;
+            _graphics.IsFullScreen = false;
             _graphics.ApplyChanges();
             #endregion
 
@@ -128,7 +128,7 @@ namespace Railgun.RailgunGame
             DebugLog.Instance.Font = Content.Load<SpriteFont>("Consolas20");
 
             //Load test map
-            testMap = FileManager.LoadMap(Content, "Example Tilesets");
+            testMap = FileManager.LoadMap(Content, "TestMap");
         }
 
         protected override void Update(GameTime gameTime)
@@ -304,7 +304,14 @@ namespace Railgun.RailgunGame
                     _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
                     //Draw test map
                     testMap.DrawTiles(_spriteBatch);
-                    
+                    _spriteBatch.End();
+                    _spriteBatch.Begin();//Dumb, get rid of, only here bc I don't want to change the current stuff until I get permission
+                    //Begin shapebatch without depth (so that shapes are drawn to the top)
+                    GraphicsDevice.DepthStencilState = DepthStencilState.None;
+                    //Once we have a camera, it will be passed to hitboxes
+                    ShapeBatch.Begin(GraphicsDevice);
+                    testMap.DrawHitboxes(Vector2.Zero, 1f);
+                    ShapeBatch.End();
 
                     break;
                 case GameState.Pause:
