@@ -85,6 +85,8 @@ namespace Railgun.RailgunGame
 
             GameTime gameTime = new GameTime();
 
+            DebugLog.Instance.LogPersistant("?????", Color.White, 3);
+
             base.Initialize();
         }
 
@@ -328,8 +330,8 @@ namespace Railgun.RailgunGame
 
             _spriteBatch.End();
 
-            //Draw debug logger
-            _spriteBatch.Begin();
+            //Draw debug logger with fading
+            _spriteBatch.Begin(blendState: BlendState.AlphaBlend);
             DebugLog.Instance.Draw(_spriteBatch,
                 _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
             _spriteBatch.End();

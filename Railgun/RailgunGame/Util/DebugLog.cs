@@ -216,7 +216,7 @@ namespace Railgun.RailgunGame.Util
                 //Draw message to content but fade as it gets older
                 spriteBatch.DrawString(
                     Font, message.Text, currentPosition,
-                    message.Color, 0f, origin, Scale,
+                    message.Color * opacity, 0f, origin, Scale,
                     SpriteEffects.None, 0f);
                 //Increment position by spacing
                 currentPosition.Y += Spacing;
