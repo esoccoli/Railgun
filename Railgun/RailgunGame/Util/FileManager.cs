@@ -155,7 +155,7 @@ namespace Railgun.RailgunGame.Util
             float rotation = reader.ReadSingle();//Read rotation
             SpriteEffects flip = (SpriteEffects)reader.ReadInt32();//Read flip
 
-            return new Tile(texture, sourceRect, rotation, tint, flip);
+            return new Tile(tint, texture, sourceRect, rotation, flip);
         }
 
         /// <summary>

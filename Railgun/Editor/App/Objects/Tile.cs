@@ -98,8 +98,8 @@ namespace Railgun.Editor.App.Objects
 
 
                 spriteBatch.Draw(
-                Texture.Value.Texture, destination, Source, Tint * opacity,
-                Rotation, origin, SpriteEffect, 0f);
+                    Texture.Value.Texture, destination, Source, Tint * opacity,
+                    Rotation, origin, SpriteEffect, 0f);
             }
         }
 

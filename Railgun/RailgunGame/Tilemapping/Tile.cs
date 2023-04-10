@@ -7,52 +7,51 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-//Nathan McAndrew
+//Nathan McAndrew, Jonathan Jan
 //Class that holds all tiles in the game
 namespace Railgun.RailgunGame.Tilemapping
 {
-    internal class Tile
+    internal struct Tile
     {
         /// <summary>
         /// tile's texture
         /// </summary>
-        public Texture2D Texture { get; set; }
+        public Texture2D Texture { get; }
 
         /// <summary>
         /// source rectangle on sprite sheet
         /// </summary>
-        public Rectangle? SourceRectangle { get; set; }
+        public Rectangle? SourceRectangle { get; }
 
         /// <summary>
         /// rotation of the tile
         /// </summary>
-        public float Rotation { get; set; }
+        public float Rotation { get; }
 
         /// <summary>
         /// tint to apply to tile
         /// </summary>
-        public Color Tint { get; set; }
+        public Color Tint { get; }
 
         /// <summary>
         /// sprite effect to apply to tile
         /// (flip horizontally or vetically)
         /// </summary>
-        public SpriteEffects Flip { get; set; }
+        public SpriteEffects Flip { get; }
 
         /// <summary>
-        /// instantiates a tile with parameters for all values
+        /// Creates a new tile with the specified parameters
         /// </summary>
         /// <param name="texture">tile's texture</param>
         /// <param name="sourceRectangle">section of texture with desired tile</param>
         /// <param name="rotation">roataion of the tile</param>
-        /// <param name="scale">scale of hitbox to draw tile at</param>
         /// <param name="tint">tint of the tile</param>
         /// <param name="flip">which way the tile is flipped</param>
-        public Tile(Texture2D texture,
-                    Rectangle? sourceRectangle,
-                    float rotation,
-                    Color tint,
-                    SpriteEffects flip)
+        public Tile(Color tint, 
+                    Texture2D texture = null,
+                    Rectangle? sourceRectangle = null,
+                    float rotation = 0f,
+                    SpriteEffects flip = SpriteEffects.None)
         {
             Texture = texture;
             SourceRectangle = sourceRectangle;
@@ -61,69 +60,25 @@ namespace Railgun.RailgunGame.Tilemapping
             Flip = flip;
         }
 
-        /// <summary>
-        /// overload with only texture, sourceRectangle, tint, and flip params
-        /// rotation = 0.0f
-        /// </summary>
-        /// <param name="texture">tile's texture</param>
-        /// <param name="hitbox">location and size of tile drawn on the screen</param>
-        /// <param name="sourceRectangle">source rectangle of tile on texture</param>
-        /// <param name="tint">tint applied to tile</param>
-        /// <param name="flip">which way the tile is flipped</param>
-        public Tile(Texture2D texture,
-                    Rectangle? sourceRectangle,
-                    Color tint,
-                    SpriteEffects flip)
-            : this(texture,
-                   sourceRectangle,
-                   0.0f,
-                   tint,
-                   flip)
-        { }
-
-        /// <summary>
-        /// overload with only texture, sourceRectangle, and tint
-        /// rotation = 0.0f
-        /// flip = SpriteEffects.None
-        /// </summary>
-        /// <param name="texture">tile's texture</param>
-        /// <param name="hitbox">location and size of tile drawn</param>
-        /// <param name="sourceRectangle">source rectangle of tile on texture</param>
-        /// <param name="tint">color of tile</param>
-        public Tile(Texture2D texture,
-                    Rectangle? sourceRectangle,
-                    Color tint)
-            : this(texture,
-                  sourceRectangle,
-                  0.0f,
-                  tint,
-                  SpriteEffects.None)
-        { }
-
-        /// <summary>
-        /// overload whith only a texture, and source rectangle
-        /// rotation = 0.0f
-        /// tint = Color.White
-        /// flip = SpriteEffects.None
-        /// </summary>
-        /// <param name="texture">tile's texture</param>
-        /// <param name="hitbox">location and size of tile drawn on screen</param>
-        /// <param name="sourceRectangle">source rectangle of the 
-        /// desired tile on the texture</param>
-        public Tile(Texture2D texture,
-                    Rectangle hitbox,
-                    Rectangle? sourceRectangle)
-            : this(texture,
-                   sourceRectangle,
-                   0.0f,
-                   Color.White,
-                   SpriteEffects.None)
-        { }
-
-
         public void Draw(SpriteBatch sb, Rectangle destination)
         {
-            sb.Draw(Texture, destination, SourceRectangle, Tint, Rotation, Vector2.Zero, Flip, 1.0f);
+            //Only draw if not null
+            if(Texture != null)
+            {
+                //Offset destination by center of texture for origin to be at center of tile
+                destination.Location = destination.Center;
+
+                Vector2 origin = Texture.Bounds.Size.ToVector2() / 2f;
+
+                //If source is specified, create origin from source rectangle size
+                if (SourceRectangle != null)
+                    origin = SourceRectangle.Value.Size.ToVector2() / 2f;
+
+
+                sb.Draw(
+                    Texture, destination, SourceRectangle, Tint,
+                    Rotation, origin, Flip, 0f);
+            }
         }
     }
 }
