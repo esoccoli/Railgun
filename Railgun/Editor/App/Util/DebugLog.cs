@@ -42,7 +42,7 @@ namespace Railgun.Editor.App.Util
             /// <param name="text">Text of this message</param>
             /// <param name="color">Color of this message</param
             /// <param name="messageDuration">The duration that this message should be displayed in seconds</param>
-            public Message(string text, Color color, float messageDuration = 999999999f)
+            public Message(string text, Color color, float messageDuration = 9999f)
             {
                 Text = text;
                 Color = color;
