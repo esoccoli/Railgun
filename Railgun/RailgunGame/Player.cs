@@ -131,7 +131,7 @@ namespace Railgun.RailgunGame
                 if (InputManager.IsKeyDown(Keys.S)) { hitboxTemp.Y += speed; Hitbox = hitboxTemp; }
                 if (InputManager.IsKeyDown(Keys.D)) { hitboxTemp.X += speed; Hitbox = hitboxTemp; }
 
-                if (InputManager.IsButtonDown(MouseButtons.Left) && ShootCooldown <= 0.0 && Ammo > 0) { Shoot(gameTime); }
+                if (InputManager.IsButtonDown(MouseButtons.Left) && ShootCooldown <= 0.0 && Ammo > 0) { Shoot(); }
                 if (InputManager.IsButtonDown(MouseButtons.Right) && Ammo <= 0) { Reload(); }
 
                 if (InputManager.IsKeyDown(Keys.LeftShift) && DashCooldown <= 0.0) { preDash = Keyboard.GetState(); dashing = true; }
@@ -155,7 +155,7 @@ namespace Railgun.RailgunGame
         /// <summary>
         /// The player's form of attacking. Creates bullet objects. That's essentially it.
         /// </summary>
-        public void Shoot(GameTime gameTime)
+        public void Shoot()
         {
             Ammo--;
             ShootCooldown = 0.1f;

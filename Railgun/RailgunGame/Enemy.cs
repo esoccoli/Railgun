@@ -7,10 +7,9 @@ namespace Railgun.RailgunGame;
 // Date Created: 3/10/23
 // Last Updated: 3/24/23
 // Details: Creates a base class for a generic enemy so that we can make multiple types of enemies more easily
-public abstract class Enemy
+abstract class Enemy : Entity
 {
-    public int MaxHealth { get; set; }
-    public int CurrHealth { get; set; }
+    public int Health { get; set; }
    
     public Animation Move { get; set; }
 
@@ -31,20 +30,19 @@ public abstract class Enemy
     /// <param name="texture">Texture file of the enemy</param>
     /// <param name="hitbox">Enemy's position rectangle</param>
     /// <param name="maxHealth">Maximum health of the enemy</param>
-    public Enemy(Animation move, Animation idle, Animation death, Rectangle hitbox, int maxHealth)
+    public Enemy(Animation move, Animation idle, Animation death, Rectangle hitbox) : base(hitbox)
     {
         Move = move;
         Idle = idle;
         Death = death;
         Hitbox = hitbox;
-        MaxHealth = maxHealth;
-        CurrHealth = MaxHealth;
     }
-    
+
     /// <summary>
     /// Each enemy type will have a different way of moving
     /// </summary>
-    public abstract void Walk();
+    /// <param name="playerPos"> Where the player is located. Needed for some enemies. </param>
+    public abstract void Walk(Point playerPos);
     
     /// <summary>
     /// Reduces the enemy's health by the specified amount
@@ -52,26 +50,40 @@ public abstract class Enemy
     /// <param name="damage">Amount of damage taken</param>
     public virtual void TakeDamage(int damage)
     {
-        CurrHealth -= damage;
+        Health -= damage;
 
-        if (CurrHealth <= 0)
+        if (Health <= 0)
         {
             isAlive = false;
         }
     }
-    
+
     /// <summary>
     /// Each enemy type will shoot bullets in a different way
     /// </summary>
-    public abstract void Shoot();
-    
-    public virtual void Update()
+    /// <param name="playerPos"> Where the player is located. Needed for some enemies. </param>
+    public virtual void Shoot(Point playerPos)
     {
-        Walk();
-        Shoot();
+        // To be implemented by specific enemies.
+    }
+    
+    /// <summary>
+    /// This is called for each enemy every frame. Needed so enemies can walk/shoot at players.
+    /// </summary>
+    /// <param name="playerPos"> The location of the player. Needed to find them for some enemies. </param>
+    public virtual void Update(Point playerPos)
+    {
+        Walk(playerPos);
+        Shoot(playerPos);
         
         // If enemy collides with bullet
         // TakeDamage();
     }
 
+    /// <summary>
+    /// Needed to put the enemies onto the screen.
+    /// </summary>
+    /// <param name="sb"> The sprite batch the enemies are being drawn with. </param>
+    /// <param name="gameTime"> The time passed in game. </param>
+    public abstract void Draw(SpriteBatch sb, GameTime gameTime);
 }
