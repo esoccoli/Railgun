@@ -30,24 +30,49 @@ namespace Railgun.RailgunGame
         /// <param name="idle"> This is null. Skeletons should never be idle. They will always walk towards the player. </param>
         /// <param name="death"> This is the death animation for a Skeleton. </param>
         /// <param name="hitbox"> The rectangle you should be aiming your gun at. </param>
-        public Skeleton(Animation move, Animation idle, Animation death, Rectangle hitbox) : base(move, idle, death, hitbox)
+        public Skeleton(Animation move, Animation death, Rectangle hitbox) : base(move, death, hitbox)
         {
             speed = 5;
             Health = 25;
             hitboxTemp = Hitbox;
         }
 
+        public override void Update(Point playerPos)
+        {
+            if(Health >= 1)
+            {
+                Walk(playerPos);
+            }
+        }
+
         public override void Walk(Point playerPos)
         {
-            velocity = (playerPos - Hitbox.Center).ToVector2() / Vector2.Distance(playerPos.ToVector2(), Hitbox.Center.ToVector2());
+            velocity = (playerPos - Hitbox.Center).ToVector2() / Vector2.Distance(playerPos.ToVector2(), Hitbox.Center.ToVector2()) * 4;
 
             hitboxTemp.X += (int)velocity.X;
             hitboxTemp.Y += (int)velocity.Y;
+
+            Hitbox = hitboxTemp;
         }
 
-        public override void Draw(SpriteBatch sb, GameTime gameTime)
+        public override bool Draw(SpriteBatch sb, GameTime gameTime, Point playerPos)
         {
-
+            if(Health <= 0)
+            {
+                return Death.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.PeachPuff, SpriteEffects.None);
+            }
+            else
+            {
+                if(playerPos.X <= Hitbox.Center.X)
+                {
+                    Move.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.White, SpriteEffects.FlipHorizontally);
+                }
+                else
+                {
+                    Move.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.White, SpriteEffects.None);
+                }
+                return false;
+            }
         }
     }
 }

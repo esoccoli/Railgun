@@ -120,7 +120,8 @@ namespace Railgun.RailgunGame
         /// draws the sprite with specified properties
         /// </summary>
         /// <param name="sb">_spritebatch</param>
-        public void Draw(SpriteBatch sb, GameTime gameTime, Vector2 position, Color tint, SpriteEffects effect)
+        /// <returns> Whether or not the animation has reached its final frame. </returns>
+        public bool Draw(SpriteBatch sb, GameTime gameTime, Vector2 position, Color tint, SpriteEffects effect)
         {
             UpdateAnimation(gameTime);
 
@@ -133,6 +134,8 @@ namespace Railgun.RailgunGame
             Rectangle destination = new Rectangle((int)position.X, (int)position.Y, 100, 100);
 
             sb.Draw(SpriteSheet, destination, SourceRectangle, tint, 0.0f, Vector2.Zero, effect, 0.0f);
+
+            return CurrentFrame == NumColumns;
         }
 
 

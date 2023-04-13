@@ -25,6 +25,19 @@ abstract class Enemy : Entity
     public bool isAlive { get; set; }
     
     /// <summary>
+    /// An additional constructor that Josh needs for the Skeleton class. It doesn't need an idle animation, it's always moving.
+    /// </summary>
+    /// <param name="move"> The Skeleton's move animation. </param>
+    /// <param name="death"> The animation for when the Skeleton dies. </param>
+    /// <param name="hitbox"> The hitbox of the Skeleton. </param>
+    public Enemy(Animation move, Animation death, Rectangle hitbox) : base(hitbox)
+    {
+        Move = move;
+        Death = death;
+        Hitbox = hitbox;
+    }
+
+    /// <summary>
     /// Creates a new generic enemy with the specified information 
     /// </summary>
     /// <param name="texture">Texture file of the enemy</param>
@@ -85,5 +98,7 @@ abstract class Enemy : Entity
     /// </summary>
     /// <param name="sb"> The sprite batch the enemies are being drawn with. </param>
     /// <param name="gameTime"> The time passed in game. </param>
-    public abstract void Draw(SpriteBatch sb, GameTime gameTime);
+    /// <param name="playerPos"> The location of the player. Needed to find them for some enemies. </param>
+    /// <returns> Whether or not the enemy has finished the death animation. </returns>
+    public abstract bool Draw(SpriteBatch sb, GameTime gameTime, Point playerPos);
 }

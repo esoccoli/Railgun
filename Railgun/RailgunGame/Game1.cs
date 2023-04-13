@@ -19,6 +19,8 @@ namespace Railgun.RailgunGame
 
         private Player mainPlayer;
 
+        private List<Enemy> enemies;
+
         #region Menu Elements
         // Textures used to display the Menu.
         private Texture2D menuLogo;
@@ -33,6 +35,7 @@ namespace Railgun.RailgunGame
         private Rectangle quitRect;
         #endregion
 
+        #region Player, Enemy, Proj. Textures
         // Player, enemy, and projectile textures
         private Texture2D playerIdle;
         private Animation playerIdleAnim;
@@ -41,6 +44,11 @@ namespace Railgun.RailgunGame
         private Texture2D playerDeath;
         private Animation playerDeathAnim;
         private Texture2D bulletTexture;
+        private Texture2D skeletonWalk;
+        private Animation skeletonWalkAnim;
+        private Texture2D skeletonDeath;
+        private Animation skeletonDeathAnim;
+        #endregion
 
         // Reticle
         private Texture2D gameReticle;
@@ -84,6 +92,7 @@ namespace Railgun.RailgunGame
             font = this.Content.Load<SpriteFont>("Mynerve24");
 
             GameTime gameTime = new GameTime();
+            enemies = new List<Enemy>();
 
             DebugLog.Instance.LogPersistant("?????", Color.White, 3);
 
@@ -115,12 +124,19 @@ namespace Railgun.RailgunGame
             playerRun = Content.Load<Texture2D>("mainCharRun");
             playerDeath = Content.Load<Texture2D>("mainCharDeath");
             bulletTexture = Content.Load<Texture2D>($"bulletTexture");
+            skeletonWalk = Content.Load<Texture2D>($"Skeleton Walk");
+            skeletonDeath = Content.Load<Texture2D>($"Skeleton Dead");
 
             #endregion
 
             playerIdleAnim = new Animation(playerIdle, 1, 6, 11.0f);
             playerRunAnim = new Animation(playerRun, 1, 8, 13.0f);
+            skeletonWalkAnim = new Animation(skeletonWalk, 1, 13, 12.0f);
+            skeletonDeathAnim = new Animation(skeletonDeath, 1, 15, 12.0f);
 
+            // This next line is just to test skeletons.
+            Skeleton testSkelley = new Skeleton(skeletonWalkAnim, skeletonDeathAnim, new Rectangle(1700, 200, 100, 100));
+            enemies.Add(testSkelley);
 
             //Creates a UI object. Values to be updated later. 
             mainPlayer = new Player(new Rectangle(870, 510, 100, 100), playerIdleAnim, playerRunAnim, bulletTexture, null);
@@ -140,6 +156,7 @@ namespace Railgun.RailgunGame
 
             switch (currentGameState)
             {
+                #region Menu
                 case GameState.Menu:
 
                     // This creates the default menu buttons
@@ -205,6 +222,9 @@ namespace Railgun.RailgunGame
 
 
                     break;
+                #endregion
+
+                #region Game
                 case GameState.Game:
 
                     userInterface.Update(mainPlayer.Health, mainPlayer.Ammo, mainPlayer.DashTime); //Updates the UI. Values to be updated later
@@ -228,8 +248,34 @@ namespace Railgun.RailgunGame
                     for (int i = 0; i < mainPlayer.PlayerBullets.Count; i++)
                     {
                         mainPlayer.PlayerBullets[i].Update(gameTime);
+                    } // Update player bullets!
+                    for (int i = 0; i < enemies.Count; i++)
+                    {
+                        enemies[i].Update(mainPlayer.Hitbox.Center);
+                    } // Update enemies!
+
+                    #region COLLISIONS!!!
+                    for(int b = 0; b < mainPlayer.PlayerBullets.Count;)
+                    {
+                        for(int e = 0; e < enemies.Count; e++)
+                        {
+                            if (mainPlayer.PlayerBullets[b].Hitbox.Intersects(enemies[e].Hitbox))
+                            {
+                                enemies[e].TakeDamage(5);
+                                mainPlayer.PlayerBullets.RemoveAt(b);
+                            }
+                            else
+                            {
+                                b++;
+                            }
+                        }
                     }
+                    #endregion
+
                     break;
+                #endregion
+
+                #region Pause
                 case GameState.Pause:
 
                     if (InputManager.IsKeyDown(Keys.Enter))
@@ -243,6 +289,9 @@ namespace Railgun.RailgunGame
                     }
 
                     break;
+                #endregion
+
+                #region Game Over
                 case GameState.GameOver:
 
                     if (InputManager.IsKeyDown(Keys.Enter))
@@ -252,6 +301,7 @@ namespace Railgun.RailgunGame
                     }
 
                     break;
+                #endregion
             }
 
             base.Update(gameTime);
@@ -293,7 +343,16 @@ namespace Railgun.RailgunGame
                     userInterface.Draw(_spriteBatch); //Draws UI
                     for (int i = 0; i < mainPlayer.PlayerBullets.Count; i++)
                     {
+                        // Draw the player bullets!
                         mainPlayer.PlayerBullets[i].Draw(_spriteBatch, gameTime);
+                    }
+                    for(int i = 0; i < enemies.Count; i++)
+                    {
+                        // Draw the enemies!!!
+                        if(enemies[i].Draw(_spriteBatch, gameTime, mainPlayer.Hitbox.Center))
+                        {
+                            enemies.RemoveAt(i);
+                        }
                     }
 
                     //Draws reticle
@@ -305,14 +364,20 @@ namespace Railgun.RailgunGame
 
                     _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
                     //Draw test map
-                    testMap.DrawTiles(_spriteBatch);
+
+                    // Disabled for testing - Josh
+                    //testMap.DrawTiles(_spriteBatch);
+
                     _spriteBatch.End();
                     _spriteBatch.Begin();//Dumb, get rid of, only here bc I don't want to change the current stuff until I get permission
                     //Begin shapebatch without depth (so that shapes are drawn to the top)
                     GraphicsDevice.DepthStencilState = DepthStencilState.None;
                     //Once we have a camera, it will be passed to hitboxes
                     ShapeBatch.Begin(GraphicsDevice);
-                    testMap.DrawHitboxes(Vector2.Zero, 1f);
+
+                    // Disabled for testing - Josh
+                    //testMap.DrawHitboxes(Vector2.Zero, 1f);
+
                     ShapeBatch.End();
 
                     break;
