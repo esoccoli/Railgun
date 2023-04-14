@@ -262,21 +262,26 @@ namespace Railgun.RailgunGame
                         enemies[i].Update(mainPlayer.Hitbox.Center);
                     } // Update enemies!
 
+                    List<Projectile> removalList = new List<Projectile>();
+
                     #region COLLISIONS!!!
-                    for(int b = 0; b < mainPlayer.PlayerBullets.Count;)
+                    for(int b = 0; b < mainPlayer.PlayerBullets.Count; b++)
                     {
                         for(int e = 0; e < enemies.Count; e++)
                         {
                             if (enemies[e].Hitbox.Contains(mainPlayer.PlayerBullets[b].Hitbox))
                             {
                                 enemies[e].TakeDamage(5);
-                                mainPlayer.PlayerBullets.Remove(mainPlayer.PlayerBullets[b]);
+                                removalList.Add(mainPlayer.PlayerBullets[b]);
                             }
-                            else
-                            {
-                                b++;
-                            }
+                            
                         }
+                    }
+
+                    //Remove the bullets that need to be removed
+                    foreach(Projectile bullet in removalList)
+                    {
+                        mainPlayer.PlayerBullets.Remove(bullet);
                     }
                     #endregion
 
