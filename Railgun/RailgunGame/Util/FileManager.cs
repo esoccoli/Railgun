@@ -76,7 +76,7 @@ namespace Railgun.RailgunGame.Util
                 //Read and add each hitbox
                 for (int i = 0; i < hitboxCount; i++)
                 {
-                    map.Hitboxes[ReadVector(reader)] = reader.ReadBoolean();
+                    map.HitboxesMap[ReadVector(reader)] = reader.ReadBoolean();
                 }
 
                 return map;

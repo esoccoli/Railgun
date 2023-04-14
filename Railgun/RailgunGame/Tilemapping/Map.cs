@@ -44,7 +44,12 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <summary>
         /// The hitboxes of each tile in this map
         /// </summary>
-        public Dictionary<Vector2, bool> Hitboxes { get; protected set; }
+        public Dictionary<Vector2, bool> HitboxesMap { get; protected set; }
+
+        /// <summary>
+        /// The list of hitboxes on this map
+        /// </summary>
+        public List<Rectangle> Hitboxes { get; protected set; }
 
         /// <summary>
         /// The tile at the specified grid position and layer
@@ -66,7 +71,7 @@ namespace Railgun.RailgunGame.Tilemapping
         {
             TileSize = tileSize;
             Layers = new List<Dictionary<Vector2, Tile>>();
-            Hitboxes = new Dictionary<Vector2, bool>();
+            HitboxesMap = new Dictionary<Vector2, bool>();
         }
 
         #region Drawing
@@ -103,7 +108,7 @@ namespace Railgun.RailgunGame.Tilemapping
             //Define constants for every hitbox
             Vector2 sizeVector = new Vector2(TileSize * cameraZoom);
 
-            foreach (KeyValuePair<Vector2, bool> hitbox in Hitboxes)
+            foreach (KeyValuePair<Vector2, bool> hitbox in HitboxesMap)
             {
                 //If hitbox placed
                 if (hitbox.Value)
@@ -149,6 +154,16 @@ namespace Railgun.RailgunGame.Tilemapping
         public static Vector2 GetGridPoint(Vector2 rawPoint, float tileSize)
         {
             return Vector2.Floor(rawPoint / new Vector2(tileSize));
+        }
+
+        /// <summary>
+        /// Returns whether 
+        /// </summary>
+        /// <param name="gridPoint"></param>
+        /// <returns></returns>
+        public bool IsSolid(Vector2 gridPoint)
+        {
+            return HitboxesMap[gridPoint];
         }
 
         #endregion

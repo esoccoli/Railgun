@@ -40,6 +40,7 @@ namespace Railgun.RailgunGame
             if(Health > 0)
             {
                 Walk(playerPos);
+                DebugLog.Instance.LogFrame("\n\n\n\n\n"+Health.ToString());
             }
         }
 
