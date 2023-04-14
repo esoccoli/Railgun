@@ -19,7 +19,6 @@ namespace Railgun.RailgunGame
     // enemy bullets.
     internal class Skeleton : Enemy
     {
-        private int speed;
         private Vector2 velocity;
         private Rectangle hitboxTemp;
 
@@ -32,14 +31,13 @@ namespace Railgun.RailgunGame
         /// <param name="hitbox"> The rectangle you should be aiming your gun at. </param>
         public Skeleton(Animation move, Animation death, Rectangle hitbox) : base(move, death, hitbox)
         {
-            speed = 5;
-            Health = 25;
+            Health = 1;
             hitboxTemp = Hitbox;
         }
 
         public override void Update(Point playerPos)
         {
-            if(Health >= 1)
+            if(Health > 0)
             {
                 Walk(playerPos);
             }

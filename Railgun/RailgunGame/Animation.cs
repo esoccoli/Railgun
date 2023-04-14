@@ -135,7 +135,7 @@ namespace Railgun.RailgunGame
 
             sb.Draw(SpriteSheet, destination, SourceRectangle, tint, 0.0f, Vector2.Zero, effect, 0.0f);
 
-            return CurrentFrame == NumColumns;
+            return CurrentFrame == TotalFrames;
         }
 
 

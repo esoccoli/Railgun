@@ -20,11 +20,6 @@ abstract class Enemy : Entity
     public Rectangle Hitbox { get; set; }
     
     /// <summary>
-    /// Tracks whether the enemy has health left
-    /// </summary>
-    public bool isAlive { get; set; }
-    
-    /// <summary>
     /// An additional constructor that Josh needs for the Skeleton class. It doesn't need an idle animation, it's always moving.
     /// </summary>
     /// <param name="move"> The Skeleton's move animation. </param>
@@ -63,12 +58,7 @@ abstract class Enemy : Entity
     /// <param name="damage">Amount of damage taken</param>
     public virtual void TakeDamage(int damage)
     {
-        Health -= damage;
-
-        if (Health <= 0)
-        {
-            isAlive = false;
-        }
+        this.Health -= damage;
     }
 
     /// <summary>
@@ -86,8 +76,8 @@ abstract class Enemy : Entity
     /// <param name="playerPos"> The location of the player. Needed to find them for some enemies. </param>
     public virtual void Update(Point playerPos)
     {
-        Walk(playerPos);
-        Shoot(playerPos);
+        // Walk(playerPos);
+        // Shoot(playerPos);
         
         // If enemy collides with bullet
         // TakeDamage();

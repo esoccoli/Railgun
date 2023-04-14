@@ -259,10 +259,10 @@ namespace Railgun.RailgunGame
                     {
                         for(int e = 0; e < enemies.Count; e++)
                         {
-                            if (mainPlayer.PlayerBullets[b].Hitbox.Intersects(enemies[e].Hitbox))
+                            if (enemies[e].Hitbox.Contains(mainPlayer.PlayerBullets[b].Hitbox))
                             {
                                 enemies[e].TakeDamage(5);
-                                mainPlayer.PlayerBullets.RemoveAt(b);
+                                mainPlayer.PlayerBullets.Remove(mainPlayer.PlayerBullets[b]);
                             }
                             else
                             {
@@ -351,7 +351,7 @@ namespace Railgun.RailgunGame
                         // Draw the enemies!!!
                         if(enemies[i].Draw(_spriteBatch, gameTime, mainPlayer.Hitbox.Center))
                         {
-                            enemies.RemoveAt(i);
+                            enemies.Remove(enemies[i]);
                         }
                     }
 
