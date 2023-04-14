@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 //Nathan McAndrew
 //Generic entity with a hitbox and texture
 namespace Railgun.RailgunGame
-{ 
+{
     internal abstract class Entity
     {
         /// <summary>
@@ -32,6 +32,7 @@ namespace Railgun.RailgunGame
         /// </summary>
         /// <param name="gameTime">time of the game</param>
         public virtual void Update(GameTime gameTime) { }
-    }
 
+
+    }
 }

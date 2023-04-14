@@ -155,6 +155,7 @@ namespace Railgun.RailgunGame
 
             //Load test map
             testMap = FileManager.LoadMap(Content, "TestMap");
+            MapManager.Instance.CurrentMap = testMap;
         }
 
         protected override void Update(GameTime gameTime)
@@ -251,6 +252,7 @@ namespace Railgun.RailgunGame
                     {
                         currentGameState = GameState.GameOver;
                     }
+
 
                     mainPlayer.Update(gameTime);
                     for (int i = 0; i < mainPlayer.PlayerBullets.Count; i++)
@@ -379,7 +381,7 @@ namespace Railgun.RailgunGame
                     //Draw test map
 
                     // Disabled for testing - Josh
-                    //testMap.DrawTiles(_spriteBatch);
+                    testMap.DrawTiles(_spriteBatch);
 
                     _spriteBatch.End();
                     _spriteBatch.Begin();//Dumb, get rid of, only here bc I don't want to change the current stuff until I get permission
@@ -389,7 +391,7 @@ namespace Railgun.RailgunGame
                     ShapeBatch.Begin(GraphicsDevice);
 
                     // Disabled for testing - Josh
-                    //testMap.DrawHitboxes(Vector2.Zero, 1f);
+                    testMap.DrawHitboxes(Vector2.Zero, 1f);
 
                     ShapeBatch.End();
 

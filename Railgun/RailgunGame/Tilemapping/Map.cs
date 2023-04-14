@@ -42,7 +42,7 @@ namespace Railgun.RailgunGame.Tilemapping
         public List<Dictionary<Vector2, Tile>> Layers { get; protected set; }
 
         /// <summary>
-        /// The hitboxes of each tile in this map
+        /// A boolean dictionary that maps position to boolean of whether a tile is solid or not
         /// </summary>
         public Dictionary<Vector2, bool> HitboxesMap { get; protected set; }
 
@@ -72,6 +72,25 @@ namespace Railgun.RailgunGame.Tilemapping
             TileSize = tileSize;
             Layers = new List<Dictionary<Vector2, Tile>>();
             HitboxesMap = new Dictionary<Vector2, bool>();
+            Hitboxes = new List<Rectangle>();
+        }
+
+        /// <summary>
+        /// Generates a list of hitboxes based on the dictionary of hitboxes
+        /// </summary>
+        public void PopulateHitboxList()
+        {
+            //Populate the list of hitboxes
+            foreach (KeyValuePair<Vector2, bool> hitbox in HitboxesMap)
+            {
+                //If solid, add it to the list
+                if (hitbox.Value)
+                {
+                    Hitboxes.Add(
+                        new Rectangle((hitbox.Key * TileSize).ToPoint(),
+                        new Point(tileSize)));
+                }
+            }
         }
 
         #region Drawing
@@ -95,6 +114,7 @@ namespace Railgun.RailgunGame.Tilemapping
                             new Point(TileSize)));
                 }
             }
+
         }
 
         /// <summary>
@@ -129,6 +149,7 @@ namespace Railgun.RailgunGame.Tilemapping
                         new Vector2(bottomRightCorner.X, topLeftCorner.Y), 2f, Color.Red);
                 }
             }
+
         }
 
         #endregion
@@ -157,13 +178,80 @@ namespace Railgun.RailgunGame.Tilemapping
         }
 
         /// <summary>
-        /// Returns whether 
+        /// Checks this map's solid hitboxes against the specified hitbox.
+        /// Returns the resolved hitbox
+        /// (shamelessly copied from the gravity and collisions pe)
         /// </summary>
-        /// <param name="gridPoint"></param>
-        /// <returns></returns>
-        public bool IsSolid(Vector2 gridPoint)
+        /// <param name="hitbox">Hitbox to resolve</param>
+        /// <return>The resolved hitbox</return>
+        public Rectangle ResolveCollisions(Rectangle hitbox)
         {
-            return HitboxesMap[gridPoint];
+            List<Rectangle> intersections = new List<Rectangle>();
+
+            //Add intersections
+            foreach (Rectangle obstical in Hitboxes)
+            {
+                //Check if it has a width or height
+                if (obstical.Intersects(hitbox))
+                {
+                    intersections.Add(obstical);
+                }
+            }
+
+            //Check and move x
+            foreach (Rectangle obstical in intersections)
+            {
+                Rectangle intersection = Rectangle.Intersect(hitbox, obstical);
+                //Check if valid and for width
+                if (intersection.Height > intersection.Width)
+                {
+                    //Calculate side
+                    if (hitbox.X < obstical.X)
+                    {
+                        hitbox.X -= intersection.Width;
+                    }
+                    else
+                    {
+                        hitbox.X += intersection.Width;
+                    }
+
+                }
+            }
+
+            //Check and move y
+            foreach (Rectangle obstical in intersections)
+            {
+                Rectangle intersection = Rectangle.Intersect(hitbox, obstical);
+
+                //Check if valid and for width
+                if (intersection.Width > intersection.Height)
+                {
+                    //Calculate side
+                    if (hitbox.Y < obstical.Y)
+                    {
+                        hitbox.Y -= intersection.Height;
+                    }
+                    else
+                    {
+                        hitbox.Y += intersection.Height;
+                    }
+                }
+            }
+
+            //Set new hitbox
+            return hitbox;
+        }
+
+    /// <summary>
+    /// Returns whether 
+    /// </summary>
+    /// <param name="gridPoint"></param>
+    /// <returns></returns>
+    public bool IsSolid(Vector2 gridPoint)
+        {
+            //If it exists, overwrite the value
+            HitboxesMap.TryGetValue(gridPoint, out bool returnValue);
+            return returnValue;
         }
 
         #endregion

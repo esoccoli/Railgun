@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Railgun.RailgunGame.Util;
+using Railgun.RailgunGame.Tilemapping;
 
 namespace Railgun.RailgunGame
 {
@@ -21,7 +22,6 @@ namespace Railgun.RailgunGame
         private int dashSpeed;
         private bool dashing;
         
-        private Rectangle hitboxTemp;
         private KeyboardState preDash;
 
         private Texture2D activeBullet;
@@ -100,7 +100,6 @@ namespace Railgun.RailgunGame
             this.notActiveBullet = notActiveBullet;
             
             Hitbox = hitbox;
-            hitboxTemp = hitbox;
             PlayerBullets = new List<Projectile>(10);
         }
 
@@ -126,10 +125,16 @@ namespace Railgun.RailgunGame
             {
                 InputManager.UpdateInputState();
 
-                if (InputManager.IsKeyDown(Keys.W)) { hitboxTemp.Y -= speed; Hitbox = hitboxTemp; }
-                if (InputManager.IsKeyDown(Keys.A)) { hitboxTemp.X -= speed; Hitbox = hitboxTemp; }
-                if (InputManager.IsKeyDown(Keys.S)) { hitboxTemp.Y += speed; Hitbox = hitboxTemp; }
-                if (InputManager.IsKeyDown(Keys.D)) { hitboxTemp.X += speed; Hitbox = hitboxTemp; }
+                Rectangle hitbox = Hitbox;
+
+                if (InputManager.IsKeyDown(Keys.W)) { hitbox.Y -= speed; }
+                if (InputManager.IsKeyDown(Keys.A)) { hitbox.X -= speed; }
+                if (InputManager.IsKeyDown(Keys.S)) { hitbox.Y += speed; }
+                if (InputManager.IsKeyDown(Keys.D)) { hitbox.X += speed; }
+
+                hitbox = MapManager.Instance.CurrentMap.ResolveCollisions(hitbox);
+
+                Hitbox = hitbox;
 
                 if (InputManager.IsButtonDown(MouseButtons.Left) && ShootCooldown <= 0.0 && Ammo > 0) { Shoot(); }
                 if (InputManager.IsButtonDown(MouseButtons.Right) && Ammo <= 0) { Reload(); }
@@ -172,11 +177,17 @@ namespace Railgun.RailgunGame
         {
             DashTime += gameTime.ElapsedGameTime.TotalSeconds;
 
+            Rectangle hitbox = Hitbox;
+
             // This is NOT user input, this is what the directional input of the user was back when they initially started dashing.
-            if (preDash.IsKeyDown(Keys.W)) { hitboxTemp.Y -= dashSpeed; Hitbox = hitboxTemp; }
-            if (preDash.IsKeyDown(Keys.A)) { hitboxTemp.X -= dashSpeed; Hitbox = hitboxTemp; }
-            if (preDash.IsKeyDown(Keys.S)) { hitboxTemp.Y += dashSpeed; Hitbox = hitboxTemp; }
-            if (preDash.IsKeyDown(Keys.D)) { hitboxTemp.X += dashSpeed; Hitbox = hitboxTemp; }
+            if (preDash.IsKeyDown(Keys.W)) { hitbox.Y -= dashSpeed; }
+            if (preDash.IsKeyDown(Keys.A)) { hitbox.X -= dashSpeed; }
+            if (preDash.IsKeyDown(Keys.S)) { hitbox.Y += dashSpeed; }
+            if (preDash.IsKeyDown(Keys.D)) { hitbox.X += dashSpeed; }
+
+            hitbox = MapManager.Instance.CurrentMap.ResolveCollisions(hitbox);
+
+            Hitbox = hitbox;
 
             // This is the total duration of the dash. We can edit this number later.
             if(DashTime >= .75) 
