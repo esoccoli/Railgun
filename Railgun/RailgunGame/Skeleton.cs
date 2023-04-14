@@ -40,8 +40,9 @@ namespace Railgun.RailgunGame
             if(Health > 0)
             {
                 Walk(playerPos);
-                DebugLog.Instance.LogFrame("\n\n\n\n\n"+Health.ToString());
             }
+            DebugLog.Instance.LogFrame("\n\n\n\n\n" + Health.ToString());
+
         }
 
         public override void Walk(Point playerPos)
