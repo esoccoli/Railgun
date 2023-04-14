@@ -88,7 +88,7 @@ namespace Railgun.RailgunGame
             {
                 case ProjectileStates.IsActive:
                     Position += Velocity;
-                    //Hitbox = new Rectangle((int)(Hitbox.X + Velocity.X), (int)(Hitbox.Y + Velocity.Y), Hitbox.Width, Hitbox.Height);
+                    Hitbox = new Rectangle((int)(Hitbox.X + Velocity.X), (int)(Hitbox.Y + Velocity.Y), Hitbox.Width, Hitbox.Height);
                     break;
 
                 case ProjectileStates.HasCollided:
