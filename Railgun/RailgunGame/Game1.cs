@@ -39,13 +39,18 @@ namespace Railgun.RailgunGame
         // Player, enemy, and projectile textures
         private Texture2D playerIdle;
         private Animation playerIdleAnim;
+        
         private Texture2D playerRun;
         private Animation playerRunAnim;
+        
         private Texture2D playerDeath;
         private Animation playerDeathAnim;
+        
         private Texture2D bulletTexture;
+        
         private Texture2D skeletonWalk;
         private Animation skeletonWalkAnim;
+        
         private Texture2D skeletonDeath;
         private Animation skeletonDeathAnim;
         #endregion
@@ -63,7 +68,10 @@ namespace Railgun.RailgunGame
             Content.RootDirectory = "Content";
             IsMouseVisible = false;
         }
-
+        
+        /// <summary>
+        /// Tracks the possible game states
+        /// </summary>
         public enum GameState
         {
             Menu,
