@@ -39,13 +39,18 @@ namespace Railgun.RailgunGame
         // Player, enemy, and projectile textures
         private Texture2D playerIdle;
         private Animation playerIdleAnim;
+        
         private Texture2D playerRun;
         private Animation playerRunAnim;
+        
         private Texture2D playerDeath;
         private Animation playerDeathAnim;
+        
         private Texture2D bulletTexture;
+        
         private Texture2D skeletonWalk;
         private Animation skeletonWalkAnim;
+        
         private Texture2D skeletonDeath;
         private Animation skeletonDeathAnim;
         #endregion
@@ -63,7 +68,10 @@ namespace Railgun.RailgunGame
             Content.RootDirectory = "Content";
             IsMouseVisible = false;
         }
-
+        
+        /// <summary>
+        /// Tracks the possible game states
+        /// </summary>
         public enum GameState
         {
             Menu,
@@ -136,8 +144,16 @@ namespace Railgun.RailgunGame
 
             // This next line is just to test skeletons.
             Skeleton testSkelley = new Skeleton(skeletonWalkAnim, skeletonDeathAnim, new Rectangle(1700, 200, 100, 100));
+            Skeleton ttestSkelley = new Skeleton(skeletonWalkAnim, skeletonDeathAnim, new Rectangle(200, 200, 100, 100));
+            Skeleton tttestSkelley = new Skeleton(skeletonWalkAnim, skeletonDeathAnim, new Rectangle(700, 200, 100, 100));
+            Skeleton ttttestSkelley = new Skeleton(skeletonWalkAnim, skeletonDeathAnim, new Rectangle(1300, 200, 100, 100));
+            Skeleton tttttestSkelley = new Skeleton(skeletonWalkAnim, skeletonDeathAnim, new Rectangle(900, 900, 100, 100));
             enemies.Add(testSkelley);
-
+            enemies.Add(ttestSkelley);
+            enemies.Add(tttestSkelley);
+            enemies.Add(ttttestSkelley);
+            enemies.Add(tttttestSkelley);
+            
             //Creates a UI object. Values to be updated later. 
             mainPlayer = new Player(new Rectangle(870, 510, 100, 100), playerIdleAnim, playerRunAnim, bulletTexture, null);
             userInterface = new UI(backgroundHealthUI, foregroundHealthUI, bulletUI, false, mainPlayer.Health, mainPlayer.MaxHealth, font, mainPlayer.Ammo, mainPlayer.MaxAmmo);
@@ -254,21 +270,26 @@ namespace Railgun.RailgunGame
                         enemies[i].Update(mainPlayer.Hitbox.Center);
                     } // Update enemies!
 
+                    List<Projectile> removalList = new List<Projectile>();
+
                     #region COLLISIONS!!!
-                    for(int b = 0; b < mainPlayer.PlayerBullets.Count;)
+                    for (int b = 0; b < mainPlayer.PlayerBullets.Count; b++)
                     {
                         for(int e = 0; e < enemies.Count; e++)
                         {
-                            if (enemies[e].Hitbox.Contains(mainPlayer.PlayerBullets[b].Hitbox))
+                            if (enemies[e].Hitbox.Intersects(mainPlayer.PlayerBullets[b].Hitbox))
                             {
                                 enemies[e].TakeDamage(5);
-                                mainPlayer.PlayerBullets.Remove(mainPlayer.PlayerBullets[b]);
+                                removalList.Add(mainPlayer.PlayerBullets[b]);
                             }
-                            else
-                            {
-                                b++;
-                            }
+                            
                         }
+                    }
+
+                    //Remove the bullets that need to be removed
+                    foreach(Projectile bullet in removalList)
+                    {
+                        mainPlayer.PlayerBullets.Remove(bullet);
                     }
                     #endregion
 
@@ -338,6 +359,7 @@ namespace Railgun.RailgunGame
                     break;
                 case GameState.Game:
                     MouseState mStateGame = Mouse.GetState();
+                    List<Enemy> removalList = new List<Enemy>();
                     mainPlayer.Draw(_spriteBatch, gameTime);
                     _spriteBatch.DrawString(font, "Game", new Vector2(_graphics.PreferredBackBufferWidth - 100, 20), Color.White);
                     userInterface.Draw(_spriteBatch); //Draws UI
@@ -351,8 +373,12 @@ namespace Railgun.RailgunGame
                         // Draw the enemies!!!
                         if(enemies[i].Draw(_spriteBatch, gameTime, mainPlayer.Hitbox.Center))
                         {
-                            enemies.Remove(enemies[i]);
+                            removalList.Add(enemies[i]);
                         }
+                    }
+                    foreach (Enemy enemy in removalList)
+                    {
+                        enemies.Remove(enemy);
                     }
 
                     //Draws reticle

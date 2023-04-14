@@ -31,19 +31,26 @@ namespace Railgun.RailgunGame
         /// <param name="hitbox"> The rectangle you should be aiming your gun at. </param>
         public Skeleton(Animation move, Animation death, Rectangle hitbox) : base(move, death, hitbox)
         {
-            Health = 1;
+            Health = 25;
             hitboxTemp = Hitbox;
         }
 
+        /// <summary>
+        /// This is called every frame for a Skeleton. It enables them to move.
+        /// </summary>
+        /// <param name="playerPos"> The position of the player. </param>
         public override void Update(Point playerPos)
         {
             if(Health > 0)
             {
                 Walk(playerPos);
-                DebugLog.Instance.LogFrame("\n\n\n\n\n"+Health.ToString());
             }
         }
 
+        /// <summary>
+        /// This is what moves the Skeleton. He moves at the breakneck speed of four.
+        /// </summary>
+        /// <param name="playerPos"> The direction that the Skeleton is moving in. </param>
         public override void Walk(Point playerPos)
         {
             velocity = (playerPos - Hitbox.Center).ToVector2() / Vector2.Distance(playerPos.ToVector2(), Hitbox.Center.ToVector2()) * 4;
@@ -54,6 +61,13 @@ namespace Railgun.RailgunGame
             Hitbox = hitboxTemp;
         }
 
+        /// <summary>
+        /// Draws the skeleton to the screen based 
+        /// </summary>
+        /// <param name="sb"></param>
+        /// <param name="gameTime"></param>
+        /// <param name="playerPos"></param>
+        /// <returns></returns>
         public override bool Draw(SpriteBatch sb, GameTime gameTime, Point playerPos)
         {
             if(Health <= 0)
