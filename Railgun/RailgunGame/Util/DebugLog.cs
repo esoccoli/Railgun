@@ -118,9 +118,9 @@ namespace Railgun.RailgunGame.Util
         /// Logs a persistant message for a long time
         /// </summary>
         /// <param name="message">Message text</param>
-        public void LogPersistant(string message)
+        public void LogPersistant(object message)
         {
-            persistantMessages.Add(new Message(message, Color.White));
+            persistantMessages.Add(new Message(message.ToString(), Color.White));
         }
 
         /// <summary>
@@ -128,9 +128,9 @@ namespace Railgun.RailgunGame.Util
         /// </summary>
         /// <param name="message">Message text</param>
         /// <param name="color">Color of message</param>
-        public void LogPersistant(string message, Color color)
+        public void LogPersistant(object message, Color color)
         {
-            persistantMessages.Add(new Message(message, color));
+            persistantMessages.Add(new Message(message.ToString(), color));
         }
 
         /// <summary>
@@ -139,18 +139,18 @@ namespace Railgun.RailgunGame.Util
         /// <param name="message">Message text</param>
         /// <param name="color">Color of message</param>
         /// <param name="duration">Duration of message</param>
-        public void LogPersistant(string message, Color color, float duration)
+        public void LogPersistant(object message, Color color, float duration)
         {
-            persistantMessages.Add(new Message(message, color, duration));
+            persistantMessages.Add(new Message(message.ToString(), color, duration));
         }
 
         /// <summary>
         /// Logs a message for just this frame
         /// </summary>
         /// <param name="message">Message text</param>
-        public void LogFrame(string message)
+        public void LogFrame(object message)
         {
-            updateMessages.Add(new Message(message, Color.White));
+            updateMessages.Add(new Message(message.ToString(), Color.White));
         }
 
         /// <summary>
@@ -158,9 +158,9 @@ namespace Railgun.RailgunGame.Util
         /// </summary>
         /// <param name="message">Message text</param>
         /// <param name="color">Color of this message</param>
-        public void LogFrame(string message, Color color)
+        public void LogFrame(object message, Color color)
         {
-            updateMessages.Add(new Message(message, color));
+            updateMessages.Add(new Message(message.ToString(), color));
         }
 
         #endregion
