@@ -21,9 +21,9 @@ namespace Railgun.RailgunGame.Util
         private const float AbsoluteMinZoom = 0.000001f;
 
         /// <summary>
-        /// The current viewport of the game
+        /// The graphics of the game
         /// </summary>
-        public Viewport CurrentViewport { get; set; }
+        private GraphicsDevice graphics;
 
         /// <summary>
         /// The current viewport of the game in camera space
@@ -31,14 +31,9 @@ namespace Railgun.RailgunGame.Util
         public Rectangle CurrentWorldViewRectangle { get; private set; }
 
         /// <summary>
-        /// The translation of matrix
+        /// The center of this camera in world space
         /// </summary>
         public Vector2 Position { get; set; }
-
-        /// <summary>
-        /// The center of the camera
-        /// </summary>
-        public Vector2 Center { get; private set; }
 
         /// <summary>
         /// The current scale or zoom of the camera
@@ -73,7 +68,7 @@ namespace Railgun.RailgunGame.Util
             set
             {
                 //Make sure it is not below the min
-                if(value < MinZoom)
+                if (value < MinZoom)
                 {
                     maxZoom = MinZoom;
                     return;
@@ -122,18 +117,22 @@ namespace Railgun.RailgunGame.Util
         /// <summary>
         /// Creates a camera rendering within the bounds of the specified viewport
         /// </summary>
-        /// <param name="currentViewport">The viewport to use</param>
+        /// <param name="graphicsDevice">The graphics device of the game to use</param>
         /// <param name="bounds">The bounds that the camera can move to
         /// (if none, use Rectangle.Empty)</param>
         /// <param name="minZoom">The minimum zoom</param>
         /// <param name="maxZoom">The maximum zoom</param>
-        public Camera(Viewport currentViewport, Rectangle bounds,
+        public Camera(GraphicsDevice graphicsDevice, Rectangle bounds,
             float minZoom = AbsoluteMinZoom, float maxZoom = 9999f)
         {
-            CurrentViewport = currentViewport;
+            graphics = graphicsDevice;
             CameraBounds = bounds;
             MinZoom = minZoom;
             MaxZoom = maxZoom;
+            Zoom = 1f;
+            Position = Vector2.Zero;
+            Rotation = 0f;
+            CreateMatrix();//Create an initial matrix
         }
 
         /// <summary>
@@ -186,14 +185,14 @@ namespace Railgun.RailgunGame.Util
         /// <param name="gameTime">The game time for this frame</param>
         public void Update(GameTime gameTime)
         {
+            CreateMatrix();
+
             //Update world view rectangle and center
             CurrentWorldViewRectangle = GetWorldViewRectangle();
-            Center = CurrentWorldViewRectangle.Center.ToVector2();
 
-            DebugLog.Instance.LogFrame()
 
             //If there are bounds, resolve them
-            if(!CameraBounds.IsEmpty)
+            if (!CameraBounds.IsEmpty)
             {
                 //Check if current view is within rectangle bounds
                 Vector2 newPosition = Position;
@@ -218,15 +217,29 @@ namespace Railgun.RailgunGame.Util
 
                 //Resolve position
                 Position = newPosition;
+
+                //Update view matrix with resolved (I know, this is terrible, I'll
+                //Change it later if I have time) Reason I'm doing this is to
+                //First compute the matrix to find the bounding box of the cam, then resolve
+                CreateMatrix();
+
             }
 
-            //Update view matrix
-            TransformationMatrix = 
+        }
+
+        /// <summary>
+        /// Creates a matrix based on the current transformations
+        /// </summary>
+        private void CreateMatrix()
+        {
+            //Update view matrix raw
+            TransformationMatrix =
                 Matrix.CreateTranslation(new Vector3(-Position, 0f))//Translate
-                * Matrix.CreateTranslation(new Vector3(-Center, 0f))//Set origin of transformations to screen center
                 * Matrix.CreateRotationZ(Rotation)//Rotate
                 * Matrix.CreateScale(Zoom, Zoom, 1f)//Zoom
-                * Matrix.CreateTranslation(new Vector3(Center, 0f));//Translate back
+                * Matrix.CreateTranslation(new Vector3(
+                        graphics.Viewport.Width * 0.5f,
+                        graphics.Viewport.Height * 0.5f, 0f));//Translate to center of screen
         }
 
         /// <summary>
@@ -235,10 +248,31 @@ namespace Railgun.RailgunGame.Util
         /// <returns>The world viewport as a rectangle in camera space</returns>
         private Rectangle GetWorldViewRectangle()
         {
-            return new Rectangle(
-                (int)Position.X - CurrentViewport.Width / 2,//Center - half width
-                (int)Position.Y + CurrentViewport.Height / 2,//Center - half height
-                CurrentViewport.Width, CurrentViewport.Height);
+            //Idk if there is a more efficient way to do this but for now it is this
+
+            //Use matrix to figure out rectangle bounds
+            Matrix inversion = Matrix.Invert(TransformationMatrix);
+
+            //Half width and height
+            Vector2 halfSize =
+                new Vector2(
+                    graphics.Viewport.Width * 0.5f,
+                    graphics.Viewport.Height * 0.5f);
+
+            //Compute important points of the view rectangle
+            Vector2 topLeft = Vector2.Transform(-halfSize, inversion);
+            Vector2 bottomRight = Vector2.Transform(halfSize, inversion);
+
+            //Create a rectangle from the two points and translate by half width and height scaled by inverse
+            return new Rectangle((topLeft + halfSize / Zoom).ToPoint(), (bottomRight - topLeft).ToPoint());
         }
+
+        /// <summary>
+        /// Returns the specified screen point in the world space
+        /// </summary>
+        /// <param name="point">Absolute screen position</param>
+        /// <returns>Camera or world position of point</returns>
+        public Vector2 ScreenToWorld(Vector2 point)
+            => Vector2.Transform(point, Matrix.Invert(TransformationMatrix));
     }
 }

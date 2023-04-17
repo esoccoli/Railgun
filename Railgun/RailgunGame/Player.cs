@@ -132,7 +132,7 @@ namespace Railgun.RailgunGame
                 if (InputManager.IsKeyDown(Keys.S)) { hitbox.Y += speed; }
                 if (InputManager.IsKeyDown(Keys.D)) { hitbox.X += speed; }
 
-                hitbox = MapManager.Instance.CurrentMap.ResolveCollisions(hitbox);
+                hitbox = WorldManager.Instance.CurrentMap.ResolveCollisions(hitbox);
 
                 Hitbox = hitbox;
 
@@ -185,7 +185,7 @@ namespace Railgun.RailgunGame
             if (preDash.IsKeyDown(Keys.S)) { hitbox.Y += dashSpeed; }
             if (preDash.IsKeyDown(Keys.D)) { hitbox.X += dashSpeed; }
 
-            hitbox = MapManager.Instance.CurrentMap.ResolveCollisions(hitbox);
+            hitbox = WorldManager.Instance.CurrentMap.ResolveCollisions(hitbox);
 
             Hitbox = hitbox;
 

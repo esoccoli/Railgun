@@ -162,13 +162,14 @@ namespace Railgun.RailgunGame
 
             //Set debug logger
             DebugLog.Instance.Font = Content.Load<SpriteFont>("Consolas20");
+            DebugLog.Instance.Scale = 2f;
 
             //Load test map
             testMap = FileManager.LoadMap(Content, "TestMap");
-            MapManager.Instance.CurrentMap = testMap;
+            WorldManager.Instance.CurrentMap = testMap;
 
             //Create camera
-            camera = new Camera(GraphicsDevice.Viewport, Rectangle.Empty);
+            camera = new Camera(GraphicsDevice, Rectangle.Empty);
         }
 
         protected override void Update(GameTime gameTime)
@@ -300,10 +301,10 @@ namespace Railgun.RailgunGame
                     }
                     #endregion
 
-                    //Update camera
-                    camera.EaseTo(mainPlayer.Hitbox.Location.ToVector2(), 1f, 01f);
-                    //camera.EaseTo(InputManager.MouseState.Position.ToVector2(),
-                    //    0.5f, 0.5f, gameTime);
+                    //Update camera to ease to player and mouse pos in world space
+                    camera.EaseTo(mainPlayer.Hitbox.Location.ToVector2(), 1f, 0.5f);
+                    camera.EaseTo(camera.ScreenToWorld(
+                        InputManager.MouseState.Position.ToVector2()), 1f, 0.5f);
                     camera.Update(gameTime);
 
                     break;
@@ -410,7 +411,9 @@ namespace Railgun.RailgunGame
                     //DEBUG Draw map hitboxes on top
                     GraphicsDevice.DepthStencilState = DepthStencilState.None;
                     ShapeBatch.Begin(GraphicsDevice);
-                    testMap.DrawHitboxes(camera.Position, camera.Zoom);
+                    testMap.DrawHitboxes(new Vector2(
+                    camera.TransformationMatrix.Translation.X,
+                    camera.TransformationMatrix.Translation.Y), camera.Zoom);
                     ShapeBatch.End();
 
                     //Draw overlay
