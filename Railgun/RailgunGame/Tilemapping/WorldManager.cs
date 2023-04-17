@@ -88,7 +88,7 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <summary>
         /// All maps to be used
         /// </summary>
-        public List<Map> maps;
+        private List<Map> maps;
 
         /// <summary>
         /// The index of the current map

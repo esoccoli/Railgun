@@ -163,10 +163,10 @@ namespace Railgun.RailgunGame
             world = WorldManager.Instance;
 
             //Load test map
-            world.maps.Add(FileManager.LoadMap(Content, "HourglassMap"));
-            world.maps.Add(FileManager.LoadMap(Content, "SquareMapWithDoor"));
-            world.maps.Add(FileManager.LoadMap(Content, "CrescentMap"));
-            world.maps.Add(FileManager.LoadMap(Content, "TestMap"));
+            world.AddMap(FileManager.LoadMap(Content, "HourglassMap"));
+            world.AddMap(FileManager.LoadMap(Content, "SquareMapWithDoor"));
+            world.AddMap(FileManager.LoadMap(Content, "CrescentMap"));
+            world.AddMap(FileManager.LoadMap(Content, "TestMap"));
 
             //Create camera
             world.CurrentCamera = new Camera(GraphicsDevice, Rectangle.Empty);
@@ -278,9 +278,10 @@ namespace Railgun.RailgunGame
                         enemies[i].Update(mainPlayer.Hitbox.Center);
                     } // Update enemies!
 
+                    #region COLLISIONS!!!
+
                     List<Projectile> removalList = new List<Projectile>();
 
-                    #region COLLISIONS!!!
                     for (int e = 0; e < enemies.Count; e++)
                     {
                         if (enemies[e].Hitbox.Intersects(mainPlayer.Hitbox) && mainPlayer.DamageCooldown <= 0.0)
@@ -308,11 +309,12 @@ namespace Railgun.RailgunGame
                     }
                     #endregion
 
+
                     //DEBUG, tp to mouse
                     if (InputManager.IsKeyDown(Keys.T))
                     {
                         Rectangle playerHitbox = mainPlayer.Hitbox;
-                        playerHitbox.Location = WorldManager.Instance.GetMouseWorldPosition().ToPoint();
+                        playerHitbox.Location = world.GetMouseWorldPosition().ToPoint();
                         mainPlayer.Hitbox = playerHitbox;
                     }
                     
@@ -395,7 +397,11 @@ namespace Railgun.RailgunGame
                         transformMatrix: world.CurrentCamera.TransformationMatrix);
 
                     //Draw test map
-                    WorldManager.Instance.CurrentMap.DrawTiles(_spriteBatch);
+                    world.CurrentMap.DrawTiles(_spriteBatch);
+                    //Draw next and prev
+                    world.PreviousMap.DrawTiles(_spriteBatch);
+                    world.NextMap.DrawTiles(_spriteBatch);
+
 
                     MouseState mStateGame = Mouse.GetState();
                     List<Enemy> removalList = new List<Enemy>();
@@ -426,7 +432,7 @@ namespace Railgun.RailgunGame
                     //DEBUG Draw map hitboxes on top
                     GraphicsDevice.DepthStencilState = DepthStencilState.None;
                     ShapeBatch.Begin(GraphicsDevice);
-                    WorldManager.Instance.CurrentMap.DrawHitboxes(new Vector2(
+                    world.CurrentMap.DrawHitboxes(new Vector2(
                         world.CurrentCamera.TransformationMatrix.Translation.X,
                         world.CurrentCamera.TransformationMatrix.Translation.Y),
                         world.CurrentCamera.Zoom);
