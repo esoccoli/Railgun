@@ -52,6 +52,11 @@ namespace Railgun.RailgunGame
         public int MaxAmmo { get; set; }
 
         /// <summary>
+        /// Whether or not the player is currently invincible.
+        /// </summary>
+        public bool Invincible { get; set; }
+
+        /// <summary>
         /// This is the amount of time before the dash is available again.
         /// </summary>
         public double DashCooldown { get; set; }
@@ -62,10 +67,18 @@ namespace Railgun.RailgunGame
         public double ShootCooldown { get; set; }
 
         /// <summary>
+        /// The player is invincible for this amount of time after taking damage.
+        /// </summary>
+        public double DamageCooldown { get; set; }
+
+        /// <summary>
         /// The amount of time the player has been dashing for.
         /// </summary>
         public double DashTime { get; set; }
 
+        /// <summary>
+        /// The previous position of the player.
+        /// </summary>
         public Vector2 prevPos { get; set; }
 
         /// <summary>
@@ -90,6 +103,7 @@ namespace Railgun.RailgunGame
 
             DashCooldown = 0.0;
             ShootCooldown = 0.15;
+            DamageCooldown = 0.0;
             dashing = false;
             DashTime = 0.0;
 
@@ -117,6 +131,10 @@ namespace Railgun.RailgunGame
             {
                 ShootCooldown -= gameTime.ElapsedGameTime.TotalSeconds;
             } // Adjusts the cooldown on shooting accordingly.
+            if(DamageCooldown > 0.0)
+            {
+                DamageCooldown -= gameTime.ElapsedGameTime.TotalSeconds;
+            } // Adjusts the cooldown on damage accordingly.
 
             prevPos = new Vector2(Hitbox.X, Hitbox.Y); // This stores the previous position of the player. It's used for checking whether or not to do the idle animation.
 
@@ -212,13 +230,27 @@ namespace Railgun.RailgunGame
 
             if(prevPos.X == Hitbox.X && prevPos.Y == Hitbox.Y)
             {
-                playerIdle.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y), Color.White, effect);
+                if (DamageCooldown <= 0.0)
+                {
+                    playerRun.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y), Color.White, effect);
+                }
+                else
+                {
+                    playerRun.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y), Color.Gray, effect);
+                }
             }
             else
             {
-                if (!dashing)
+                if(!dashing)
                 {
-                    playerRun.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y), Color.White, effect);
+                    if(DamageCooldown <= 0.0)
+                    {
+                        playerRun.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y), Color.White, effect);
+                    }
+                    else
+                    {
+                        playerRun.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y), Color.Gray, effect);
+                    }
                 }
                 else
                 {
@@ -236,6 +268,7 @@ namespace Railgun.RailgunGame
             if (!dashing)
             {
                 Health -= damage;
+                DamageCooldown = 2.5;
             }
             else
             {
@@ -249,7 +282,7 @@ namespace Railgun.RailgunGame
         /// </summary>
         public void Reload()
         {
-            Damage(20); // The player takes 20 damage for reloading. This can be adjusted later.
+            Health -= 20; // The player takes 20 damage for reloading. This can be adjusted later.
             Ammo = MaxAmmo;
         }
     }                                        

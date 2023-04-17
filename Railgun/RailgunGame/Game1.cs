@@ -287,6 +287,14 @@ namespace Railgun.RailgunGame
                     List<Projectile> removalList = new List<Projectile>();
 
                     #region COLLISIONS!!!
+                    for (int e = 0; e < enemies.Count; e++)
+                    {
+                        if (enemies[e].Hitbox.Intersects(mainPlayer.Hitbox) && mainPlayer.DamageCooldown <= 0.0)
+                        {
+                            mainPlayer.Damage(8);
+                        }
+                    }
+
                     for (int b = 0; b < mainPlayer.PlayerBullets.Count; b++)
                     {
                         for(int e = 0; e < enemies.Count; e++)

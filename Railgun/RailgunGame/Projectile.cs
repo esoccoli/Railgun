@@ -107,7 +107,7 @@ namespace Railgun.RailgunGame
             switch (CurrentState)
             {
                 case ProjectileStates.IsActive:
-                    sb.Draw(IsActive, new Rectangle((int)(Position.X - (IsActive.Width / 2)), (int)(Position.Y - (IsActive.Height / 2)), IsActive.Width, IsActive.Height), Color.White);
+                    sb.Draw(IsActive, new Rectangle((int)(Position.X - (IsActive.Width / 2)), (int)(Position.Y - (IsActive.Height / 2)), IsActive.Width, IsActive.Height), Color.LightSkyBlue);
                     break;
 
                 case ProjectileStates.HasCollided:
