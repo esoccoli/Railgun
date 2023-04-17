@@ -293,7 +293,7 @@ namespace Railgun.RailgunGame
                             if(mainPlayer.Dashing)
                             {
                                 mainPlayer.Dashing = false;
-                                mainPlayer.DashCooldown = 7;
+                                mainPlayer.DashCooldown = 7.0;
                             } // Colliding with an enemy stops the dash and hurts you.
                             mainPlayer.Damage(8);
                         }

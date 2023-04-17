@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Railgun.RailgunGame.Tilemapping;
+using Railgun.RailgunGame.Util;
 
 //Nathan McAndrew
 //Class for all projectiles in the game
@@ -42,7 +43,7 @@ namespace Railgun.RailgunGame
         /// <summary>
         /// animation to play when projectile is active
         /// </summary>
-        public Texture2D IsActive { get; set; }
+        public Texture2D ActiveTexture { get; set; }
 
         /// <summary>
         /// animation to play when projectile collides
@@ -60,7 +61,7 @@ namespace Railgun.RailgunGame
                           Vector2 Velocity) : base(hitbox)
         {
             this.Velocity = Velocity;
-            IsActive = isActiveTexture;
+            ActiveTexture = isActiveTexture;
             HasCollided = hasCollidedAnimation;
             Position = Hitbox.Center.ToVector2();
         }
@@ -98,7 +99,7 @@ namespace Railgun.RailgunGame
             }
             Vector2 gridPos = WorldManager.Instance.CurrentMap.GetGridPoint(Position);
 
-            if(WorldManager.Instance.CurrentMap.IsSolid(gridPos))
+            if (WorldManager.Instance.CurrentMap.IsSolid(gridPos))
             {
                 CurrentState = ProjectileStates.HasCollided;
             }
@@ -114,13 +115,14 @@ namespace Railgun.RailgunGame
             switch (CurrentState)
             {
                 case ProjectileStates.IsActive:
-                    sb.Draw(IsActive, new Rectangle((int)(Position.X - (IsActive.Width / 2)), (int)(Position.Y - (IsActive.Height / 2)), IsActive.Width, IsActive.Height), Color.LightSkyBlue);
+                    sb.Draw(ActiveTexture, new Rectangle((int)(Position.X - (ActiveTexture.Width / 2)), (int)(Position.Y - (ActiveTexture.Height / 2)), ActiveTexture.Width, ActiveTexture.Height), Color.LightSkyBlue);
                     break;
 
                 case ProjectileStates.HasCollided:
                     if (HasCollided.CurrentFrame != HasCollided.TotalFrames)
                     {
-                        return HasCollided.Draw(sb, gameTime, new Vector2(Hitbox.Center.ToVector2().X - HasCollided.FrameWidth / 2 - 20, Hitbox.Center.ToVector2().Y - HasCollided.FrameHeight / 2 - 20), Color.White, SpriteEffects.None);
+                        // We need to subtract from Position half the width of the animation rectangle and bullet texture.
+                        return HasCollided.Draw(sb, gameTime, new Vector2(Position.X - (50 - (ActiveTexture.Width /2)), Position.Y - (50 - (ActiveTexture.Height / 2))), Color.White, SpriteEffects.None);
                     }
                     break;
             }
