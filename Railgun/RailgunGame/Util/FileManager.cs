@@ -80,7 +80,7 @@ namespace Railgun.RailgunGame.Util
                 }
 
                 //Populate hitbox list
-                map.PopulateHitboxList();
+                map.GenerateMapValues();
 
                 return map;
             }
