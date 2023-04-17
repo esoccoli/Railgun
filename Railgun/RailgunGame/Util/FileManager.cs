@@ -79,6 +79,9 @@ namespace Railgun.RailgunGame.Util
                     map.HitboxesMap[ReadVector(reader)] = reader.ReadBoolean();
                 }
 
+                //Populate hitbox list
+                map.PopulateHitboxList();
+
                 return map;
             }
             catch (Exception e)
