@@ -51,7 +51,27 @@ namespace Railgun.RailgunGame.Tilemapping
         /// </summary>
         public List<Rectangle> Hitboxes { get; private set; }
 
+        /// <summary>
+        /// The created bounds of this map
+        /// </summary>
         public Rectangle Bounds { get; private set; }
+
+        public Vector2 Position
+        {
+            get => position;
+            set
+            {
+                position = value;
+                //Update hitbox locations
+                for(int i = 0; i < Hitboxes.Count; i++)
+                {
+                    Rectangle hitbox = Hitboxes[i];
+                    hitbox.Location = position.ToPoint();
+                    Hitboxes[i] = hitbox;
+                }
+            }
+        }
+        private Vector2 position;
 
         /// <summary>
         /// The tile at the specified grid position and layer
@@ -135,7 +155,7 @@ namespace Railgun.RailgunGame.Tilemapping
                     //Draw the tile to rectangle corresponding to its grid location
                     tile.Value.Draw(
                         spriteBatch, new Rectangle(
-                            (tile.Key * TileSize).ToPoint(),
+                            (tile.Key * TileSize + Position).ToPoint(),
                             new Point(TileSize)));
                 }
             }
@@ -168,10 +188,10 @@ namespace Railgun.RailgunGame.Tilemapping
                             topLeftCorner.ToPoint(),
                             sizeVector.ToPoint()), Color.Red);
                     //Draw x in the middle
-                    ShapeBatch.Line(topLeftCorner, bottomRightCorner, 2f, Color.Red);
+                    ShapeBatch.Line(topLeftCorner + Position, bottomRightCorner, 2f, Color.Red);
                     ShapeBatch.Line(
-                        new Vector2(topLeftCorner.X, bottomRightCorner.Y),
-                        new Vector2(bottomRightCorner.X, topLeftCorner.Y), 2f, Color.Red);
+                        new Vector2(topLeftCorner.X, bottomRightCorner.Y) + Position,
+                        new Vector2(bottomRightCorner.X, topLeftCorner.Y) + Position, 2f, Color.Red);
                 }
             }
 
@@ -188,7 +208,7 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <returns>The grid point corresponding to the specified point</returns>
         public Vector2 GetGridPoint(Vector2 rawPoint)
         {
-            return GetGridPoint(rawPoint, TileSize);
+            return GetGridPoint(rawPoint, TileSize, Position);
         }
 
         /// <summary>
@@ -197,9 +217,9 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <param name="rawPoint">The point to convert to grid-point</param>
         /// <param name="tileSize">The size of each tile on the grid</param>
         /// <returns>The grid point corresponding to the specified point</returns>
-        public static Vector2 GetGridPoint(Vector2 rawPoint, float tileSize)
+        public static Vector2 GetGridPoint(Vector2 rawPoint, float tileSize, Vector2 position)
         {
-            return Vector2.Floor(rawPoint / new Vector2(tileSize));
+            return Vector2.Floor(rawPoint / new Vector2(tileSize)) + position;
         }
 
         /// <summary>

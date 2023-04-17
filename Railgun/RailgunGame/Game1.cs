@@ -82,11 +82,6 @@ namespace Railgun.RailgunGame
             GameOver
         }
 
-        /// <summary>
-        /// A map to be used for testing out map loading
-        /// </summary>
-        private Map testMap;
-
         protected override void Initialize()
         {
             #region Set Screen Resolution
@@ -168,13 +163,13 @@ namespace Railgun.RailgunGame
             world = WorldManager.Instance;
 
             //Load test map
-            world.Maps.Add(FileManager.LoadMap(Content, "HourglassMap"));
-            world.Maps.Add(FileManager.LoadMap(Content, "SquareMapWithDoor"));
-            world.Maps.Add(FileManager.LoadMap(Content, "CrescentMap"));
-            world.Maps.Add(FileManager.LoadMap(Content, "CrescentMap"));
+            world.maps.Add(FileManager.LoadMap(Content, "HourglassMap"));
+            world.maps.Add(FileManager.LoadMap(Content, "SquareMapWithDoor"));
+            world.maps.Add(FileManager.LoadMap(Content, "CrescentMap"));
+            world.maps.Add(FileManager.LoadMap(Content, "TestMap"));
 
             //Create camera
-            world.CurrentCamera = new Camera(GraphicsDevice, testMap.Bounds);
+            world.CurrentCamera = new Camera(GraphicsDevice, Rectangle.Empty);
         }
 
         protected override void Update(GameTime gameTime)
@@ -392,7 +387,7 @@ namespace Railgun.RailgunGame
                         transformMatrix: world.CurrentCamera.TransformationMatrix);
 
                     //Draw test map
-                    testMap.DrawTiles(_spriteBatch);
+                    WorldManager.Instance.CurrentMap.DrawTiles(_spriteBatch);
 
                     MouseState mStateGame = Mouse.GetState();
                     List<Enemy> removalList = new List<Enemy>();
@@ -423,7 +418,7 @@ namespace Railgun.RailgunGame
                     //DEBUG Draw map hitboxes on top
                     GraphicsDevice.DepthStencilState = DepthStencilState.None;
                     ShapeBatch.Begin(GraphicsDevice);
-                    testMap.DrawHitboxes(new Vector2(
+                    WorldManager.Instance.CurrentMap.DrawHitboxes(new Vector2(
                         world.CurrentCamera.TransformationMatrix.Translation.X,
                         world.CurrentCamera.TransformationMatrix.Translation.Y),
                         world.CurrentCamera.Zoom);
