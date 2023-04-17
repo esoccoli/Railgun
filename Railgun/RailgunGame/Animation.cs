@@ -120,7 +120,7 @@ namespace Railgun.RailgunGame
         /// draws the sprite with specified properties
         /// </summary>
         /// <param name="sb">_spritebatch</param>
-        /// <returns> Whether or not the animation has reached its final frame. </returns>
+        /// <returns> Whether or not the animation has reached its final frame.</returns>
         public bool Draw(SpriteBatch sb, GameTime gameTime, Vector2 position, Color tint, SpriteEffects effect)
         {
             UpdateAnimation(gameTime);
@@ -163,6 +163,15 @@ namespace Railgun.RailgunGame
 
                 TimeCounter = 0;
             }
+        }
+
+        /// <summary>
+        /// clones the current animations
+        /// </summary>
+        /// <returns>the same animation but with reset values</returns>
+        public Animation Clone()
+        {
+            return new Animation(SpriteSheet, NumRows, NumColumns, (float)( 1.0f / SecondsPerFrame));
         }
     }
 }
