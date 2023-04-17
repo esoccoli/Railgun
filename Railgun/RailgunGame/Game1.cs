@@ -162,7 +162,7 @@ namespace Railgun.RailgunGame
             //Create world manager shortcut
             world = WorldManager.Instance;
 
-            //Load test map
+            //Load map sequence
             world.AddMap(FileManager.LoadMap(Content, "HourglassMap"));
             world.AddMap(FileManager.LoadMap(Content, "SquareMapWithDoor"));
             world.AddMap(FileManager.LoadMap(Content, "CrescentMap"));

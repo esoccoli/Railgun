@@ -66,9 +66,12 @@ namespace Railgun.RailgunGame.Tilemapping
                 for(int i = 0; i < Hitboxes.Count; i++)
                 {
                     Rectangle hitbox = Hitboxes[i];
-                    hitbox.Location = position.ToPoint();
+                    hitbox.Location += value.ToPoint();
                     Hitboxes[i] = hitbox;
                 }
+                Rectangle bounds = Bounds;
+                bounds.Location += value.ToPoint();
+                Bounds = bounds;
             }
         }
         private Vector2 position;

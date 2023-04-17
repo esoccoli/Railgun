@@ -118,7 +118,9 @@ namespace Railgun.RailgunGame.Tilemapping
         public void AddMap(Map map)
         {
             Map lastMap = GetMapAtIndex(maps.Count - 1);
-            map.Position = lastMap.Position + lastMap.Bounds.Size.ToVector2();
+            map.Position = new Vector2(0f, lastMap.Position.Y - lastMap.Bounds.Height);
+            //map.Position = lastMap.Bounds.Location.ToVector2() + lastMap.Bounds.Size.ToVector2();
+            DebugLog.Instance.LogPersistant(map.Position, Color.AliceBlue, 10f);
             maps.Add(map);
         }
 
@@ -138,7 +140,7 @@ namespace Railgun.RailgunGame.Tilemapping
         public Map GetMapAtIndex(int index)
         {
             //If invalid index, return empty
-            if (index < 1 || index >= maps.Count)
+            if (index < 0 || index >= maps.Count)
                 return Map.Empty();
             return maps[index];
         }
