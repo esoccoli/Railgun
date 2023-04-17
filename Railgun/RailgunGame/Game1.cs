@@ -21,6 +21,8 @@ namespace Railgun.RailgunGame
 
         private List<Enemy> enemies;
 
+        private WorldManager world;
+
         #region Menu Elements
         // Textures used to display the Menu.
         private Texture2D menuLogo;
@@ -160,10 +162,20 @@ namespace Railgun.RailgunGame
 
             //Set debug logger
             DebugLog.Instance.Font = Content.Load<SpriteFont>("Consolas20");
+            DebugLog.Instance.Scale = 2f;
+
+            //Create world manager shortcut
+            world = WorldManager.Instance;
 
             //Load test map
             testMap = FileManager.LoadMap(Content, "TestMap");
-            MapManager.Instance.CurrentMap = testMap;
+            world.CurrentMap = testMap;
+
+            //Create camera
+            world.CurrentCamera = new Camera(GraphicsDevice, Rectangle.Empty);
+            Rectangle testBounds = GraphicsDevice.Viewport.Bounds;
+            testBounds.Inflate(500f, 500f);
+            world.CurrentCamera.CameraBounds = testBounds;
         }
 
         protected override void Update(GameTime gameTime)
@@ -294,6 +306,11 @@ namespace Railgun.RailgunGame
                     }
                     #endregion
 
+                    //Update camera to ease to player and mouse pos in world space
+                    world.CurrentCamera.EaseTo(mainPlayer.Hitbox.Location.ToVector2(), 1f, 0.2f);
+                    world.CurrentCamera.EaseTo(world.GetMouseWorldPosition(), 1f, 0.05f);
+                    world.CurrentCamera.Update(gameTime);
+
                     break;
                 #endregion
 
@@ -333,11 +350,11 @@ namespace Railgun.RailgunGame
         {
             GraphicsDevice.Clear(Color.DarkSlateGray);
 
-            _spriteBatch.Begin();
-
             switch (currentGameState)
             {
                 case GameState.Menu:
+
+                    _spriteBatch.Begin();
 
                     _spriteBatch.Draw(menuLogo, logoRect, Color.White);
                     _spriteBatch.Draw(menuPlay, playRect, Color.White);
@@ -357,13 +374,23 @@ namespace Railgun.RailgunGame
                     //Draws reticle
                     _spriteBatch.Draw(gameReticle, new Rectangle(mState.X - 25, mState.Y - 25, 50, 50), Color.White);
 
+                    _spriteBatch.End();
+
                     break;
                 case GameState.Game:
+
+                    //Begin with pixel percision, opacity, and cam matrix
+                    _spriteBatch.Begin(samplerState: SamplerState.PointClamp,
+                        blendState: BlendState.AlphaBlend,
+                        transformMatrix: world.CurrentCamera.TransformationMatrix);
+
+                    //Draw test map
+                    testMap.DrawTiles(_spriteBatch);
+
                     MouseState mStateGame = Mouse.GetState();
                     List<Enemy> removalList = new List<Enemy>();
                     mainPlayer.Draw(_spriteBatch, gameTime);
-                    _spriteBatch.DrawString(font, "Game", new Vector2(_graphics.PreferredBackBufferWidth - 100, 20), Color.White);
-                    userInterface.Draw(_spriteBatch); //Draws UI
+                    
                     for (int i = 0; i < mainPlayer.PlayerBullets.Count; i++)
                     {
                         // Draw the player bullets!
@@ -382,45 +409,51 @@ namespace Railgun.RailgunGame
                         enemies.Remove(enemy);
                     }
 
+
+                    _spriteBatch.End();
+
+                    //DEBUG Draw map hitboxes on top
+                    GraphicsDevice.DepthStencilState = DepthStencilState.None;
+                    ShapeBatch.Begin(GraphicsDevice);
+                    testMap.DrawHitboxes(new Vector2(
+                        world.CurrentCamera.TransformationMatrix.Translation.X,
+                        world.CurrentCamera.TransformationMatrix.Translation.Y),
+                        world.CurrentCamera.Zoom);
+                    ShapeBatch.End();
+
+                    //Draw overlay
+                    _spriteBatch.Begin(samplerState: SamplerState.PointClamp,
+                        blendState: BlendState.AlphaBlend);
+
+                    _spriteBatch.DrawString(font, "Game", new Vector2(_graphics.PreferredBackBufferWidth - 100, 20), Color.White);
+                    userInterface.Draw(_spriteBatch); //Draws UI
+
                     //Draws reticle
                     _spriteBatch.Draw(gameReticle, new Rectangle(mStateGame.X - 25, mStateGame.Y - 25, 50, 50), Color.White);
 
-                    //Note: we should re structure sprite batch calls to be within
-                    //each FSM so that it can be drawn with different params and shapebatch
                     _spriteBatch.End();
-
-                    _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-                    //Draw test map
-
-                    // Disabled for testing - Josh
-                    testMap.DrawTiles(_spriteBatch);
-
-                    _spriteBatch.End();
-                    _spriteBatch.Begin();//Dumb, get rid of, only here bc I don't want to change the current stuff until I get permission
-                    //Begin shapebatch without depth (so that shapes are drawn to the top)
-                    GraphicsDevice.DepthStencilState = DepthStencilState.None;
-                    //Once we have a camera, it will be passed to hitboxes
-                    ShapeBatch.Begin(GraphicsDevice);
-
-                    // Disabled for testing - Josh
-                    testMap.DrawHitboxes(Vector2.Zero, 1f);
-
-                    ShapeBatch.End();
 
                     break;
                 case GameState.Pause:
 
+                    _spriteBatch.Begin();
+
                     _spriteBatch.DrawString(font, "Pause", new Vector2(_graphics.PreferredBackBufferWidth - 100, 20), Color.White);
+
+                    _spriteBatch.End();
 
                     break;
                 case GameState.GameOver:
 
+                    _spriteBatch.Begin();
+
                     _spriteBatch.DrawString(font, "Game Over", new Vector2(_graphics.PreferredBackBufferWidth - 175, 20), Color.White);
+
+                    _spriteBatch.End();
 
                     break;
             }
 
-            _spriteBatch.End();
 
             //Draw debug logger with fading
             _spriteBatch.Begin(blendState: BlendState.AlphaBlend);
