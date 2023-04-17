@@ -232,11 +232,11 @@ namespace Railgun.RailgunGame
             {
                 if (DamageCooldown <= 0.0)
                 {
-                    playerRun.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y), Color.White, effect);
+                    playerIdle.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y), Color.White, effect);
                 }
                 else
                 {
-                    playerRun.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y), Color.Gray, effect);
+                    playerIdle.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y), Color.Gray, effect);
                 }
             }
             else
