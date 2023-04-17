@@ -158,7 +158,7 @@ namespace Railgun.RailgunGame
             
             //Creates a UI object. Values to be updated later. 
             mainPlayer = new Player(new Rectangle(0, 0, 100, 100), playerIdleAnim, playerRunAnim, bulletTexture, null);
-            userInterface = new UI(backgroundHealthUI, foregroundHealthUI, bulletUI, false, mainPlayer.Health, mainPlayer.MaxHealth, font, mainPlayer.Ammo, mainPlayer.MaxAmmo);
+            userInterface = new UI(backgroundHealthUI, foregroundHealthUI, bulletUI, true, mainPlayer.Health, mainPlayer.MaxHealth, font, mainPlayer.Ammo, mainPlayer.MaxAmmo);
 
             //Set debug logger
             DebugLog.Instance.Font = Content.Load<SpriteFont>("Consolas20");
@@ -255,7 +255,7 @@ namespace Railgun.RailgunGame
                 #region Game
                 case GameState.Game:
 
-                    userInterface.Update(mainPlayer.Health, mainPlayer.Ammo, mainPlayer.DashTime); //Updates the UI. Values to be updated later
+                    userInterface.Update(mainPlayer.Health, mainPlayer.Ammo, mainPlayer.DashTime, mainPlayer.Hitbox); //Updates the UI. Values to be updated later
 
                     if (InputManager.IsKeyDown(Keys.R)) // A temporary way to instantly lose the game. Or maybe an unintentional feature!!!
                     {
@@ -416,6 +416,7 @@ namespace Railgun.RailgunGame
                         enemies.Remove(enemy);
                     }
 
+                    userInterface.DrawToWorldspace(_spriteBatch);
 
                     _spriteBatch.End();
 
