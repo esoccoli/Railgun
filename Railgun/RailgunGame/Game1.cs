@@ -308,6 +308,14 @@ namespace Railgun.RailgunGame
                     }
                     #endregion
 
+                    //DEBUG, tp to mouse
+                    if (InputManager.IsKeyDown(Keys.T))
+                    {
+                        Rectangle playerHitbox = mainPlayer.Hitbox;
+                        playerHitbox.Location = WorldManager.Instance.GetMouseWorldPosition().ToPoint();
+                        mainPlayer.Hitbox = playerHitbox;
+                    }
+                    
                     //Update camera to ease to player and mouse pos in world space
                     world.CurrentCamera.EaseTo(mainPlayer.Hitbox.Location.ToVector2(), 1f, 0.2f);
                     world.CurrentCamera.EaseTo(world.GetMouseWorldPosition(), 1f, 0.05f);
