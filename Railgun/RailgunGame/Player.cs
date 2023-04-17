@@ -20,7 +20,6 @@ namespace Railgun.RailgunGame
     {
         private int speed;
         private int dashSpeed;
-        private bool dashing;
         
         private KeyboardState preDash;
 
@@ -31,6 +30,11 @@ namespace Railgun.RailgunGame
 
         // I will organize this later.
         
+        /// <summary>
+        /// A property to see if the player is currently dashing.
+        /// </summary>
+        public bool Dashing { get; set; }
+
         /// <summary>
         /// This is the amount of health that the player has.
         /// </summary>
@@ -50,11 +54,6 @@ namespace Railgun.RailgunGame
         /// This is the max amount of bullets that the player can hold.
         /// </summary>
         public int MaxAmmo { get; set; }
-
-        /// <summary>
-        /// Whether or not the player is currently invincible.
-        /// </summary>
-        public bool Invincible { get; set; }
 
         /// <summary>
         /// This is the amount of time before the dash is available again.
@@ -104,7 +103,7 @@ namespace Railgun.RailgunGame
             DashCooldown = 0.0;
             ShootCooldown = 0.15;
             DamageCooldown = 0.0;
-            dashing = false;
+            Dashing = false;
             DashTime = 0.0;
 
             this.playerIdle = playerIdle;
@@ -139,7 +138,7 @@ namespace Railgun.RailgunGame
             prevPos = new Vector2(Hitbox.X, Hitbox.Y); // This stores the previous position of the player. It's used for checking whether or not to do the idle animation.
 
             // Handles the movement of the player. All of this is run if they're not currently dashing.
-            if (!dashing)
+            if (!Dashing)
             {
                 InputManager.UpdateInputState();
 
@@ -157,7 +156,7 @@ namespace Railgun.RailgunGame
                 if (InputManager.IsButtonDown(MouseButtons.Left) && ShootCooldown <= 0.0 && Ammo > 0) { Shoot(); }
                 if (InputManager.IsButtonDown(MouseButtons.Right) && Ammo <= 0) { Reload(); }
 
-                if (InputManager.IsKeyDown(Keys.LeftShift) && DashCooldown <= 0.0) { preDash = Keyboard.GetState(); dashing = true; }
+                if (InputManager.IsKeyDown(Keys.LeftShift) && DashCooldown <= 0.0) { preDash = Keyboard.GetState(); Dashing = true; }
             }
             else
             {
@@ -185,7 +184,7 @@ namespace Railgun.RailgunGame
 
             Vector2 vect = (WorldManager.Instance.GetMouseWorldPosition().ToPoint() - Hitbox.Center).ToVector2() / Vector2.Distance(WorldManager.Instance.GetMouseWorldPosition(), Hitbox.Center.ToVector2());
 
-            PlayerBullets.Add(new Projectile(new Rectangle(Hitbox.X + (Hitbox.Width / 2) - (activeBullet.Width / 2), Hitbox.Y + (Hitbox.Height / 2) - (activeBullet.Height / 2), activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet, vect * 10.0f));
+            PlayerBullets.Add(new Projectile(new Rectangle(Hitbox.X + (Hitbox.Width / 2) - (activeBullet.Width / 2), Hitbox.Y + (Hitbox.Height / 2) - (activeBullet.Height / 2), activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet.Clone(), vect * 10.0f));
         }
 
         /// <summary>
@@ -212,7 +211,7 @@ namespace Railgun.RailgunGame
             {
                 DashTime = 0.0;
                 DashCooldown = 3.5;
-                dashing = false;
+                Dashing = false;
             }
         }        
         
@@ -241,7 +240,7 @@ namespace Railgun.RailgunGame
             }
             else
             {
-                if(!dashing)
+                if(!Dashing)
                 {
                     if(DamageCooldown <= 0.0)
                     {
@@ -265,7 +264,7 @@ namespace Railgun.RailgunGame
         /// <param name="damage"> The amount of damage that this specific projectile will deal. </param>
         public void Damage(int damage)
         {
-            if (!dashing)
+            if(!Dashing)
             {
                 Health -= damage;
                 DamageCooldown = 2.5;
@@ -274,6 +273,10 @@ namespace Railgun.RailgunGame
             {
                 // If the player is dashing, they heal this amount per bullet. This can be adjusted during playtesting.
                 Health += 5;
+                if(Health > 100)
+                {
+                    Health = 100;
+                }
             }
         }
 

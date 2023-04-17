@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Railgun.RailgunGame.Tilemapping;
 
 //Nathan McAndrew
 //Class for all projectiles in the game
@@ -95,6 +96,12 @@ namespace Railgun.RailgunGame
                     //do nothing
                     break;
             }
+            Vector2 gridPos = WorldManager.Instance.CurrentMap.GetGridPoint(Position);
+
+            if(WorldManager.Instance.CurrentMap.IsSolid(gridPos))
+            {
+                CurrentState = ProjectileStates.HasCollided;
+            }
         }
 
         /// <summary>
@@ -102,7 +109,7 @@ namespace Railgun.RailgunGame
         /// the specified properties
         /// </summary>
         /// <param name="sb">_spritebatch</param>
-        public void Draw(SpriteBatch sb, GameTime gameTime)
+        public bool Draw(SpriteBatch sb, GameTime gameTime)
         {
             switch (CurrentState)
             {
@@ -113,10 +120,11 @@ namespace Railgun.RailgunGame
                 case ProjectileStates.HasCollided:
                     if (HasCollided.CurrentFrame != HasCollided.TotalFrames)
                     {
-                        HasCollided.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y), Color.White, SpriteEffects.None);
+                        return HasCollided.Draw(sb, gameTime, new Vector2(Hitbox.Center.ToVector2().X - HasCollided.FrameWidth / 2 - 20, Hitbox.Center.ToVector2().Y - HasCollided.FrameHeight / 2 - 20), Color.White, SpriteEffects.None);
                     }
                     break;
             }
+            return false;
         }
     }
 }
