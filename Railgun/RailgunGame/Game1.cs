@@ -143,16 +143,16 @@ namespace Railgun.RailgunGame
             skeletonDeathAnim = new Animation(skeletonDeath, 1, 15, 12.0f);
 
             // This next line is just to test skeletons.
-            Skeleton testSkelley = new Skeleton(skeletonWalkAnim, skeletonDeathAnim, new Rectangle(1700, 200, 100, 100));
-            // Skeleton ttestSkelley = new Skeleton(skeletonWalkAnim, skeletonDeathAnim, new Rectangle(200, 200, 100, 100));
-            // Skeleton tttestSkelley = new Skeleton(skeletonWalkAnim, skeletonDeathAnim, new Rectangle(700, 200, 100, 100));
-            // Skeleton ttttestSkelley = new Skeleton(skeletonWalkAnim, skeletonDeathAnim, new Rectangle(1300, 200, 100, 100));
-            // Skeleton tttttestSkelley = new Skeleton(skeletonWalkAnim, skeletonDeathAnim, new Rectangle(900, 900, 100, 100));
+            Skeleton testSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(1700, 200, 100, 100));
+             Skeleton ttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(200, 200, 100, 100));
+             Skeleton tttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(700, 200, 100, 100));
+             Skeleton ttttestSkelley = new Skeleton(skeletonWalkAnim, skeletonDeathAnim, new Rectangle(1300, 200, 100, 100));
+             Skeleton tttttestSkelley = new Skeleton(skeletonWalkAnim, skeletonDeathAnim, new Rectangle(900, 900, 100, 100));
             enemies.Add(testSkelley);
-            // enemies.Add(ttestSkelley);
-            // enemies.Add(tttestSkelley);
-            // enemies.Add(ttttestSkelley);
-            // enemies.Add(tttttestSkelley);
+             enemies.Add(ttestSkelley);
+             enemies.Add(tttestSkelley);
+             enemies.Add(ttttestSkelley);
+             enemies.Add(tttttestSkelley);
             
             //Creates a UI object. Values to be updated later. 
             mainPlayer = new Player(new Rectangle(870, 510, 100, 100), playerIdleAnim, playerRunAnim, bulletTexture, null);
