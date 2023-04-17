@@ -116,6 +116,9 @@
 /processorParam:TextureFormat=Color
 /build:mainCharRun.png
 
+#begin Maps/CrescentMap.rgm
+/copy:Maps/CrescentMap.rgm
+
 #begin Maps/Example Tilesets.rgm
 /copy:Maps/Example Tilesets.rgm
 

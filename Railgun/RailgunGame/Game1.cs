@@ -85,11 +85,6 @@ namespace Railgun.RailgunGame
             GameOver
         }
 
-        /// <summary>
-        /// A map to be used for testing out map loading
-        /// </summary>
-        private Map testMap;
-
         protected override void Initialize()
         {
             #region Set Screen Resolution
@@ -174,13 +169,14 @@ namespace Railgun.RailgunGame
             //Create world manager shortcut
             world = WorldManager.Instance;
 
-            //Load test map
-            testMap = FileManager.LoadMap(Content, "SquareMapWithDoor");
-            world.CurrentMap = testMap;
+            //Load map sequence
+            world.AddMap(FileManager.LoadMap(Content, "HourglassMap"));
+            world.AddMap(FileManager.LoadMap(Content, "SquareMapWithDoor"));
+            world.AddMap(FileManager.LoadMap(Content, "CrescentMap"));
+            world.AddMap(FileManager.LoadMap(Content, "TestMap"));
 
             //Create camera
             world.CurrentCamera = new Camera(GraphicsDevice, Rectangle.Empty);
-            world.CurrentCamera.CameraBounds = testMap.Bounds;
         }
 
         protected override void Update(GameTime gameTime)
@@ -261,7 +257,7 @@ namespace Railgun.RailgunGame
                 #region Game
                 case GameState.Game:
 
-                    userInterface.Update(mainPlayer.Health, mainPlayer.Ammo, mainPlayer.DashTime); //Updates the UI. Values to be updated later
+                    userInterface.Update(mainPlayer.Health, mainPlayer.Ammo, mainPlayer.DashTime, mainPlayer.Hitbox); //Updates the UI. Values to be updated later
 
                     if (InputManager.IsKeyDown(Keys.R))
                     {
@@ -316,6 +312,15 @@ namespace Railgun.RailgunGame
                     }
                     #endregion
 
+
+                    //DEBUG, tp to mouse
+                    if (InputManager.IsKeyDown(Keys.T))
+                    {
+                        Rectangle playerHitbox = mainPlayer.Hitbox;
+                        playerHitbox.Location = world.GetMouseWorldPosition().ToPoint();
+                        mainPlayer.Hitbox = playerHitbox;
+                    }
+                    
                     //Update camera to ease to player and mouse pos in world space
                     world.CurrentCamera.EaseTo(mainPlayer.Hitbox.Location.ToVector2(), 1f, 0.2f);
                     world.CurrentCamera.EaseTo(world.GetMouseWorldPosition(), 1f, 0.05f);
@@ -399,7 +404,11 @@ namespace Railgun.RailgunGame
                         transformMatrix: world.CurrentCamera.TransformationMatrix);
 
                     //Draw test map
-                    testMap.DrawTiles(_spriteBatch);
+                    world.CurrentMap.DrawTiles(_spriteBatch);
+                    //Draw next and prev
+                    world.PreviousMap.DrawTiles(_spriteBatch);
+                    world.NextMap.DrawTiles(_spriteBatch);
+
 
                     MouseState mStateGame = Mouse.GetState();
                     List<Enemy> removalList = new List<Enemy>();
@@ -438,7 +447,7 @@ namespace Railgun.RailgunGame
                     //DEBUG Draw map hitboxes on top
                     GraphicsDevice.DepthStencilState = DepthStencilState.None;
                     ShapeBatch.Begin(GraphicsDevice);
-                    testMap.DrawHitboxes(new Vector2(
+                    world.CurrentMap.DrawHitboxes(new Vector2(
                         world.CurrentCamera.TransformationMatrix.Translation.X,
                         world.CurrentCamera.TransformationMatrix.Translation.Y),
                         world.CurrentCamera.Zoom);
