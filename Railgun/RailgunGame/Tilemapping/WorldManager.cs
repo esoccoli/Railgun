@@ -1,4 +1,5 @@
-﻿using Railgun.RailgunGame.Util;
+﻿using Microsoft.Xna.Framework;
+using Railgun.RailgunGame.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,5 +44,16 @@ namespace Railgun.RailgunGame.Tilemapping
         /// The current camera of the world
         /// </summary>
         public Camera CurrentCamera { get; set; }
+
+        /// <summary>
+        /// Returns the current mouse position relative to the world
+        /// (camera space)
+        /// </summary>
+        /// <returns>The mouse position within the world</returns>
+        public Vector2 GetMouseWorldPosition()
+        {
+            return CurrentCamera.ScreenToWorld(
+                InputManager.MouseState.Position.ToVector2());
+        }
     }
 }

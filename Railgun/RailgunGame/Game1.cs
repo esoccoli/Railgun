@@ -21,7 +21,7 @@ namespace Railgun.RailgunGame
 
         private List<Enemy> enemies;
 
-        private Camera camera;
+        private WorldManager world;
 
         #region Menu Elements
         // Textures used to display the Menu.
@@ -164,12 +164,18 @@ namespace Railgun.RailgunGame
             DebugLog.Instance.Font = Content.Load<SpriteFont>("Consolas20");
             DebugLog.Instance.Scale = 2f;
 
+            //Create world manager shortcut
+            world = WorldManager.Instance;
+
             //Load test map
             testMap = FileManager.LoadMap(Content, "TestMap");
-            WorldManager.Instance.CurrentMap = testMap;
+            world.CurrentMap = testMap;
 
             //Create camera
-            camera = new Camera(GraphicsDevice, Rectangle.Empty);
+            world.CurrentCamera = new Camera(GraphicsDevice, Rectangle.Empty);
+            Rectangle testBounds = GraphicsDevice.Viewport.Bounds;
+            testBounds.Inflate(500f, 500f);
+            world.CurrentCamera.CameraBounds = testBounds;
         }
 
         protected override void Update(GameTime gameTime)
@@ -302,10 +308,9 @@ namespace Railgun.RailgunGame
                     #endregion
 
                     //Update camera to ease to player and mouse pos in world space
-                    camera.EaseTo(mainPlayer.Hitbox.Location.ToVector2(), 1f, 0.5f);
-                    camera.EaseTo(camera.ScreenToWorld(
-                        InputManager.MouseState.Position.ToVector2()), 1f, 0.5f);
-                    camera.Update(gameTime);
+                    world.CurrentCamera.EaseTo(mainPlayer.Hitbox.Location.ToVector2(), 1f, 0.2f);
+                    world.CurrentCamera.EaseTo(world.GetMouseWorldPosition(), 1f, 0.05f);
+                    world.CurrentCamera.Update(gameTime);
 
                     break;
                 #endregion
@@ -378,7 +383,7 @@ namespace Railgun.RailgunGame
                     //Begin with pixel percision, opacity, and cam matrix
                     _spriteBatch.Begin(samplerState: SamplerState.PointClamp,
                         blendState: BlendState.AlphaBlend,
-                        transformMatrix: camera.TransformationMatrix);
+                        transformMatrix: world.CurrentCamera.TransformationMatrix);
 
                     //Draw test map
                     testMap.DrawTiles(_spriteBatch);
@@ -412,8 +417,9 @@ namespace Railgun.RailgunGame
                     GraphicsDevice.DepthStencilState = DepthStencilState.None;
                     ShapeBatch.Begin(GraphicsDevice);
                     testMap.DrawHitboxes(new Vector2(
-                    camera.TransformationMatrix.Translation.X,
-                    camera.TransformationMatrix.Translation.Y), camera.Zoom);
+                        world.CurrentCamera.TransformationMatrix.Translation.X,
+                        world.CurrentCamera.TransformationMatrix.Translation.Y),
+                        world.CurrentCamera.Zoom);
                     ShapeBatch.End();
 
                     //Draw overlay
