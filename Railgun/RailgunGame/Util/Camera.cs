@@ -216,7 +216,8 @@ namespace Railgun.RailgunGame.Util
                 }
 
                 //Resolve position
-                Position = newPosition;
+                Position = Vector2.Floor(newPosition);
+                DebugLog.Instance.LogFrame(Position);
 
                 //Update view matrix with resolved (I know, this is terrible, I'll
                 //Change it later if I have time) Reason I'm doing this is to

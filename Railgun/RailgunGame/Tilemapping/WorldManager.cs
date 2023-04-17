@@ -38,7 +38,23 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <summary>
         /// The current map of the world
         /// </summary>
+        //public Map CurrentMap => Maps[MapIndex];
         public Map CurrentMap { get; set; }
+
+        /// <summary>
+        /// The next map in the list
+        /// </summary>
+        public Map NextMap => Maps[MapIndex + 1];
+
+        /// <summary>
+        /// All maps to be used
+        /// </summary>
+        public List<Map> Maps { get; set; }
+
+        /// <summary>
+        /// The index of the current map
+        /// </summary>
+        public int MapIndex { get; set; } = 0;
 
         /// <summary>
         /// The current camera of the world

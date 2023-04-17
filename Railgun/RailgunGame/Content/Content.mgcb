@@ -95,11 +95,17 @@
 #begin Maps/Example Tilesets.rgm
 /copy:Maps/Example Tilesets.rgm
 
+#begin Maps/HourglassMap.rgm
+/copy:Maps/HourglassMap.rgm
+
 #begin Maps/More Tilesets.rgm
 /copy:Maps/More Tilesets.rgm
 
 #begin Maps/ppp.rgm
 /copy:Maps/ppp.rgm
+
+#begin Maps/SquareMapWithDoor.rgm
+/copy:Maps/SquareMapWithDoor.rgm
 
 #begin Maps/Test Map with collision.rgm
 /copy:Maps/Test Map with collision.rgm

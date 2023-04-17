@@ -157,7 +157,7 @@ namespace Railgun.RailgunGame
              enemies.Add(tttttestSkelley);
             
             //Creates a UI object. Values to be updated later. 
-            mainPlayer = new Player(new Rectangle(870, 510, 100, 100), playerIdleAnim, playerRunAnim, bulletTexture, null);
+            mainPlayer = new Player(new Rectangle(0, 0, 100, 100), playerIdleAnim, playerRunAnim, bulletTexture, null);
             userInterface = new UI(backgroundHealthUI, foregroundHealthUI, bulletUI, true, mainPlayer.Health, mainPlayer.MaxHealth, font, mainPlayer.Ammo, mainPlayer.MaxAmmo);
 
             //Set debug logger
@@ -168,14 +168,11 @@ namespace Railgun.RailgunGame
             world = WorldManager.Instance;
 
             //Load test map
-            testMap = FileManager.LoadMap(Content, "TestMap");
+            testMap = FileManager.LoadMap(Content, "SquareMapWithDoor");
             world.CurrentMap = testMap;
 
             //Create camera
-            world.CurrentCamera = new Camera(GraphicsDevice, Rectangle.Empty);
-            Rectangle testBounds = GraphicsDevice.Viewport.Bounds;
-            testBounds.Inflate(500f, 500f);
-            world.CurrentCamera.CameraBounds = testBounds;
+            world.CurrentCamera = new Camera(GraphicsDevice, testMap.Bounds);
         }
 
         protected override void Update(GameTime gameTime)

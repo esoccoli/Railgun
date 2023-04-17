@@ -39,17 +39,19 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <para>Note: layers with larger indecies will appear above layers
         /// with smaller indecies</para>
         /// </summary>
-        public List<Dictionary<Vector2, Tile>> Layers { get; protected set; }
+        public List<Dictionary<Vector2, Tile>> Layers { get; private set; }
 
         /// <summary>
         /// A boolean dictionary that maps position to boolean of whether a tile is solid or not
         /// </summary>
-        public Dictionary<Vector2, bool> HitboxesMap { get; protected set; }
+        public Dictionary<Vector2, bool> HitboxesMap { get; private set; }
 
         /// <summary>
         /// The list of hitboxes on this map
         /// </summary>
-        public List<Rectangle> Hitboxes { get; protected set; }
+        public List<Rectangle> Hitboxes { get; private set; }
+
+        public Rectangle Bounds { get; private set; }
 
         /// <summary>
         /// The tile at the specified grid position and layer
@@ -77,8 +79,9 @@ namespace Railgun.RailgunGame.Tilemapping
 
         /// <summary>
         /// Generates a list of hitboxes based on the dictionary of hitboxes
+        /// and the bounds of the map (should be called after all tiles have been added)
         /// </summary>
-        public void PopulateHitboxList()
+        public void GenerateMapValues()
         {
             //Populate the list of hitboxes
             foreach (KeyValuePair<Vector2, bool> hitbox in HitboxesMap)
@@ -91,6 +94,28 @@ namespace Railgun.RailgunGame.Tilemapping
                         new Point(tileSize)));
                 }
             }
+            
+            //Create bounds
+            Rectangle bounds = Hitboxes.First();
+            Point bottomRightTile = Hitboxes.First().Location;
+
+            //Create bounds of map
+            foreach (Rectangle hitbox in Hitboxes)
+            {
+                //Find top most left tile
+                if (hitbox.X < bounds.X) bounds.X = hitbox.X;
+                if (hitbox.Y < bounds.Y) bounds.Y = hitbox.Y;
+                //Find bottom most right tile
+                if (hitbox.X > bottomRightTile.X) bottomRightTile.X = hitbox.X;
+                if (hitbox.Y > bottomRightTile.Y) bottomRightTile.Y = hitbox.Y;
+            }
+            //Create final rectangle size
+            bottomRightTile += new Point(tileSize);
+            bounds.Size = new Point(
+                    bottomRightTile.X - bounds.X,
+                    bottomRightTile.Y - bounds.Y);
+            bounds.Inflate(100f, 100f);
+            Bounds = bounds;
         }
 
         #region Drawing
