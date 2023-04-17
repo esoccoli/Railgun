@@ -172,8 +172,7 @@ namespace Railgun.RailgunGame
             world.CurrentMap = testMap;
 
             //Create camera
-            world.CurrentCamera = new Camera(GraphicsDevice, Rectangle.Empty);
-            world.CurrentCamera.CameraBounds = testMap.Bounds;
+            world.CurrentCamera = new Camera(GraphicsDevice, testMap.Bounds);
         }
 
         protected override void Update(GameTime gameTime)
