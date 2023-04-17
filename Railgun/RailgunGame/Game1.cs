@@ -168,8 +168,10 @@ namespace Railgun.RailgunGame
             world = WorldManager.Instance;
 
             //Load test map
-            testMap = FileManager.LoadMap(Content, "SquareMapWithDoor");
-            world.CurrentMap = testMap;
+            world.Maps.Add(FileManager.LoadMap(Content, "HourglassMap"));
+            world.Maps.Add(FileManager.LoadMap(Content, "SquareMapWithDoor"));
+            world.Maps.Add(FileManager.LoadMap(Content, "CrescentMap"));
+            world.Maps.Add(FileManager.LoadMap(Content, "CrescentMap"));
 
             //Create camera
             world.CurrentCamera = new Camera(GraphicsDevice, testMap.Bounds);

@@ -18,6 +18,14 @@ namespace Railgun.RailgunGame.Tilemapping
         #region Singleton Design
 
         /// <summary>
+        /// Creates a new world manager
+        /// </summary>
+        private WorldManager()
+        {
+            Maps = new List<Map>();
+        }
+
+        /// <summary>
         /// The singleton instance of this InputManager
         /// </summary>
         public static WorldManager Instance
@@ -38,18 +46,49 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <summary>
         /// The current map of the world
         /// </summary>
-        //public Map CurrentMap => Maps[MapIndex];
-        public Map CurrentMap { get; set; }
+        public Map CurrentMap
+        {
+            get
+            {
+                //If invalid index, return empty
+                if (MapIndex >= Maps.Count || MapIndex < 0)
+                    return Map.Empty();
+                return Maps[MapIndex];
+            }
+        }
 
         /// <summary>
         /// The next map in the list
         /// </summary>
-        public Map NextMap => Maps[MapIndex + 1];
+        public Map NextMap
+        {
+            get
+            {
+                //If invalid index, return empty
+                if (MapIndex > Maps.Count - 2)
+                    return Map.Empty();
+                return Maps[MapIndex + 1];
+            }
+        }
+        
+        /// <summary>
+        /// The previous map in the list
+        /// </summary>
+        public Map PreviousMap
+        {
+            get
+            {
+                //If invalid index, return empty
+                if(MapIndex < 1)
+                    return Map.Empty();
+                return Maps[MapIndex - 1];
+            }
+        }
 
         /// <summary>
         /// All maps to be used
         /// </summary>
-        public List<Map> Maps { get; set; }
+        public List<Map> Maps { get; private set; }
 
         /// <summary>
         /// The index of the current map
@@ -70,6 +109,14 @@ namespace Railgun.RailgunGame.Tilemapping
         {
             return CurrentCamera.ScreenToWorld(
                 InputManager.MouseState.Position.ToVector2());
+        }
+
+        /// <summary>
+        /// Moves to the next map
+        /// </summary>
+        public void IncrementMap()
+        {
+            MapIndex++;
         }
     }
 }

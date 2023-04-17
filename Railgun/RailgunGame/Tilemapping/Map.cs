@@ -267,16 +267,25 @@ namespace Railgun.RailgunGame.Tilemapping
             return hitbox;
         }
 
-    /// <summary>
-    /// Returns whether 
-    /// </summary>
-    /// <param name="gridPoint"></param>
-    /// <returns></returns>
-    public bool IsSolid(Vector2 gridPoint)
+        /// <summary>
+        /// Returns whether 
+        /// </summary>
+        /// <param name="gridPoint"></param>
+        /// <returns></returns>
+        public bool IsSolid(Vector2 gridPoint)
         {
             //If it exists, overwrite the value
             HitboxesMap.TryGetValue(gridPoint, out bool returnValue);
             return returnValue;
+        }
+
+        /// <summary>
+        /// Returns an empty map
+        /// </summary>
+        /// <returns></returns>
+        public static Map Empty()
+        {
+            return new Map(0);
         }
 
         #endregion
