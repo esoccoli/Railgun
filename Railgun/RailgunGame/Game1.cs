@@ -318,9 +318,21 @@ namespace Railgun.RailgunGame
                         mainPlayer.Hitbox = playerHitbox;
                     }
                     
-                    //Update camera to ease to player and mouse pos in world space
-                    world.CurrentCamera.EaseTo(mainPlayer.Hitbox.Location.ToVector2(), 1f, 0.2f);
-                    world.CurrentCamera.EaseTo(world.GetMouseWorldPosition(), 1f, 0.05f);
+                    
+                    //If alive, ease somewhat to mouse as well
+                    if(mainPlayer.Health > 0)
+                    {
+                        //Update camera to ease to player and mouse pos in world space
+                        world.CurrentCamera.EaseTo(mainPlayer.Hitbox.Center.ToVector2(), 1f, 0.2f);
+                        world.CurrentCamera.EaseTo(world.GetMouseWorldPosition(), 1f, 0.05f);
+                    }
+                    else//If dead, ease slowly to player
+                    {
+                        world.CurrentCamera.EaseTo(mainPlayer.Hitbox.Center.ToVector2(), 2f, 0.02f);
+
+                    }
+
+
                     world.CurrentCamera.Update(gameTime);
 
                     break;
