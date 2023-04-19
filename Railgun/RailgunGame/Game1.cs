@@ -142,24 +142,25 @@ namespace Railgun.RailgunGame
 
             playerIdleAnim = new Animation(playerIdle, 1, 6, 11.0f);
             playerRunAnim = new Animation(playerRun, 1, 8, 13.0f);
+            playerDeathAnim = new Animation(playerDeath, 1, 8, 2.5f);
             bulletCollideAnim = new Animation(bulletCollideTexture, 4, 1, 12.4f);
             skeletonWalkAnim = new Animation(skeletonWalk, 1, 13, 12.0f);
             skeletonDeathAnim = new Animation(skeletonDeath, 1, 15, 12.0f);
 
             // This next line is just to test skeletons.
-            Skeleton testSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(1700, 200, 100, 100));
-            Skeleton ttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(200, 200, 100, 100));
-            Skeleton tttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(700, 200, 100, 100));
-            Skeleton ttttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(1300, 200, 100, 100));
-            Skeleton tttttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(900, 900, 100, 100));
-            enemies.Add(testSkelley);
-            enemies.Add(ttestSkelley);
-            enemies.Add(tttestSkelley);
-            enemies.Add(ttttestSkelley);
-            enemies.Add(tttttestSkelley);
+            // Skeleton testSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(1700, 200, 100, 100));
+            // Skeleton ttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(200, 200, 100, 100));
+            // Skeleton tttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(700, 200, 100, 100));
+            // Skeleton ttttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(1300, 200, 100, 100));
+            // Skeleton tttttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(900, 900, 100, 100));
+            // enemies.Add(testSkelley);
+            // enemies.Add(ttestSkelley);
+            // enemies.Add(tttestSkelley);
+            // enemies.Add(ttttestSkelley);
+            // enemies.Add(tttttestSkelley);
             
             //Creates a UI object. Values to be updated later. 
-            mainPlayer = new Player(new Rectangle(0, 0, 100, 100), playerIdleAnim, playerRunAnim, bulletTexture, bulletCollideAnim);
+            mainPlayer = new Player(new Rectangle(0, 0, 100, 100), playerIdleAnim, playerRunAnim, playerDeathAnim, bulletTexture, bulletCollideAnim);
             userInterface = new UI(backgroundHealthUI, foregroundHealthUI, bulletUI, false, mainPlayer.Health, mainPlayer.MaxHealth, font, mainPlayer.Ammo, mainPlayer.MaxAmmo);
 
             //Set debug logger
@@ -268,14 +269,11 @@ namespace Railgun.RailgunGame
                         currentGameState = GameState.Pause;
                     } // A way to pause the game.
 
-                    // Ends the game when the player's HP falls below one.
-                    if (mainPlayer.Health <= 0)
+                    if(mainPlayer.Health > 0)
                     {
-                        currentGameState = GameState.GameOver;
+                        mainPlayer.Update(gameTime);
                     }
-
-
-                    mainPlayer.Update(gameTime);
+                
                     for (int i = 0; i < mainPlayer.PlayerBullets.Count; i++)
                     {
                         mainPlayer.PlayerBullets[i].Update(gameTime);
@@ -412,7 +410,10 @@ namespace Railgun.RailgunGame
 
                     MouseState mStateGame = Mouse.GetState();
                     List<Enemy> removalList = new List<Enemy>();
-                    mainPlayer.Draw(_spriteBatch, gameTime);
+                    if(mainPlayer.Draw(_spriteBatch, gameTime))
+                    {
+                        currentGameState = GameState.GameOver;
+                    }
 
                     #region Enemies/Bullets
                     // This will draw the enemies and bullets, and remove them if they have finished their death animation.

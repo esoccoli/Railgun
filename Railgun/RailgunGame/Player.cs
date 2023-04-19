@@ -27,6 +27,7 @@ namespace Railgun.RailgunGame
         private Animation notActiveBullet;
         private Animation playerIdle;
         private Animation playerRun;
+        private Animation playerDeath;
 
         // I will organize this later.
         
@@ -90,7 +91,7 @@ namespace Railgun.RailgunGame
         /// </summary>
         /// <param name="hitbox"> The rectangle that defines where the player is, and where they can be injured. </param>
         /// <param name="texture"> The texture used to show what our player looks like. </param>
-        public Player(Rectangle hitbox, Animation playerIdle, Animation playerRun, Texture2D activeBullet, Animation notActiveBullet) : base(hitbox)
+        public Player(Rectangle hitbox, Animation playerIdle, Animation playerRun, Animation playerDeath, Texture2D activeBullet, Animation notActiveBullet) : base(hitbox)
         {
             // I'm only setting the health to 100 as a default value. We can come back and change this if we need to adjust it later.
             Health = 100;
@@ -108,6 +109,7 @@ namespace Railgun.RailgunGame
 
             this.playerIdle = playerIdle;
             this.playerRun = playerRun;
+            this.playerDeath = playerDeath;
 
             this.activeBullet = activeBullet;
             this.notActiveBullet = notActiveBullet;
@@ -219,7 +221,7 @@ namespace Railgun.RailgunGame
         /// This is where the player is drawn. Might not need to edit this but when the animation object is made, I might.
         /// </summary>
         /// <param name="sb"> The spritebatch being drawn with. </param>
-        public void Draw(SpriteBatch sb, GameTime gameTime)
+        public bool Draw(SpriteBatch sb, GameTime gameTime)
         {
             SpriteEffects effect = SpriteEffects.None;
             if(WorldManager.Instance.GetMouseWorldPosition().X < Hitbox.X + (Hitbox.Width / 2))
@@ -227,15 +229,19 @@ namespace Railgun.RailgunGame
                 effect = SpriteEffects.FlipHorizontally;
             }
 
-            if(prevPos.X == Hitbox.X && prevPos.Y == Hitbox.Y)
+            if(Health <= 0)
+            {
+                return playerDeath.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.Gray, effect); ;
+            }
+            else if(prevPos.X == Hitbox.X && prevPos.Y == Hitbox.Y)
             {
                 if (DamageCooldown <= 0.0)
                 {
-                    playerIdle.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y), Color.White, effect);
+                    playerIdle.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.White, effect);
                 }
                 else
                 {
-                    playerIdle.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y), Color.Gray, effect);
+                    playerIdle.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.Gray, effect);
                 }
             }
             else
@@ -244,18 +250,19 @@ namespace Railgun.RailgunGame
                 {
                     if(DamageCooldown <= 0.0)
                     {
-                        playerRun.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y), Color.White, effect);
+                        playerRun.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.White, effect);
                     }
                     else
                     {
-                        playerRun.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y), Color.Gray, effect);
+                        playerRun.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.Gray, effect);
                     }
                 }
                 else
                 {
-                    playerRun.Draw(sb, gameTime, new Vector2(Hitbox.X, Hitbox.Y), Color.Blue, effect);
+                    playerRun.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.Blue, effect);
                 }
             }
+            return false;
         }
 
         /// <summary>
