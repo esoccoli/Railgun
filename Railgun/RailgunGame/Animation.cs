@@ -171,21 +171,8 @@ namespace Railgun.RailgunGame
         /// <returns>true if the animation is at the final frame, false otherwise</returns>
         public bool Draw(SpriteBatch sb, GameTime gameTime, Vector2 position, SpriteEffects effect)
         {
-            UpdateAnimation(gameTime);
-
-            int row = CurrentFrame / NumColumns;
-            int col = CurrentFrame % NumColumns;
-
-            SourceRectangle = new Rectangle(FrameWidth * col, FrameHeight * row, FrameWidth, FrameHeight);
-
-            //rectangle on screen to be drawn to
-            Rectangle destination = new Rectangle((int)position.X, (int)position.Y, 100, 100);
-
-            sb.Draw(SpriteSheet, destination, SourceRectangle, Color, 0.0f, Vector2.Zero, effect, 0.0f);
-
-            return CurrentFrame == TotalFrames - 1;
+            return Draw(sb, gameTime, position, Color, effect);
         }
-
 
 
         /// <summary>
