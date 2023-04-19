@@ -135,8 +135,8 @@ namespace Railgun.Editor.App
             toolStripMenuItem_ShowHitboxes.ShortcutKeyDisplayString = "X";
             toolStripMenuItem_PlaceHitbox.ShortcutKeyDisplayString = "C";
 
-            //Set selected layer
-            comboBox_Layers.SelectedIndex = 1;
+            //Set selected layer to tiles
+            comboBox_Layers.SelectedIndex = comboBox_Layers.Items.Count - 1;
 
             //Set hitboxes to checked
             checkBox_ShowHitboxes.Checked = true;
@@ -608,7 +608,7 @@ namespace Railgun.Editor.App
         private void ComboBox_Layers_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Set current layer where the hitbox layer is -1
-            tileManager.CurrentLayer = comboBox_Layers.SelectedIndex - 1;
+            tileManager.CurrentLayer = comboBox_Layers.SelectedIndex - 3;
         }
 
         #endregion
