@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace Railgun.Editor.App.Util
 {
@@ -20,9 +21,14 @@ namespace Railgun.Editor.App.Util
     internal class FileManager
     {
         /// <summary>
-        /// The identifier for a Railgun map file
+        /// The identifier for a Railgun map file as of stable build 1
         /// </summary>
-        private const string FileIdentifier = "RailgunMapRGM";
+        private const string FileIdentifierV1 = "RailgunMapRGM";
+
+        /// <summary>
+        /// The current identifier for a Railgun map file
+        /// </summary>
+        private const string FileIdentifierV2 = "RailgunMapRGMV2";
 
         /// <summary>
         /// The content manager to be used for loading textures
@@ -107,8 +113,8 @@ namespace Railgun.Editor.App.Util
             //Create a file writer from this path
             BinaryWriter writer = new BinaryWriter(File.OpenWrite(CurrentMapPath));
 
-            //Create an identifier that can make sure this is a valid file
-            writer.Write(FileIdentifier);
+            //Write the newest file id
+            writer.Write(FileIdentifierV2);
 
             //Write tile size
             writer.Write(map.TileSize);
@@ -280,32 +286,26 @@ namespace Railgun.Editor.App.Util
 
             try
             {
-                //Check if the file is valid, if not return null
-                if (reader.ReadString() != FileIdentifier)
+                Map map;
+
+                //Check file identifiers
+                string fileId = reader.ReadString();
+
+                //Old file format
+                if(fileId == FileIdentifierV1)
+                {
+                    map = ReadMapV1(reader);
+                }
+                else if(fileId == FileIdentifierV2)//New file format
+                {
+                    map = ReadMapV2(reader);
+                }
+                else//Doesn't have any file id
                 {
                     //Show error dialog
                     MessageBox.Show("File was unreadable: Incorrect identifier",
                         "Error Reading File:", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return null;
-                }
-
-                //Begin actually reading the map
-                Map map = new Map(reader.ReadInt32());
-
-                //Store tile layer count
-                int layerCount = reader.ReadInt32();
-                //Read and add each layer
-                for (int i = 0; i < layerCount; i++)
-                {
-                    map.Layers.Add(ReadLayer(reader));
-                }
-
-                //Store hitbox count
-                int hitboxCount = reader.ReadInt32();
-                //Read and add each hitbox
-                for (int i = 0; i < hitboxCount; i++)
-                {
-                    map.Hitboxes[ReadVector(reader)] = reader.ReadBoolean();
                 }
 
                 //Update current path if it makes it all the way through
@@ -339,6 +339,64 @@ namespace Railgun.Editor.App.Util
                 //Close reader
                 reader.Close();
             }
+        }
+
+        /// <summary>
+        /// Reads the map in the first format used aka "v1 format"
+        /// </summary>
+        /// <param name="reader">The binary reader to read from</param>
+        /// <returns>A new map with the old stuff in it</returns>
+        private static Map ReadMapV1(BinaryReader reader)
+        {
+            //Begin actually reading the map
+            Map map = new Map(reader.ReadInt32());
+
+            //Store tile layer count
+            int layerCount = reader.ReadInt32();
+            //Read and add each layer
+            for (int i = 0; i < layerCount; i++)
+            {
+                map.Layers.Add(ReadLayer(reader));
+            }
+
+            //Store hitbox count
+            int hitboxCount = reader.ReadInt32();
+            //Read and add each hitbox
+            for (int i = 0; i < hitboxCount; i++)
+            {
+                map.Hitboxes[ReadVector(reader)] = reader.ReadBoolean();
+            }
+
+            return map;
+        }
+
+        /// <summary>
+        /// Reads a current version formated map
+        /// </summary>
+        /// <param name="reader">The binary reader to read from</param>
+        /// <returns>The map from the file</returns>
+        private static Map ReadMapV2(BinaryReader reader)
+        {
+            //Begin actually reading the map
+            Map map = new Map(reader.ReadInt32());
+
+            //Store tile layer count
+            int layerCount = reader.ReadInt32();
+            //Read and add each layer
+            for (int i = 0; i < layerCount; i++)
+            {
+                map.Layers.Add(ReadLayer(reader));
+            }
+
+            //Store hitbox count
+            int hitboxCount = reader.ReadInt32();
+            //Read and add each hitbox
+            for (int i = 0; i < hitboxCount; i++)
+            {
+                map.Hitboxes[ReadVector(reader)] = reader.ReadBoolean();
+            }
+
+            return map;
         }
 
         /// <summary>
