@@ -142,18 +142,18 @@ namespace Railgun.RailgunGame
 
             playerIdleAnim = new Animation(playerIdle, 1, 6, 11.0f);
             playerRunAnim = new Animation(playerRun, 1, 8, 13.0f);
-            playerDeathAnim = new Animation(playerDeath, 1, 8, 2.5f);
+            playerDeathAnim = new Animation(playerDeath, 1, 8, 4.0f);
             bulletCollideAnim = new Animation(bulletCollideTexture, 4, 1, 12.4f);
             skeletonWalkAnim = new Animation(skeletonWalk, 1, 13, 12.0f);
             skeletonDeathAnim = new Animation(skeletonDeath, 1, 15, 12.0f);
 
             // This next line is just to test skeletons.
-            // Skeleton testSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(1700, 200, 100, 100));
+             Skeleton testSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(1700, 200, 100, 100));
             // Skeleton ttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(200, 200, 100, 100));
             // Skeleton tttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(700, 200, 100, 100));
             // Skeleton ttttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(1300, 200, 100, 100));
             // Skeleton tttttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(900, 900, 100, 100));
-            // enemies.Add(testSkelley);
+             enemies.Add(testSkelley);
             // enemies.Add(ttestSkelley);
             // enemies.Add(tttestSkelley);
             // enemies.Add(ttttestSkelley);
