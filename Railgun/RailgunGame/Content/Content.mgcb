@@ -25,18 +25,6 @@
 /processorParam:TextureFormat=Color
 /build:BulletBoom.png
 
-#begin BulletBoom.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:BulletBoom.png
-
 #begin bulletTexture.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -119,26 +107,20 @@
 #begin Maps/CrescentMap.rgm
 /copy:Maps/CrescentMap.rgm
 
-#begin Maps/Example Tilesets.rgm
-/copy:Maps/Example Tilesets.rgm
+#begin Maps/DonutRoom.rgm
+/copy:Maps/DonutRoom.rgm
 
 #begin Maps/HourglassMap.rgm
 /copy:Maps/HourglassMap.rgm
 
-#begin Maps/More Tilesets.rgm
-/copy:Maps/More Tilesets.rgm
-
-#begin Maps/ppp.rgm
-/copy:Maps/ppp.rgm
+#begin Maps/Longus.rgm
+/copy:Maps/Longus.rgm
 
 #begin Maps/SquareMapWithDoor.rgm
 /copy:Maps/SquareMapWithDoor.rgm
 
-#begin Maps/Test Map with collision.rgm
-/copy:Maps/Test Map with collision.rgm
-
-#begin Maps/TestMap.rgm
-/copy:Maps/TestMap.rgm
+#begin Maps/TShapeMap.rgm
+/copy:Maps/TShapeMap.rgm
 
 #begin menuLogo.png
 /importer:TextureImporter

@@ -114,7 +114,7 @@ namespace Railgun.Editor.App.Util
             BinaryWriter writer = new BinaryWriter(File.OpenWrite(CurrentMapPath));
 
             //Write the newest file id
-            writer.Write(FileIdentifierV2);
+            writer.Write(FileIdentifierV1);
 
             //Write tile size
             writer.Write(map.TileSize);
