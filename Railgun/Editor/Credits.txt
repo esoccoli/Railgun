@@ -1,2 +1,8 @@
 ﻿Credit to Caro Asercion for "Subway train icon"
-Credit to Delapouite for "Clockwise rotation icon"
+
+Credit to Delapouite for:
+- "Clockwise rotation icon"
+- "Open gate icon"
+- "Exit door icon"
+
+Credit to sbed for "Death skull icon"
