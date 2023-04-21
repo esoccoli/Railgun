@@ -141,6 +141,12 @@ namespace Railgun.Editor.App
             //Set hitboxes to checked
             checkBox_ShowHitboxes.Checked = true;
             checkBox_Solid.Checked = true;
+
+            //Re-arrange temporary holder panels
+            panel_Entities.Visible = false;
+            tableLayoutPanel_MainEditor.Controls.Remove(panel_Big_Holder);
+            tableLayoutPanel_MainEditor.Controls.Add(mapEditor, 0, 1);
+            panel_Objects.Controls.Add(tableLayoutPanel_EntityPicker);
         }
 
         /// <summary>
@@ -589,14 +595,33 @@ namespace Railgun.Editor.App
             //Set current tile to nothing if on a non-tile layer
             if(tileManager.CurrentLayer < 0)
             {
-                //Hide tile picker
-                tableLayoutPanel_TilePicker.Visible = false;
-                tileManager.CurrentTile = Tile.Empty;
+                //If hitbox layer
+                if(tileManager.CurrentLayer == -1)
+                {
+                    //Hide tile picker
+                    tableLayoutPanel_TilePicker.Visible = false;
+                    tileManager.CurrentTile = Tile.Empty;
+                    //Hide entity picker
+                    tableLayoutPanel_EntityPicker.Visible = false;
+                    
+                }
+                //If entity layer
+                else if(tileManager.CurrentLayer == -2)
+                {
+                    //Hide tile picker
+                    tableLayoutPanel_TilePicker.Visible = false;
+                    tileManager.CurrentTile = Tile.Empty;
+                    //Hide entity picker
+                    tableLayoutPanel_EntityPicker.Visible = true;
+                }
+
                 return;
             }
 
             //Show tile picker
             tableLayoutPanel_TilePicker.Visible = true;
+            //Hide entity picker
+            tableLayoutPanel_EntityPicker.Visible = false;
 
             //Else set to current selection
             CurrentTileset.CreateTileSelection();
@@ -608,7 +633,35 @@ namespace Railgun.Editor.App
         private void ComboBox_Layers_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Set current layer where the hitbox layer is -1
-            tileManager.CurrentLayer = comboBox_Layers.SelectedIndex - 3;
+            tileManager.CurrentLayer = comboBox_Layers.SelectedIndex - 2;
+        }
+
+        /// <summary>
+        /// Called when the entity picker is changed
+        /// </summary>
+        private void ComboBox_EntityPicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch(comboBox_EntityPicker.SelectedIndex)
+            {
+                case 0://Removal
+
+                    break;
+                case 1://Enter
+
+                    break;
+                case 2://Exit
+
+                    break;
+                case 3://Enemy 1
+
+                    break;
+                case 4://Enemy 2
+
+                    break;
+                case 5://Enemy 3
+
+                    break;
+            }
         }
 
         #endregion
@@ -729,5 +782,6 @@ namespace Railgun.Editor.App
         }
 
         #endregion
+
     }
 }
