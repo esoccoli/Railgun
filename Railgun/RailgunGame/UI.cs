@@ -122,7 +122,7 @@ namespace Railgun.RailgunGame
             dashCooldown = new Rectangle(10, 170, maxHealth * 2, 10);
             dashCooldownBackground = dashCooldown;
             foregroundHealth = new Rectangle(10, 40, maxHealth * 2, 10);
-            drawDash = false;
+            drawDash = true;
         }
 
         /// <summary>
@@ -157,11 +157,12 @@ namespace Railgun.RailgunGame
             // TODO: What are our thoughts on unary operators?
             // Ex: dashCooldown = dashTimeLeft <= 0.0 ? new Rectangle(10, 170, maxHealth * 2, 10) : new Rectangle(10, 170, (int)(((maxHealth * 2) / dashTimeLeft)), 10);
 
+            drawDash = true;
+
             if (dashTimeLeft >= 0.1)
             {
-                dashCooldown = new Rectangle(playerPosition.X, playerPosition.Y, maxHealth * 2, 10);
-                dashCooldownBackground = new Rectangle(playerPosition.X, playerPosition.Y, maxHealth * 2, 10);
-                drawDash = true;
+                dashCooldown = new Rectangle(playerPosition.X, playerPosition.Y, (int)(dashTimeLeft * 100.0), 10);
+                dashCooldownBackground = new Rectangle(playerPosition.X, playerPosition.Y, 100, 10);
             }
             else
             {

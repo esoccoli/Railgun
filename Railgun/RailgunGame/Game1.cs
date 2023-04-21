@@ -258,7 +258,7 @@ namespace Railgun.RailgunGame
                 #region Game
                 case GameState.Game:
 
-                    userInterface.Update(mainPlayer.Health, mainPlayer.Ammo, mainPlayer.DashTime, mainPlayer.Hitbox); //Updates the UI. Values to be updated later
+                    userInterface.Update(mainPlayer.Health, mainPlayer.Ammo, mainPlayer.DashCooldown, mainPlayer.Hitbox); //Updates the UI. Values to be updated later
 
                     if (InputManager.IsKeyDown(Keys.R))
                     {
@@ -453,6 +453,9 @@ namespace Railgun.RailgunGame
                     {
                         mainPlayer.PlayerBullets.Remove(bullet);
                     }
+
+                    userInterface.DrawToWorldspace(_spriteBatch);
+
                     #endregion
 
                     _spriteBatch.End();
