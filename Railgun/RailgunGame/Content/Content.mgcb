@@ -107,32 +107,17 @@
 #begin Maps/CrescentMap.rgm
 /copy:Maps/CrescentMap.rgm
 
-#begin Maps/CrescentMap.rgm
-/importer:
-/processor:
-/build:Maps/CrescentMap.rgm
-
 #begin Maps/DonutRoom.rgm
 /copy:Maps/DonutRoom.rgm
 
 #begin Maps/HourglassMap.rgm
 /copy:Maps/HourglassMap.rgm
 
-#begin Maps/HourglassMap.rgm
-/importer:
-/processor:
-/build:Maps/HourglassMap.rgm
-
 #begin Maps/Longus.rgm
 /copy:Maps/Longus.rgm
 
 #begin Maps/SquareMapWithDoor.rgm
 /copy:Maps/SquareMapWithDoor.rgm
-
-#begin Maps/SquareMapWithDoor.rgm
-/importer:
-/processor:
-/build:Maps/SquareMapWithDoor.rgm
 
 #begin Maps/TShapeMap.rgm
 /copy:Maps/TShapeMap.rgm
