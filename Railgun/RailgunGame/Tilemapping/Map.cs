@@ -52,26 +52,52 @@ namespace Railgun.RailgunGame.Tilemapping
         public List<Rectangle> Hitboxes { get; private set; }
 
         /// <summary>
+        /// A dictionary of entity ids that this map contains
+        /// </summary>
+        public Dictionary<Vector2, int> EntitiesDictionary { get; protected set; }
+
+        /// <summary>
+        /// A list of enemies in this map
+        /// </summary>
+        public List<Enemy> Enemies { get; protected set; }
+
+        /// <summary>
+        /// The entrence point of this map
+        /// </summary>
+        public Vector2 Entrence { get; set; }
+
+        /// <summary>
+        /// The exit point of this map
+        /// </summary>
+        public Vector2 Exit { get; set; }
+
+        /// <summary>
         /// The created bounds of this map
         /// </summary>
         public Rectangle Bounds { get; private set; }
 
+        /// <summary>
+        /// The position of the map
+        /// </summary>
         public Vector2 Position
         {
             get => position;
             set
             {
+                Vector2 changeInPosition = value - position;
                 position = value;
                 //Update hitbox locations
                 for(int i = 0; i < Hitboxes.Count; i++)
                 {
                     Rectangle hitbox = Hitboxes[i];
-                    hitbox.Location += value.ToPoint();
+                    hitbox.Location += changeInPosition.ToPoint();
                     Hitboxes[i] = hitbox;
                 }
                 Rectangle bounds = Bounds;
-                bounds.Location += value.ToPoint();
+                bounds.Location += changeInPosition.ToPoint();
                 Bounds = bounds;
+                Entrence += changeInPosition;
+                Exit += changeInPosition;
             }
         }
         private Vector2 position;
@@ -98,6 +124,10 @@ namespace Railgun.RailgunGame.Tilemapping
             Layers = new List<Dictionary<Vector2, Tile>>();
             HitboxesMap = new Dictionary<Vector2, bool>();
             Hitboxes = new List<Rectangle>();
+            EntitiesDictionary = new Dictionary<Vector2, int>();
+            Enemies = new List<Enemy>();
+            Entrence = Vector2.Zero;
+            Exit = Vector2.Zero;
         }
 
         /// <summary>
@@ -117,28 +147,57 @@ namespace Railgun.RailgunGame.Tilemapping
                         new Point(tileSize)));
                 }
             }
-            
-            //Create bounds
-            Rectangle bounds = Hitboxes.First();
-            Point bottomRightTile = Hitboxes.First().Location;
 
-            //Create bounds of map
-            foreach (Rectangle hitbox in Hitboxes)
+            //If hitboxes are available, create bounds
+            if(Hitboxes.Count > 0)
             {
-                //Find top most left tile
-                if (hitbox.X < bounds.X) bounds.X = hitbox.X;
-                if (hitbox.Y < bounds.Y) bounds.Y = hitbox.Y;
-                //Find bottom most right tile
-                if (hitbox.X > bottomRightTile.X) bottomRightTile.X = hitbox.X;
-                if (hitbox.Y > bottomRightTile.Y) bottomRightTile.Y = hitbox.Y;
+                Rectangle bounds = Hitboxes.First();
+                Point bottomRightTile = Hitboxes.First().Location;
+
+                //Create bounds of map
+                foreach (Rectangle hitbox in Hitboxes)
+                {
+                    //Find top most left tile
+                    if (hitbox.X < bounds.X) bounds.X = hitbox.X;
+                    if (hitbox.Y < bounds.Y) bounds.Y = hitbox.Y;
+                    //Find bottom most right tile
+                    if (hitbox.X > bottomRightTile.X) bottomRightTile.X = hitbox.X;
+                    if (hitbox.Y > bottomRightTile.Y) bottomRightTile.Y = hitbox.Y;
+                }
+                //Create final rectangle size
+                bottomRightTile += new Point(tileSize);
+                bounds.Size = new Point(
+                        bottomRightTile.X - bounds.X,
+                        bottomRightTile.Y - bounds.Y);
+                bounds.Inflate(100f, 100f);
+                Bounds = bounds;
             }
-            //Create final rectangle size
-            bottomRightTile += new Point(tileSize);
-            bounds.Size = new Point(
-                    bottomRightTile.X - bounds.X,
-                    bottomRightTile.Y - bounds.Y);
-            bounds.Inflate(100f, 100f);
-            Bounds = bounds;
+
+            //Generate entities
+            foreach(KeyValuePair<Vector2, int> entityPair in EntitiesDictionary)
+            {
+                //Hitbox for any entity
+                Rectangle hitbox =
+                    new Rectangle(
+                        (entityPair.Key * TileSize).ToPoint(),
+                        new Point(TileSize));
+                //Create enemy based on ID
+                switch(entityPair.Value)
+                {
+                    case 0://Enemy 1
+                        Enemies.Add(new Skeleton(hitbox));
+                        break;
+                    case 1://Enemy 2
+
+                        break;
+                    case 2://Enemy 3
+
+                        break;
+                }
+            }
+
+            Entrence *= TileSize;
+            Exit *= TileSize;
         }
 
         #region Drawing

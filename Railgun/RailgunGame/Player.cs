@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Railgun.RailgunGame.Util;
 using Railgun.RailgunGame.Tilemapping;
+using System.Runtime.InteropServices;
 
 namespace Railgun.RailgunGame
 {
@@ -117,6 +118,18 @@ namespace Railgun.RailgunGame
             Hitbox = hitbox;
             PlayerBullets = new List<Projectile>(10);
         }
+
+        /// <summary>
+        /// Creates a player with the default animations
+        /// </summary>
+        /// <param name="hitbox">The hitbox of this player</param>
+        /// <param name="activeBullet">The active bullet texture</param>
+        /// <param name="notActiveBullet">The non-active bullet texture</param>
+        public Player(Rectangle hitbox, Texture2D activeBullet)
+            : this(hitbox, AnimationManager.Instance.PlayerIdle,
+                  AnimationManager.Instance.PlayerMove,
+                  AnimationManager.Instance.PlayerDeath, activeBullet,
+                  AnimationManager.Instance.BulletCollide) { }
 
         /// <summary>
         /// This gets called every frame. It's used to see when other methods should be called.

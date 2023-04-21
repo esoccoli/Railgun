@@ -26,7 +26,7 @@ namespace Railgun.RailgunGame.Tilemapping
         }
 
         /// <summary>
-        /// The singleton instance of this InputManager
+        /// The singleton instance of this world manager
         /// </summary>
         public static WorldManager Instance
         {
@@ -117,10 +117,17 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <param name="map">The map to use</param>
         public void AddMap(Map map)
         {
-            Map lastMap = GetMapAtIndex(maps.Count - 1);
-            map.Position = new Vector2(0f, lastMap.Position.Y - lastMap.Bounds.Height);
-            //map.Position = lastMap.Bounds.Location.ToVector2() + lastMap.Bounds.Size.ToVector2();
-            DebugLog.Instance.LogPersistant(map.Position, Color.AliceBlue, 10f);
+            if(map == null)
+            {
+                //Show error log
+                DebugLog.Instance.LogPersistant(
+                    $"Map was null, cannot add",
+                    Color.Red, 10f);
+                return;
+            }
+            Map finalMap = GetMapAtIndex(maps.Count - 1);
+            //Position entrence of this map at the exit of the map before it
+            map.Position = finalMap.Exit - map.Entrence;
             maps.Add(map);
         }
 

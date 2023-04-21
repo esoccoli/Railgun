@@ -37,6 +37,14 @@ namespace Railgun.RailgunGame
         }
 
         /// <summary>
+        /// Creates a new skeleton with the default animations
+        /// </summary>
+        /// <param name="hitbox">The hitbox of the enemy</param>
+        public Skeleton(Rectangle hitbox)
+            : this(AnimationManager.Instance.SkeletonMove.Clone(),
+                  AnimationManager.Instance.SkeletonDeath, hitbox) { }
+
+        /// <summary>
         /// This is called every frame for a Skeleton. It enables them to move.
         /// </summary>
         /// <param name="playerPos"> The position of the player. </param>

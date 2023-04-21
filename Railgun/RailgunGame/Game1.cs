@@ -23,6 +23,7 @@ namespace Railgun.RailgunGame
         private List<Projectile> bulletRemovalList;
 
         private WorldManager world;
+        private AnimationManager aniManager;
 
         #region Menu Elements
         // Textures used to display the Menu.
@@ -41,23 +42,17 @@ namespace Railgun.RailgunGame
         #region Player, Enemy, Proj. Textures
         // Player, enemy, and projectile textures
         private Texture2D playerIdle;
-        private Animation playerIdleAnim;
         
         private Texture2D playerRun;
-        private Animation playerRunAnim;
         
         private Texture2D playerDeath;
-        private Animation playerDeathAnim;
         
         private Texture2D bulletTexture;
         private Texture2D bulletCollideTexture;
-        private Animation bulletCollideAnim;
         
         private Texture2D skeletonWalk;
-        private Animation skeletonWalkAnim;
         
         private Texture2D skeletonDeath;
-        private Animation skeletonDeathAnim;
         #endregion
 
         // Reticle
@@ -140,15 +135,18 @@ namespace Railgun.RailgunGame
 
             #endregion
 
-            playerIdleAnim = new Animation(playerIdle, 1, 6, 11.0f);
-            playerRunAnim = new Animation(playerRun, 1, 8, 13.0f);
-            playerDeathAnim = new Animation(playerDeath, 1, 8, 4.0f);
-            bulletCollideAnim = new Animation(bulletCollideTexture, 4, 1, 12.4f);
-            skeletonWalkAnim = new Animation(skeletonWalk, 1, 13, 12.0f);
-            skeletonDeathAnim = new Animation(skeletonDeath, 1, 15, 12.0f);
+            //Set field of animation manager
+            aniManager = AnimationManager.Instance;
+
+            aniManager.PlayerIdle = new Animation(playerIdle, 1, 6, 11.0f);
+            aniManager.PlayerMove = new Animation(playerRun, 1, 8, 13.0f);
+            aniManager.PlayerDeath = new Animation(playerDeath, 1, 8, 4.0f);
+            aniManager.BulletCollide = new Animation(bulletCollideTexture, 4, 1, 12.4f);
+            aniManager.SkeletonMove = new Animation(skeletonWalk, 1, 13, 12.0f);
+            aniManager.SkeletonDeath = new Animation(skeletonDeath, 1, 15, 12.0f);
 
             // This next line is just to test skeletons.
-             Skeleton testSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(1700, 200, 100, 100));
+             Skeleton testSkelley = new Skeleton(new Rectangle(1700, 200, 100, 100));
             // Skeleton ttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(200, 200, 100, 100));
             // Skeleton tttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(700, 200, 100, 100));
             // Skeleton ttttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(1300, 200, 100, 100));
@@ -160,7 +158,7 @@ namespace Railgun.RailgunGame
             // enemies.Add(tttttestSkelley);
             
             //Creates a UI object. Values to be updated later. 
-            mainPlayer = new Player(new Rectangle(0, 0, 100, 100), playerIdleAnim, playerRunAnim, playerDeathAnim, bulletTexture, bulletCollideAnim);
+            mainPlayer = new Player(new Rectangle(0, 0, 100, 100), bulletTexture);
             userInterface = new UI(backgroundHealthUI, foregroundHealthUI, bulletUI, false, mainPlayer.Health, mainPlayer.MaxHealth, font, mainPlayer.Ammo, mainPlayer.MaxAmmo);
 
             //Set debug logger
@@ -171,10 +169,11 @@ namespace Railgun.RailgunGame
             world = WorldManager.Instance;
 
             //Load map sequence
-            world.AddMap(FileManager.LoadMap(Content, "HourglassMap"));
-            world.AddMap(FileManager.LoadMap(Content, "SquareMapWithDoor"));
-            world.AddMap(FileManager.LoadMap(Content, "CrescentMap"));
-            world.AddMap(FileManager.LoadMap(Content, "TestMap"));
+            world.AddMap(FileManager.LoadMap(Content, "CrescentMapWithEnt"));
+            world.AddMap(FileManager.LoadMap(Content, "CrescentMapWithEnt"));
+            world.AddMap(FileManager.LoadMap(Content, "CrescentMapWithEnt"));
+            //world.AddMap(FileManager.LoadMap(Content, "SquareMapWithDoor"));
+            //world.AddMap(FileManager.LoadMap(Content, "CrescentMap"));
 
             //Create camera
             world.CurrentCamera = new Camera(GraphicsDevice, Rectangle.Empty);
@@ -416,8 +415,8 @@ namespace Railgun.RailgunGame
                     //Draw test map
                     world.CurrentMap.DrawTiles(_spriteBatch);
                     //Draw next and prev
-                    world.PreviousMap.DrawTiles(_spriteBatch);
-                    world.NextMap.DrawTiles(_spriteBatch);
+                    //world.PreviousMap.DrawTiles(_spriteBatch);
+                    //world.NextMap.DrawTiles(_spriteBatch);
 
 
                     MouseState mStateGame = Mouse.GetState();

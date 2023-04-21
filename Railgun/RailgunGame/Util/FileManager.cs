@@ -21,7 +21,7 @@ namespace Railgun.RailgunGame.Util
         /// <summary>
         /// The identifier for a Railgun map file
         /// </summary>
-        private const string FileIdentifier = "RailgunMapRGM";
+        private const string FileIdentifier = "RailgunMapRGMV2";
 
         /// <summary>
         /// The content manager to be used for loading textures
@@ -55,7 +55,8 @@ namespace Railgun.RailgunGame.Util
                 {
                     //Show error log
                     DebugLog.Instance.LogPersistant(
-                        $"Loading Map: {mapName} was unreadable: Incorrect identifier",
+                        $"Loading Map: {mapName} was unreadable: " +
+                        $"Map is old, please open and save in the editor",
                         Color.Red, 10f);
                     return null;
                 }
@@ -78,6 +79,18 @@ namespace Railgun.RailgunGame.Util
                 {
                     map.HitboxesMap[ReadVector(reader)] = reader.ReadBoolean();
                 }
+
+                //Store entity count
+                int entityCount = reader.ReadInt32();
+                //Read and add each entity
+                for (int i = 0; i < entityCount; i++)
+                {
+                    map.EntitiesDictionary[ReadVector(reader)] = reader.ReadInt32();
+                }
+
+                //Read enterence and exit
+                map.Entrence = ReadVector(reader);
+                map.Exit = ReadVector(reader);
 
                 //Populate hitbox list
                 map.GenerateMapValues();

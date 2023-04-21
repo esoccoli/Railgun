@@ -107,6 +107,9 @@
 #begin Maps/CrescentMap.rgm
 /copy:Maps/CrescentMap.rgm
 
+#begin Maps/CrescentMapWithEnt.rgm
+/copy:Maps/CrescentMapWithEnt.rgm
+
 #begin Maps/DonutRoom.rgm
 /copy:Maps/DonutRoom.rgm
 
@@ -121,6 +124,9 @@
 
 #begin Maps/TShapeMap.rgm
 /copy:Maps/TShapeMap.rgm
+
+#begin Maps/Unno.rgm
+/copy:Maps/Unno.rgm
 
 #begin menuLogo.png
 /importer:TextureImporter
