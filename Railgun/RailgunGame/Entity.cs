@@ -32,7 +32,5 @@ namespace Railgun.RailgunGame
         /// </summary>
         /// <param name="gameTime">time of the game</param>
         public virtual void Update(GameTime gameTime) { }
-
-
     }
 }
