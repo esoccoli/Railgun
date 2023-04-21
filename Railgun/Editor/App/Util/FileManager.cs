@@ -114,7 +114,7 @@ namespace Railgun.Editor.App.Util
             BinaryWriter writer = new BinaryWriter(File.OpenWrite(CurrentMapPath));
 
             //Write the newest file id
-            writer.Write(FileIdentifierV1);
+            writer.Write(FileIdentifierV2);
 
             //Write tile size
             writer.Write(map.TileSize);
@@ -135,6 +135,19 @@ namespace Railgun.Editor.App.Util
                 WriteVector(writer, hitbox.Key);
                 writer.Write(hitbox.Value);
             }
+
+            //Write the entity count
+            writer.Write(map.Entities.Count);
+            //Write entities
+            foreach(KeyValuePair<Vector2, int> entity in map.Entities)
+            {
+                WriteVector(writer, entity.Key);
+                writer.Write(entity.Value);//entity id
+            }
+
+            //Write entrence and exit
+            WriteVector(writer, map.Entrence);
+            WriteVector(writer, map.Exit);
 
             //Close the writer
             writer.Close();
@@ -395,6 +408,18 @@ namespace Railgun.Editor.App.Util
             {
                 map.Hitboxes[ReadVector(reader)] = reader.ReadBoolean();
             }
+
+            //Store entity count
+            int entityCount = reader.ReadInt32();
+            //Read and add each entity
+            for (int i = 0; i < entityCount; i++)
+            {
+                map.Entities[ReadVector(reader)] = reader.ReadInt32();
+            }
+
+            //Read enterence and exit
+            map.Entrence = ReadVector(reader);
+            map.Exit = ReadVector(reader);
 
             return map;
         }
