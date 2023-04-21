@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Railgun.RailgunGame.Util;
+using Railgun.RailgunGame.Tilemapping;
 
 namespace Railgun.RailgunGame
 {
@@ -31,7 +32,7 @@ namespace Railgun.RailgunGame
         /// <param name="hitbox"> The rectangle you should be aiming your gun at. </param>
         public Skeleton(Animation move, Animation death, Rectangle hitbox) : base(move, death, hitbox)
         {
-            Health = 25;
+            Health = 50;
             hitboxTemp = Hitbox;
         }
 
@@ -53,12 +54,23 @@ namespace Railgun.RailgunGame
         /// <param name="playerPos"> The direction that the Skeleton is moving in. </param>
         public override void Walk(Point playerPos)
         {
-            velocity = (playerPos - Hitbox.Center).ToVector2() / Vector2.Distance(playerPos.ToVector2(), Hitbox.Center.ToVector2()) * 4;
+            float distance = Vector2.Distance(playerPos.ToVector2(), Hitbox.Center.ToVector2());
+
+            if(distance == 0)
+            {
+                distance = 1;
+            }
+
+            velocity = (playerPos - Hitbox.Center).ToVector2() / distance * 4;
 
             hitboxTemp.X += (int)velocity.X;
             hitboxTemp.Y += (int)velocity.Y;
 
+            hitboxTemp = WorldManager.Instance.CurrentMap.ResolveCollisions(hitboxTemp);
+
             Hitbox = hitboxTemp;
+
+            DebugLog.Instance.LogFrame($"X: {Hitbox.X}  Y: {Hitbox.Y}");
         }
 
         /// <summary>

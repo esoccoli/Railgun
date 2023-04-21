@@ -209,10 +209,10 @@ namespace Railgun.RailgunGame
             Hitbox = hitbox;
 
             // This is the total duration of the dash. We can edit this number later.
-            if(DashTime >= .75) 
+            if(DashTime >= .35) 
             {
                 DashTime = 0.0;
-                DashCooldown = 3.5;
+                DashCooldown = 1.0;
                 Dashing = false;
             }
         }        
