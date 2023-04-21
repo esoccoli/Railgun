@@ -147,6 +147,9 @@ namespace Railgun.Editor.App
             tableLayoutPanel_MainEditor.Controls.Remove(panel_Big_Holder);
             tableLayoutPanel_MainEditor.Controls.Add(mapEditor, 0, 1);
             panel_Objects.Controls.Add(tableLayoutPanel_EntityPicker);
+
+            //Set current entity to enterence
+            comboBox_EntityPicker.SelectedIndex = 1;
         }
 
         /// <summary>
@@ -641,27 +644,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void ComboBox_EntityPicker_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch(comboBox_EntityPicker.SelectedIndex)
-            {
-                case 0://Removal
-
-                    break;
-                case 1://Enter
-
-                    break;
-                case 2://Exit
-
-                    break;
-                case 3://Enemy 1
-
-                    break;
-                case 4://Enemy 2
-
-                    break;
-                case 5://Enemy 3
-
-                    break;
-            }
+            EntityManager.Instance.CurrentEntity = comboBox_EntityPicker.SelectedIndex;
         }
 
         #endregion

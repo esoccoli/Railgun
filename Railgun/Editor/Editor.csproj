@@ -90,6 +90,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="App\DarkTheme.cs" />
+    <Compile Include="App\Objects\EntityManager.cs" />
     <Compile Include="App\Util\HelperForm.cs">
       <SubType>Form</SubType>
     </Compile>

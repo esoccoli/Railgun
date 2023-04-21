@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Railgun.Editor.App.Util;
+using SharpDX.Direct2D1.Effects;
 using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,21 @@ namespace Railgun.Editor.App.Objects
         public Dictionary<Vector2, bool> Hitboxes { get; protected set; }
 
         /// <summary>
+        /// A list of entity ids that this map contains
+        /// </summary>
+        public Dictionary<Vector2, int> Entities { get; protected set; }
+
+        /// <summary>
+        /// The entrence point of this map
+        /// </summary>
+        public Vector2 Entrence { get; set; }
+
+        /// <summary>
+        /// The exit point of this map
+        /// </summary>
+        public Vector2 Exit { get; set; }
+
+        /// <summary>
         /// The tile at the specified grid position and layer
         /// </summary>
         /// <param name="gridPosition">The position relative to the grid</param>
@@ -68,6 +84,9 @@ namespace Railgun.Editor.App.Objects
             TileSize = tileSize;
             Layers = new List<Dictionary<Vector2, Tile>>();
             Hitboxes = new Dictionary<Vector2, bool>();
+            Entities = new Dictionary<Vector2, int>();
+            Entrence = Vector2.Zero;
+            Exit = new Vector2(2f, 2f);
         }
 
         #region Drawing
@@ -94,6 +113,57 @@ namespace Railgun.Editor.App.Objects
                     //DebugLog.Instance.AddUpdateMessage(tile.Key.ToString());
                 }
             }
+        }
+
+        /// <summary>
+        /// Draws all entities in this map
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch to draw</param>
+        public void DrawEntities(SpriteBatch spriteBatch)
+        {
+            EntityManager entityManager = EntityManager.Instance;
+
+            foreach(KeyValuePair<Vector2, int> entity in Entities)
+            {
+                Texture2D entityTexture = null;
+                Color tint = Color.White;
+                //Get the texture based on the id of the entity
+                switch(entity.Value)
+                {
+                    case 0://Enemy1
+                        entityTexture = entityManager.Enemy1;
+                        tint = Color.LightGoldenrodYellow;
+                        break;
+                    case 1://Enemy2
+                        entityTexture = entityManager.Enemy2;
+                        tint = Color.LightSalmon;
+                        break;
+                    case 2://Enemy3
+                        entityTexture = entityManager.Enemy3;
+                        tint = Color.LightSteelBlue;
+                        break;
+                    default:
+                        entityTexture = entityManager.UndefinedTexture;
+                        break;
+                }
+                //Draw the entity
+                spriteBatch.Draw(
+                    entityTexture,
+                    new Rectangle((entity.Key * TileSize).ToPoint(), new Point(TileSize)),
+                    tint);
+            }
+
+            //Draw entrence
+            spriteBatch.Draw(
+                entityManager.Enterence,
+                new Rectangle((Entrence * TileSize).ToPoint(), new Point(TileSize)),
+                Color.LawnGreen);
+
+            //Draw exit
+            spriteBatch.Draw(
+                entityManager.Exit,
+                new Rectangle((Exit * TileSize).ToPoint(), new Point(TileSize)),
+                Color.OrangeRed);
         }
 
         /// <summary>

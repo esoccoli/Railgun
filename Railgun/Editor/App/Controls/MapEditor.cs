@@ -121,6 +121,13 @@ namespace Railgun.Editor.App.Controls
             //Center camera on the 0,0 coordinate
             Editor.Cam.DefaultPosition = new Vector2(GridSize / 2);
 
+            //Add entity textures
+            EntityManager.Instance.Enemy1 = Editor.Content.Load<Texture2D>("Entities/Enemy1");
+            EntityManager.Instance.Enemy2 = Editor.Content.Load<Texture2D>("Entities/Enemy2");
+            EntityManager.Instance.Enemy3 = Editor.Content.Load<Texture2D>("Entities/Enemy3");
+            EntityManager.Instance.Enterence = Editor.Content.Load<Texture2D>("Entities/Enter");
+            EntityManager.Instance.Exit = Editor.Content.Load<Texture2D>("Entities/Exit");
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -176,6 +183,9 @@ namespace Railgun.Editor.App.Controls
             //Draw map
             CurrentMap.DrawTiles(Editor.spriteBatch);
 
+            //Draw entities
+            CurrentMap.DrawEntities(Editor.spriteBatch);
+
             //Only show if mouse is inside this control and not selecting
             if(IsMouseInsideControl && !selecting)
             {
@@ -217,7 +227,8 @@ namespace Railgun.Editor.App.Controls
             ////
 
             //Draw placing preview if placing a hitbox and mouse is withing control
-            if(tileManager.ViewHitboxes && tileManager.PlaceHitbox && IsMouseInsideControl)
+            if(tileManager.ViewHitboxes && tileManager.PlaceHitbox
+                && IsMouseInsideControl && tileManager.CurrentLayer > -2)
             {
                 //The size of the hitbox
                 Vector2 sizeVector = new Vector2(GridSize * Editor.Cam.Zoom);
@@ -327,22 +338,56 @@ namespace Railgun.Editor.App.Controls
             //If placing
             if(input.IsDown(MouseButtonTypes.Left))
             {
+
+
                 //Get current grid point
                 Vector2 gridPoint = CurrentMap.GetGridPoint(MouseCameraPosition);
-
-                //If current layer is a tile layer
-                if (tileManager.CurrentLayer > -1)
+                
+                switch(tileManager.CurrentLayer)
                 {
-                    //Place current tile at tile point
-                    CurrentMap[gridPoint, tileManager.CurrentLayer] =
-                        tileManager.CurrentTile;
+                    case -1://Hitbox layer
+                        //If hitboxes enabled, place hitbox, else remove it
+                        CurrentMap.Hitboxes[gridPoint] = tileManager.PlaceHitbox;
+                        break;
+                    case -2://Entity layer
+                        PlaceEntity(gridPoint);
+                        break;
+                    default://Normal tile layer
+                        //Place current tile at tile point
+                        CurrentMap[gridPoint, tileManager.CurrentLayer] =
+                            tileManager.CurrentTile;
+                        //If hitboxes enabled, place hitbox, else remove it
+                        CurrentMap.Hitboxes[gridPoint] = tileManager.PlaceHitbox;
+                        break;
                 }
-
-                //If hitboxes enabled, place hitbox, else remove it
-                CurrentMap.Hitboxes[gridPoint] = tileManager.PlaceHitbox;
 
                 //Set to modified
                 FileManager.Modified = true;
+            }
+        }
+
+        /// <summary>
+        /// Places the current entity at the specified grid point
+        /// </summary>
+        /// <param name="gridPoint"></param>
+        public void PlaceEntity(Vector2 gridPoint)
+        {
+            int entityIndex = EntityManager.Instance.CurrentEntity;
+            switch(entityIndex)
+            {
+                case 0://Removal
+                    if(CurrentMap.Entities.ContainsKey(gridPoint))
+                        CurrentMap.Entities.Remove(gridPoint);
+                    break;
+                case 1://Enter
+                    CurrentMap.Entrence = gridPoint;
+                    break;
+                case 2://Exit
+                    CurrentMap.Exit = gridPoint;
+                    break;
+                default:
+                    CurrentMap.Entities[gridPoint] = entityIndex - 3;
+                    break;
             }
         }
 
