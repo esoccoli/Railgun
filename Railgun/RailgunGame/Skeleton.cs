@@ -42,7 +42,7 @@ namespace Railgun.RailgunGame
         /// <param name="hitbox">The hitbox of the enemy</param>
         public Skeleton(Rectangle hitbox)
             : this(VisualManager.Instance.SkeletonMove.Clone(),
-                  VisualManager.Instance.SkeletonDeath, hitbox) { }
+                  VisualManager.Instance.SkeletonDeath.Clone(), hitbox) { }
 
         /// <summary>
         /// This is called every frame for a Skeleton. It enables them to move.
