@@ -77,7 +77,7 @@ namespace Railgun.RailgunGame.Util
 
         #endregion
 
-        #region Texture
+        #region Textures
 
         /// <summary>
         /// The texture for a door

@@ -97,9 +97,7 @@ namespace Railgun.RailgunGame
                     //do nothing
                     break;
             }
-            Vector2 gridPos = WorldManager.Instance.CurrentMap.GetGridPoint(Position);
-
-            if (WorldManager.Instance.CurrentMap.IsSolid(gridPos))
+            if (WorldManager.Instance.IsColliding(Position))
             {
                 CurrentState = ProjectileStates.HasCollided;
             }
