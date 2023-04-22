@@ -49,7 +49,7 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <summary>
         /// The list of active solid hitboxes for debug drawing
         /// </summary>
-        private List<Rectangle> activeHitboxes;
+        private List<Vector2> activeHitboxes;
 
         /// <summary>
         /// A dictionary of entity ids that this map contains
@@ -111,7 +111,7 @@ namespace Railgun.RailgunGame.Tilemapping
             TileSize = tileSize;
             Layers = new List<Dictionary<Vector2, Tile>>();
             Hitboxes = new Dictionary<Vector2, bool>();
-            activeHitboxes = new List<Rectangle>();
+            activeHitboxes = new List<Vector2>();
             EntitiesDictionary = new Dictionary<Vector2, int>();
             Entrence = Vector2.Zero;
             Exit = Vector2.Zero;
@@ -195,23 +195,45 @@ namespace Railgun.RailgunGame.Tilemapping
                 //If hitbox placed
                 if (hitbox.Value)
                 {
-                    //Compute position to draw
-                    Vector2 topLeftCorner = hitbox.Key * sizeVector + cameraOffset + Position * cameraZoom;
-                    Vector2 bottomRightCorner = topLeftCorner + sizeVector;
-
-                    //Draw box of bounds
-                    ShapeBatch.BoxOutline(
-                        new Rectangle(
-                            topLeftCorner.ToPoint(),
-                            sizeVector.ToPoint()), Color.Red);
-                    //Draw x in the middle
-                    ShapeBatch.Line(topLeftCorner, bottomRightCorner, 2f, Color.Red);
-                    ShapeBatch.Line(
-                        new Vector2(topLeftCorner.X, bottomRightCorner.Y),
-                        new Vector2(bottomRightCorner.X, topLeftCorner.Y), 2f, Color.Red);
+                    DrawSingleHitbox(cameraOffset, cameraZoom, sizeVector, hitbox.Key, Color.Magenta * 0.2f);
                 }
             }
 
+            //Draw active hitboxes
+            foreach(Vector2 hitboxPoint in activeHitboxes)
+            {
+                DrawSingleHitbox(cameraOffset, cameraZoom, sizeVector, hitboxPoint, Color.Red);
+            }
+            //Reset active hitboxes
+            activeHitboxes.Clear();
+
+        }
+
+        /// <summary>
+        /// Draws a single debug hitbox with the specified values
+        /// </summary>
+        /// <param name="cameraOffset">Offset of camera</param>
+        /// <param name="cameraZoom">Zoom of camera</param>
+        /// <param name="sizeVector">The tile size * zoom</param>
+        /// <param name="position">Position of hitbox</param>
+        /// <param name="tint">The color to draw it</param>
+        private void DrawSingleHitbox(Vector2 cameraOffset, float cameraZoom,
+            Vector2 sizeVector, Vector2 position, Color tint)
+        {
+            //Compute position to draw
+            Vector2 topLeftCorner = position * sizeVector + cameraOffset + Position * cameraZoom;
+            Vector2 bottomRightCorner = topLeftCorner + sizeVector;
+
+            //Draw box of bounds
+            ShapeBatch.BoxOutline(
+                new Rectangle(
+                    topLeftCorner.ToPoint(),
+                    sizeVector.ToPoint()), tint);
+            //Draw x in the middle
+            ShapeBatch.Line(topLeftCorner, bottomRightCorner, 2f, tint);
+            ShapeBatch.Line(
+                new Vector2(topLeftCorner.X, bottomRightCorner.Y),
+                new Vector2(bottomRightCorner.X, topLeftCorner.Y), 2f, tint);
         }
 
         #endregion
@@ -250,10 +272,10 @@ namespace Railgun.RailgunGame.Tilemapping
         public Rectangle ResolveCollisions(Rectangle hitbox)
         {
             //Get hitbox location in grid-space and then some
-            Vector2 gridPos = GetGridPoint(hitbox.Location.ToVector2()) - Vector2.One;
+            Vector2 gridPos = GetGridPoint(hitbox.Location.ToVector2());
             //Get the amount of tiles to the bottom right that this hitbox reaches and then some
             Vector2 maxGridReach =
-                Vector2.Ceiling((hitbox.Size.ToVector2() / TileSize)) + Vector2.One * 2;
+                Vector2.Ceiling((hitbox.Size.ToVector2() / TileSize)) + Vector2.One;
 
             List<Rectangle> intersections = new List<Rectangle>();
 
@@ -268,21 +290,11 @@ namespace Railgun.RailgunGame.Tilemapping
                     if(IsSolid(gridPoint))
                     {
                         intersections.Add(GetSolidTile(gridPoint));
-                        //Add a debug list of rectangles to draw
-
+                        //Add a debug list of hitboxes to draw
+                        activeHitboxes.Add(gridPoint);
                     }
                 }
             }
-
-            ////Add intersections
-            //foreach (Rectangle obstical in Hitboxes)
-            //{
-            //    //Check if it has a width or height
-            //    if (obstical.Intersects(hitbox))
-            //    {
-            //        intersections.Add(obstical);
-            //    }
-            //}
 
             //Check and move x
             foreach (Rectangle obstical in intersections)
@@ -323,7 +335,6 @@ namespace Railgun.RailgunGame.Tilemapping
                     }
                 }
             }
-
 
             //Set new hitbox
             return hitbox;
@@ -390,7 +401,7 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <summary>
         /// Creates and returns a shallow copy of this map
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A shallow copy of the map</returns>
         public Map Clone()
         {
             return MemberwiseClone() as Map;
@@ -399,7 +410,7 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <summary>
         /// Returns an empty map
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Empty map</returns>
         public static Map Empty()
         {
             return new Map(0);
