@@ -26,7 +26,6 @@ namespace Railgun.RailgunGame
         private Rectangle hitboxTemp;
         private Texture2D activeBullet;
         private Animation notActiveBullet;
-        private int bulletDamage;
         private double SecondsPerState;
         private double TimeCounter;
 
@@ -52,13 +51,15 @@ namespace Railgun.RailgunGame
         /// <param name="death">death animation</param>
         /// <param name="hitbox">hitbox</param>
         /// <param name="shoot">shooting animation</param>
-        public GasMan(Animation move, Animation death, Rectangle hitbox, Animation shoot) : base(move, death, hitbox)
+        public GasMan(Animation move, Animation death, Rectangle hitbox, Animation shoot, Texture2D activeBullet, Animation notActiveBullet) : base(move, death, hitbox)
         {
             Health = 40;
             hitboxTemp = Hitbox;
             SecondsPerState = 4;
             TimeCounter = 0;
 
+            this.activeBullet = activeBullet;
+            this.notActiveBullet = notActiveBullet; 
             CurrentState = GasState.Walk;
             Shooting = shoot;
         }
