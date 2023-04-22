@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 namespace Railgun.RailgunGame.Util
 {
     /// <summary>
-    /// A singleton manager that contains animations
+    /// A singleton manager that contains animations and textures
     /// <para>Author: Jonathan Jan</para>
     /// Date Created: 4/21/2023
     /// </summary>
-    internal class AnimationManager
+    internal class VisualManager
     {
         #region Singleton Design
 
         /// <summary>
         /// Creates a new animation manager
         /// </summary>
-        private AnimationManager()
+        private VisualManager()
         {
 
         }
@@ -28,18 +28,18 @@ namespace Railgun.RailgunGame.Util
         /// <summary>
         /// The singleton instance of this animation manager
         /// </summary>
-        public static AnimationManager Instance
+        public static VisualManager Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new AnimationManager();
+                    instance = new VisualManager();
                 }
                 return instance;
             }
         }
-        private static AnimationManager instance;
+        private static VisualManager instance;
 
         #endregion
 
@@ -89,6 +89,15 @@ namespace Railgun.RailgunGame.Util
         /// gas man's shoot animation
         /// </summary>
         public Animation GasManShoot { get; set; }
+
+        #endregion
+
+        #region Textures
+
+        /// <summary>
+        /// The texture for a door
+        /// </summary>
+        public Texture2D DoorTexture { get; set; }
 
         #endregion
 

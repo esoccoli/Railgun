@@ -187,22 +187,23 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <param name="cameraZoom">The camera zoom to account for</param>
         public void DrawHitboxes(Vector2 cameraOffset, float cameraZoom)
         {
-            //Define constants for every hitbox
-            Vector2 sizeVector = new Vector2(TileSize * cameraZoom);
-
             foreach (KeyValuePair<Vector2, bool> hitbox in Hitboxes)
             {
                 //If hitbox placed
                 if (hitbox.Value)
                 {
-                    DrawSingleHitbox(cameraOffset, cameraZoom, sizeVector, hitbox.Key, Color.Magenta * 0.2f);
+                    DrawSingleHitbox(
+                        cameraOffset, cameraZoom, 
+                        hitbox.Key * TileSize, Color.Magenta * 0.2f);
                 }
             }
 
             //Draw active hitboxes
             foreach(Vector2 hitboxPoint in activeHitboxes)
             {
-                DrawSingleHitbox(cameraOffset, cameraZoom, sizeVector, hitboxPoint, Color.Red);
+                DrawSingleHitbox(
+                    cameraOffset, cameraZoom,
+                    hitboxPoint * TileSize, Color.Red);
             }
             //Reset active hitboxes
             activeHitboxes.Clear();
@@ -214,26 +215,12 @@ namespace Railgun.RailgunGame.Tilemapping
         /// </summary>
         /// <param name="cameraOffset">Offset of camera</param>
         /// <param name="cameraZoom">Zoom of camera</param>
-        /// <param name="sizeVector">The tile size * zoom</param>
         /// <param name="position">Position of hitbox</param>
         /// <param name="tint">The color to draw it</param>
         private void DrawSingleHitbox(Vector2 cameraOffset, float cameraZoom,
-            Vector2 sizeVector, Vector2 position, Color tint)
+            Vector2 position, Color tint)
         {
-            //Compute position to draw
-            Vector2 topLeftCorner = position * sizeVector + cameraOffset + Position * cameraZoom;
-            Vector2 bottomRightCorner = topLeftCorner + sizeVector;
-
-            //Draw box of bounds
-            ShapeBatch.BoxOutline(
-                new Rectangle(
-                    topLeftCorner.ToPoint(),
-                    sizeVector.ToPoint()), tint);
-            //Draw x in the middle
-            ShapeBatch.Line(topLeftCorner, bottomRightCorner, 2f, tint);
-            ShapeBatch.Line(
-                new Vector2(topLeftCorner.X, bottomRightCorner.Y),
-                new Vector2(bottomRightCorner.X, topLeftCorner.Y), 2f, tint);
+            DrawSingleHitbox(cameraOffset, cameraZoom, position, new Vector2(TileSize), Position, tint);
         }
 
         #endregion
@@ -296,6 +283,17 @@ namespace Railgun.RailgunGame.Tilemapping
                 }
             }
 
+            return ResolveCollisions(hitbox, intersections);
+        }
+
+        /// <summary>
+        /// A general method for resolving collisions between specified hitbox and solids
+        /// </summary>
+        /// <param name="hitbox">The hitbox to check</param>
+        /// <param name="intersections">The solids to repel from</param>
+        /// <returns></returns>
+        public static Rectangle ResolveCollisions(Rectangle hitbox, List<Rectangle> intersections)
+        {
             //Check and move x
             foreach (Rectangle obstical in intersections)
             {
@@ -336,7 +334,7 @@ namespace Railgun.RailgunGame.Tilemapping
                 }
             }
 
-            //Set new hitbox
+            //Return new hitbox
             return hitbox;
         }
 
@@ -414,6 +412,36 @@ namespace Railgun.RailgunGame.Tilemapping
         public static Map Empty()
         {
             return new Map(0);
+        }
+
+        /// <summary>
+        /// Draws a single debug hitbox with the specified values
+        /// </summary>
+        /// <param name="cameraOffset">Offset of camera</param>
+        /// <param name="cameraZoom">Zoom of camera</param>
+        /// <param name="position">Position of hitbox</param>
+        /// <param name="size">The size of the hitbox</param>
+        /// <param name="offset">The offset of the map or world</param>
+        /// <param name="tint">The color to draw it</param>
+        public static void DrawSingleHitbox(Vector2 cameraOffset, float cameraZoom,
+            Vector2 position, Vector2 size, Vector2 offset, Color tint)
+        {
+            Vector2 sizeVector = size * cameraZoom;
+
+            //Compute position to draw
+            Vector2 topLeftCorner = (position + offset) * cameraZoom + cameraOffset;
+            Vector2 bottomRightCorner = topLeftCorner + sizeVector;
+
+            //Draw box of bounds
+            ShapeBatch.BoxOutline(
+                new Rectangle(
+                    topLeftCorner.ToPoint(),
+                    sizeVector.ToPoint()), tint);
+            //Draw x in the middle
+            ShapeBatch.Line(topLeftCorner, bottomRightCorner, 2f, tint);
+            ShapeBatch.Line(
+                new Vector2(topLeftCorner.X, bottomRightCorner.Y),
+                new Vector2(bottomRightCorner.X, topLeftCorner.Y), 2f, tint);
         }
 
         #endregion

@@ -62,6 +62,16 @@ namespace Railgun.RailgunGame.Tilemapping
         public Rectangle CurrentExitTrigger { get; private set; }
 
         /// <summary>
+        /// The enterence door of the current room
+        /// </summary>
+        public Door EntrenceDoor { get; private set; }
+
+        /// <summary>
+        /// The exit door of the current room
+        /// </summary>
+        public Door ExitDoor { get; private set; }
+
+        /// <summary>
         /// The next map in the list
         /// </summary>
         public Map NextMap { get; private set; }
@@ -100,6 +110,10 @@ namespace Railgun.RailgunGame.Tilemapping
             PreviousMap.DrawTiles(spriteBatch);
             CurrentMap.DrawTiles(spriteBatch);
             NextMap.DrawTiles(spriteBatch);
+
+            //Draw doors
+            EntrenceDoor.Draw(spriteBatch);
+            ExitDoor.Draw(spriteBatch);
         }
 
         /// <summary>
@@ -111,10 +125,24 @@ namespace Railgun.RailgunGame.Tilemapping
             //Draw hitboxes
             graphicsDevice.DepthStencilState = DepthStencilState.None;
             ShapeBatch.Begin(graphicsDevice);
-            CurrentMap.DrawHitboxes(new Vector2(
+            Vector2 cameraOffset = new Vector2(
                 CurrentCamera.TransformationMatrix.Translation.X,
-                CurrentCamera.TransformationMatrix.Translation.Y),
-                CurrentCamera.Zoom);
+                CurrentCamera.TransformationMatrix.Translation.Y);
+            //Draw map hitboxes
+            CurrentMap.DrawHitboxes(cameraOffset, CurrentCamera.Zoom);
+            //Draw door hitboxes
+            if(EntrenceDoor.IsClosed)
+                Map.DrawSingleHitbox(
+                    cameraOffset, CurrentCamera.Zoom,
+                    EntrenceDoor.Hitbox.Location.ToVector2(),
+                    EntrenceDoor.Hitbox.Size.ToVector2(),
+                    Vector2.Zero, Color.Blue);
+            if(ExitDoor.IsClosed)
+                Map.DrawSingleHitbox(
+                    cameraOffset, CurrentCamera.Zoom,
+                    ExitDoor.Hitbox.Location.ToVector2(),
+                    ExitDoor.Hitbox.Size.ToVector2(),
+                    Vector2.Zero, Color.Blue);
             ShapeBatch.End();
 
             //Draw triggers
@@ -150,6 +178,36 @@ namespace Railgun.RailgunGame.Tilemapping
             NextMap = RandomMap();
 
             MakeCurrentRoom();
+        }
+
+        /// <summary>
+        /// Resolves collisions with map hitboxes and with solid entities
+        /// </summary>
+        /// <param name="hitbox">Hitbox to resolve</param>
+        /// <returns>A resolved hitbox</returns>
+        public Rectangle ResolveCollisions(Rectangle hitbox)
+        {
+            hitbox = CurrentMap.ResolveCollisions(hitbox);
+
+            //Check entities
+            List<Rectangle> entityHitboxes = new List<Rectangle>();
+            if(EntrenceDoor.IsClosed) entityHitboxes.Add(EntrenceDoor.Hitbox);
+            if(ExitDoor.IsClosed) entityHitboxes.Add(ExitDoor.Hitbox);
+            hitbox = Map.ResolveCollisions(hitbox, entityHitboxes);
+
+            return hitbox;
+        }
+
+        /// <summary>
+        /// Returns if the given world point is colliding with anything collidable
+        /// </summary>
+        /// <param name="position">Free world point</param>
+        /// <returns>TRUE if colliding</returns>
+        public bool IsColliding(Vector2 position)
+        {
+            return CurrentMap.IsSolid(CurrentMap.GetGridPoint(position))
+                || (EntrenceDoor.Hitbox.Contains(position) && EntrenceDoor.IsClosed)
+                || (ExitDoor.Hitbox.Contains(position) && ExitDoor.IsClosed);
         }
 
         /// <summary>
@@ -197,12 +255,19 @@ namespace Railgun.RailgunGame.Tilemapping
             CurrentEnemies = CurrentMap.GenerateEnemyList();
 
             //Create the new exit hitbox
-            Point triggerSize = new Point(CurrentMap.TileSize * 2);
+            Point triggerSize = new Point(CurrentMap.TileSize * 4);
             //Have it start 2 tiles above exit indicator
             CurrentExitTrigger =
                 new Rectangle(
-                    CurrentMap.Exit.ToPoint() - 
-                    new Point(0, triggerSize.Y), triggerSize);
+                    CurrentMap.Exit.ToPoint() -
+                    new Point(CurrentMap.TileSize, triggerSize.Y), triggerSize);
+
+            Point doorSize = new Point(CurrentMap.TileSize * 2);
+            //Create solid doors
+            EntrenceDoor =
+                new Door(new Rectangle(CurrentMap.Entrence.ToPoint(), doorSize));
+            ExitDoor =
+                new Door(new Rectangle(CurrentMap.Exit.ToPoint(), doorSize));
         }
     }
 }

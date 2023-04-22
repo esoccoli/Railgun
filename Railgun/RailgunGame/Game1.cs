@@ -22,7 +22,7 @@ namespace Railgun.RailgunGame
         private List<Projectile> bulletRemovalList;
 
         private WorldManager world;
-        private AnimationManager aniManager;
+        private VisualManager visuals;
 
         #region Menu Elements
         // Textures used to display the Menu.
@@ -140,10 +140,17 @@ namespace Railgun.RailgunGame
             #endregion
 
             //Instantiate singletons
-            aniManager = AnimationManager.Instance;
+            visuals = VisualManager.Instance;
             world = WorldManager.Instance;
 
             //Add animations to manager
+            visuals.PlayerIdle = new Animation(playerIdle, 1, 6, 11.0f);
+            visuals.PlayerMove = new Animation(playerRun, 1, 8, 13.0f);
+            visuals.PlayerDeath = new Animation(playerDeath, 1, 8, 4.0f);
+            visuals.BulletCollide = new Animation(bulletCollideTexture, 4, 1, 12.4f);
+            visuals.SkeletonMove = new Animation(skeletonWalk, 1, 13, 12.0f);
+            visuals.SkeletonDeath = new Animation(skeletonDeath, 1, 15, 12.0f);
+            visuals.DoorTexture = Content.Load<Texture2D>("Tiles/Tiles");
             aniManager.PlayerIdle = new Animation(playerIdle, 1, 6, 11.0f);
             aniManager.PlayerMove = new Animation(playerRun, 1, 8, 13.0f);
             aniManager.PlayerDeath = new Animation(playerDeath, 1, 8, 4.0f);
@@ -161,8 +168,7 @@ namespace Railgun.RailgunGame
             // Skeleton tttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(700, 200, 100, 100));
             // Skeleton ttttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(1300, 200, 100, 100));
             // Skeleton tttttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(900, 900, 100, 100));
-            world.CurrentEnemies.Add(testSkelley);
-
+             //world.CurrentEnemies.Add(testSkelley);
             // enemies.Add(ttestSkelley);
             // enemies.Add(tttestSkelley);
             // enemies.Add(ttttestSkelley);
@@ -346,11 +352,18 @@ namespace Railgun.RailgunGame
 
                     }
 
-                    //Check if within next room trigger
-                    if (mainPlayer.Hitbox.Intersects(world.CurrentExitTrigger))
+                    //If all enemies defeated, open door
+                    if(world.CurrentEnemies.Count == 0)
                     {
-                        world.IncrementMap();
+                        world.ExitDoor.IsClosed = false;
+                        //Check if fully within next room trigger
+                        if (world.CurrentExitTrigger.Contains(mainPlayer.Hitbox))
+                        {
+                            world.IncrementMap();
+                        }
                     }
+
+
 
                     world.CurrentCamera.Update(gameTime);
 

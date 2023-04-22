@@ -41,8 +41,8 @@ namespace Railgun.RailgunGame
         /// </summary>
         /// <param name="hitbox">The hitbox of the enemy</param>
         public Skeleton(Rectangle hitbox)
-            : this(AnimationManager.Instance.SkeletonMove.Clone(),
-                  AnimationManager.Instance.SkeletonDeath, hitbox) { }
+            : this(VisualManager.Instance.SkeletonMove.Clone(),
+                  VisualManager.Instance.SkeletonDeath.Clone(), hitbox) { }
 
         /// <summary>
         /// This is called every frame for a Skeleton. It enables them to move.
@@ -74,7 +74,7 @@ namespace Railgun.RailgunGame
             hitboxTemp.X += (int)velocity.X;
             hitboxTemp.Y += (int)velocity.Y;
 
-            hitboxTemp = WorldManager.Instance.CurrentMap.ResolveCollisions(hitboxTemp);
+            hitboxTemp = WorldManager.Instance.ResolveCollisions(hitboxTemp);
 
             Hitbox = hitboxTemp;
 

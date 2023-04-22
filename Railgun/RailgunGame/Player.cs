@@ -126,10 +126,10 @@ namespace Railgun.RailgunGame
         /// <param name="activeBullet">The active bullet texture</param>
         /// <param name="notActiveBullet">The non-active bullet texture</param>
         public Player(Rectangle hitbox, Texture2D activeBullet)
-            : this(hitbox, AnimationManager.Instance.PlayerIdle,
-                  AnimationManager.Instance.PlayerMove,
-                  AnimationManager.Instance.PlayerDeath, activeBullet,
-                  AnimationManager.Instance.BulletCollide) { }
+            : this(hitbox, VisualManager.Instance.PlayerIdle,
+                  VisualManager.Instance.PlayerMove,
+                  VisualManager.Instance.PlayerDeath, activeBullet,
+                  VisualManager.Instance.BulletCollide) { }
 
         /// <summary>
         /// This gets called every frame. It's used to see when other methods should be called.
@@ -164,7 +164,7 @@ namespace Railgun.RailgunGame
                 if (InputManager.IsKeyDown(Keys.S)) { hitbox.Y += speed; }
                 if (InputManager.IsKeyDown(Keys.D)) { hitbox.X += speed; }
 
-                hitbox = WorldManager.Instance.CurrentMap.ResolveCollisions(hitbox);
+                hitbox = WorldManager.Instance.ResolveCollisions(hitbox);
 
                 Hitbox = hitbox;
 
@@ -217,7 +217,7 @@ namespace Railgun.RailgunGame
             if (preDash.IsKeyDown(Keys.S)) { hitbox.Y += dashSpeed; }
             if (preDash.IsKeyDown(Keys.D)) { hitbox.X += dashSpeed; }
 
-            hitbox = WorldManager.Instance.CurrentMap.ResolveCollisions(hitbox);
+            hitbox = WorldManager.Instance.ResolveCollisions(hitbox);
 
             Hitbox = hitbox;
 
