@@ -75,6 +75,21 @@ namespace Railgun.RailgunGame.Util
         /// </summary>
         public Animation SkeletonDeath { get; set; }
 
+        /// <summary>
+        /// gas man's move animation
+        /// </summary>
+        public Animation GasManMove { get; set; }
+
+        /// <summary>
+        /// Gas man's death animation
+        /// </summary>
+        public Animation GasManDeath { get; set; }
+
+        /// <summary>
+        /// gas man's shoot animation
+        /// </summary>
+        public Animation GasManShoot { get; set; }
+
         #endregion
 
     }
