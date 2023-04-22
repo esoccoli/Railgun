@@ -124,6 +124,8 @@ namespace Railgun.RailgunGame
             {
                 projectile.Update(gameTime);
             }
+
+            EnemyProjManager.Instance.Projectiles = EnemyBullets;
         }
 
         /// <summary>
@@ -214,8 +216,6 @@ namespace Railgun.RailgunGame
 
             hitboxTemp = WorldManager.Instance.CurrentMap.ResolveCollisions(hitboxTemp);
             Hitbox = hitboxTemp;
-
-            DebugLog.Instance.LogFrame(Hitbox);
         }
     }
 }

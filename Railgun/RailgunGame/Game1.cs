@@ -191,8 +191,6 @@ namespace Railgun.RailgunGame
                         FileManager.LoadMap(Content, "TShapeMap")
                     }
                 , FileManager.LoadMap(Content, "StartingRoom"));
-            //GasMan testGasMan = new GasMan(new Rectangle(0, 0, 100, 100));
-            //world.CurrentEnemies.Add(testGasMan);
         }
 
         protected override void Update(GameTime gameTime)
@@ -400,7 +398,7 @@ namespace Railgun.RailgunGame
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.DarkSlateGray);
+            GraphicsDevice.Clear(Color.Black);
 
             switch (currentGameState)
             {
