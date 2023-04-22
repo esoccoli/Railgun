@@ -169,6 +169,8 @@ namespace Railgun.RailgunGame
             world = WorldManager.Instance;
 
             //Load map sequence
+            //world.AddMap(FileManager.LoadMap(Content, "newver"));
+            //world.AddMap(FileManager.LoadMap(Content, "newver"));
             world.AddMap(FileManager.LoadMap(Content, "CrescentMapWithEnt"));
             world.AddMap(FileManager.LoadMap(Content, "CrescentMapWithEnt"));
             world.AddMap(FileManager.LoadMap(Content, "CrescentMapWithEnt"));
@@ -415,8 +417,8 @@ namespace Railgun.RailgunGame
                     //Draw test map
                     world.CurrentMap.DrawTiles(_spriteBatch);
                     //Draw next and prev
-                    //world.PreviousMap.DrawTiles(_spriteBatch);
-                    //world.NextMap.DrawTiles(_spriteBatch);
+                    world.PreviousMap.DrawTiles(_spriteBatch);
+                    world.NextMap.DrawTiles(_spriteBatch);
 
 
                     MouseState mStateGame = Mouse.GetState();

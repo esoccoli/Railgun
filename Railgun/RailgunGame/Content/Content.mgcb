@@ -119,6 +119,9 @@
 #begin Maps/Longus.rgm
 /copy:Maps/Longus.rgm
 
+#begin Maps/newver.rgm
+/copy:Maps/newver.rgm
+
 #begin Maps/SquareMapWithDoor.rgm
 /copy:Maps/SquareMapWithDoor.rgm
 

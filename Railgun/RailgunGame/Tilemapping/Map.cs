@@ -241,7 +241,7 @@ namespace Railgun.RailgunGame.Tilemapping
                 if (hitbox.Value)
                 {
                     //Compute position to draw
-                    Vector2 topLeftCorner = hitbox.Key * sizeVector + cameraOffset;
+                    Vector2 topLeftCorner = hitbox.Key * sizeVector + cameraOffset + Position * cameraZoom;
                     Vector2 bottomRightCorner = topLeftCorner + sizeVector;
 
                     //Draw box of bounds
@@ -250,10 +250,10 @@ namespace Railgun.RailgunGame.Tilemapping
                             topLeftCorner.ToPoint(),
                             sizeVector.ToPoint()), Color.Red);
                     //Draw x in the middle
-                    ShapeBatch.Line(topLeftCorner + Position, bottomRightCorner, 2f, Color.Red);
+                    ShapeBatch.Line(topLeftCorner, bottomRightCorner, 2f, Color.Red);
                     ShapeBatch.Line(
-                        new Vector2(topLeftCorner.X, bottomRightCorner.Y) + Position,
-                        new Vector2(bottomRightCorner.X, topLeftCorner.Y) + Position, 2f, Color.Red);
+                        new Vector2(topLeftCorner.X, bottomRightCorner.Y),
+                        new Vector2(bottomRightCorner.X, topLeftCorner.Y), 2f, Color.Red);
                 }
             }
 
@@ -278,10 +278,11 @@ namespace Railgun.RailgunGame.Tilemapping
         /// </summary>
         /// <param name="rawPoint">The point to convert to grid-point</param>
         /// <param name="tileSize">The size of each tile on the grid</param>
+        /// <param name="offset">The offset or position of the map</param>
         /// <returns>The grid point corresponding to the specified point</returns>
-        public static Vector2 GetGridPoint(Vector2 rawPoint, float tileSize, Vector2 position)
+        public static Vector2 GetGridPoint(Vector2 rawPoint, float tileSize, Vector2 offset)
         {
-            return Vector2.Floor(rawPoint / new Vector2(tileSize)) + position;
+            return Vector2.Floor((rawPoint - offset) / new Vector2(tileSize));
         }
 
         /// <summary>

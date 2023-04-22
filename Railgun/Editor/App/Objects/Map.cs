@@ -125,7 +125,7 @@ namespace Railgun.Editor.App.Objects
 
             foreach(KeyValuePair<Vector2, int> entity in Entities)
             {
-                Texture2D entityTexture = null;
+                Texture2D entityTexture;
                 Color tint = Color.White;
                 //Get the texture based on the id of the entity
                 switch(entity.Value)
