@@ -202,7 +202,7 @@ namespace Railgun.RailgunGame.Util
             }
             else
             {
-                float easing = 0.1f;
+                float easing = 0.05f;
 
                 Rectangle bounds = CameraBounds;
                 bounds.Location += 

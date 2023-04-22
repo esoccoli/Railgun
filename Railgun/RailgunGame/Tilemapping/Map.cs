@@ -296,6 +296,17 @@ namespace Railgun.RailgunGame.Tilemapping
                 }
             }
 
+            return ResolveCollisions(hitbox, intersections);
+        }
+
+        /// <summary>
+        /// A general method for resolving collisions between specified hitbox and solids
+        /// </summary>
+        /// <param name="hitbox">The hitbox to check</param>
+        /// <param name="intersections">The solids to repel from</param>
+        /// <returns></returns>
+        public static Rectangle ResolveCollisions(Rectangle hitbox, List<Rectangle> intersections)
+        {
             //Check and move x
             foreach (Rectangle obstical in intersections)
             {
@@ -336,7 +347,7 @@ namespace Railgun.RailgunGame.Tilemapping
                 }
             }
 
-            //Set new hitbox
+            //Return new hitbox
             return hitbox;
         }
 

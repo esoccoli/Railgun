@@ -153,6 +153,21 @@ namespace Railgun.RailgunGame.Tilemapping
         }
 
         /// <summary>
+        /// Resolves collisions with map hitboxes and with solid entities
+        /// </summary>
+        /// <param name="hitbox">Hitbox to resolve</param>
+        /// <returns>A resolved hitbox</returns>
+        public Rectangle ResolveCollisions(Rectangle hitbox)
+        {
+            hitbox = CurrentMap.ResolveCollisions(hitbox);
+
+            //Check entities
+            //hitbox = Map.ResolveCollisions()
+
+            return hitbox;
+        }
+
+        /// <summary>
         /// Sets up the world manager with the specified possible maps
         /// </summary>
         /// <param name="graphicsDevice">The graphics device to be used for the camera</param>

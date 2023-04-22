@@ -22,7 +22,7 @@ namespace Railgun.RailgunGame
         private List<Projectile> bulletRemovalList;
 
         private WorldManager world;
-        private AnimationManager aniManager;
+        private VisualManager aniManager;
 
         #region Menu Elements
         // Textures used to display the Menu.
@@ -134,7 +134,7 @@ namespace Railgun.RailgunGame
             #endregion
 
             //Instantiate singletons
-            aniManager = AnimationManager.Instance;
+            aniManager = VisualManager.Instance;
             world = WorldManager.Instance;
 
             //Add animations to manager
@@ -334,11 +334,18 @@ namespace Railgun.RailgunGame
 
                     }
 
+                    //If there are still enemies, block the doorway
+                    if(world.CurrentEnemies.Count > 0)
+                    {
+                        
+                    }
                     //Check if within next room trigger
-                    if(mainPlayer.Hitbox.Intersects(world.CurrentExitTrigger))
+                    else if (mainPlayer.Hitbox.Intersects(world.CurrentExitTrigger))
                     {
                         world.IncrementMap();
                     }
+
+
 
                     world.CurrentCamera.Update(gameTime);
 
