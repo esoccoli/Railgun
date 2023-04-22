@@ -202,11 +202,13 @@ namespace Railgun.RailgunGame.Util
             }
             else
             {
+                float easing = 0.1f;
+
                 Rectangle bounds = CameraBounds;
                 bounds.Location += 
-                    ((TargetBounds.Location - bounds.Location).ToVector2() * 0.5f).ToPoint();
+                    ((TargetBounds.Location - bounds.Location).ToVector2() * easing).ToPoint();
                 bounds.Size +=
-                    ((TargetBounds.Size - bounds.Size).ToVector2() * 0.5f).ToPoint();
+                    ((TargetBounds.Size - bounds.Size).ToVector2() * easing).ToPoint();
                 CameraBounds = bounds;
             }
 
@@ -216,8 +218,14 @@ namespace Railgun.RailgunGame.Util
             {
                 //Check if current view is within rectangle bounds
                 Vector2 newPosition = Position;
-                //If too left or right
-                if (CameraBounds.X > CurrentWorldViewRectangle.X)
+
+                //Check if width are too small for viewport, center it
+                if(CameraBounds.Width < CurrentWorldViewRectangle.Width)
+                {
+                    newPosition.X = CameraBounds.Center.X;
+                }
+                //Otherwise check left or right
+                else if (CameraBounds.X > CurrentWorldViewRectangle.X)
                 {
                     newPosition.X += CameraBounds.X - CurrentWorldViewRectangle.X;
                 }
@@ -225,8 +233,14 @@ namespace Railgun.RailgunGame.Util
                 {
                     newPosition.X -= CurrentWorldViewRectangle.Right - CameraBounds.Right;
                 }
-                //Check top and bottom
-                if (CameraBounds.Y > CurrentWorldViewRectangle.Y)
+
+                //Check if height are too small for viewport, center it
+                if (CameraBounds.Height < CurrentWorldViewRectangle.Height)
+                {
+                    newPosition.Y = CameraBounds.Center.Y;
+                }
+                //Otherwise check top or bottom
+                else if (CameraBounds.Y > CurrentWorldViewRectangle.Y)
                 {
                     newPosition.Y += CameraBounds.Y - CurrentWorldViewRectangle.Y;
                 }

@@ -57,6 +57,11 @@ namespace Railgun.RailgunGame.Tilemapping
         public Map CurrentMap { get; private set; }
 
         /// <summary>
+        /// The hitbox for telling if the player has moved to the next room
+        /// </summary>
+        public Rectangle CurrentExitTrigger { get; private set; }
+
+        /// <summary>
         /// The next map in the list
         /// </summary>
         public Map NextMap { get; private set; }
@@ -82,6 +87,49 @@ namespace Railgun.RailgunGame.Tilemapping
         public Camera CurrentCamera { get; set; }
 
         /// <summary>
+        /// A white square used for debug drawing triggers
+        /// </summary>
+        private Texture2D whiteSquare;
+
+        /// <summary>
+        /// Draws all normal game parts of the world (the map)
+        /// </summary>
+        /// <param name="spriteBatch">Sprite batch to draw to</param>
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            PreviousMap.DrawTiles(spriteBatch);
+            CurrentMap.DrawTiles(spriteBatch);
+            NextMap.DrawTiles(spriteBatch);
+        }
+
+        /// <summary>
+        /// Draws all debug parts (solid collision, triggers)
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        public void DrawDebug(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
+        {
+            //Draw hitboxes
+            graphicsDevice.DepthStencilState = DepthStencilState.None;
+            ShapeBatch.Begin(graphicsDevice);
+            CurrentMap.DrawHitboxes(new Vector2(
+                CurrentCamera.TransformationMatrix.Translation.X,
+                CurrentCamera.TransformationMatrix.Translation.Y),
+                CurrentCamera.Zoom);
+            ShapeBatch.End();
+
+            //Draw triggers
+            spriteBatch.Begin(
+                blendState: BlendState.AlphaBlend,
+                samplerState: SamplerState.PointClamp,
+                transformMatrix: CurrentCamera.TransformationMatrix);
+            spriteBatch.Draw(whiteSquare, CurrentExitTrigger, Color.BlueViolet * 0.2f);
+
+            spriteBatch.End();
+
+            
+        }
+
+        /// <summary>
         /// Returns the current mouse position relative to the world
         /// (camera space)
         /// </summary>
@@ -99,7 +147,7 @@ namespace Railgun.RailgunGame.Tilemapping
         {
             PreviousMap = CurrentMap;
             CurrentMap = NextMap;
-            NextMap = PossibleMaps[RNG.Next(PossibleMaps.Count)];//Random map
+            NextMap = RandomMap();
 
             MakeCurrentRoom();
         }
@@ -112,15 +160,28 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <param name="startingMap">The map to start in</param>
         public void SetupWorld(GraphicsDevice graphicsDevice, List<Map> mapPossibilities, Map startingMap)
         {
+            //Create white square
+            whiteSquare = new Texture2D(graphicsDevice, 1, 1);
+            whiteSquare.SetData(new Color[] { Color.White });
+
             PossibleMaps = mapPossibilities;
 
             PreviousMap = Map.Empty();
             CurrentMap = startingMap;
-            NextMap = PossibleMaps[RNG.Next(PossibleMaps.Count)];//Random map
+            NextMap = RandomMap();
 
             //Create cam
             CurrentCamera = new Camera(graphicsDevice, Rectangle.Empty);
             MakeCurrentRoom();
+        }
+
+        /// <summary>
+        /// Clones a random map out of the possible maps
+        /// </summary>
+        /// <returns></returns>
+        private Map RandomMap()
+        {
+            return PossibleMaps[RNG.Next(PossibleMaps.Count)].Clone();//Random map clone
         }
 
         /// <summary>
@@ -134,6 +195,14 @@ namespace Railgun.RailgunGame.Tilemapping
             NextMap.Position = CurrentMap.Exit - NextMap.Entrence;
             //Populate enemy list
             CurrentEnemies = CurrentMap.GenerateEnemyList();
+
+            //Create the new exit hitbox
+            Point triggerSize = new Point(CurrentMap.TileSize * 2);
+            //Have it start 2 tiles above exit indicator
+            CurrentExitTrigger =
+                new Rectangle(
+                    CurrentMap.Exit.ToPoint() - 
+                    new Point(0, triggerSize.Y), triggerSize);
         }
     }
 }

@@ -334,6 +334,11 @@ namespace Railgun.RailgunGame
 
                     }
 
+                    //Check if within next room trigger
+                    if(mainPlayer.Hitbox.Intersects(world.CurrentExitTrigger))
+                    {
+                        world.IncrementMap();
+                    }
 
                     world.CurrentCamera.Update(gameTime);
 
@@ -414,11 +419,8 @@ namespace Railgun.RailgunGame
                         blendState: BlendState.AlphaBlend,
                         transformMatrix: world.CurrentCamera.TransformationMatrix);
 
-                    //Draw test map
-                    world.CurrentMap.DrawTiles(_spriteBatch);
-                    //Draw next and prev
-                    world.PreviousMap.DrawTiles(_spriteBatch);
-                    world.NextMap.DrawTiles(_spriteBatch);
+                    //Draw world on bottom
+                    world.Draw(_spriteBatch);
 
 
                     MouseState mStateGame = Mouse.GetState();
@@ -461,14 +463,8 @@ namespace Railgun.RailgunGame
 
                     _spriteBatch.End();
 
-                    //DEBUG Draw map hitboxes on top
-                    GraphicsDevice.DepthStencilState = DepthStencilState.None;
-                    ShapeBatch.Begin(GraphicsDevice);
-                    world.CurrentMap.DrawHitboxes(new Vector2(
-                        world.CurrentCamera.TransformationMatrix.Translation.X,
-                        world.CurrentCamera.TransformationMatrix.Translation.Y),
-                        world.CurrentCamera.Zoom);
-                    ShapeBatch.End();
+                    //DEBUG Draw world debug
+                    world.DrawDebug(_spriteBatch, GraphicsDevice);
 
                     //Draw overlay
                     _spriteBatch.Begin(samplerState: SamplerState.PointClamp,

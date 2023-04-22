@@ -44,12 +44,12 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <summary>
         /// A boolean dictionary that maps position to boolean of whether a tile is solid or not
         /// </summary>
-        public Dictionary<Vector2, bool> HitboxesMap { get; private set; }
+        public Dictionary<Vector2, bool> Hitboxes { get; private set; }
 
         /// <summary>
-        /// The list of hitboxes on this map
+        /// The list of active solid hitboxes for debug drawing
         /// </summary>
-        public List<Rectangle> Hitboxes { get; private set; }
+        private List<Rectangle> activeHitboxes;
 
         /// <summary>
         /// A dictionary of entity ids that this map contains
@@ -81,13 +81,6 @@ namespace Railgun.RailgunGame.Tilemapping
             {
                 Vector2 changeInPosition = value - position;
                 position = value;
-                //Update hitbox locations
-                for(int i = 0; i < Hitboxes.Count; i++)
-                {
-                    Rectangle hitbox = Hitboxes[i];
-                    hitbox.Location += changeInPosition.ToPoint();
-                    Hitboxes[i] = hitbox;
-                }
                 Rectangle bounds = Bounds;
                 bounds.Location += changeInPosition.ToPoint();
                 Bounds = bounds;
@@ -117,8 +110,8 @@ namespace Railgun.RailgunGame.Tilemapping
         {
             TileSize = tileSize;
             Layers = new List<Dictionary<Vector2, Tile>>();
-            HitboxesMap = new Dictionary<Vector2, bool>();
-            Hitboxes = new List<Rectangle>();
+            Hitboxes = new Dictionary<Vector2, bool>();
+            activeHitboxes = new List<Rectangle>();
             EntitiesDictionary = new Dictionary<Vector2, int>();
             Entrence = Vector2.Zero;
             Exit = Vector2.Zero;
@@ -130,33 +123,27 @@ namespace Railgun.RailgunGame.Tilemapping
         /// </summary>
         public void GenerateMapValues()
         {
-            //Populate the list of hitboxes
-            foreach (KeyValuePair<Vector2, bool> hitbox in HitboxesMap)
-            {
-                //If solid, add it to the list
-                if (hitbox.Value)
-                {
-                    Hitboxes.Add(
-                        new Rectangle((hitbox.Key * TileSize).ToPoint(),
-                        new Point(tileSize)));
-                }
-            }
-
             //If hitboxes are available, create bounds
             if(Hitboxes.Count > 0)
             {
-                Rectangle bounds = Hitboxes.First();
-                Point bottomRightTile = Hitboxes.First().Location;
+                Rectangle bounds = Rectangle.Empty;
+                Point bottomRightTile = Point.Zero;
 
                 //Create bounds of map
-                foreach (Rectangle hitbox in Hitboxes)
+                foreach(KeyValuePair<Vector2, bool> hitboxPair in Hitboxes)
                 {
-                    //Find top most left tile
-                    if (hitbox.X < bounds.X) bounds.X = hitbox.X;
-                    if (hitbox.Y < bounds.Y) bounds.Y = hitbox.Y;
-                    //Find bottom most right tile
-                    if (hitbox.X > bottomRightTile.X) bottomRightTile.X = hitbox.X;
-                    if (hitbox.Y > bottomRightTile.Y) bottomRightTile.Y = hitbox.Y;
+                    //If solid, create a hitbox and compare
+                    if(hitboxPair.Value)
+                    {
+                        Rectangle hitbox = GetSolidTile(hitboxPair.Key);
+
+                        //Find top most left tile
+                        if (hitbox.X < bounds.X) bounds.X = hitbox.X;
+                        if (hitbox.Y < bounds.Y) bounds.Y = hitbox.Y;
+                        //Find bottom most right tile
+                        if (hitbox.X > bottomRightTile.X) bottomRightTile.X = hitbox.X;
+                        if (hitbox.Y > bottomRightTile.Y) bottomRightTile.Y = hitbox.Y;
+                    }
                 }
                 //Create final rectangle size
                 bottomRightTile += new Point(tileSize);
@@ -187,13 +174,9 @@ namespace Railgun.RailgunGame.Tilemapping
                 foreach (KeyValuePair<Vector2, Tile> tile in layer)
                 {
                     //Draw the tile to rectangle corresponding to its grid location
-                    tile.Value.Draw(
-                        spriteBatch, new Rectangle(
-                            (tile.Key * TileSize + Position).ToPoint(),
-                            new Point(TileSize)));
+                    tile.Value.Draw(spriteBatch, GetSolidTile(tile.Key));
                 }
             }
-
         }
 
         /// <summary>
@@ -207,7 +190,7 @@ namespace Railgun.RailgunGame.Tilemapping
             //Define constants for every hitbox
             Vector2 sizeVector = new Vector2(TileSize * cameraZoom);
 
-            foreach (KeyValuePair<Vector2, bool> hitbox in HitboxesMap)
+            foreach (KeyValuePair<Vector2, bool> hitbox in Hitboxes)
             {
                 //If hitbox placed
                 if (hitbox.Value)
@@ -266,17 +249,40 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <return>The resolved hitbox</return>
         public Rectangle ResolveCollisions(Rectangle hitbox)
         {
+            //Get hitbox location in grid-space and then some
+            Vector2 gridPos = GetGridPoint(hitbox.Location.ToVector2()) - Vector2.One;
+            //Get the amount of tiles to the bottom right that this hitbox reaches and then some
+            Vector2 maxGridReach =
+                Vector2.Ceiling((hitbox.Size.ToVector2() / TileSize)) + Vector2.One * 2;
+
             List<Rectangle> intersections = new List<Rectangle>();
 
-            //Add intersections
-            foreach (Rectangle obstical in Hitboxes)
+            //Check each grid point that is within hitbox range
+            for (int x = 0; x < maxGridReach.X; x++)
             {
-                //Check if it has a width or height
-                if (obstical.Intersects(hitbox))
+                for (int y = 0; y < maxGridReach.Y; y++)
                 {
-                    intersections.Add(obstical);
+                    //The grid point to check
+                    Vector2 gridPoint = new Vector2(x, y) + gridPos;
+                    //If there is collision, add to collision list
+                    if(IsSolid(gridPoint))
+                    {
+                        intersections.Add(GetSolidTile(gridPoint));
+                        //Add a debug list of rectangles to draw
+
+                    }
                 }
             }
+
+            ////Add intersections
+            //foreach (Rectangle obstical in Hitboxes)
+            //{
+            //    //Check if it has a width or height
+            //    if (obstical.Intersects(hitbox))
+            //    {
+            //        intersections.Add(obstical);
+            //    }
+            //}
 
             //Check and move x
             foreach (Rectangle obstical in intersections)
@@ -318,20 +324,35 @@ namespace Railgun.RailgunGame.Tilemapping
                 }
             }
 
+
             //Set new hitbox
             return hitbox;
         }
 
         /// <summary>
-        /// Returns whether 
+        /// Returns whether the tile grid point specified is solid
         /// </summary>
         /// <param name="gridPoint"></param>
         /// <returns></returns>
         public bool IsSolid(Vector2 gridPoint)
         {
             //If it exists, overwrite the value
-            HitboxesMap.TryGetValue(gridPoint, out bool returnValue);
+            Hitboxes.TryGetValue(gridPoint, out bool returnValue);
             return returnValue;
+        }
+
+        /// <summary>
+        /// Returns a world-space tile hitbox based on the specified grid point
+        /// <para>NOTE: this does not check if it is actually solid, it
+        /// will create a solid hitbox regardless</para>
+        /// </summary>
+        /// <param name="gridPoint">The grid point to create from</param>
+        /// <returns>The solid hitbox</returns>
+        public Rectangle GetSolidTile(Vector2 gridPoint)
+        {
+            return new Rectangle(
+                (gridPoint * TileSize).ToPoint() + Position.ToPoint(),
+                new Point(TileSize));
         }
 
         /// <summary>
@@ -346,10 +367,8 @@ namespace Railgun.RailgunGame.Tilemapping
             foreach (KeyValuePair<Vector2, int> entityPair in EntitiesDictionary)
             {
                 //Hitbox for any entity
-                Rectangle hitbox =
-                    new Rectangle(
-                        (entityPair.Key * TileSize + Position).ToPoint(),
-                        new Point(TileSize));
+                Rectangle hitbox = GetSolidTile(entityPair.Key);
+
                 //Create enemy based on ID
                 switch (entityPair.Value)
                 {
@@ -366,6 +385,15 @@ namespace Railgun.RailgunGame.Tilemapping
             }
 
             return enemies;
+        }
+
+        /// <summary>
+        /// Creates and returns a shallow copy of this map
+        /// </summary>
+        /// <returns></returns>
+        public Map Clone()
+        {
+            return MemberwiseClone() as Map;
         }
 
         /// <summary>
