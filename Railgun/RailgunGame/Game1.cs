@@ -52,6 +52,10 @@ namespace Railgun.RailgunGame
         private Texture2D skeletonWalk;
         
         private Texture2D skeletonDeath;
+
+        private Texture2D gasManMove;
+        private Texture2D gasManDeath;
+        private Texture2D gasManShoot;
         #endregion
 
         // Reticle
@@ -130,7 +134,9 @@ namespace Railgun.RailgunGame
             bulletCollideTexture = Content.Load<Texture2D>($"BulletBoom");
             skeletonWalk = Content.Load<Texture2D>($"Skeleton Walk");
             skeletonDeath = Content.Load<Texture2D>($"Skeleton Dead");
-
+            gasManMove = Content.Load<Texture2D>("gasManMove");
+            gasManDeath = Content.Load<Texture2D>("gasManDeath");
+            gasManShoot = Content.Load<Texture2D>("gasManShoot");
             #endregion
 
             //Instantiate singletons
