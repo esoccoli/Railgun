@@ -84,6 +84,16 @@ abstract class Enemy : Entity
     }
 
     /// <summary>
+    /// updates the enemy with gameTime parameter
+    /// </summary>
+    /// <param name="gameTime">gameTime</param>
+    /// <param name="playerPos">current position of player</param>
+    public virtual void Update(GameTime gameTime, Point playerPos)
+    {
+        this.Update(playerPos);
+    }
+
+    /// <summary>
     /// Needed to put the enemies onto the screen.
     /// </summary>
     /// <param name="sb"> The sprite batch the enemies are being drawn with. </param>

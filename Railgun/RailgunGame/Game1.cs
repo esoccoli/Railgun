@@ -41,16 +41,16 @@ namespace Railgun.RailgunGame
         #region Player, Enemy, Proj. Textures
         // Player, enemy, and projectile textures
         private Texture2D playerIdle;
-        
+
         private Texture2D playerRun;
-        
+
         private Texture2D playerDeath;
-        
+
         private Texture2D bulletTexture;
         private Texture2D bulletCollideTexture;
-        
+
         private Texture2D skeletonWalk;
-        
+
         private Texture2D skeletonDeath;
 
         private Texture2D gasManMove;
@@ -71,7 +71,7 @@ namespace Railgun.RailgunGame
             Content.RootDirectory = "Content";
             IsMouseVisible = false;
         }
-        
+
         /// <summary>
         /// Tracks the possible game states
         /// </summary>
@@ -150,14 +150,19 @@ namespace Railgun.RailgunGame
             aniManager.BulletCollide = new Animation(bulletCollideTexture, 4, 1, 12.4f);
             aniManager.SkeletonMove = new Animation(skeletonWalk, 1, 13, 12.0f);
             aniManager.SkeletonDeath = new Animation(skeletonDeath, 1, 15, 12.0f);
+            aniManager.GasManMove = new Animation(gasManMove, 8, 1, 12.0f);
+            aniManager.GasManDeath = new Animation(gasManDeath, 6, 1, 12.0f);
+            aniManager.GasManShoot = new Animation(gasManShoot, 4, 1, 12.0f);
 
             // This next line is just to test skeletons.
-             Skeleton testSkelley = new Skeleton(new Rectangle(1700, 200, 100, 100));
+            Skeleton testSkelley = new Skeleton(new Rectangle(1700, 200, 100, 100));
+
             // Skeleton ttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(200, 200, 100, 100));
             // Skeleton tttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(700, 200, 100, 100));
             // Skeleton ttttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(1300, 200, 100, 100));
             // Skeleton tttttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(900, 900, 100, 100));
-             world.CurrentEnemies.Add(testSkelley);
+            world.CurrentEnemies.Add(testSkelley);
+
             // enemies.Add(ttestSkelley);
             // enemies.Add(tttestSkelley);
             // enemies.Add(ttttestSkelley);
@@ -183,8 +188,9 @@ namespace Railgun.RailgunGame
                         FileManager.LoadMap(Content, "SquareMapWithDoor"),
                         FileManager.LoadMap(Content, "TShapeMap")
                     }
-                ,FileManager.LoadMap(Content, "StartingRoom"));
-
+                , FileManager.LoadMap(Content, "StartingRoom"));
+            GasMan testGasMan = new GasMan(new Rectangle(0, 0, 100, 100), bulletTexture);
+            world.CurrentEnemies.Add(testGasMan);
         }
 
         protected override void Update(GameTime gameTime)
@@ -276,26 +282,26 @@ namespace Railgun.RailgunGame
                         currentGameState = GameState.Pause;
                     } // A way to pause the game.
 
-                    if(mainPlayer.Health > 0)
+                    if (mainPlayer.Health > 0)
                     {
                         mainPlayer.Update(gameTime);
                     }
-                
+
                     for (int i = 0; i < mainPlayer.PlayerBullets.Count; i++)
                     {
                         mainPlayer.PlayerBullets[i].Update(gameTime);
                     } // Update player bullets!
                     for (int i = 0; i < world.CurrentEnemies.Count; i++)
                     {
-                        world.CurrentEnemies[i].Update(mainPlayer.Hitbox.Center);
+                        world.CurrentEnemies[i].Update(gameTime, mainPlayer.Hitbox.Center);
                     } // Update enemies!
 
                     #region COLLISIONS!!!
                     for (int e = 0; e < world.CurrentEnemies.Count; e++)
                     {
-                        if(world.CurrentEnemies[e].Hitbox.Intersects(mainPlayer.Hitbox) && mainPlayer.DamageCooldown <= 0.0)
+                        if (world.CurrentEnemies[e].Hitbox.Intersects(mainPlayer.Hitbox) && mainPlayer.DamageCooldown <= 0.0)
                         {
-                            if(mainPlayer.Dashing)
+                            if (mainPlayer.Dashing)
                             {
                                 mainPlayer.Dashing = false;
                                 mainPlayer.DashCooldown = 7.0;
@@ -306,9 +312,9 @@ namespace Railgun.RailgunGame
 
                     for (int b = 0; b < mainPlayer.PlayerBullets.Count; b++)
                     {
-                        for(int e = 0; e < world.CurrentEnemies.Count; e++)
+                        for (int e = 0; e < world.CurrentEnemies.Count; e++)
                         {
-                            if(world.CurrentEnemies[e].Hitbox.Intersects(mainPlayer.PlayerBullets[b].Hitbox) && mainPlayer.PlayerBullets[b].CurrentState != Projectile.ProjectileStates.HasCollided && world.CurrentEnemies[e].Health > 0)
+                            if (world.CurrentEnemies[e].Hitbox.Intersects(mainPlayer.PlayerBullets[b].Hitbox) && mainPlayer.PlayerBullets[b].CurrentState != Projectile.ProjectileStates.HasCollided && world.CurrentEnemies[e].Health > 0)
                             {
                                 world.CurrentEnemies[e].TakeDamage(5);
                                 mainPlayer.PlayerBullets[b].CurrentState = Projectile.ProjectileStates.HasCollided;
@@ -325,10 +331,10 @@ namespace Railgun.RailgunGame
                         playerHitbox.Location = world.GetMouseWorldPosition().ToPoint();
                         mainPlayer.Hitbox = playerHitbox;
                     }
-                    
-                    
+
+
                     //If alive, ease somewhat to mouse as well
-                    if(mainPlayer.Health > 0)
+                    if (mainPlayer.Health > 0)
                     {
                         //Update camera to ease to player and mouse pos in world space
                         world.CurrentCamera.EaseTo(mainPlayer.Hitbox.Center.ToVector2(), 1.1f, 0.2f);
@@ -341,7 +347,7 @@ namespace Railgun.RailgunGame
                     }
 
                     //Check if within next room trigger
-                    if(mainPlayer.Hitbox.Intersects(world.CurrentExitTrigger))
+                    if (mainPlayer.Hitbox.Intersects(world.CurrentExitTrigger))
                     {
                         world.IncrementMap();
                     }
@@ -377,7 +383,7 @@ namespace Railgun.RailgunGame
                     }
 
                     break;
-                #endregion
+                    #endregion
             }
 
             base.Update(gameTime);
@@ -431,7 +437,7 @@ namespace Railgun.RailgunGame
 
                     MouseState mStateGame = Mouse.GetState();
                     List<Enemy> removalList = new List<Enemy>();
-                    if(mainPlayer.Draw(_spriteBatch, gameTime))
+                    if (mainPlayer.Draw(_spriteBatch, gameTime))
                     {
                         currentGameState = GameState.GameOver;
                     }
@@ -441,15 +447,15 @@ namespace Railgun.RailgunGame
                     for (int i = 0; i < mainPlayer.PlayerBullets.Count; i++)
                     {
                         // Draw the player bullets!
-                        if(mainPlayer.PlayerBullets[i].Draw(_spriteBatch, gameTime) && mainPlayer.PlayerBullets[i].CurrentState == Projectile.ProjectileStates.HasCollided)
+                        if (mainPlayer.PlayerBullets[i].Draw(_spriteBatch, gameTime) && mainPlayer.PlayerBullets[i].CurrentState == Projectile.ProjectileStates.HasCollided)
                         {
                             bulletRemovalList.Add(mainPlayer.PlayerBullets[i]);
                         }
                     }
-                    for(int i = 0; i < world.CurrentEnemies.Count; i++)
+                    for (int i = 0; i < world.CurrentEnemies.Count; i++)
                     {
                         // Draw the enemies!!!
-                        if(world.CurrentEnemies[i].Draw(_spriteBatch, gameTime, mainPlayer.Hitbox.Center))
+                        if (world.CurrentEnemies[i].Draw(_spriteBatch, gameTime, mainPlayer.Hitbox.Center))
                         {
                             removalList.Add(world.CurrentEnemies[i]);
                         }
@@ -509,7 +515,7 @@ namespace Railgun.RailgunGame
                     _spriteBatch.End();
 
                     break;
-                #endregion
+                    #endregion
             }
 
 

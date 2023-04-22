@@ -59,23 +59,34 @@ namespace Railgun.RailgunGame
             TimeCounter = 0;
 
             this.activeBullet = activeBullet;
-            this.notActiveBullet = notActiveBullet; 
+            this.notActiveBullet = notActiveBullet;
             CurrentState = GasState.Walk;
             Shooting = shoot;
+            EnemyBullets = new List<Projectile>();
         }
+
+        public GasMan(Rectangle hitbox, Texture2D activeBullet)
+            : this(AnimationManager.Instance.GasManMove.Clone(),
+                 AnimationManager.Instance.GasManDeath.Clone(),
+                 hitbox,
+                 AnimationManager.Instance.GasManShoot.Clone(),
+                 activeBullet,
+                 AnimationManager.Instance.BulletCollide.Clone())
+        { }
 
         /// <summary>
         /// Updates the state of the enemy
         /// </summary>
         /// <param name="gameTime">gameTime</param>
         /// /// <param name="playerPos">current position of the player</param>
-        public void Update(GameTime gameTime, Point playerPos)
+        public override void Update(GameTime gameTime, Point playerPos)
         {
+
             switch (CurrentState)
             {
                 case GasState.Walk:
                     Walk(playerPos);
-                    TimeCounter += gameTime.TotalGameTime.TotalMilliseconds;
+                    TimeCounter += gameTime.ElapsedGameTime.TotalSeconds;
                     if (TimeCounter >= SecondsPerState)
                     {
                         CurrentState = GasState.Shoot;
@@ -85,7 +96,7 @@ namespace Railgun.RailgunGame
 
                 case GasState.Shoot:
                     Shoot(playerPos);
-                    TimeCounter += gameTime.TotalGameTime.TotalMilliseconds;
+                    TimeCounter += gameTime.ElapsedGameTime.TotalSeconds;
                     if (TimeCounter >= SecondsPerState)
                     {
                         CurrentState = GasState.Walk;
@@ -95,6 +106,11 @@ namespace Railgun.RailgunGame
 
                 case GasState.Death:
                     break;
+            }
+
+            foreach(Projectile projectile in EnemyBullets)
+            {
+                projectile.Update(gameTime);
             }
         }
 
@@ -109,6 +125,15 @@ namespace Railgun.RailgunGame
         /// Death: True if the last frame of the animation has been reached</returns>
         public override bool Draw(SpriteBatch sb, GameTime gameTime, Point playerPos)
         {
+            for(int i = 0; i < EnemyBullets.Count; i++)
+            {
+                if (EnemyBullets[i].Draw(sb, gameTime))
+                {
+                    EnemyBullets.RemoveAt(i);
+                    i--;
+                }
+            }
+
             switch (CurrentState)
             {
                 case GasState.Walk:
@@ -151,6 +176,7 @@ namespace Railgun.RailgunGame
             Vector2 vect = (playerPos - Hitbox.Center).ToVector2() / Vector2.Distance(playerPos.ToVector2(), Hitbox.Center.ToVector2());
             EnemyBullets.Add(new Projectile(new Rectangle(Hitbox.X + (Hitbox.Width / 2) - (activeBullet.Width / 2), Hitbox.Y + (Hitbox.Height / 2) - (activeBullet.Height / 2),
                 activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet.Clone(), vect * 10.0f));
+            DebugLog.Instance.LogFrame(EnemyBullets[0].Hitbox.Location);
         }
 
         /// <summary>
