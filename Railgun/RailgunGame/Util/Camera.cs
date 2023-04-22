@@ -107,7 +107,12 @@ namespace Railgun.RailgunGame.Util
         /// The boundries that the camera can move within. Set to Rectangle.Empty
         /// to not have camera bounds
         /// </summary>
-        public Rectangle CameraBounds { get; set; }
+        public Rectangle CameraBounds { get; private set; }
+
+        /// <summary>
+        /// The target boundries that the camera bounds should ease to
+        /// </summary>
+        public Rectangle TargetBounds { get; set; }
 
         /// <summary>
         /// The matrix of the camera created by the last update
@@ -189,6 +194,21 @@ namespace Railgun.RailgunGame.Util
 
             //Update world view rectangle and center
             CurrentWorldViewRectangle = GetWorldViewRectangle();
+
+            //Update camera bounds to ease to target
+            if(TargetBounds.IsEmpty)
+            {
+                CameraBounds = Rectangle.Empty;
+            }
+            else
+            {
+                Rectangle bounds = CameraBounds;
+                bounds.Location += 
+                    ((TargetBounds.Location - bounds.Location).ToVector2() * 0.5f).ToPoint();
+                bounds.Size +=
+                    ((TargetBounds.Size - bounds.Size).ToVector2() * 0.5f).ToPoint();
+                CameraBounds = bounds;
+            }
 
 
             //If there are bounds, resolve them

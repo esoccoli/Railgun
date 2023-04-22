@@ -165,20 +165,20 @@ namespace Railgun.RailgunGame
             DebugLog.Instance.Font = Content.Load<SpriteFont>("Consolas20");
             DebugLog.Instance.Scale = 2f;
 
-            //Load maps
-            List<Map> possibleMaps = new List<Map>
-            {
-                FileManager.LoadMap(Content, "CrescentMap"),
-                FileManager.LoadMap(Content, "DonutRoom"),
-                FileManager.LoadMap(Content, "HourglassMap"),
-                FileManager.LoadMap(Content, "Longus"),
-                FileManager.LoadMap(Content, "SquareMapWithDoor"),
-                FileManager.LoadMap(Content, "TShapeMap")
-            };
-            world.SetupMaps(possibleMaps);
+            //Load maps and create camera
+            world.SetupWorld(
+                GraphicsDevice,
+                new List<Map>
+                    {
+                        FileManager.LoadMap(Content, "CrescentMap"),
+                        FileManager.LoadMap(Content, "DonutRoom"),
+                        FileManager.LoadMap(Content, "HourglassMap"),
+                        FileManager.LoadMap(Content, "Longus"),
+                        FileManager.LoadMap(Content, "SquareMapWithDoor"),
+                        FileManager.LoadMap(Content, "TShapeMap")
+                    }
+                ,FileManager.LoadMap(Content, "StartingRoom"));
 
-            //Create camera
-            world.CurrentCamera = new Camera(GraphicsDevice, Rectangle.Empty);
         }
 
         protected override void Update(GameTime gameTime)
@@ -325,8 +325,8 @@ namespace Railgun.RailgunGame
                     if(mainPlayer.Health > 0)
                     {
                         //Update camera to ease to player and mouse pos in world space
-                        world.CurrentCamera.EaseTo(mainPlayer.Hitbox.Center.ToVector2(), 1f, 0.2f);
-                        world.CurrentCamera.EaseTo(world.GetMouseWorldPosition(), 1f, 0.05f);
+                        world.CurrentCamera.EaseTo(mainPlayer.Hitbox.Center.ToVector2(), 1.1f, 0.2f);
+                        world.CurrentCamera.EaseTo(world.GetMouseWorldPosition(), 1.1f, 0.05f);
                     }
                     else//If dead, ease slowly to player
                     {

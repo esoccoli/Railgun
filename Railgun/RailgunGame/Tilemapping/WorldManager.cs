@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Railgun.RailgunGame.Util;
 using System;
 using System.Collections.Generic;
@@ -99,24 +100,38 @@ namespace Railgun.RailgunGame.Tilemapping
             PreviousMap = CurrentMap;
             CurrentMap = NextMap;
             NextMap = PossibleMaps[RNG.Next(PossibleMaps.Count)];//Random map
-            //Position entrence of this map at the exit of the map before it
-            NextMap.Position = CurrentMap.Exit - NextMap.Entrence;
 
-            //Populate enemy list
-            CurrentEnemies = CurrentMap.GenerateEnemyList();
+            MakeCurrentRoom();
         }
 
         /// <summary>
         /// Sets up the world manager with the specified possible maps
         /// </summary>
+        /// <param name="graphicsDevice">The graphics device to be used for the camera</param>
         /// <param name="mapPossibilities"></param>
-        public void SetupMaps(List<Map> mapPossibilities)
+        /// <param name="startingMap">The map to start in</param>
+        public void SetupWorld(GraphicsDevice graphicsDevice, List<Map> mapPossibilities, Map startingMap)
         {
             PossibleMaps = mapPossibilities;
-            PreviousMap = Map.Empty();
-            CurrentMap = PossibleMaps[RNG.Next(PossibleMaps.Count)];//Random map
-            NextMap = PossibleMaps[RNG.Next(PossibleMaps.Count)];
 
+            PreviousMap = Map.Empty();
+            CurrentMap = startingMap;
+            NextMap = PossibleMaps[RNG.Next(PossibleMaps.Count)];//Random map
+
+            //Create cam
+            CurrentCamera = new Camera(graphicsDevice, Rectangle.Empty);
+            MakeCurrentRoom();
+        }
+
+        /// <summary>
+        /// Sets up entities and other info for a new current room
+        /// </summary>
+        private void MakeCurrentRoom()
+        {
+            //Set cam bounds
+            CurrentCamera.TargetBounds = CurrentMap.Bounds;
+            //Position entrence of this map at the exit of the map before it
+            NextMap.Position = CurrentMap.Exit - NextMap.Entrence;
             //Populate enemy list
             CurrentEnemies = CurrentMap.GenerateEnemyList();
         }
