@@ -22,7 +22,9 @@ namespace Railgun.RailgunGame.Tilemapping
         /// </summary>
         private WorldManager()
         {
-            maps = new List<Map>();
+            PossibleMaps = new List<Map>();
+            RNG = new Random();
+            CurrentEnemies = new List<Enemy>();
         }
 
         /// <summary>
@@ -44,56 +46,34 @@ namespace Railgun.RailgunGame.Tilemapping
         #endregion
 
         /// <summary>
+        /// A random object for anything that needs a bit of non-deterministic magic
+        /// </summary>
+        public Random RNG { get; private set; }
+
+        /// <summary>
         /// The current map of the world
         /// </summary>
-        public Map CurrentMap
-        {
-            get
-            {
-                //If invalid index, return empty
-                if (MapIndex >= maps.Count || MapIndex < 0)
-                    return Map.Empty();
-                return maps[MapIndex];
-            }
-        }
+        public Map CurrentMap { get; private set; }
 
         /// <summary>
         /// The next map in the list
         /// </summary>
-        public Map NextMap
-        {
-            get
-            {
-                //If invalid index, return empty
-                if (MapIndex > maps.Count - 2)
-                    return Map.Empty();
-                return maps[MapIndex + 1];
-            }
-        }
-        
+        public Map NextMap { get; private set; }
+
         /// <summary>
         /// The previous map in the list
         /// </summary>
-        public Map PreviousMap
-        {
-            get
-            {
-                //If invalid index, return empty
-                if(MapIndex < 1)
-                    return Map.Empty();
-                return maps[MapIndex - 1];
-            }
-        }
+        public Map PreviousMap { get; private set; }
 
         /// <summary>
-        /// All maps to be used
+        /// All maps that can be used
         /// </summary>
-        private List<Map> maps;
+        public List<Map> PossibleMaps { get; private set; }
 
         /// <summary>
-        /// The index of the current map
+        /// The list of enemies active
         /// </summary>
-        public int MapIndex { get; set; } = 0;
+        public List<Enemy> CurrentEnemies { get; private set; }
 
         /// <summary>
         /// The current camera of the world
@@ -112,44 +92,33 @@ namespace Railgun.RailgunGame.Tilemapping
         }
 
         /// <summary>
-        /// Adds the specified map to the list with position modified
-        /// </summary>
-        /// <param name="map">The map to use</param>
-        public void AddMap(Map map)
-        {
-            if(map == null)
-            {
-                //Show error log
-                DebugLog.Instance.LogPersistant(
-                    $"Map was null, cannot add",
-                    Color.Red, 10f);
-                return;
-            }
-            Map finalMap = GetMapAtIndex(maps.Count - 1);
-            //Position entrence of this map at the exit of the map before it
-            map.Position = finalMap.Exit - map.Entrence;
-            maps.Add(map);
-        }
-
-        /// <summary>
-        /// Moves to the next map
+        /// Moves to the next map and updates map values
         /// </summary>
         public void IncrementMap()
         {
-            MapIndex++;
+            PreviousMap = CurrentMap;
+            CurrentMap = NextMap;
+            NextMap = PossibleMaps[RNG.Next(PossibleMaps.Count)];//Random map
+            //Position entrence of this map at the exit of the map before it
+            NextMap.Position = CurrentMap.Exit - NextMap.Entrence;
+
+            //Populate enemy list
+            CurrentEnemies = CurrentMap.GenerateEnemyList();
         }
 
         /// <summary>
-        /// Returns the map at the specified index or empty
+        /// Sets up the world manager with the specified possible maps
         /// </summary>
-        /// <param name="index">Index to get</param>
-        /// <returns>Map at that index or null</returns>
-        public Map GetMapAtIndex(int index)
+        /// <param name="mapPossibilities"></param>
+        public void SetupMaps(List<Map> mapPossibilities)
         {
-            //If invalid index, return empty
-            if (index < 0 || index >= maps.Count)
-                return Map.Empty();
-            return maps[index];
+            PossibleMaps = mapPossibilities;
+            PreviousMap = Map.Empty();
+            CurrentMap = PossibleMaps[RNG.Next(PossibleMaps.Count)];//Random map
+            NextMap = PossibleMaps[RNG.Next(PossibleMaps.Count)];
+
+            //Populate enemy list
+            CurrentEnemies = CurrentMap.GenerateEnemyList();
         }
     }
 }

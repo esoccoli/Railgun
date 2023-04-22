@@ -22,7 +22,7 @@ namespace Railgun.RailgunGame.Tilemapping
         public int TileSize
         {
             get => tileSize;
-            set
+            private set
             {
                 //Only if valid size
                 if (value > 0)
@@ -54,12 +54,7 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <summary>
         /// A dictionary of entity ids that this map contains
         /// </summary>
-        public Dictionary<Vector2, int> EntitiesDictionary { get; protected set; }
-
-        /// <summary>
-        /// A list of enemies in this map
-        /// </summary>
-        public List<Enemy> Enemies { get; protected set; }
+        public Dictionary<Vector2, int> EntitiesDictionary { get; private set; }
 
         /// <summary>
         /// The entrence point of this map
@@ -125,7 +120,6 @@ namespace Railgun.RailgunGame.Tilemapping
             HitboxesMap = new Dictionary<Vector2, bool>();
             Hitboxes = new List<Rectangle>();
             EntitiesDictionary = new Dictionary<Vector2, int>();
-            Enemies = new List<Enemy>();
             Entrence = Vector2.Zero;
             Exit = Vector2.Zero;
         }
@@ -173,29 +167,7 @@ namespace Railgun.RailgunGame.Tilemapping
                 Bounds = bounds;
             }
 
-            //Generate entities
-            foreach(KeyValuePair<Vector2, int> entityPair in EntitiesDictionary)
-            {
-                //Hitbox for any entity
-                Rectangle hitbox =
-                    new Rectangle(
-                        (entityPair.Key * TileSize).ToPoint(),
-                        new Point(TileSize));
-                //Create enemy based on ID
-                switch(entityPair.Value)
-                {
-                    case 0://Enemy 1
-                        Enemies.Add(new Skeleton(hitbox));
-                        break;
-                    case 1://Enemy 2
-
-                        break;
-                    case 2://Enemy 3
-
-                        break;
-                }
-            }
-
+            //Calculate entrence and exit positions
             Entrence *= TileSize;
             Exit *= TileSize;
         }
@@ -360,6 +332,40 @@ namespace Railgun.RailgunGame.Tilemapping
             //If it exists, overwrite the value
             HitboxesMap.TryGetValue(gridPoint, out bool returnValue);
             return returnValue;
+        }
+
+        /// <summary>
+        /// Generates a list of enemies based on the current position
+        /// </summary>
+        /// <returns>List of enemies</returns>
+        public List<Enemy> GenerateEnemyList()
+        {
+            List<Enemy> enemies = new List<Enemy>();
+
+            //Generate entities
+            foreach (KeyValuePair<Vector2, int> entityPair in EntitiesDictionary)
+            {
+                //Hitbox for any entity
+                Rectangle hitbox =
+                    new Rectangle(
+                        (entityPair.Key * TileSize + Position).ToPoint(),
+                        new Point(TileSize));
+                //Create enemy based on ID
+                switch (entityPair.Value)
+                {
+                    case 0://Enemy 1
+                        enemies.Add(new Skeleton(hitbox));
+                        break;
+                    case 1://Enemy 2
+
+                        break;
+                    case 2://Enemy 3
+
+                        break;
+                }
+            }
+
+            return enemies;
         }
 
         /// <summary>

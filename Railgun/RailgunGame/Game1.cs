@@ -19,7 +19,6 @@ namespace Railgun.RailgunGame
 
         private Player mainPlayer;
 
-        private List<Enemy> enemies;
         private List<Projectile> bulletRemovalList;
 
         private WorldManager world;
@@ -95,7 +94,6 @@ namespace Railgun.RailgunGame
             font = this.Content.Load<SpriteFont>("Mynerve24");
 
             GameTime gameTime = new GameTime();
-            enemies = new List<Enemy>();
 
             bulletRemovalList = new List<Projectile>();
 
@@ -135,9 +133,11 @@ namespace Railgun.RailgunGame
 
             #endregion
 
-            //Set field of animation manager
+            //Instantiate singletons
             aniManager = AnimationManager.Instance;
+            world = WorldManager.Instance;
 
+            //Add animations to manager
             aniManager.PlayerIdle = new Animation(playerIdle, 1, 6, 11.0f);
             aniManager.PlayerMove = new Animation(playerRun, 1, 8, 13.0f);
             aniManager.PlayerDeath = new Animation(playerDeath, 1, 8, 4.0f);
@@ -151,12 +151,12 @@ namespace Railgun.RailgunGame
             // Skeleton tttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(700, 200, 100, 100));
             // Skeleton ttttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(1300, 200, 100, 100));
             // Skeleton tttttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(900, 900, 100, 100));
-             enemies.Add(testSkelley);
+             world.CurrentEnemies.Add(testSkelley);
             // enemies.Add(ttestSkelley);
             // enemies.Add(tttestSkelley);
             // enemies.Add(ttttestSkelley);
             // enemies.Add(tttttestSkelley);
-            
+
             //Creates a UI object. Values to be updated later. 
             mainPlayer = new Player(new Rectangle(0, 0, 100, 100), bulletTexture);
             userInterface = new UI(backgroundHealthUI, foregroundHealthUI, bulletUI, false, mainPlayer.Health, mainPlayer.MaxHealth, font, mainPlayer.Ammo, mainPlayer.MaxAmmo);
@@ -165,17 +165,17 @@ namespace Railgun.RailgunGame
             DebugLog.Instance.Font = Content.Load<SpriteFont>("Consolas20");
             DebugLog.Instance.Scale = 2f;
 
-            //Create world manager shortcut
-            world = WorldManager.Instance;
-
-            //Load map sequence
-            //world.AddMap(FileManager.LoadMap(Content, "newver"));
-            //world.AddMap(FileManager.LoadMap(Content, "newver"));
-            world.AddMap(FileManager.LoadMap(Content, "CrescentMapWithEnt"));
-            world.AddMap(FileManager.LoadMap(Content, "CrescentMapWithEnt"));
-            world.AddMap(FileManager.LoadMap(Content, "CrescentMapWithEnt"));
-            //world.AddMap(FileManager.LoadMap(Content, "SquareMapWithDoor"));
-            //world.AddMap(FileManager.LoadMap(Content, "CrescentMap"));
+            //Load maps
+            List<Map> possibleMaps = new List<Map>
+            {
+                FileManager.LoadMap(Content, "CrescentMap"),
+                FileManager.LoadMap(Content, "DonutRoom"),
+                FileManager.LoadMap(Content, "HourglassMap"),
+                FileManager.LoadMap(Content, "Longus"),
+                FileManager.LoadMap(Content, "SquareMapWithDoor"),
+                FileManager.LoadMap(Content, "TShapeMap")
+            };
+            world.SetupMaps(possibleMaps);
 
             //Create camera
             world.CurrentCamera = new Camera(GraphicsDevice, Rectangle.Empty);
@@ -279,15 +279,15 @@ namespace Railgun.RailgunGame
                     {
                         mainPlayer.PlayerBullets[i].Update(gameTime);
                     } // Update player bullets!
-                    for (int i = 0; i < enemies.Count; i++)
+                    for (int i = 0; i < world.CurrentEnemies.Count; i++)
                     {
-                        enemies[i].Update(mainPlayer.Hitbox.Center);
+                        world.CurrentEnemies[i].Update(mainPlayer.Hitbox.Center);
                     } // Update enemies!
 
                     #region COLLISIONS!!!
-                    for (int e = 0; e < enemies.Count; e++)
+                    for (int e = 0; e < world.CurrentEnemies.Count; e++)
                     {
-                        if(enemies[e].Hitbox.Intersects(mainPlayer.Hitbox) && mainPlayer.DamageCooldown <= 0.0)
+                        if(world.CurrentEnemies[e].Hitbox.Intersects(mainPlayer.Hitbox) && mainPlayer.DamageCooldown <= 0.0)
                         {
                             if(mainPlayer.Dashing)
                             {
@@ -300,11 +300,11 @@ namespace Railgun.RailgunGame
 
                     for (int b = 0; b < mainPlayer.PlayerBullets.Count; b++)
                     {
-                        for(int e = 0; e < enemies.Count; e++)
+                        for(int e = 0; e < world.CurrentEnemies.Count; e++)
                         {
-                            if(enemies[e].Hitbox.Intersects(mainPlayer.PlayerBullets[b].Hitbox) && mainPlayer.PlayerBullets[b].CurrentState != Projectile.ProjectileStates.HasCollided && enemies[e].Health > 0)
+                            if(world.CurrentEnemies[e].Hitbox.Intersects(mainPlayer.PlayerBullets[b].Hitbox) && mainPlayer.PlayerBullets[b].CurrentState != Projectile.ProjectileStates.HasCollided && world.CurrentEnemies[e].Health > 0)
                             {
-                                enemies[e].TakeDamage(5);
+                                world.CurrentEnemies[e].TakeDamage(5);
                                 mainPlayer.PlayerBullets[b].CurrentState = Projectile.ProjectileStates.HasCollided;
                             }
                         }
@@ -438,17 +438,17 @@ namespace Railgun.RailgunGame
                             bulletRemovalList.Add(mainPlayer.PlayerBullets[i]);
                         }
                     }
-                    for(int i = 0; i < enemies.Count; i++)
+                    for(int i = 0; i < world.CurrentEnemies.Count; i++)
                     {
                         // Draw the enemies!!!
-                        if(enemies[i].Draw(_spriteBatch, gameTime, mainPlayer.Hitbox.Center))
+                        if(world.CurrentEnemies[i].Draw(_spriteBatch, gameTime, mainPlayer.Hitbox.Center))
                         {
-                            removalList.Add(enemies[i]);
+                            removalList.Add(world.CurrentEnemies[i]);
                         }
                     }
                     foreach (Enemy enemy in removalList)
                     {
-                        enemies.Remove(enemy);
+                        world.CurrentEnemies.Remove(enemy);
                     }
                     foreach (Projectile bullet in bulletRemovalList)
                     {
