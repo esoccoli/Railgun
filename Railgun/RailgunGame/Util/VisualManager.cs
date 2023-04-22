@@ -99,6 +99,10 @@ namespace Railgun.RailgunGame.Util
         /// </summary>
         public Texture2D DoorTexture { get; set; }
 
+        /// <summary>
+        /// texture for active bullets
+        /// </summary>
+        public Texture2D BulletTexture { get; set; }
         #endregion
 
     }

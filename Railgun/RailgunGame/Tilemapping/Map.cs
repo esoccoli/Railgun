@@ -385,6 +385,7 @@ namespace Railgun.RailgunGame.Tilemapping
                         enemies.Add(new Skeleton(hitbox));
                         break;
                     case 1://Enemy 2
+                        enemies.Add(new GasMan(hitbox));
 
                         break;
                     case 2://Enemy 3

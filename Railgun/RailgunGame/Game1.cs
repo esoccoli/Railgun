@@ -137,6 +137,7 @@ namespace Railgun.RailgunGame
             gasManMove = Content.Load<Texture2D>("gasManMove");
             gasManDeath = Content.Load<Texture2D>("gasManDeath");
             gasManShoot = Content.Load<Texture2D>("gasManShoot");
+            
             #endregion
 
             //Instantiate singletons
@@ -150,16 +151,11 @@ namespace Railgun.RailgunGame
             visuals.BulletCollide = new Animation(bulletCollideTexture, 4, 1, 12.4f);
             visuals.SkeletonMove = new Animation(skeletonWalk, 1, 13, 12.0f);
             visuals.SkeletonDeath = new Animation(skeletonDeath, 1, 15, 12.0f);
-            visuals.DoorTexture = Content.Load<Texture2D>("Tiles/Tiles");
-            aniManager.PlayerIdle = new Animation(playerIdle, 1, 6, 11.0f);
-            aniManager.PlayerMove = new Animation(playerRun, 1, 8, 13.0f);
-            aniManager.PlayerDeath = new Animation(playerDeath, 1, 8, 4.0f);
-            aniManager.BulletCollide = new Animation(bulletCollideTexture, 4, 1, 12.4f);
-            aniManager.SkeletonMove = new Animation(skeletonWalk, 1, 13, 12.0f);
-            aniManager.SkeletonDeath = new Animation(skeletonDeath, 1, 15, 12.0f);
-            aniManager.GasManMove = new Animation(gasManMove, 8, 1, 12.0f);
-            aniManager.GasManDeath = new Animation(gasManDeath, 6, 1, 12.0f);
-            aniManager.GasManShoot = new Animation(gasManShoot, 4, 1, 12.0f);
+            visuals.DoorTexture = Content.Load<Texture2D>("Tiles/Tiles");;
+            visuals.GasManMove = new Animation(gasManMove, 8, 1, 12.0f);
+            visuals.GasManDeath = new Animation(gasManDeath, 6, 1, 12.0f);
+            visuals.GasManShoot = new Animation(gasManShoot, 4, 1, 12.0f);
+            visuals.BulletTexture = bulletTexture;
 
             // This next line is just to test skeletons.
             Skeleton testSkelley = new Skeleton(new Rectangle(1700, 200, 100, 100));
@@ -195,8 +191,8 @@ namespace Railgun.RailgunGame
                         FileManager.LoadMap(Content, "TShapeMap")
                     }
                 , FileManager.LoadMap(Content, "StartingRoom"));
-            GasMan testGasMan = new GasMan(new Rectangle(0, 0, 100, 100), bulletTexture);
-            world.CurrentEnemies.Add(testGasMan);
+            //GasMan testGasMan = new GasMan(new Rectangle(0, 0, 100, 100));
+            //world.CurrentEnemies.Add(testGasMan);
         }
 
         protected override void Update(GameTime gameTime)

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Railgun.RailgunGame.Util;
 using Railgun.RailgunGame.Tilemapping;
+using System.Linq.Expressions;
 
 //Nathan McAndrew
 //Enemy that walks away from the player
@@ -23,11 +24,12 @@ namespace Railgun.RailgunGame
         }
 
         private Vector2 velocity;
-        private Rectangle hitboxTemp;
         private Texture2D activeBullet;
         private Animation notActiveBullet;
         private double SecondsPerState;
         private double TimeCounter;
+        private double bulletCooldown;
+        private double timeSinceShot;
 
         /// <summary>
         /// animation to play when enemy is shooting
@@ -54,7 +56,7 @@ namespace Railgun.RailgunGame
         public GasMan(Animation move, Animation death, Rectangle hitbox, Animation shoot, Texture2D activeBullet, Animation notActiveBullet) : base(move, death, hitbox)
         {
             Health = 40;
-            hitboxTemp = Hitbox;
+            Hitbox = hitbox;
             SecondsPerState = 4;
             TimeCounter = 0;
 
@@ -62,16 +64,18 @@ namespace Railgun.RailgunGame
             this.notActiveBullet = notActiveBullet;
             CurrentState = GasState.Walk;
             Shooting = shoot;
+            bulletCooldown = .25;
+            timeSinceShot = 0;
             EnemyBullets = new List<Projectile>();
         }
 
-        public GasMan(Rectangle hitbox, Texture2D activeBullet)
-            : this(AnimationManager.Instance.GasManMove.Clone(),
-                 AnimationManager.Instance.GasManDeath.Clone(),
+        public GasMan(Rectangle hitbox)
+            : this(VisualManager.Instance.GasManMove.Clone(),
+                 VisualManager.Instance.GasManDeath.Clone(),
                  hitbox,
-                 AnimationManager.Instance.GasManShoot.Clone(),
-                 activeBullet,
-                 AnimationManager.Instance.BulletCollide.Clone())
+                 VisualManager.Instance.GasManShoot.Clone(),
+                 VisualManager.Instance.BulletTexture,
+                 VisualManager.Instance.BulletCollide.Clone())
         { }
 
         /// <summary>
@@ -81,7 +85,10 @@ namespace Railgun.RailgunGame
         /// /// <param name="playerPos">current position of the player</param>
         public override void Update(GameTime gameTime, Point playerPos)
         {
-
+            if (Health <= 0)
+            {
+                CurrentState = GasState.Death;
+            }
             switch (CurrentState)
             {
                 case GasState.Walk:
@@ -95,7 +102,12 @@ namespace Railgun.RailgunGame
                     break;
 
                 case GasState.Shoot:
-                    Shoot(playerPos);
+                    timeSinceShot += gameTime.ElapsedGameTime.TotalSeconds;
+                    if (timeSinceShot >= bulletCooldown)
+                    {
+                        Shoot(playerPos);
+                        timeSinceShot = 0;
+                    }
                     TimeCounter += gameTime.ElapsedGameTime.TotalSeconds;
                     if (TimeCounter >= SecondsPerState)
                     {
@@ -173,10 +185,11 @@ namespace Railgun.RailgunGame
         /// <param name="playerPos">player's position</param>
         public override void Shoot(Point playerPos)
         {
+
             Vector2 vect = (playerPos - Hitbox.Center).ToVector2() / Vector2.Distance(playerPos.ToVector2(), Hitbox.Center.ToVector2());
             EnemyBullets.Add(new Projectile(new Rectangle(Hitbox.X + (Hitbox.Width / 2) - (activeBullet.Width / 2), Hitbox.Y + (Hitbox.Height / 2) - (activeBullet.Height / 2),
                 activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet.Clone(), vect * 10.0f));
-            DebugLog.Instance.LogFrame(EnemyBullets[0].Hitbox.Location);
+
         }
 
         /// <summary>
@@ -185,6 +198,7 @@ namespace Railgun.RailgunGame
         /// <param name="playerPos">current position of the player</param>
         public override void Walk(Point playerPos)
         {
+            Rectangle hitboxTemp = Hitbox;
             float distance = Vector2.Distance(playerPos.ToVector2(), Hitbox.Center.ToVector2());
 
             //prevents "telepotration"
@@ -200,6 +214,8 @@ namespace Railgun.RailgunGame
 
             hitboxTemp = WorldManager.Instance.CurrentMap.ResolveCollisions(hitboxTemp);
             Hitbox = hitboxTemp;
+
+            DebugLog.Instance.LogFrame(Hitbox);
         }
     }
 }
