@@ -145,14 +145,18 @@ namespace Railgun.RailgunGame.Tilemapping
                     Vector2.Zero, Color.Blue);
             ShapeBatch.End();
 
-            //Draw triggers
-            spriteBatch.Begin(
-                blendState: BlendState.AlphaBlend,
-                samplerState: SamplerState.PointClamp,
-                transformMatrix: CurrentCamera.TransformationMatrix);
-            spriteBatch.Draw(whiteSquare, CurrentExitTrigger, Color.BlueViolet * 0.2f);
+            //If door is open, draw
+            if(!ExitDoor.IsClosed)
+            {
+                //Draw next room trigger
+                spriteBatch.Begin(
+                    blendState: BlendState.AlphaBlend,
+                    samplerState: SamplerState.PointClamp,
+                    transformMatrix: CurrentCamera.TransformationMatrix);
+                spriteBatch.Draw(whiteSquare, CurrentExitTrigger, Color.Red * 0.2f);
 
-            spriteBatch.End();
+                spriteBatch.End();
+            }
 
             
         }

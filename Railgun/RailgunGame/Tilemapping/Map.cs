@@ -291,7 +291,7 @@ namespace Railgun.RailgunGame.Tilemapping
         /// </summary>
         /// <param name="hitbox">The hitbox to check</param>
         /// <param name="intersections">The solids to repel from</param>
-        /// <returns></returns>
+        /// <returns>The resolved hitbox</returns>
         public static Rectangle ResolveCollisions(Rectangle hitbox, List<Rectangle> intersections)
         {
             //Check and move x
@@ -320,7 +320,7 @@ namespace Railgun.RailgunGame.Tilemapping
                 Rectangle intersection = Rectangle.Intersect(hitbox, obstical);
 
                 //Check if valid and for width
-                if (intersection.Width > intersection.Height)
+                if (intersection.Width >= intersection.Height)
                 {
                     //Calculate side
                     if (hitbox.Y < obstical.Y)

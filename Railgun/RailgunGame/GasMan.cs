@@ -214,7 +214,7 @@ namespace Railgun.RailgunGame
             hitboxTemp.X -= (int)velocity.X;
             hitboxTemp.Y -= (int)velocity.Y;
 
-            hitboxTemp = WorldManager.Instance.CurrentMap.ResolveCollisions(hitboxTemp);
+            hitboxTemp = WorldManager.Instance.ResolveCollisions(hitboxTemp);
             Hitbox = hitboxTemp;
         }
     }
