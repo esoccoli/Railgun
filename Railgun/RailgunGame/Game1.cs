@@ -327,9 +327,9 @@ namespace Railgun.RailgunGame
 
                     foreach(Projectile projectile in EnemyProjManager.Instance.Projectiles)
                     {
-                        if (projectile.Hitbox.Intersects(mainPlayer.Hitbox))
+                        if (projectile.Hitbox.Intersects(mainPlayer.Hitbox) && mainPlayer.DamageCooldown <= 0)
                         {
-                            mainPlayer.Damage(2);
+                            mainPlayer.Damage(10);
                             projectile.CurrentState = Projectile.ProjectileStates.HasCollided;
                         }
                     }
