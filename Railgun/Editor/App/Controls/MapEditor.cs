@@ -122,8 +122,8 @@ namespace Railgun.Editor.App.Controls
             Editor.Cam.DefaultPosition = new Vector2(GridSize / 2);
 
             //Add entity textures
-            EntityManager.Instance.Enemy1 = Editor.Content.Load<Texture2D>("Entities/Enemy1");
-            EntityManager.Instance.Enemy2 = Editor.Content.Load<Texture2D>("Entities/Enemy2");
+            EntityManager.Instance.Skeleton = Editor.Content.Load<Texture2D>("Entities/Enemy1");
+            EntityManager.Instance.GasMan = Editor.Content.Load<Texture2D>("Entities/Enemy2");
             EntityManager.Instance.Enemy3 = Editor.Content.Load<Texture2D>("Entities/Enemy3");
             EntityManager.Instance.Enterence = Editor.Content.Load<Texture2D>("Entities/Enter");
             EntityManager.Instance.Exit = Editor.Content.Load<Texture2D>("Entities/Exit");

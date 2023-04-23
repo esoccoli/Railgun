@@ -131,16 +131,16 @@ namespace Railgun.Editor.App.Objects
                 switch(entity.Value)
                 {
                     case 0://Enemy1
-                        entityTexture = entityManager.Enemy1;
+                        entityTexture = entityManager.Skeleton;
                         tint = Color.LightGoldenrodYellow;
                         break;
                     case 1://Enemy2
-                        entityTexture = entityManager.Enemy2;
-                        tint = Color.LightSalmon;
+                        entityTexture = entityManager.GasMan;
+                        tint = Color.LightSeaGreen;
                         break;
                     case 2://Enemy3
                         entityTexture = entityManager.Enemy3;
-                        tint = Color.LightSteelBlue;
+                        tint = Color.LightCoral;
                         break;
                     default:
                         entityTexture = entityManager.UndefinedTexture;

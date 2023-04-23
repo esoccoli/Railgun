@@ -49,12 +49,12 @@ namespace Railgun.Editor.App.Objects
         /// <summary>
         /// The texture for enemy 1
         /// </summary>
-        public Texture2D Enemy1 { get; set; }
+        public Texture2D Skeleton { get; set; }
 
         /// <summary>
         /// The texture for enemy 2
         /// </summary>
-        public Texture2D Enemy2 { get; set; }
+        public Texture2D GasMan { get; set; }
 
         /// <summary>
         /// The texture for enemy 3
