@@ -324,6 +324,15 @@ namespace Railgun.RailgunGame
 
                     //enemy bullets
                     EnemyProjManager.Instance.Update(gameTime);
+
+                    foreach(Projectile projectile in EnemyProjManager.Instance.Projectiles)
+                    {
+                        if (projectile.Hitbox.Intersects(mainPlayer.Hitbox))
+                        {
+                            mainPlayer.Damage(5);
+                            projectile.CurrentState = Projectile.ProjectileStates.HasCollided;
+                        }
+                    }
                     #endregion
 
 
