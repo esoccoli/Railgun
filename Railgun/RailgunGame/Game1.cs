@@ -329,7 +329,7 @@ namespace Railgun.RailgunGame
                     {
                         if (projectile.Hitbox.Intersects(mainPlayer.Hitbox))
                         {
-                            mainPlayer.Damage(5);
+                            mainPlayer.Damage(2);
                             projectile.CurrentState = Projectile.ProjectileStates.HasCollided;
                         }
                     }
