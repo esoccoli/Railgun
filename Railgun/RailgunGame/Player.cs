@@ -292,7 +292,7 @@ namespace Railgun.RailgunGame
             else
             {
                 // If the player is dashing, they heal this amount per bullet. This can be adjusted during playtesting.
-                Health += 5;
+                Health += damage;
                 if(Health > 100)
                 {
                     Health = 100;
