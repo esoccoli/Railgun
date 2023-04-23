@@ -321,6 +321,9 @@ namespace Railgun.RailgunGame
                             }
                         }
                     }
+
+                    //enemy bullets
+                    EnemyProjManager.Instance.Update(gameTime);
                     #endregion
 
 
@@ -475,6 +478,9 @@ namespace Railgun.RailgunGame
                     {
                         mainPlayer.PlayerBullets.Remove(bullet);
                     }
+
+                    //enemy bullets gets drawn/removed
+                    EnemyProjManager.Instance.Draw(_spriteBatch, gameTime);
 
                     userInterface.DrawToWorldspace(_spriteBatch);
 

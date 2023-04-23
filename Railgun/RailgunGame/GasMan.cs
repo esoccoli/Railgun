@@ -119,13 +119,6 @@ namespace Railgun.RailgunGame
                 case GasState.Death:
                     break;
             }
-
-            foreach(Projectile projectile in EnemyBullets)
-            {
-                projectile.Update(gameTime);
-            }
-
-            EnemyProjManager.Instance.Projectiles = EnemyBullets;
         }
 
         /// <summary>
@@ -139,14 +132,6 @@ namespace Railgun.RailgunGame
         /// Death: True if the last frame of the animation has been reached</returns>
         public override bool Draw(SpriteBatch sb, GameTime gameTime, Point playerPos)
         {
-            for(int i = 0; i < EnemyBullets.Count; i++)
-            {
-                if (EnemyBullets[i].Draw(sb, gameTime))
-                {
-                    EnemyBullets.RemoveAt(i);
-                    i--;
-                }
-            }
 
             switch (CurrentState)
             {
@@ -189,7 +174,7 @@ namespace Railgun.RailgunGame
         {
 
             Vector2 vect = (playerPos - Hitbox.Center).ToVector2() / Vector2.Distance(playerPos.ToVector2(), Hitbox.Center.ToVector2());
-            EnemyBullets.Add(new Projectile(new Rectangle(Hitbox.X + (Hitbox.Width / 2) - (activeBullet.Width / 2), Hitbox.Y + (Hitbox.Height / 2) - (activeBullet.Height / 2),
+            EnemyProjManager.Instance.Projectiles.Add(new Projectile(new Rectangle(Hitbox.X + (Hitbox.Width / 2) - (activeBullet.Width / 2), Hitbox.Y + (Hitbox.Height / 2) - (activeBullet.Height / 2),
                 activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet.Clone(), vect * 10.0f));
 
         }
