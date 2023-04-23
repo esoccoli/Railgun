@@ -48,7 +48,7 @@ namespace Railgun.RailgunGame.Util
             {
                 //Read map from the map folder
                 reader = new BinaryReader(
-                    File.OpenRead($@"{content.RootDirectory}\Maps\{mapName}.rgm"));
+                    File.OpenRead($"{content.RootDirectory}/Maps/{mapName}.rgm"));
 
                 //Check if the file is valid, if not return null
                 if (reader.ReadString() != FileIdentifier)
