@@ -122,7 +122,7 @@
 above the editor or through the "View" tab in the context menu.
 
 Different layers can be viewed through the combo box above as well.
-Currently, there are only 2 layers: the tile layer and hitbox layer.
+Currently, there are 3 layers: the tile layer, hitbox layer, and entity layer.
 
 The hitbox layer will only allow placing a hitbox or not placing at hitbox
 (which removes the current hitbox)
@@ -160,6 +160,28 @@ To zoom, use the scroll bar, trackpad scrolling, or the '+' and '-' keys.
 To place the currently selected tile, click down.
 
 Right clicking or shift-dragging will appear to select object but not actually lol</value>
+  </data>
+  <data name="label_MainDescription.Text" xml:space="preserve">
+    <value>If you are confused, open an example map.
+
+The default directory can be found in the content folder in the
+RailgunGame project.
+
+Or if that is not available, you can open the example railgun map
+that can be found within the resources folder of this project
+.</value>
+  </data>
+  <data name="label_EntityDescription.Text" xml:space="preserve">
+    <value>Entity layer was rushed but is functional. Use the drop down menu to choose
+what entity you want to place or to remove an entity.
+
+The entrence and exit entity cannot be remove and there can only ever
+be one of each in a map.
+
+The entrence specifies where the player will enter a map while the exit
+specifies where the player exits. In the game, the maps are then
+stitched together and door entities are added, blocking the way.
+</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

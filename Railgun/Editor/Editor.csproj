@@ -162,6 +162,7 @@
       <SubType>Form</SubType>
     </Content>
     <None Include="Resources\Exit.png" />
+    <None Include="Resources\ExampleMap.rgm" />
     <None Include="Resources\Maximize.png" />
     <None Include="Resources\Minimize.png" />
     <None Include="Resources\Normal.png" />

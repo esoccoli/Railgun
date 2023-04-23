@@ -30,28 +30,33 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HelperForm));
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.label_Viewing = new System.Windows.Forms.Label();
             this.label_ViewingDescription = new System.Windows.Forms.Label();
+            this.label_Viewing = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.label_CurrentTile = new System.Windows.Forms.Label();
             this.label_CurrentTileDescription = new System.Windows.Forms.Label();
+            this.label_CurrentTile = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.label_TilesetsTitle = new System.Windows.Forms.Label();
             this.label_TilesetsDescription = new System.Windows.Forms.Label();
+            this.label_TilesetsTitle = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label_NavigationTitle = new System.Windows.Forms.Label();
             this.label_NavigationText = new System.Windows.Forms.Label();
+            this.label_NavigationTitle = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.label_Title = new System.Windows.Forms.Label();
-            this.label_Credit = new System.Windows.Forms.Label();
+            this.label_MainDescription = new System.Windows.Forms.Label();
             this.label_Hint = new System.Windows.Forms.Label();
+            this.label_Credit = new System.Windows.Forms.Label();
+            this.label_Title = new System.Windows.Forms.Label();
             this.tabControl_Main = new System.Windows.Forms.TabControl();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.label_EntityDescription = new System.Windows.Forms.Label();
+            this.label_Entities = new System.Windows.Forms.Label();
             this.tabPage5.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl_Main.SuspendLayout();
+            this.tabPage6.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabPage5
@@ -65,26 +70,26 @@
             this.tabPage5.Text = "Layers and Viewing";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
-            // label_Viewing
-            // 
-            this.label_Viewing.AutoSize = true;
-            this.label_Viewing.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_Viewing.Location = new System.Drawing.Point(296, 61);
-            this.label_Viewing.Name = "label_Viewing";
-            this.label_Viewing.Size = new System.Drawing.Size(290, 41);
-            this.label_Viewing.TabIndex = 6;
-            this.label_Viewing.Text = "Layers and Viewing";
-            // 
             // label_ViewingDescription
             // 
             this.label_ViewingDescription.AutoSize = true;
             this.label_ViewingDescription.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_ViewingDescription.Location = new System.Drawing.Point(110, 151);
+            this.label_ViewingDescription.Location = new System.Drawing.Point(110, 101);
             this.label_ViewingDescription.Name = "label_ViewingDescription";
             this.label_ViewingDescription.Size = new System.Drawing.Size(662, 308);
             this.label_ViewingDescription.TabIndex = 7;
             this.label_ViewingDescription.Text = resources.GetString("label_ViewingDescription.Text");
             this.label_ViewingDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label_Viewing
+            // 
+            this.label_Viewing.AutoSize = true;
+            this.label_Viewing.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Viewing.Location = new System.Drawing.Point(296, 11);
+            this.label_Viewing.Name = "label_Viewing";
+            this.label_Viewing.Size = new System.Drawing.Size(290, 41);
+            this.label_Viewing.TabIndex = 6;
+            this.label_Viewing.Text = "Layers and Viewing";
             // 
             // tabPage4
             // 
@@ -97,16 +102,6 @@
             this.tabPage4.Text = "Editing the Current Tile";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // label_CurrentTile
-            // 
-            this.label_CurrentTile.AutoSize = true;
-            this.label_CurrentTile.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_CurrentTile.Location = new System.Drawing.Point(267, 64);
-            this.label_CurrentTile.Name = "label_CurrentTile";
-            this.label_CurrentTile.Size = new System.Drawing.Size(349, 41);
-            this.label_CurrentTile.TabIndex = 4;
-            this.label_CurrentTile.Text = "Editing the Current Tile";
-            // 
             // label_CurrentTileDescription
             // 
             this.label_CurrentTileDescription.AutoSize = true;
@@ -117,6 +112,16 @@
             this.label_CurrentTileDescription.TabIndex = 5;
             this.label_CurrentTileDescription.Text = resources.GetString("label_CurrentTileDescription.Text");
             this.label_CurrentTileDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label_CurrentTile
+            // 
+            this.label_CurrentTile.AutoSize = true;
+            this.label_CurrentTile.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_CurrentTile.Location = new System.Drawing.Point(267, 64);
+            this.label_CurrentTile.Name = "label_CurrentTile";
+            this.label_CurrentTile.Size = new System.Drawing.Size(349, 41);
+            this.label_CurrentTile.TabIndex = 4;
+            this.label_CurrentTile.Text = "Editing the Current Tile";
             // 
             // tabPage3
             // 
@@ -129,16 +134,6 @@
             this.tabPage3.Text = "Tilesets";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // label_TilesetsTitle
-            // 
-            this.label_TilesetsTitle.AutoSize = true;
-            this.label_TilesetsTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_TilesetsTitle.Location = new System.Drawing.Point(379, 85);
-            this.label_TilesetsTitle.Name = "label_TilesetsTitle";
-            this.label_TilesetsTitle.Size = new System.Drawing.Size(124, 41);
-            this.label_TilesetsTitle.TabIndex = 2;
-            this.label_TilesetsTitle.Text = "Tilesets";
-            // 
             // label_TilesetsDescription
             // 
             this.label_TilesetsDescription.AutoSize = true;
@@ -149,6 +144,16 @@
             this.label_TilesetsDescription.TabIndex = 3;
             this.label_TilesetsDescription.Text = resources.GetString("label_TilesetsDescription.Text");
             this.label_TilesetsDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label_TilesetsTitle
+            // 
+            this.label_TilesetsTitle.AutoSize = true;
+            this.label_TilesetsTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_TilesetsTitle.Location = new System.Drawing.Point(379, 85);
+            this.label_TilesetsTitle.Name = "label_TilesetsTitle";
+            this.label_TilesetsTitle.Size = new System.Drawing.Size(124, 41);
+            this.label_TilesetsTitle.TabIndex = 2;
+            this.label_TilesetsTitle.Text = "Tilesets";
             // 
             // tabPage2
             // 
@@ -162,16 +167,6 @@
             this.tabPage2.Text = "Navigation";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // label_NavigationTitle
-            // 
-            this.label_NavigationTitle.AutoSize = true;
-            this.label_NavigationTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_NavigationTitle.Location = new System.Drawing.Point(354, 77);
-            this.label_NavigationTitle.Name = "label_NavigationTitle";
-            this.label_NavigationTitle.Size = new System.Drawing.Size(175, 41);
-            this.label_NavigationTitle.TabIndex = 0;
-            this.label_NavigationTitle.Text = "Navigation";
-            // 
             // label_NavigationText
             // 
             this.label_NavigationText.AutoSize = true;
@@ -183,8 +178,19 @@
             this.label_NavigationText.Text = resources.GetString("label_NavigationText.Text");
             this.label_NavigationText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // label_NavigationTitle
+            // 
+            this.label_NavigationTitle.AutoSize = true;
+            this.label_NavigationTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_NavigationTitle.Location = new System.Drawing.Point(354, 77);
+            this.label_NavigationTitle.Name = "label_NavigationTitle";
+            this.label_NavigationTitle.Size = new System.Drawing.Size(175, 41);
+            this.label_NavigationTitle.TabIndex = 0;
+            this.label_NavigationTitle.Text = "Navigation";
+            // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label_MainDescription);
             this.tabPage1.Controls.Add(this.label_Hint);
             this.tabPage1.Controls.Add(this.label_Credit);
             this.tabPage1.Controls.Add(this.label_Title);
@@ -195,6 +201,37 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Welcome";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label_MainDescription
+            // 
+            this.label_MainDescription.AutoSize = true;
+            this.label_MainDescription.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_MainDescription.Location = new System.Drawing.Point(155, 265);
+            this.label_MainDescription.Name = "label_MainDescription";
+            this.label_MainDescription.Size = new System.Drawing.Size(573, 224);
+            this.label_MainDescription.TabIndex = 5;
+            this.label_MainDescription.Text = resources.GetString("label_MainDescription.Text");
+            this.label_MainDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label_Hint
+            // 
+            this.label_Hint.AutoSize = true;
+            this.label_Hint.Font = new System.Drawing.Font("Consolas", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Hint.Location = new System.Drawing.Point(216, 24);
+            this.label_Hint.Name = "label_Hint";
+            this.label_Hint.Size = new System.Drawing.Size(450, 33);
+            this.label_Hint.TabIndex = 4;
+            this.label_Hint.Text = "(Use the above tabs for help)";
+            // 
+            // label_Credit
+            // 
+            this.label_Credit.AutoSize = true;
+            this.label_Credit.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Credit.Location = new System.Drawing.Point(338, 197);
+            this.label_Credit.Name = "label_Credit";
+            this.label_Credit.Size = new System.Drawing.Size(207, 27);
+            this.label_Credit.TabIndex = 3;
+            this.label_Credit.Text = "by Jonathan Jan";
             // 
             // label_Title
             // 
@@ -207,26 +244,6 @@
             this.label_Title.Text = "Welcome to the Rail Gun Editor!";
             this.label_Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label_Credit
-            // 
-            this.label_Credit.AutoSize = true;
-            this.label_Credit.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_Credit.Location = new System.Drawing.Point(338, 230);
-            this.label_Credit.Name = "label_Credit";
-            this.label_Credit.Size = new System.Drawing.Size(207, 27);
-            this.label_Credit.TabIndex = 3;
-            this.label_Credit.Text = "by Jonathan Jan";
-            // 
-            // label_Hint
-            // 
-            this.label_Hint.AutoSize = true;
-            this.label_Hint.Font = new System.Drawing.Font("Consolas", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_Hint.Location = new System.Drawing.Point(216, 382);
-            this.label_Hint.Name = "label_Hint";
-            this.label_Hint.Size = new System.Drawing.Size(450, 33);
-            this.label_Hint.TabIndex = 4;
-            this.label_Hint.Text = "(Use the above tabs for help)";
-            // 
             // tabControl_Main
             // 
             this.tabControl_Main.Controls.Add(this.tabPage1);
@@ -234,6 +251,7 @@
             this.tabControl_Main.Controls.Add(this.tabPage3);
             this.tabControl_Main.Controls.Add(this.tabPage4);
             this.tabControl_Main.Controls.Add(this.tabPage5);
+            this.tabControl_Main.Controls.Add(this.tabPage6);
             this.tabControl_Main.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl_Main.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tabControl_Main.Location = new System.Drawing.Point(0, 0);
@@ -241,6 +259,39 @@
             this.tabControl_Main.SelectedIndex = 0;
             this.tabControl_Main.Size = new System.Drawing.Size(882, 553);
             this.tabControl_Main.TabIndex = 0;
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.label_EntityDescription);
+            this.tabPage6.Controls.Add(this.label_Entities);
+            this.tabPage6.Location = new System.Drawing.Point(4, 29);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(874, 520);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "Entities";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // label_EntityDescription
+            // 
+            this.label_EntityDescription.AutoSize = true;
+            this.label_EntityDescription.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_EntityDescription.Location = new System.Drawing.Point(103, 139);
+            this.label_EntityDescription.Name = "label_EntityDescription";
+            this.label_EntityDescription.Size = new System.Drawing.Size(676, 252);
+            this.label_EntityDescription.TabIndex = 9;
+            this.label_EntityDescription.Text = resources.GetString("label_EntityDescription.Text");
+            this.label_EntityDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label_Entities
+            // 
+            this.label_Entities.AutoSize = true;
+            this.label_Entities.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Entities.Location = new System.Drawing.Point(380, 49);
+            this.label_Entities.Name = "label_Entities";
+            this.label_Entities.Size = new System.Drawing.Size(123, 41);
+            this.label_Entities.TabIndex = 8;
+            this.label_Entities.Text = "Entities";
             // 
             // HelperForm
             // 
@@ -267,6 +318,8 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabControl_Main.ResumeLayout(false);
+            this.tabPage6.ResumeLayout(false);
+            this.tabPage6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -290,5 +343,9 @@
         private System.Windows.Forms.Label label_Credit;
         private System.Windows.Forms.Label label_Title;
         private System.Windows.Forms.TabControl tabControl_Main;
+        private System.Windows.Forms.Label label_MainDescription;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.Label label_EntityDescription;
+        private System.Windows.Forms.Label label_Entities;
     }
 }
