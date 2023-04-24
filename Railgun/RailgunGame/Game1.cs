@@ -16,6 +16,7 @@ namespace Railgun.RailgunGame
         private Texture2D backgroundHealthUI;
         private Texture2D foregroundHealthUI;
         private Texture2D bulletUI;
+        private Texture2D howToPlay;
 
         private Player mainPlayer;
 
@@ -115,12 +116,14 @@ namespace Railgun.RailgunGame
             backgroundHealthUI = Content.Load<Texture2D>("WhiteHealthSquare");
             foregroundHealthUI = Content.Load<Texture2D>("RedHealthSquare");
             bulletUI = Content.Load<Texture2D>("uiBullet");
+            howToPlay = Content.Load<Texture2D>("Intro");
 
 
             //Game Menu Stuff
             menuLogo = Content.Load<Texture2D>("menuLogo");
             menuPlay = Content.Load<Texture2D>("menuPlay");
-            menuOpti = Content.Load<Texture2D>("menuOptions");
+            //menuOpti = Content.Load<Texture2D>("menuOptions");
+            menuOpti = Content.Load<Texture2D>("controls");
             menuQuit = Content.Load<Texture2D>("menuQuit");
 
             //Game Reticle
@@ -381,7 +384,7 @@ namespace Railgun.RailgunGame
 
                     if (InputManager.IsKeyDown(Keys.Enter))
                     {
-                        currentGameState = GameState.Game;
+                        currentGameState = GameState.Menu;
                     }
 
                     if (InputManager.IsKeyDown(Keys.Escape))
@@ -520,6 +523,7 @@ namespace Railgun.RailgunGame
 
                     _spriteBatch.Begin();
 
+                    _spriteBatch.Draw(howToPlay, new Rectangle(0,0,1920,1080), Color.White);
                     _spriteBatch.DrawString(font, "Pause", new Vector2(_graphics.PreferredBackBufferWidth - 100, 20), Color.White);
 
                     _spriteBatch.End();
