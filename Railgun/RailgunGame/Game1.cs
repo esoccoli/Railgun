@@ -401,6 +401,7 @@ namespace Railgun.RailgunGame
                     if (InputManager.IsKeyDown(Keys.Enter))
                     {
                         mainPlayer.ResetPlayer();
+                        world.ResetWorld();
                         currentGameState = GameState.Game;
                     }
 
@@ -537,6 +538,8 @@ namespace Railgun.RailgunGame
                     _spriteBatch.Begin();
 
                     _spriteBatch.DrawString(font, "Game Over", new Vector2(_graphics.PreferredBackBufferWidth - 175, 20), Color.White);
+
+                    _spriteBatch.DrawString(font, "Rooms Passed: " + world.Score, Vector2.Zero, Color.Gold);
 
                     _spriteBatch.End();
 

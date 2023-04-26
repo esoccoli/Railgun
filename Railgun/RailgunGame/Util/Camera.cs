@@ -107,7 +107,7 @@ namespace Railgun.RailgunGame.Util
         /// The boundries that the camera can move within. Set to Rectangle.Empty
         /// to not have camera bounds
         /// </summary>
-        public Rectangle CameraBounds { get; private set; }
+        public Rectangle CameraBounds { get; set; }
 
         /// <summary>
         /// The target boundries that the camera bounds should ease to
