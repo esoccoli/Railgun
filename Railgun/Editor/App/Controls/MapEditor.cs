@@ -88,6 +88,8 @@ namespace Railgun.Editor.App.Controls
 
             //Start in a new map
             CurrentMap = new Map(128);
+            //have 2 layers
+            CurrentMap.Layers.Add(new Dictionary<Vector2, Tile>());
             CurrentMap.Layers.Add(new Dictionary<Vector2, Tile>());
 
             //Set max and min zoom

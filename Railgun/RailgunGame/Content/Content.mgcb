@@ -176,6 +176,9 @@
 #begin Maps/Longus.rgm
 /copy:Maps/Longus.rgm
 
+#begin Maps/LushHalls.rgm
+/copy:Maps/LushHalls.rgm
+
 #begin Maps/SquareMapWithDoor.rgm
 /copy:Maps/SquareMapWithDoor.rgm
 

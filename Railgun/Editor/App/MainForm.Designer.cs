@@ -22,12 +22,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Eraser", 0);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Entrence", 1);
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Exit", 2);
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("Skeleton", 3);
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("Gas Man", 4);
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("Enemy 3", 5);
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("Eraser", 0);
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("Entrence", 1);
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("Exit", 2);
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("Skeleton", 3);
+            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("Gas Man", 4);
+            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("Enemy 3", 5);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem_Logo = new System.Windows.Forms.ToolStripMenuItem();
@@ -1044,7 +1044,8 @@
             this.comboBox_Layers.Items.AddRange(new object[] {
             "Entities",
             "Hitboxes",
-            "Tiles"});
+            "Tiles Bottom",
+            "Tiles Top"});
             this.comboBox_Layers.Location = new System.Drawing.Point(182, 9);
             this.comboBox_Layers.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.comboBox_Layers.Name = "comboBox_Layers";
@@ -1152,19 +1153,19 @@
             this.listView_Entities.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listView_Entities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView_Entities.HideSelection = false;
-            listViewItem1.StateImageIndex = 0;
-            listViewItem2.StateImageIndex = 0;
-            listViewItem3.StateImageIndex = 0;
-            listViewItem4.StateImageIndex = 0;
-            listViewItem5.StateImageIndex = 0;
-            listViewItem6.StateImageIndex = 0;
+            listViewItem7.StateImageIndex = 0;
+            listViewItem8.StateImageIndex = 0;
+            listViewItem9.StateImageIndex = 0;
+            listViewItem10.StateImageIndex = 0;
+            listViewItem11.StateImageIndex = 0;
+            listViewItem12.StateImageIndex = 0;
             this.listView_Entities.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4,
-            listViewItem5,
-            listViewItem6});
+            listViewItem7,
+            listViewItem8,
+            listViewItem9,
+            listViewItem10,
+            listViewItem11,
+            listViewItem12});
             this.listView_Entities.LargeImageList = this.imageList_Entities;
             this.listView_Entities.Location = new System.Drawing.Point(0, 0);
             this.listView_Entities.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);

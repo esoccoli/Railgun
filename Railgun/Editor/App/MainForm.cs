@@ -136,7 +136,7 @@ namespace Railgun.Editor.App
             toolStripMenuItem_PlaceHitbox.ShortcutKeyDisplayString = "C";
 
             //Set selected layer to tiles
-            comboBox_Layers.SelectedIndex = comboBox_Layers.Items.Count - 1;
+            comboBox_Layers.SelectedIndex = comboBox_Layers.Items.Count - 2;
 
             //Set hitboxes to checked
             checkBox_ShowHitboxes.Checked = true;
@@ -682,6 +682,8 @@ namespace Railgun.Editor.App
 
             //Create new map
             Map newMap = new Map(128);
+            //Create 2 layers
+            newMap.Layers.Add(new Dictionary<Microsoft.Xna.Framework.Vector2, Tile>());
             newMap.Layers.Add(new Dictionary<Microsoft.Xna.Framework.Vector2, Tile>());
 
             //Prompt user to save as (allowing them to name), if cancel, return

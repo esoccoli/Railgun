@@ -186,12 +186,13 @@ namespace Railgun.RailgunGame
                 GraphicsDevice,
                 new List<Map>
                     {
-                        FileManager.LoadMap(Content, "CrescentMap"),
-                        FileManager.LoadMap(Content, "DonutRoom"),
-                        FileManager.LoadMap(Content, "HourglassMap"),
-                        FileManager.LoadMap(Content, "Longus"),
-                        FileManager.LoadMap(Content, "SquareMapWithDoor"),
-                        FileManager.LoadMap(Content, "TShapeMap")
+                        //FileManager.LoadMap(Content, "CrescentMap"),
+                        //FileManager.LoadMap(Content, "DonutRoom"),
+                        //FileManager.LoadMap(Content, "HourglassMap"),
+                        //FileManager.LoadMap(Content, "Longus"),
+                        //FileManager.LoadMap(Content, "SquareMapWithDoor"),
+                        //FileManager.LoadMap(Content, "TShapeMap"),
+                        FileManager.LoadMap(Content, "LushHalls")
                     }
                 , FileManager.LoadMap(Content, "StartingRoom"));
         }
