@@ -226,6 +226,12 @@
     <None Include="Resources\Counter Clockwise.png" />
     <None Include="Resources\Flip Horizontal.png" />
     <None Include="Resources\Flip Vertical.png" />
+    <Content Include="Resources\Entity Icons\death-skull.png" />
+    <Content Include="Resources\Entity Icons\exit-door.png" />
+    <Content Include="Resources\Entity Icons\gas-mask.png" />
+    <Content Include="Resources\Entity Icons\open-gate.png" />
+    <Content Include="Resources\Entity Icons\uncertainty.png" />
+    <Content Include="Resources\Entity Icons\X.png" />
     <Content Include="Resources\High Contrast Logo.ico" />
     <Content Include="Resources\High Contrast Logo.png" />
     <None Include="Resources\Move Up.png" />

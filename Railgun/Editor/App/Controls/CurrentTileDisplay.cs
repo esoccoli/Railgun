@@ -43,7 +43,7 @@ namespace Railgun.Editor.App.Controls
             ////
 
             //Store the viewport
-            Rectangle viewRectangle = new Rectangle(0, 0, Width, Height);
+            Rectangle viewRectangle = new Rectangle(1, 1, Width - 1, Height - 1);
 
             //Draw the current tile to fill this control
             TileManager.Instance.CurrentTile.Draw(Editor.spriteBatch, viewRectangle);

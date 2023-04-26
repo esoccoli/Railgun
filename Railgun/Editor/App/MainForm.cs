@@ -147,9 +147,6 @@ namespace Railgun.Editor.App
             tableLayoutPanel_MainEditor.Controls.Remove(panel_Big_Holder);
             tableLayoutPanel_MainEditor.Controls.Add(mapEditor, 0, 1);
             panel_Objects.Controls.Add(tableLayoutPanel_EntityPicker);
-
-            //Set current entity to enterence
-            listBox_EntityPicker.SelectedIndex = 1;
         }
 
         /// <summary>
@@ -612,7 +609,7 @@ namespace Railgun.Editor.App
                     tileManager.CurrentTile = Tile.Empty;
                     //Hide entity picker
                     tableLayoutPanel_EntityPicker.Visible = false;
-                    
+                    tableLayoutPanel_Edit.Visible = true;
                 }
                 //If entity layer
                 else if(tileManager.CurrentLayer == -2)
@@ -620,8 +617,9 @@ namespace Railgun.Editor.App
                     //Hide tile picker
                     tableLayoutPanel_TilePicker.Visible = false;
                     tileManager.CurrentTile = Tile.Empty;
-                    //Hide entity picker
+                    //Hide tile picker
                     tableLayoutPanel_EntityPicker.Visible = true;
+                    tableLayoutPanel_Edit.Visible = false;
                 }
 
                 return;
@@ -631,6 +629,7 @@ namespace Railgun.Editor.App
             tableLayoutPanel_TilePicker.Visible = true;
             //Hide entity picker
             tableLayoutPanel_EntityPicker.Visible = false;
+            tableLayoutPanel_Edit.Visible = true;
 
             //Else set to current selection
             CurrentTileset.CreateTileSelection();
@@ -650,7 +649,9 @@ namespace Railgun.Editor.App
         /// </summary>
         private void ListBox_EntityPicker_SelectedIndexChanged(object sender, EventArgs e)
         {
-            EntityManager.Instance.CurrentEntity = listView_Entities.SelectedItems[0].Index;
+            //If something is selected, set it to the current entity
+            if(listView_Entities.SelectedItems.Count > 0)
+                EntityManager.Instance.CurrentEntity = listView_Entities.SelectedIndices[0];
         }
 
         #endregion
@@ -771,6 +772,5 @@ namespace Railgun.Editor.App
         }
 
         #endregion
-
     }
 }
