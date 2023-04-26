@@ -21,6 +21,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Eraser", 0);
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Entrence", 1);
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Exit", 2);
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("Skeleton", 3);
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("Gas Man", 4);
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("Enemy 3", 5);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem_Logo = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,7 +84,6 @@
             this.panel_TilePicker = new System.Windows.Forms.Panel();
             this.tabControl_Tileset = new System.Windows.Forms.TabControl();
             this.tabPage_EmptyTileset = new System.Windows.Forms.TabPage();
-            this.tilePicker_Empty = new Railgun.Editor.App.Controls.TilePicker();
             this.label_NoTilesets = new System.Windows.Forms.Label();
             this.label_TilePicker = new System.Windows.Forms.Label();
             this.tableLayoutPanel_Edit = new System.Windows.Forms.TableLayoutPanel();
@@ -87,7 +93,6 @@
             this.button_Edit_FlipVertical = new System.Windows.Forms.Button();
             this.button_Edit_RotateCW = new System.Windows.Forms.Button();
             this.button_Edit_RotateCCW = new System.Windows.Forms.Button();
-            this.currentTileDisplay = new Railgun.Editor.App.Controls.CurrentTileDisplay();
             this.button_Edit_Up = new System.Windows.Forms.Button();
             this.button_Edit_Left = new System.Windows.Forms.Button();
             this.button_Edit_Down = new System.Windows.Forms.Button();
@@ -108,10 +113,17 @@
             this.tableLayoutPanel_EntitySettings = new System.Windows.Forms.TableLayoutPanel();
             this.panel_EntitySettings = new System.Windows.Forms.Panel();
             this.panel_EntityPicker = new System.Windows.Forms.Panel();
-            this.comboBox_EntityPicker = new System.Windows.Forms.ComboBox();
+            this.listBox_EntityPicker = new System.Windows.Forms.ListBox();
             this.panel_MapEditorHolder = new System.Windows.Forms.Panel();
-            this.mapEditor = new Railgun.Editor.App.Controls.MapEditor();
             this.tableLayoutPanel_MainOutline = new System.Windows.Forms.TableLayoutPanel();
+            this.tilePicker_Empty = new Railgun.Editor.App.Controls.TilePicker();
+            this.currentTileDisplay = new Railgun.Editor.App.Controls.CurrentTileDisplay();
+            this.mapEditor = new Railgun.Editor.App.Controls.MapEditor();
+            this.listView_Entities = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.imageList_Entities = new System.Windows.Forms.ImageList(this.components);
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_MainEditor)).BeginInit();
@@ -713,23 +725,6 @@
             this.tabPage_EmptyTileset.Text = "Error";
             this.tabPage_EmptyTileset.UseVisualStyleBackColor = true;
             // 
-            // tilePicker_Empty
-            // 
-            this.tilePicker_Empty.BackColor = System.Drawing.Color.White;
-            this.tilePicker_Empty.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
-            this.tilePicker_Empty.ForeColor = System.Drawing.Color.Black;
-            this.tilePicker_Empty.GridSize = 0F;
-            this.tilePicker_Empty.Location = new System.Drawing.Point(3, 2);
-            this.tilePicker_Empty.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tilePicker_Empty.MaxZoom = 0.1F;
-            this.tilePicker_Empty.MinZoom = 0.1F;
-            this.tilePicker_Empty.MouseHoverUpdatesOnly = false;
-            this.tilePicker_Empty.Name = "tilePicker_Empty";
-            this.tilePicker_Empty.Size = new System.Drawing.Size(93, 46);
-            this.tilePicker_Empty.TabIndex = 2;
-            this.tilePicker_Empty.Text = "tilePicker1";
-            this.tilePicker_Empty.Visible = false;
-            // 
             // label_NoTilesets
             // 
             this.label_NoTilesets.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -878,21 +873,6 @@
             this.button_Edit_RotateCCW.TabIndex = 3;
             this.button_Edit_RotateCCW.UseVisualStyleBackColor = true;
             this.button_Edit_RotateCCW.Click += new System.EventHandler(this.Menu_Edit_Rotate90CCW_Click);
-            // 
-            // currentTileDisplay
-            // 
-            this.currentTileDisplay.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.currentTileDisplay.BackColor = System.Drawing.SystemColors.Control;
-            this.tableLayoutPanel_EditTable.SetColumnSpan(this.currentTileDisplay, 3);
-            this.currentTileDisplay.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
-            this.currentTileDisplay.ForeColor = System.Drawing.Color.Black;
-            this.currentTileDisplay.Location = new System.Drawing.Point(125, 108);
-            this.currentTileDisplay.Margin = new System.Windows.Forms.Padding(0);
-            this.currentTileDisplay.Name = "currentTileDisplay";
-            this.tableLayoutPanel_EditTable.SetRowSpan(this.currentTileDisplay, 3);
-            this.currentTileDisplay.Size = new System.Drawing.Size(149, 150);
-            this.currentTileDisplay.TabIndex = 1;
-            this.currentTileDisplay.Text = "currentTileDisplay";
             // 
             // button_Edit_Up
             // 
@@ -1090,7 +1070,7 @@
             this.panel_Big_Holder.Controls.Add(this.panel_EntityPickerHolder);
             this.panel_Big_Holder.Controls.Add(this.panel_MapEditorHolder);
             this.panel_Big_Holder.Location = new System.Drawing.Point(4, 54);
-            this.panel_Big_Holder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel_Big_Holder.Margin = new System.Windows.Forms.Padding(4);
             this.panel_Big_Holder.Name = "panel_Big_Holder";
             this.panel_Big_Holder.Size = new System.Drawing.Size(715, 546);
             this.panel_Big_Holder.TabIndex = 3;
@@ -1099,7 +1079,7 @@
             // 
             this.panel_EntityPickerHolder.Controls.Add(this.panel_Entities);
             this.panel_EntityPickerHolder.Location = new System.Drawing.Point(207, 196);
-            this.panel_EntityPickerHolder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel_EntityPickerHolder.Margin = new System.Windows.Forms.Padding(4);
             this.panel_EntityPickerHolder.Name = "panel_EntityPickerHolder";
             this.panel_EntityPickerHolder.Size = new System.Drawing.Size(433, 294);
             this.panel_EntityPickerHolder.TabIndex = 1;
@@ -1158,7 +1138,8 @@
             // 
             // panel_EntityPicker
             // 
-            this.panel_EntityPicker.Controls.Add(this.comboBox_EntityPicker);
+            this.panel_EntityPicker.Controls.Add(this.listView_Entities);
+            this.panel_EntityPicker.Controls.Add(this.listBox_EntityPicker);
             this.panel_EntityPicker.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_EntityPicker.Location = new System.Drawing.Point(3, 52);
             this.panel_EntityPicker.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -1166,36 +1147,78 @@
             this.panel_EntityPicker.Size = new System.Drawing.Size(427, 240);
             this.panel_EntityPicker.TabIndex = 3;
             // 
-            // comboBox_EntityPicker
+            // listBox_EntityPicker
             // 
-            this.comboBox_EntityPicker.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.comboBox_EntityPicker.BackColor = System.Drawing.SystemColors.Window;
-            this.comboBox_EntityPicker.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_EntityPicker.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox_EntityPicker.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.comboBox_EntityPicker.FormattingEnabled = true;
-            this.comboBox_EntityPicker.Items.AddRange(new object[] {
+            this.listBox_EntityPicker.FormattingEnabled = true;
+            this.listBox_EntityPicker.ItemHeight = 16;
+            this.listBox_EntityPicker.Items.AddRange(new object[] {
             "Remove Entity",
             "Entrence",
             "Exit",
             "Skeleton",
             "Gas Man",
             "Enemy 3"});
-            this.comboBox_EntityPicker.Location = new System.Drawing.Point(130, 107);
-            this.comboBox_EntityPicker.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.comboBox_EntityPicker.Name = "comboBox_EntityPicker";
-            this.comboBox_EntityPicker.Size = new System.Drawing.Size(165, 28);
-            this.comboBox_EntityPicker.TabIndex = 4;
-            this.comboBox_EntityPicker.SelectedIndexChanged += new System.EventHandler(this.ComboBox_EntityPicker_SelectedIndexChanged);
+            this.listBox_EntityPicker.Location = new System.Drawing.Point(16, 11);
+            this.listBox_EntityPicker.Name = "listBox_EntityPicker";
+            this.listBox_EntityPicker.Size = new System.Drawing.Size(120, 84);
+            this.listBox_EntityPicker.TabIndex = 7;
             // 
             // panel_MapEditorHolder
             // 
             this.panel_MapEditorHolder.Controls.Add(this.mapEditor);
             this.panel_MapEditorHolder.Location = new System.Drawing.Point(79, 47);
-            this.panel_MapEditorHolder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel_MapEditorHolder.Margin = new System.Windows.Forms.Padding(4);
             this.panel_MapEditorHolder.Name = "panel_MapEditorHolder";
             this.panel_MapEditorHolder.Size = new System.Drawing.Size(267, 123);
             this.panel_MapEditorHolder.TabIndex = 0;
+            // 
+            // tableLayoutPanel_MainOutline
+            // 
+            this.tableLayoutPanel_MainOutline.ColumnCount = 1;
+            this.tableLayoutPanel_MainOutline.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_MainOutline.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_MainOutline.Controls.Add(this.splitContainer_MainEditor, 0, 0);
+            this.tableLayoutPanel_MainOutline.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel_MainOutline.Location = new System.Drawing.Point(0, 45);
+            this.tableLayoutPanel_MainOutline.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tableLayoutPanel_MainOutline.Name = "tableLayoutPanel_MainOutline";
+            this.tableLayoutPanel_MainOutline.RowCount = 1;
+            this.tableLayoutPanel_MainOutline.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_MainOutline.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 771F));
+            this.tableLayoutPanel_MainOutline.Size = new System.Drawing.Size(1343, 771);
+            this.tableLayoutPanel_MainOutline.TabIndex = 6;
+            // 
+            // tilePicker_Empty
+            // 
+            this.tilePicker_Empty.BackColor = System.Drawing.Color.White;
+            this.tilePicker_Empty.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
+            this.tilePicker_Empty.ForeColor = System.Drawing.Color.Black;
+            this.tilePicker_Empty.GridSize = 0F;
+            this.tilePicker_Empty.Location = new System.Drawing.Point(3, 2);
+            this.tilePicker_Empty.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tilePicker_Empty.MaxZoom = 0.1F;
+            this.tilePicker_Empty.MinZoom = 0.1F;
+            this.tilePicker_Empty.MouseHoverUpdatesOnly = false;
+            this.tilePicker_Empty.Name = "tilePicker_Empty";
+            this.tilePicker_Empty.Size = new System.Drawing.Size(93, 46);
+            this.tilePicker_Empty.TabIndex = 2;
+            this.tilePicker_Empty.Text = "tilePicker1";
+            this.tilePicker_Empty.Visible = false;
+            // 
+            // currentTileDisplay
+            // 
+            this.currentTileDisplay.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.currentTileDisplay.BackColor = System.Drawing.SystemColors.Control;
+            this.tableLayoutPanel_EditTable.SetColumnSpan(this.currentTileDisplay, 3);
+            this.currentTileDisplay.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Bold);
+            this.currentTileDisplay.ForeColor = System.Drawing.Color.Black;
+            this.currentTileDisplay.Location = new System.Drawing.Point(125, 108);
+            this.currentTileDisplay.Margin = new System.Windows.Forms.Padding(0);
+            this.currentTileDisplay.Name = "currentTileDisplay";
+            this.tableLayoutPanel_EditTable.SetRowSpan(this.currentTileDisplay, 3);
+            this.currentTileDisplay.Size = new System.Drawing.Size(149, 150);
+            this.currentTileDisplay.TabIndex = 1;
+            this.currentTileDisplay.Text = "currentTileDisplay";
             // 
             // mapEditor
             // 
@@ -1216,21 +1239,47 @@
             this.mapEditor.TabIndex = 2;
             this.mapEditor.Text = "mainEditorPanel";
             // 
-            // tableLayoutPanel_MainOutline
+            // listView_Entities
             // 
-            this.tableLayoutPanel_MainOutline.ColumnCount = 1;
-            this.tableLayoutPanel_MainOutline.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_MainOutline.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel_MainOutline.Controls.Add(this.splitContainer_MainEditor, 0, 0);
-            this.tableLayoutPanel_MainOutline.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel_MainOutline.Location = new System.Drawing.Point(0, 45);
-            this.tableLayoutPanel_MainOutline.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tableLayoutPanel_MainOutline.Name = "tableLayoutPanel_MainOutline";
-            this.tableLayoutPanel_MainOutline.RowCount = 1;
-            this.tableLayoutPanel_MainOutline.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_MainOutline.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 764F));
-            this.tableLayoutPanel_MainOutline.Size = new System.Drawing.Size(1343, 771);
-            this.tableLayoutPanel_MainOutline.TabIndex = 6;
+            this.listView_Entities.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listView_Entities.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3});
+            this.listView_Entities.HideSelection = false;
+            listViewItem1.StateImageIndex = 0;
+            listViewItem2.StateImageIndex = 0;
+            listViewItem3.StateImageIndex = 0;
+            listViewItem4.StateImageIndex = 0;
+            listViewItem5.StateImageIndex = 0;
+            listViewItem6.StateImageIndex = 0;
+            this.listView_Entities.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5,
+            listViewItem6});
+            this.listView_Entities.LargeImageList = this.imageList_Entities;
+            this.listView_Entities.Location = new System.Drawing.Point(181, 40);
+            this.listView_Entities.MultiSelect = false;
+            this.listView_Entities.Name = "listView_Entities";
+            this.listView_Entities.Size = new System.Drawing.Size(223, 181);
+            this.listView_Entities.TabIndex = 8;
+            this.listView_Entities.TileSize = new System.Drawing.Size(20, 20);
+            this.listView_Entities.UseCompatibleStateImageBehavior = false;
+            this.listView_Entities.SelectedIndexChanged += new System.EventHandler(this.ListBox_EntityPicker_SelectedIndexChanged);
+            // 
+            // imageList_Entities
+            // 
+            this.imageList_Entities.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList_Entities.ImageStream")));
+            this.imageList_Entities.TransparentColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.imageList_Entities.Images.SetKeyName(0, "X.png");
+            this.imageList_Entities.Images.SetKeyName(1, "open-gate.png");
+            this.imageList_Entities.Images.SetKeyName(2, "exit-door.png");
+            this.imageList_Entities.Images.SetKeyName(3, "death-skull.png");
+            this.imageList_Entities.Images.SetKeyName(4, "gas-mask.png");
+            this.imageList_Entities.Images.SetKeyName(5, "uncertainty.png");
             // 
             // MainForm
             // 
@@ -1387,6 +1436,11 @@
         private System.Windows.Forms.Panel panel_EntityPicker;
         private System.Windows.Forms.Panel panel_MapEditorHolder;
         private Controls.MapEditor mapEditor;
-        private System.Windows.Forms.ComboBox comboBox_EntityPicker;
+        private System.Windows.Forms.ListBox listBox_EntityPicker;
+        private System.Windows.Forms.ListView listView_Entities;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ImageList imageList_Entities;
     }
 }

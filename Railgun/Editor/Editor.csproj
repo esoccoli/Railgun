@@ -3,7 +3,61 @@
   <!--Start of the extra build tasks for Content-->
   <ItemGroup>
     <None Include="Content\bin\Windows\Content\TestDir\IMG_4658.xnb" />
-    <None Include="Content\**" />
+    <None Include="Content\bin\Windows\Content\Consolas20.xnb" />
+    <None Include="Content\bin\Windows\Content\Entities\Enemy1.xnb" />
+    <None Include="Content\bin\Windows\Content\Entities\Enemy2.xnb" />
+    <None Include="Content\bin\Windows\Content\Entities\Enemy3.xnb" />
+    <None Include="Content\bin\Windows\Content\Entities\Enter.xnb" />
+    <None Include="Content\bin\Windows\Content\Entities\Exit.xnb" />
+    <None Include="Content\bin\Windows\Content\test.xnb" />
+    <None Include="Content\bin\Windows\Content\Tiles\Grass hill tiles v.2.xnb" />
+    <None Include="Content\bin\Windows\Content\Tiles\Grass tiles v.2.xnb" />
+    <None Include="Content\bin\Windows\Content\Tiles\mainlevbuild.xnb" />
+    <None Include="Content\bin\Windows\Content\Tiles\Tall Grass hill tiles v.2.xnb" />
+    <None Include="Content\bin\Windows\Content\Tiles\Textures-16.xnb" />
+    <None Include="Content\bin\Windows\Content\Tiles\Tiles.xnb" />
+    <None Include="Content\bin\Windows\Content\tmp\Grass hill tiles v.2.xnb" />
+    <None Include="Content\bin\Windows\Content\tmp\Grass tiles v.2.xnb" />
+    <None Include="Content\bin\Windows\Content\tmp\mainlevbuild.xnb" />
+    <None Include="Content\bin\Windows\Content\tmp\Tall Grass hill tiles v.2.xnb" />
+    <None Include="Content\bin\Windows\Content\tmp\Tiles.xnb" />
+    <None Include="Content\Consolas20.spritefont" />
+    <None Include="Content\Content.mgcb" />
+    <None Include="Content\Entities\Enter.png" />
+    <None Include="Content\Entities\Exit.png" />
+    <None Include="Content\obj\Windows\Content\.mgcontent" />
+    <None Include="Content\obj\Windows\Content\.mgstats" />
+    <None Include="Content\obj\Windows\Content\Consolas20.mgcontent" />
+    <None Include="Content\obj\Windows\Content\Entities\Enemy1.mgcontent" />
+    <None Include="Content\obj\Windows\Content\Entities\Enemy2.mgcontent" />
+    <None Include="Content\obj\Windows\Content\Entities\Enemy3.mgcontent" />
+    <None Include="Content\obj\Windows\Content\Entities\Enter.mgcontent" />
+    <None Include="Content\obj\Windows\Content\Entities\Exit.mgcontent" />
+    <None Include="Content\obj\Windows\Content\test.mgcontent" />
+    <None Include="Content\obj\Windows\Content\Tiles\Grass hill tiles v.2.mgcontent" />
+    <None Include="Content\obj\Windows\Content\Tiles\Grass tiles v.2.mgcontent" />
+    <None Include="Content\obj\Windows\Content\Tiles\mainlevbuild.mgcontent" />
+    <None Include="Content\obj\Windows\Content\Tiles\Tall Grass hill tiles v.2.mgcontent" />
+    <None Include="Content\obj\Windows\Content\Tiles\Textures-16.mgcontent" />
+    <None Include="Content\obj\Windows\Content\Tiles\Tiles.mgcontent" />
+    <None Include="Content\obj\Windows\Content\tmp\Grass hill tiles v.2.mgcontent" />
+    <None Include="Content\obj\Windows\Content\tmp\Grass tiles v.2.mgcontent" />
+    <None Include="Content\obj\Windows\Content\tmp\mainlevbuild.mgcontent" />
+    <None Include="Content\obj\Windows\Content\tmp\Tall Grass hill tiles v.2.mgcontent" />
+    <None Include="Content\obj\Windows\Content\tmp\Tiles.mgcontent" />
+    <None Include="Content\railgun editor logo.png" />
+    <None Include="Content\Tiles\Grass hill tiles v.2.png" />
+    <None Include="Content\Tiles\Grass tiles v.2.png" />
+    <None Include="Content\Tiles\mainlevbuild.png" />
+    <None Include="Content\Tiles\Tall Grass hill tiles v.2.png" />
+    <None Include="Content\Tiles\Textures-16.png" />
+    <None Include="Content\Tiles\Tiles.png" />
+    <None Include="Content\tmp\Grass hill tiles v.2.png" />
+    <None Include="Content\tmp\Grass tiles v.2.png" />
+    <None Include="Content\tmp\mainlevbuild.png" />
+    <None Include="Content\tmp\Tall Grass hill tiles v.2.png" />
+    <None Include="Content\tmp\Tiles.png" />
+    <None Include="Content\uiBullet.png" />
     <None Include="Content\Content.mgcb" />
     <None Include="Content\obj\Windows\Content\.mgcontent" />
     <None Include="Content\obj\Windows\Content\.mgstats" />
@@ -143,11 +197,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Entities\Enemy1.png" />
-    <Content Include="Content\Entities\Enemy2.png" />
-    <Content Include="Content\Entities\Enemy3.png" />
     <Content Include="Content\Entities\Enter.png" />
     <Content Include="Content\Entities\Exit.png" />
+    <Content Include="Content\Entities\Gas Man.png" />
+    <Content Include="Content\Entities\Skeleton.png" />
+    <Content Include="Content\Entities\Unknown.png" />
     <Content Include="Content\Tiles\Grass hill tiles v.2.png" />
     <Content Include="Content\Tiles\Grass tiles v.2.png" />
     <Content Include="Content\Tiles\mainlevbuild.png" />

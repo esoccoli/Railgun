@@ -149,7 +149,7 @@ namespace Railgun.Editor.App
             panel_Objects.Controls.Add(tableLayoutPanel_EntityPicker);
 
             //Set current entity to enterence
-            comboBox_EntityPicker.SelectedIndex = 1;
+            listBox_EntityPicker.SelectedIndex = 1;
         }
 
         /// <summary>
@@ -238,6 +238,12 @@ namespace Railgun.Editor.App
                     button.FlatAppearance.BorderColor = DarkTheme.Highlight;
                     button.FlatAppearance.MouseOverBackColor = DarkTheme.Highlight;
                     button.FlatAppearance.MouseDownBackColor = DarkTheme.Base;
+                }
+                else if(control is ListView)
+                {
+                    ListView list = control as ListView;
+                    list.BackColor = DarkTheme.Panel;
+                    list.ForeColor = DarkTheme.Label;
                 }
                 else
                 {
@@ -642,9 +648,9 @@ namespace Railgun.Editor.App
         /// <summary>
         /// Called when the entity picker is changed
         /// </summary>
-        private void ComboBox_EntityPicker_SelectedIndexChanged(object sender, EventArgs e)
+        private void ListBox_EntityPicker_SelectedIndexChanged(object sender, EventArgs e)
         {
-            EntityManager.Instance.CurrentEntity = comboBox_EntityPicker.SelectedIndex;
+            EntityManager.Instance.CurrentEntity = listView_Entities.SelectedItems[0].Index;
         }
 
         #endregion
