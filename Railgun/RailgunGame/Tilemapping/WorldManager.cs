@@ -26,6 +26,7 @@ namespace Railgun.RailgunGame.Tilemapping
             PossibleMaps = new List<Map>();
             RNG = new Random();
             CurrentEnemies = new List<Enemy>();
+            lastMapIndex = -1;
         }
 
         /// <summary>
@@ -110,6 +111,11 @@ namespace Railgun.RailgunGame.Tilemapping
         /// A white square used for debug drawing triggers
         /// </summary>
         private Texture2D whiteSquare;
+
+        /// <summary>
+        /// Stores the map index from the random map placement
+        /// </summary>
+        private int lastMapIndex;
 
         /// <summary>
         /// Draws all normal game parts of the world (the map)
@@ -251,7 +257,14 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <returns>Returns a new random map clone</returns>
         private Map RandomMap()
         {
-            return PossibleMaps[RNG.Next(PossibleMaps.Count)].Clone();//Random map clone
+            //Make sure it is not the same map as last time
+            int index = RNG.Next(PossibleMaps.Count);
+            while(index == lastMapIndex)
+            {
+                index = RNG.Next(PossibleMaps.Count);
+            }
+            lastMapIndex = index;
+            return PossibleMaps[index].Clone();
         }
 
         /// <summary>
