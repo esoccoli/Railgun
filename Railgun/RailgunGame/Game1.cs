@@ -503,7 +503,7 @@ namespace Railgun.RailgunGame
                     _spriteBatch.End();
 
                     //DEBUG Draw world debug
-                    world.DrawDebug(_spriteBatch, GraphicsDevice);
+                    //world.DrawDebug(_spriteBatch, GraphicsDevice);
 
                     //Draw overlay
                     _spriteBatch.Begin(samplerState: SamplerState.PointClamp,
