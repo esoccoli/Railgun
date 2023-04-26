@@ -51,6 +51,11 @@ namespace Railgun.RailgunGame
         public Animation HasCollided { get; set; }
 
         /// <summary>
+        /// The color of the bullet.
+        /// </summary>
+        public Color color { get; set; }
+
+        /// <summary>
         /// instantiates a projectile
         /// </summary>
         /// <param name="hitbox">hitbox of projectile</param>
@@ -58,12 +63,14 @@ namespace Railgun.RailgunGame
         public Projectile(Rectangle hitbox,
                           Texture2D isActiveTexture,
                           Animation hasCollidedAnimation,
-                          Vector2 Velocity) : base(hitbox)
+                          Vector2 Velocity,
+                          Color color) : base(hitbox)
         {
             this.Velocity = Velocity;
             ActiveTexture = isActiveTexture;
             HasCollided = hasCollidedAnimation;
             Position = Hitbox.Center.ToVector2();
+            this.color = color;
         }
 
         /// <summary>
@@ -110,10 +117,10 @@ namespace Railgun.RailgunGame
         /// <param name="sb">_spritebatch</param>
         public bool Draw(SpriteBatch sb, GameTime gameTime)
         {
-            switch (CurrentState)
+            switch(CurrentState)
             {
                 case ProjectileStates.IsActive:
-                    sb.Draw(ActiveTexture, new Rectangle((int)(Position.X - (ActiveTexture.Width / 2)), (int)(Position.Y - (ActiveTexture.Height / 2)), ActiveTexture.Width, ActiveTexture.Height), Color.LightSkyBlue);
+                    sb.Draw(ActiveTexture, new Rectangle((int)(Position.X - (ActiveTexture.Width / 2)), (int)(Position.Y - (ActiveTexture.Height / 2)), ActiveTexture.Width, ActiveTexture.Height), color);
                     break;
 
                 case ProjectileStates.HasCollided:
