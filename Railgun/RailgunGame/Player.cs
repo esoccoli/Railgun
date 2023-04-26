@@ -185,8 +185,10 @@ namespace Railgun.RailgunGame
         public void ResetPlayer()
         {
             Health = 100;
-            Ammo = 8;
+            Ammo = 24;
             ShootCooldown = 2.5;
+
+            Hitbox = new Rectangle(0, 0, 100, 100);
         }
 
         /// <summary>
@@ -199,7 +201,7 @@ namespace Railgun.RailgunGame
 
             Vector2 vect = (WorldManager.Instance.GetMouseWorldPosition().ToPoint() - Hitbox.Center).ToVector2() / Vector2.Distance(WorldManager.Instance.GetMouseWorldPosition(), Hitbox.Center.ToVector2());
 
-            PlayerBullets.Add(new Projectile(new Rectangle(Hitbox.X + (Hitbox.Width / 2) - (activeBullet.Width / 2), Hitbox.Y + (Hitbox.Height / 2) - (activeBullet.Height / 2), activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet.Clone(), vect * 10.0f));
+            PlayerBullets.Add(new Projectile(new Rectangle(Hitbox.X + (Hitbox.Width / 2) - (activeBullet.Width / 2), Hitbox.Y + (Hitbox.Height / 2) - (activeBullet.Height / 2), activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet.Clone(), vect * 10.0f, Color.Red));
         }
 
         /// <summary>
