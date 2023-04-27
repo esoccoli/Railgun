@@ -88,7 +88,8 @@ namespace Railgun.Editor.App.Util
         private Tile currentTile;
 
         /// <summary>
-        /// A list of selected tiles to be edited
+        /// A list of selected tiles to be edited, except I never got
+        /// the chance to fully implement the feature
         /// </summary>
         public List<Tile> SelectedTiles { get; private set; }
 
@@ -123,6 +124,20 @@ namespace Railgun.Editor.App.Util
             }
         }
         private bool viewHitboxes;
+
+        /// <summary>
+        /// Whether or not the hitboxes of tiles should be displayed
+        /// </summary>
+        public bool ShowGrid
+        {
+            get => showGrid;
+            set
+            {
+                showGrid = value;
+                OnViewGridChange?.Invoke();
+            }
+        }
+        private bool showGrid;
 
         #endregion
 
@@ -198,6 +213,11 @@ namespace Railgun.Editor.App.Util
         /// An event that is called when the viewing ability of hitboxes is changed
         /// </summary>
         public event GenericDelegate OnViewHitboxesChange;
+
+        /// <summary>
+        /// An event that is called when the viewing ability of the grid is changed
+        /// </summary>
+        public event GenericDelegate OnViewGridChange;
 
         #endregion
 

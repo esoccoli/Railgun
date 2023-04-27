@@ -267,8 +267,8 @@ namespace Railgun.Editor.App.Controls
                 ShapeBatch.BoxOutline(selectionRectangle, selectorColorOutline);
             }
 
-            //Draw grid
-            DrawGrid();
+            //Draw grid if enabled
+            if(tileManager.ShowGrid) DrawGrid();
 
             ////
             ShapeBatch.End();
@@ -417,6 +417,8 @@ namespace Railgun.Editor.App.Controls
                    tileManager.ViewHitboxes = !tileManager.ViewHitboxes;//Toggle view hitbox
                 if(input.JustPressed(Keys.C))
                     tileManager.PlaceHitbox = !tileManager.PlaceHitbox;//Toggle place hitbox
+                if(input.JustPressed(Keys.G))
+                    tileManager.ShowGrid = !tileManager.ShowGrid;//Toggle view grid
             }
         }
 

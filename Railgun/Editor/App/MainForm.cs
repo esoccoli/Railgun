@@ -97,6 +97,7 @@ namespace Railgun.Editor.App
             tileManager.OnHitboxChange += currentTileDisplay.Update;
             tileManager.OnViewHitboxesChange += UpdateViewHitbox;
             tileManager.OnViewHitboxesChange += currentTileDisplay.Update;
+            tileManager.OnViewGridChange += UpdateViewGrid;
             tileManager.OnLayerChange += UpdateLayerDisplay;
 
             //Subscribe modify event
@@ -134,6 +135,7 @@ namespace Railgun.Editor.App
             toolStripMenuItem_MoveRight.ShortcutKeyDisplayString = "D";
             toolStripMenuItem_ShowHitboxes.ShortcutKeyDisplayString = "X";
             toolStripMenuItem_PlaceHitbox.ShortcutKeyDisplayString = "C";
+            toolStripMenuItem_ShowGrid.ShortcutKeyDisplayString = "G";
 
             //Set selected layer to tiles
             comboBox_Layers.SelectedIndex = comboBox_Layers.Items.Count - 2;
@@ -141,12 +143,13 @@ namespace Railgun.Editor.App
             //Set hitboxes to checked
             checkBox_ShowHitboxes.Checked = true;
             checkBox_Solid.Checked = true;
+            checkBox_ShowGrid.Checked = true;
 
             //Re-arrange temporary holder panels
             panel_Entities.Visible = false;
             tableLayoutPanel_MainEditor.Controls.Remove(panel_Big_Holder);
             tableLayoutPanel_MainEditor.Controls.Add(mapEditor, 0, 1);
-            panel_Objects.Controls.Add(tableLayoutPanel_EntityPicker);
+            splitContainer_MainEditor.Panel1.Controls.Add(tableLayoutPanel_EntityPicker);
         }
 
         /// <summary>
@@ -480,6 +483,31 @@ namespace Railgun.Editor.App
             tileManager.ViewHitboxes = (sender as ToolStripMenuItem).Checked;
         }
 
+        /// <summary>
+        /// Updates the checkboxes of the grid view
+        /// </summary>
+        private void UpdateViewGrid()
+        {
+            toolStripMenuItem_ShowGrid.Checked = tileManager.ShowGrid;
+            checkBox_ShowGrid.Checked = tileManager.ShowGrid;
+        }
+
+        /// <summary>
+        /// Sets showing the grid to the check
+        /// </summary>
+        private void CheckBox_ShowGrid_CheckedChanged(object sender, EventArgs e)
+        {
+            tileManager.ShowGrid = (sender as CheckBox).Checked;
+        }
+
+        /// <summary>
+        /// Sets showing the grid to the check
+        /// </summary>
+        private void Menu_View_ShowGrid_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
         #endregion
 
         #region Fake Control Box Events
@@ -601,12 +629,15 @@ namespace Railgun.Editor.App
             //Set current tile to nothing if on a non-tile layer
             if(tileManager.CurrentLayer < 0)
             {
+                tileManager.CurrentTile = Tile.Empty;
+
                 //If hitbox layer
                 if(tileManager.CurrentLayer == -1)
                 {
                     //Hide tile picker
+                    splitContainer_LeftSideBar.Visible = true;
                     tableLayoutPanel_TilePicker.Visible = false;
-                    tileManager.CurrentTile = Tile.Empty;
+                    
                     //Hide entity picker
                     tableLayoutPanel_EntityPicker.Visible = false;
                     tableLayoutPanel_Edit.Visible = true;
@@ -614,9 +645,8 @@ namespace Railgun.Editor.App
                 //If entity layer
                 else if(tileManager.CurrentLayer == -2)
                 {
-                    //Hide tile picker
-                    tableLayoutPanel_TilePicker.Visible = false;
-                    tileManager.CurrentTile = Tile.Empty;
+                    //Hide tile and hitbox sidebar
+                    splitContainer_LeftSideBar.Visible = false;
                     //Hide tile picker
                     tableLayoutPanel_EntityPicker.Visible = true;
                     tableLayoutPanel_Edit.Visible = false;
@@ -626,10 +656,13 @@ namespace Railgun.Editor.App
             }
 
             //Show tile picker
+            splitContainer_LeftSideBar.Visible = true;
             tableLayoutPanel_TilePicker.Visible = true;
             //Hide entity picker
             tableLayoutPanel_EntityPicker.Visible = false;
             tableLayoutPanel_Edit.Visible = true;
+
+            
 
             //Else set to current selection
             CurrentTileset.CreateTileSelection();

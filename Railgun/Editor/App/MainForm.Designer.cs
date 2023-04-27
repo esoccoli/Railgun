@@ -107,19 +107,21 @@
             this.panel_LayerSettings = new System.Windows.Forms.Panel();
             this.label_Layers = new System.Windows.Forms.Label();
             this.comboBox_Layers = new System.Windows.Forms.ComboBox();
-            this.checkBox_ShowHitboxes = new System.Windows.Forms.CheckBox();
             this.panel_Big_Holder = new System.Windows.Forms.Panel();
             this.panel_EntityPickerHolder = new System.Windows.Forms.Panel();
             this.panel_Entities = new System.Windows.Forms.Panel();
             this.tableLayoutPanel_EntityPicker = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel_EntitySettings = new System.Windows.Forms.TableLayoutPanel();
-            this.panel_EntitySettings = new System.Windows.Forms.Panel();
             this.panel_EntityPicker = new System.Windows.Forms.Panel();
             this.listView_Entities = new System.Windows.Forms.ListView();
             this.imageList_Entities = new System.Windows.Forms.ImageList(this.components);
             this.panel_MapEditorHolder = new System.Windows.Forms.Panel();
             this.mapEditor = new Railgun.Editor.App.Controls.MapEditor();
             this.tableLayoutPanel_MainOutline = new System.Windows.Forms.TableLayoutPanel();
+            this.label_EntityPicker = new System.Windows.Forms.Label();
+            this.tableLayoutPanel_EntitySettings = new System.Windows.Forms.TableLayoutPanel();
+            this.checkBox_ShowGrid = new System.Windows.Forms.CheckBox();
+            this.checkBox_ShowHitboxes = new System.Windows.Forms.CheckBox();
+            this.toolStripMenuItem_ShowGrid = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_MainEditor)).BeginInit();
@@ -149,7 +151,6 @@
             this.panel_EntityPickerHolder.SuspendLayout();
             this.panel_Entities.SuspendLayout();
             this.tableLayoutPanel_EntityPicker.SuspendLayout();
-            this.tableLayoutPanel_EntitySettings.SuspendLayout();
             this.panel_EntityPicker.SuspendLayout();
             this.panel_MapEditorHolder.SuspendLayout();
             this.tableLayoutPanel_MainOutline.SuspendLayout();
@@ -342,7 +343,8 @@
             this.toolStripMenuItem_View.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem_ResetZoom,
             this.toolStripMenuItem_ResetCamera,
-            this.toolStripMenuItem_ShowHitboxes});
+            this.toolStripMenuItem_ShowHitboxes,
+            this.toolStripMenuItem_ShowGrid});
             this.toolStripMenuItem_View.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.toolStripMenuItem_View.Name = "toolStripMenuItem_View";
             this.toolStripMenuItem_View.Size = new System.Drawing.Size(55, 24);
@@ -595,8 +597,8 @@
             this.tableLayoutPanel_Tiles.ColumnCount = 1;
             this.tableLayoutPanel_Tiles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel_Tiles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel_Tiles.Controls.Add(this.panel_Objects, 0, 1);
             this.tableLayoutPanel_Tiles.Controls.Add(this.label_TilePicker, 0, 0);
+            this.tableLayoutPanel_Tiles.Controls.Add(this.panel_Objects, 0, 1);
             this.tableLayoutPanel_Tiles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel_Tiles.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel_Tiles.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -755,7 +757,7 @@
             // 
             // label_TilePicker
             // 
-            this.label_TilePicker.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label_TilePicker.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label_TilePicker.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label_TilePicker.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label_TilePicker.Location = new System.Drawing.Point(0, 0);
@@ -961,7 +963,7 @@
             // 
             // label_Edit
             // 
-            this.label_Edit.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label_Edit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label_Edit.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label_Edit.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label_Edit.Location = new System.Drawing.Point(0, 0);
@@ -1023,11 +1025,13 @@
             // tableLayoutPanel_MainEditorSettings
             // 
             this.tableLayoutPanel_MainEditorSettings.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanel_MainEditorSettings.ColumnCount = 2;
-            this.tableLayoutPanel_MainEditorSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel_MainEditorSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel_MainEditorSettings.ColumnCount = 3;
+            this.tableLayoutPanel_MainEditorSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel_MainEditorSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel_MainEditorSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel_MainEditorSettings.Controls.Add(this.checkBox_ShowHitboxes, 0, 0);
             this.tableLayoutPanel_MainEditorSettings.Controls.Add(this.panel_LayerSettings, 0, 0);
-            this.tableLayoutPanel_MainEditorSettings.Controls.Add(this.checkBox_ShowHitboxes, 1, 0);
+            this.tableLayoutPanel_MainEditorSettings.Controls.Add(this.checkBox_ShowGrid, 2, 0);
             this.tableLayoutPanel_MainEditorSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel_MainEditorSettings.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel_MainEditorSettings.Margin = new System.Windows.Forms.Padding(0);
@@ -1045,7 +1049,7 @@
             this.panel_LayerSettings.Location = new System.Drawing.Point(0, 0);
             this.panel_LayerSettings.Margin = new System.Windows.Forms.Padding(0);
             this.panel_LayerSettings.Name = "panel_LayerSettings";
-            this.panel_LayerSettings.Size = new System.Drawing.Size(535, 50);
+            this.panel_LayerSettings.Size = new System.Drawing.Size(357, 50);
             this.panel_LayerSettings.TabIndex = 2;
             // 
             // label_Layers
@@ -1054,7 +1058,7 @@
             this.label_Layers.AutoSize = true;
             this.label_Layers.BackColor = System.Drawing.Color.Transparent;
             this.label_Layers.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.label_Layers.Location = new System.Drawing.Point(123, 14);
+            this.label_Layers.Location = new System.Drawing.Point(34, 14);
             this.label_Layers.Name = "label_Layers";
             this.label_Layers.Size = new System.Drawing.Size(99, 20);
             this.label_Layers.TabIndex = 5;
@@ -1073,27 +1077,12 @@
             "Hitboxes",
             "Tiles Bottom",
             "Tiles Top"});
-            this.comboBox_Layers.Location = new System.Drawing.Point(243, 11);
+            this.comboBox_Layers.Location = new System.Drawing.Point(154, 11);
             this.comboBox_Layers.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBox_Layers.Name = "comboBox_Layers";
             this.comboBox_Layers.Size = new System.Drawing.Size(165, 28);
             this.comboBox_Layers.TabIndex = 3;
             this.comboBox_Layers.SelectedIndexChanged += new System.EventHandler(this.ComboBox_Layers_SelectedIndexChanged);
-            // 
-            // checkBox_ShowHitboxes
-            // 
-            this.checkBox_ShowHitboxes.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.checkBox_ShowHitboxes.AutoSize = true;
-            this.checkBox_ShowHitboxes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox_ShowHitboxes.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.checkBox_ShowHitboxes.Location = new System.Drawing.Point(740, 13);
-            this.checkBox_ShowHitboxes.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.checkBox_ShowHitboxes.Name = "checkBox_ShowHitboxes";
-            this.checkBox_ShowHitboxes.Size = new System.Drawing.Size(126, 24);
-            this.checkBox_ShowHitboxes.TabIndex = 1;
-            this.checkBox_ShowHitboxes.Text = "Show Hitboxes";
-            this.checkBox_ShowHitboxes.UseVisualStyleBackColor = true;
-            this.checkBox_ShowHitboxes.CheckedChanged += new System.EventHandler(this.CheckBox_ShowHitboxes_CheckedChanged);
             // 
             // panel_Big_Holder
             // 
@@ -1111,7 +1100,7 @@
             this.panel_EntityPickerHolder.Location = new System.Drawing.Point(207, 196);
             this.panel_EntityPickerHolder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel_EntityPickerHolder.Name = "panel_EntityPickerHolder";
-            this.panel_EntityPickerHolder.Size = new System.Drawing.Size(699, 629);
+            this.panel_EntityPickerHolder.Size = new System.Drawing.Size(669, 382);
             this.panel_EntityPickerHolder.TabIndex = 1;
             // 
             // panel_Entities
@@ -1121,59 +1110,37 @@
             this.panel_Entities.Location = new System.Drawing.Point(0, 0);
             this.panel_Entities.Margin = new System.Windows.Forms.Padding(0);
             this.panel_Entities.Name = "panel_Entities";
-            this.panel_Entities.Size = new System.Drawing.Size(699, 629);
+            this.panel_Entities.Size = new System.Drawing.Size(669, 382);
             this.panel_Entities.TabIndex = 5;
             // 
             // tableLayoutPanel_EntityPicker
             // 
             this.tableLayoutPanel_EntityPicker.ColumnCount = 1;
             this.tableLayoutPanel_EntityPicker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_EntityPicker.Controls.Add(this.tableLayoutPanel_EntitySettings, 0, 0);
-            this.tableLayoutPanel_EntityPicker.Controls.Add(this.panel_EntityPicker, 0, 1);
+            this.tableLayoutPanel_EntityPicker.Controls.Add(this.tableLayoutPanel_EntitySettings, 0, 1);
+            this.tableLayoutPanel_EntityPicker.Controls.Add(this.panel_EntityPicker, 0, 2);
+            this.tableLayoutPanel_EntityPicker.Controls.Add(this.label_EntityPicker, 0, 0);
             this.tableLayoutPanel_EntityPicker.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel_EntityPicker.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel_EntityPicker.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel_EntityPicker.Name = "tableLayoutPanel_EntityPicker";
-            this.tableLayoutPanel_EntityPicker.RowCount = 2;
+            this.tableLayoutPanel_EntityPicker.RowCount = 3;
+            this.tableLayoutPanel_EntityPicker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel_EntityPicker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel_EntityPicker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_EntityPicker.Size = new System.Drawing.Size(699, 629);
+            this.tableLayoutPanel_EntityPicker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_EntityPicker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_EntityPicker.Size = new System.Drawing.Size(669, 382);
             this.tableLayoutPanel_EntityPicker.TabIndex = 1;
-            // 
-            // tableLayoutPanel_EntitySettings
-            // 
-            this.tableLayoutPanel_EntitySettings.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanel_EntitySettings.ColumnCount = 1;
-            this.tableLayoutPanel_EntitySettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_EntitySettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel_EntitySettings.Controls.Add(this.panel_EntitySettings, 0, 0);
-            this.tableLayoutPanel_EntitySettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel_EntitySettings.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel_EntitySettings.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel_EntitySettings.Name = "tableLayoutPanel_EntitySettings";
-            this.tableLayoutPanel_EntitySettings.RowCount = 1;
-            this.tableLayoutPanel_EntitySettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_EntitySettings.Size = new System.Drawing.Size(699, 50);
-            this.tableLayoutPanel_EntitySettings.TabIndex = 2;
-            // 
-            // panel_EntitySettings
-            // 
-            this.panel_EntitySettings.AutoSize = true;
-            this.panel_EntitySettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_EntitySettings.Location = new System.Drawing.Point(0, 0);
-            this.panel_EntitySettings.Margin = new System.Windows.Forms.Padding(0);
-            this.panel_EntitySettings.Name = "panel_EntitySettings";
-            this.panel_EntitySettings.Size = new System.Drawing.Size(699, 50);
-            this.panel_EntitySettings.TabIndex = 7;
             // 
             // panel_EntityPicker
             // 
             this.panel_EntityPicker.Controls.Add(this.listView_Entities);
             this.panel_EntityPicker.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_EntityPicker.Location = new System.Drawing.Point(3, 52);
+            this.panel_EntityPicker.Location = new System.Drawing.Point(3, 72);
             this.panel_EntityPicker.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel_EntityPicker.Name = "panel_EntityPicker";
-            this.panel_EntityPicker.Size = new System.Drawing.Size(693, 575);
+            this.panel_EntityPicker.Size = new System.Drawing.Size(663, 308);
             this.panel_EntityPicker.TabIndex = 3;
             // 
             // listView_Entities
@@ -1200,7 +1167,7 @@
             this.listView_Entities.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listView_Entities.MultiSelect = false;
             this.listView_Entities.Name = "listView_Entities";
-            this.listView_Entities.Size = new System.Drawing.Size(693, 575);
+            this.listView_Entities.Size = new System.Drawing.Size(663, 308);
             this.listView_Entities.TabIndex = 8;
             this.listView_Entities.TileSize = new System.Drawing.Size(20, 20);
             this.listView_Entities.UseCompatibleStateImageBehavior = false;
@@ -1261,6 +1228,72 @@
             this.tableLayoutPanel_MainOutline.Size = new System.Drawing.Size(1529, 1013);
             this.tableLayoutPanel_MainOutline.TabIndex = 6;
             // 
+            // label_EntityPicker
+            // 
+            this.label_EntityPicker.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label_EntityPicker.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label_EntityPicker.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label_EntityPicker.Location = new System.Drawing.Point(0, 0);
+            this.label_EntityPicker.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
+            this.label_EntityPicker.Name = "label_EntityPicker";
+            this.label_EntityPicker.Size = new System.Drawing.Size(669, 16);
+            this.label_EntityPicker.TabIndex = 4;
+            this.label_EntityPicker.Text = "Entity Picker";
+            this.label_EntityPicker.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tableLayoutPanel_EntitySettings
+            // 
+            this.tableLayoutPanel_EntitySettings.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel_EntitySettings.ColumnCount = 1;
+            this.tableLayoutPanel_EntitySettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_EntitySettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_EntitySettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel_EntitySettings.Location = new System.Drawing.Point(0, 20);
+            this.tableLayoutPanel_EntitySettings.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel_EntitySettings.Name = "tableLayoutPanel_EntitySettings";
+            this.tableLayoutPanel_EntitySettings.RowCount = 1;
+            this.tableLayoutPanel_EntitySettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_EntitySettings.Size = new System.Drawing.Size(669, 50);
+            this.tableLayoutPanel_EntitySettings.TabIndex = 2;
+            // 
+            // checkBox_ShowGrid
+            // 
+            this.checkBox_ShowGrid.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.checkBox_ShowGrid.AutoSize = true;
+            this.checkBox_ShowGrid.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox_ShowGrid.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.checkBox_ShowGrid.Location = new System.Drawing.Point(845, 13);
+            this.checkBox_ShowGrid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.checkBox_ShowGrid.Name = "checkBox_ShowGrid";
+            this.checkBox_ShowGrid.Size = new System.Drawing.Size(95, 24);
+            this.checkBox_ShowGrid.TabIndex = 3;
+            this.checkBox_ShowGrid.Text = "Show Grid";
+            this.checkBox_ShowGrid.UseVisualStyleBackColor = true;
+            this.checkBox_ShowGrid.CheckedChanged += new System.EventHandler(this.CheckBox_ShowGrid_CheckedChanged);
+            // 
+            // checkBox_ShowHitboxes
+            // 
+            this.checkBox_ShowHitboxes.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.checkBox_ShowHitboxes.AutoSize = true;
+            this.checkBox_ShowHitboxes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox_ShowHitboxes.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.checkBox_ShowHitboxes.Location = new System.Drawing.Point(472, 13);
+            this.checkBox_ShowHitboxes.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.checkBox_ShowHitboxes.Name = "checkBox_ShowHitboxes";
+            this.checkBox_ShowHitboxes.Size = new System.Drawing.Size(126, 24);
+            this.checkBox_ShowHitboxes.TabIndex = 4;
+            this.checkBox_ShowHitboxes.Text = "Show Hitboxes";
+            this.checkBox_ShowHitboxes.UseVisualStyleBackColor = true;
+            this.checkBox_ShowHitboxes.CheckedChanged += new System.EventHandler(this.CheckBox_ShowHitboxes_CheckedChanged);
+            // 
+            // toolStripMenuItem_ShowGrid
+            // 
+            this.toolStripMenuItem_ShowGrid.CheckOnClick = true;
+            this.toolStripMenuItem_ShowGrid.Name = "toolStripMenuItem_ShowGrid";
+            this.toolStripMenuItem_ShowGrid.Size = new System.Drawing.Size(233, 26);
+            this.toolStripMenuItem_ShowGrid.Text = "Show Grid";
+            this.toolStripMenuItem_ShowGrid.CheckedChanged += new System.EventHandler(this.Menu_View_ShowGrid_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1316,8 +1349,6 @@
             this.panel_EntityPickerHolder.ResumeLayout(false);
             this.panel_Entities.ResumeLayout(false);
             this.tableLayoutPanel_EntityPicker.ResumeLayout(false);
-            this.tableLayoutPanel_EntitySettings.ResumeLayout(false);
-            this.tableLayoutPanel_EntitySettings.PerformLayout();
             this.panel_EntityPicker.ResumeLayout(false);
             this.panel_MapEditorHolder.ResumeLayout(false);
             this.tableLayoutPanel_MainOutline.ResumeLayout(false);
@@ -1382,7 +1413,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_EditSettings;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_PlaceHitbox;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_ShowHitboxes;
-        private System.Windows.Forms.CheckBox checkBox_ShowHitboxes;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_MainEditor;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_MainEditorSettings;
         private System.Windows.Forms.Panel panel_LayerSettings;
@@ -1411,12 +1441,15 @@
         private System.Windows.Forms.Panel panel_EntityPickerHolder;
         private System.Windows.Forms.Panel panel_Entities;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_EntityPicker;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_EntitySettings;
-        private System.Windows.Forms.Panel panel_EntitySettings;
         private System.Windows.Forms.Panel panel_EntityPicker;
         private System.Windows.Forms.Panel panel_MapEditorHolder;
         private Controls.MapEditor mapEditor;
         private System.Windows.Forms.ListView listView_Entities;
         private System.Windows.Forms.ImageList imageList_Entities;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_EntitySettings;
+        private System.Windows.Forms.Label label_EntityPicker;
+        private System.Windows.Forms.CheckBox checkBox_ShowGrid;
+        private System.Windows.Forms.CheckBox checkBox_ShowHitboxes;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_ShowGrid;
     }
 }
