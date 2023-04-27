@@ -564,7 +564,7 @@
             // splitContainer_MainEditor.Panel2
             // 
             this.splitContainer_MainEditor.Panel2.Controls.Add(this.tableLayoutPanel_MainEditor);
-            this.splitContainer_MainEditor.Panel2MinSize = 400;
+            this.splitContainer_MainEditor.Panel2MinSize = 700;
             this.splitContainer_MainEditor.Size = new System.Drawing.Size(1529, 1005);
             this.splitContainer_MainEditor.SplitterDistance = 454;
             this.splitContainer_MainEditor.TabIndex = 5;
