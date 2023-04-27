@@ -112,7 +112,7 @@ namespace Railgun.Editor.App
             WindowState = FormWindowState.Maximized;
 
             //Set tile size to 16 pixels
-            textBox_TileSize.Text = "16";
+            numericUpDown_TileSize.Value = 16;
 
             //Resize square buttons since the designer doesn't understand how since
             //it sets the size before it changes the margin size. Also for the display
@@ -505,7 +505,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_View_ShowGrid_CheckedChanged(object sender, EventArgs e)
         {
-
+            tileManager.ShowGrid = (sender as ToolStripMenuItem).Checked;
         }
 
         #endregion
@@ -583,33 +583,11 @@ namespace Railgun.Editor.App
         #region Tile Picker and Related Events
 
         /// <summary>
-        /// Changes the tile size when the text box is changed
+        /// Changes the tile size when the number box is changed
         /// </summary>
         private void TileSize_TextChanged(object sender, EventArgs e)
         {
-            TextBox textBox = sender as TextBox;
-
-            //If valid, set the tile size
-            if(int.TryParse(textBox.Text, out int tileSize) && tileSize > 0)
-            {
-                CurrentTileset.GridSize = tileSize;
-            }
-            //If not valid number an not empty, set it to previous valid number
-            else if (textBox.Text != string.Empty)
-            {
-                textBox.Text = CurrentTileset.GridSize.ToString();
-                //Set cursor to end of text
-                textBox.SelectionStart = textBox.TextLength;
-            }
-        }
-
-        /// <summary>
-        /// Called when the text box has lost focus and
-        /// makes sure it has the correct number
-        /// </summary>
-        private void TileSize_Leave(object sender, EventArgs e)
-        {
-            (sender as TextBox).Text = CurrentTileset.GridSize.ToString();
+            CurrentTileset.GridSize = (float)(sender as NumericUpDown).Value;
         }
 
         /// <summary>
@@ -618,7 +596,7 @@ namespace Railgun.Editor.App
         private void TabControl_Tileset_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Set tile size to current tileset's tile size
-            textBox_TileSize.Text = CurrentTileset.GridSize.ToString();
+            numericUpDown_TileSize.Value = (decimal)CurrentTileset.GridSize;
         }
 
         /// <summary>

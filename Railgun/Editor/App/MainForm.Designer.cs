@@ -22,12 +22,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Eraser", 0);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Entrence", 1);
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Exit", 2);
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("Skeleton", 3);
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("Gas Man", 4);
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("Enemy 3", 5);
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("Eraser", 0);
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("Entrence", 1);
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("Exit", 2);
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("Skeleton", 3);
+            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("Gas Man", 4);
+            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("Enemy 3", 5);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem_Logo = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,7 +80,6 @@
             this.tableLayoutPanel_ObjectSettings = new System.Windows.Forms.TableLayoutPanel();
             this.panel_TileSizeSettings = new System.Windows.Forms.Panel();
             this.label_TileSize = new System.Windows.Forms.Label();
-            this.textBox_TileSize = new System.Windows.Forms.TextBox();
             this.panel_TilePicker = new System.Windows.Forms.Panel();
             this.tabControl_Tileset = new System.Windows.Forms.TabControl();
             this.tabPage_EmptyTileset = new System.Windows.Forms.TabPage();
@@ -122,6 +121,7 @@
             this.checkBox_ShowGrid = new System.Windows.Forms.CheckBox();
             this.checkBox_ShowHitboxes = new System.Windows.Forms.CheckBox();
             this.toolStripMenuItem_ShowGrid = new System.Windows.Forms.ToolStripMenuItem();
+            this.numericUpDown_TileSize = new System.Windows.Forms.NumericUpDown();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_MainEditor)).BeginInit();
@@ -154,6 +154,7 @@
             this.panel_EntityPicker.SuspendLayout();
             this.panel_MapEditorHolder.SuspendLayout();
             this.tableLayoutPanel_MainOutline.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_TileSize)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -655,8 +656,8 @@
             // panel_TileSizeSettings
             // 
             this.panel_TileSizeSettings.AutoSize = true;
+            this.panel_TileSizeSettings.Controls.Add(this.numericUpDown_TileSize);
             this.panel_TileSizeSettings.Controls.Add(this.label_TileSize);
-            this.panel_TileSizeSettings.Controls.Add(this.textBox_TileSize);
             this.panel_TileSizeSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_TileSizeSettings.Location = new System.Drawing.Point(0, 0);
             this.panel_TileSizeSettings.Margin = new System.Windows.Forms.Padding(0);
@@ -670,22 +671,11 @@
             this.label_TileSize.AutoSize = true;
             this.label_TileSize.BackColor = System.Drawing.Color.Transparent;
             this.label_TileSize.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.label_TileSize.Location = new System.Drawing.Point(165, 14);
+            this.label_TileSize.Location = new System.Drawing.Point(147, 14);
             this.label_TileSize.Name = "label_TileSize";
             this.label_TileSize.Size = new System.Drawing.Size(67, 20);
             this.label_TileSize.TabIndex = 4;
             this.label_TileSize.Text = "Tile Size:";
-            // 
-            // textBox_TileSize
-            // 
-            this.textBox_TileSize.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.textBox_TileSize.Location = new System.Drawing.Point(240, 14);
-            this.textBox_TileSize.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.textBox_TileSize.Name = "textBox_TileSize";
-            this.textBox_TileSize.Size = new System.Drawing.Size(41, 22);
-            this.textBox_TileSize.TabIndex = 3;
-            this.textBox_TileSize.TextChanged += new System.EventHandler(this.TileSize_TextChanged);
-            this.textBox_TileSize.Leave += new System.EventHandler(this.TileSize_Leave);
             // 
             // panel_TilePicker
             // 
@@ -1149,19 +1139,19 @@
             this.listView_Entities.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listView_Entities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView_Entities.HideSelection = false;
-            listViewItem1.StateImageIndex = 0;
-            listViewItem2.StateImageIndex = 0;
-            listViewItem3.StateImageIndex = 0;
-            listViewItem4.StateImageIndex = 0;
-            listViewItem5.StateImageIndex = 0;
-            listViewItem6.StateImageIndex = 0;
+            listViewItem7.StateImageIndex = 0;
+            listViewItem8.StateImageIndex = 0;
+            listViewItem9.StateImageIndex = 0;
+            listViewItem10.StateImageIndex = 0;
+            listViewItem11.StateImageIndex = 0;
+            listViewItem12.StateImageIndex = 0;
             this.listView_Entities.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4,
-            listViewItem5,
-            listViewItem6});
+            listViewItem7,
+            listViewItem8,
+            listViewItem9,
+            listViewItem10,
+            listViewItem11,
+            listViewItem12});
             this.listView_Entities.LargeImageList = this.imageList_Entities;
             this.listView_Entities.Location = new System.Drawing.Point(0, 0);
             this.listView_Entities.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -1294,6 +1284,30 @@
             this.toolStripMenuItem_ShowGrid.Text = "Show Grid";
             this.toolStripMenuItem_ShowGrid.CheckedChanged += new System.EventHandler(this.Menu_View_ShowGrid_CheckedChanged);
             // 
+            // numericUpDown_TileSize
+            // 
+            this.numericUpDown_TileSize.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.numericUpDown_TileSize.Location = new System.Drawing.Point(233, 13);
+            this.numericUpDown_TileSize.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.numericUpDown_TileSize.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown_TileSize.Name = "numericUpDown_TileSize";
+            this.numericUpDown_TileSize.Size = new System.Drawing.Size(66, 22);
+            this.numericUpDown_TileSize.TabIndex = 5;
+            this.numericUpDown_TileSize.Value = new decimal(new int[] {
+            16,
+            0,
+            0,
+            0});
+            this.numericUpDown_TileSize.ValueChanged += new System.EventHandler(this.TileSize_TextChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1352,6 +1366,7 @@
             this.panel_EntityPicker.ResumeLayout(false);
             this.panel_MapEditorHolder.ResumeLayout(false);
             this.tableLayoutPanel_MainOutline.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_TileSize)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1431,7 +1446,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_ObjectSettings;
         private System.Windows.Forms.Panel panel_TileSizeSettings;
         private System.Windows.Forms.Label label_TileSize;
-        private System.Windows.Forms.TextBox textBox_TileSize;
         private System.Windows.Forms.Panel panel_TilePicker;
         private System.Windows.Forms.TabControl tabControl_Tileset;
         private System.Windows.Forms.TabPage tabPage_EmptyTileset;
@@ -1451,5 +1465,6 @@
         private System.Windows.Forms.CheckBox checkBox_ShowGrid;
         private System.Windows.Forms.CheckBox checkBox_ShowHitboxes;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_ShowGrid;
+        private System.Windows.Forms.NumericUpDown numericUpDown_TileSize;
     }
 }
