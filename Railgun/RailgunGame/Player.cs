@@ -98,7 +98,7 @@ namespace Railgun.RailgunGame
             Health = 100;
             MaxHealth = Health;
             speed = 5;
-            dashSpeed = 10;
+            dashSpeed = 15;
             Ammo = 24;
             MaxAmmo = 24;
 
