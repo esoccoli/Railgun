@@ -97,6 +97,7 @@ namespace Railgun.Editor.App
             tileManager.OnHitboxChange += currentTileDisplay.Update;
             tileManager.OnViewHitboxesChange += UpdateViewHitbox;
             tileManager.OnViewHitboxesChange += currentTileDisplay.Update;
+            tileManager.OnViewGridChange += UpdateViewGrid;
             tileManager.OnLayerChange += UpdateLayerDisplay;
 
             //Subscribe modify event
@@ -111,7 +112,7 @@ namespace Railgun.Editor.App
             WindowState = FormWindowState.Maximized;
 
             //Set tile size to 16 pixels
-            textBox_TileSize.Text = "16";
+            numericUpDown_TileSize.Value = 16;
 
             //Resize square buttons since the designer doesn't understand how since
             //it sets the size before it changes the margin size. Also for the display
@@ -134,22 +135,21 @@ namespace Railgun.Editor.App
             toolStripMenuItem_MoveRight.ShortcutKeyDisplayString = "D";
             toolStripMenuItem_ShowHitboxes.ShortcutKeyDisplayString = "X";
             toolStripMenuItem_PlaceHitbox.ShortcutKeyDisplayString = "C";
+            toolStripMenuItem_ShowGrid.ShortcutKeyDisplayString = "G";
 
             //Set selected layer to tiles
-            comboBox_Layers.SelectedIndex = comboBox_Layers.Items.Count - 1;
+            comboBox_Layers.SelectedIndex = comboBox_Layers.Items.Count - 2;
 
             //Set hitboxes to checked
             checkBox_ShowHitboxes.Checked = true;
             checkBox_Solid.Checked = true;
+            checkBox_ShowGrid.Checked = true;
 
             //Re-arrange temporary holder panels
             panel_Entities.Visible = false;
             tableLayoutPanel_MainEditor.Controls.Remove(panel_Big_Holder);
             tableLayoutPanel_MainEditor.Controls.Add(mapEditor, 0, 1);
-            panel_Objects.Controls.Add(tableLayoutPanel_EntityPicker);
-
-            //Set current entity to enterence
-            comboBox_EntityPicker.SelectedIndex = 1;
+            splitContainer_MainEditor.Panel1.Controls.Add(tableLayoutPanel_EntityPicker);
         }
 
         /// <summary>
@@ -238,6 +238,12 @@ namespace Railgun.Editor.App
                     button.FlatAppearance.BorderColor = DarkTheme.Highlight;
                     button.FlatAppearance.MouseOverBackColor = DarkTheme.Highlight;
                     button.FlatAppearance.MouseDownBackColor = DarkTheme.Base;
+                }
+                else if(control is ListView)
+                {
+                    ListView list = control as ListView;
+                    list.BackColor = DarkTheme.Panel;
+                    list.ForeColor = DarkTheme.Label;
                 }
                 else
                 {
@@ -477,6 +483,31 @@ namespace Railgun.Editor.App
             tileManager.ViewHitboxes = (sender as ToolStripMenuItem).Checked;
         }
 
+        /// <summary>
+        /// Updates the checkboxes of the grid view
+        /// </summary>
+        private void UpdateViewGrid()
+        {
+            toolStripMenuItem_ShowGrid.Checked = tileManager.ShowGrid;
+            checkBox_ShowGrid.Checked = tileManager.ShowGrid;
+        }
+
+        /// <summary>
+        /// Sets showing the grid to the check
+        /// </summary>
+        private void CheckBox_ShowGrid_CheckedChanged(object sender, EventArgs e)
+        {
+            tileManager.ShowGrid = (sender as CheckBox).Checked;
+        }
+
+        /// <summary>
+        /// Sets showing the grid to the check
+        /// </summary>
+        private void Menu_View_ShowGrid_CheckedChanged(object sender, EventArgs e)
+        {
+            tileManager.ShowGrid = (sender as ToolStripMenuItem).Checked;
+        }
+
         #endregion
 
         #region Fake Control Box Events
@@ -552,33 +583,11 @@ namespace Railgun.Editor.App
         #region Tile Picker and Related Events
 
         /// <summary>
-        /// Changes the tile size when the text box is changed
+        /// Changes the tile size when the number box is changed
         /// </summary>
         private void TileSize_TextChanged(object sender, EventArgs e)
         {
-            TextBox textBox = sender as TextBox;
-
-            //If valid, set the tile size
-            if(int.TryParse(textBox.Text, out int tileSize) && tileSize > 0)
-            {
-                CurrentTileset.GridSize = tileSize;
-            }
-            //If not valid number an not empty, set it to previous valid number
-            else if (textBox.Text != string.Empty)
-            {
-                textBox.Text = CurrentTileset.GridSize.ToString();
-                //Set cursor to end of text
-                textBox.SelectionStart = textBox.TextLength;
-            }
-        }
-
-        /// <summary>
-        /// Called when the text box has lost focus and
-        /// makes sure it has the correct number
-        /// </summary>
-        private void TileSize_Leave(object sender, EventArgs e)
-        {
-            (sender as TextBox).Text = CurrentTileset.GridSize.ToString();
+            CurrentTileset.GridSize = (float)(sender as NumericUpDown).Value;
         }
 
         /// <summary>
@@ -587,7 +596,7 @@ namespace Railgun.Editor.App
         private void TabControl_Tileset_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Set tile size to current tileset's tile size
-            textBox_TileSize.Text = CurrentTileset.GridSize.ToString();
+            numericUpDown_TileSize.Value = (decimal)CurrentTileset.GridSize;
         }
 
         /// <summary>
@@ -598,33 +607,40 @@ namespace Railgun.Editor.App
             //Set current tile to nothing if on a non-tile layer
             if(tileManager.CurrentLayer < 0)
             {
+                tileManager.CurrentTile = Tile.Empty;
+
                 //If hitbox layer
                 if(tileManager.CurrentLayer == -1)
                 {
                     //Hide tile picker
+                    splitContainer_LeftSideBar.Visible = true;
                     tableLayoutPanel_TilePicker.Visible = false;
-                    tileManager.CurrentTile = Tile.Empty;
+                    
                     //Hide entity picker
                     tableLayoutPanel_EntityPicker.Visible = false;
-                    
+                    tableLayoutPanel_Edit.Visible = true;
                 }
                 //If entity layer
                 else if(tileManager.CurrentLayer == -2)
                 {
+                    //Hide tile and hitbox sidebar
+                    splitContainer_LeftSideBar.Visible = false;
                     //Hide tile picker
-                    tableLayoutPanel_TilePicker.Visible = false;
-                    tileManager.CurrentTile = Tile.Empty;
-                    //Hide entity picker
                     tableLayoutPanel_EntityPicker.Visible = true;
+                    tableLayoutPanel_Edit.Visible = false;
                 }
 
                 return;
             }
 
             //Show tile picker
+            splitContainer_LeftSideBar.Visible = true;
             tableLayoutPanel_TilePicker.Visible = true;
             //Hide entity picker
             tableLayoutPanel_EntityPicker.Visible = false;
+            tableLayoutPanel_Edit.Visible = true;
+
+            
 
             //Else set to current selection
             CurrentTileset.CreateTileSelection();
@@ -642,9 +658,11 @@ namespace Railgun.Editor.App
         /// <summary>
         /// Called when the entity picker is changed
         /// </summary>
-        private void ComboBox_EntityPicker_SelectedIndexChanged(object sender, EventArgs e)
+        private void ListBox_EntityPicker_SelectedIndexChanged(object sender, EventArgs e)
         {
-            EntityManager.Instance.CurrentEntity = comboBox_EntityPicker.SelectedIndex;
+            //If something is selected, set it to the current entity
+            if(listView_Entities.SelectedItems.Count > 0)
+                EntityManager.Instance.CurrentEntity = listView_Entities.SelectedIndices[0];
         }
 
         #endregion
@@ -675,6 +693,8 @@ namespace Railgun.Editor.App
 
             //Create new map
             Map newMap = new Map(128);
+            //Create 2 layers
+            newMap.Layers.Add(new Dictionary<Microsoft.Xna.Framework.Vector2, Tile>());
             newMap.Layers.Add(new Dictionary<Microsoft.Xna.Framework.Vector2, Tile>());
 
             //Prompt user to save as (allowing them to name), if cancel, return
@@ -765,6 +785,5 @@ namespace Railgun.Editor.App
         }
 
         #endregion
-
     }
 }

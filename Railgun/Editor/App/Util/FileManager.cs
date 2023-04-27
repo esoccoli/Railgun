@@ -400,9 +400,17 @@ namespace Railgun.Editor.App.Util
             {
                 map.Layers.Add(ReadLayer(reader));
             }
+            //If the saved layers is less than the 2 layers, add empty layers
+            if(layerCount < 2)
+            {
+                for(int i = 0; i < 2 - layerCount; i++)
+                {
+                    map.Layers.Add(new Dictionary<Vector2, Tile>());
+                }
+            }
 
-            //Store hitbox count
-            int hitboxCount = reader.ReadInt32();
+                //Store hitbox count
+                int hitboxCount = reader.ReadInt32();
             //Read and add each hitbox
             for (int i = 0; i < hitboxCount; i++)
             {

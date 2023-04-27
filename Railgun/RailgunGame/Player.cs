@@ -159,10 +159,10 @@ namespace Railgun.RailgunGame
 
                 Rectangle hitbox = Hitbox;
 
-                if (InputManager.IsKeyDown(Keys.W)) { hitbox.Y -= speed; }
-                if (InputManager.IsKeyDown(Keys.A)) { hitbox.X -= speed; }
-                if (InputManager.IsKeyDown(Keys.S)) { hitbox.Y += speed; }
-                if (InputManager.IsKeyDown(Keys.D)) { hitbox.X += speed; }
+                if (InputManager.IsKeyDown(Keys.W) || InputManager.IsKeyDown(Keys.Up)) { hitbox.Y -= speed; }
+                if (InputManager.IsKeyDown(Keys.A) || InputManager.IsKeyDown(Keys.Left)) { hitbox.X -= speed; }
+                if (InputManager.IsKeyDown(Keys.S) || InputManager.IsKeyDown(Keys.Down)) { hitbox.Y += speed; }
+                if (InputManager.IsKeyDown(Keys.D) || InputManager.IsKeyDown(Keys.Right)) { hitbox.X += speed; }
 
                 hitbox = WorldManager.Instance.ResolveCollisions(hitbox);
 
@@ -171,7 +171,7 @@ namespace Railgun.RailgunGame
                 if (InputManager.IsButtonDown(MouseButtons.Left) && ShootCooldown <= 0.0 && Ammo > 0) { Shoot(); }
                 if (InputManager.IsButtonDown(MouseButtons.Right) && Ammo <= 0) { Reload(); }
 
-                if (InputManager.IsKeyDown(Keys.LeftShift) && DashCooldown <= 0.0) { preDash = Keyboard.GetState(); Dashing = true; }
+                if ((InputManager.IsKeyDown(Keys.LeftShift) || InputManager.IsKeyDown(Keys.Space)) && DashCooldown <= 0.0) { preDash = Keyboard.GetState(); Dashing = true; }
             }
             else
             {
@@ -185,8 +185,10 @@ namespace Railgun.RailgunGame
         public void ResetPlayer()
         {
             Health = 100;
-            Ammo = 8;
+            Ammo = 24;
             ShootCooldown = 2.5;
+
+            Hitbox = new Rectangle(0, 0, 100, 100);
         }
 
         /// <summary>
@@ -199,7 +201,7 @@ namespace Railgun.RailgunGame
 
             Vector2 vect = (WorldManager.Instance.GetMouseWorldPosition().ToPoint() - Hitbox.Center).ToVector2() / Vector2.Distance(WorldManager.Instance.GetMouseWorldPosition(), Hitbox.Center.ToVector2());
 
-            PlayerBullets.Add(new Projectile(new Rectangle(Hitbox.X + (Hitbox.Width / 2) - (activeBullet.Width / 2), Hitbox.Y + (Hitbox.Height / 2) - (activeBullet.Height / 2), activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet.Clone(), vect * 10.0f));
+            PlayerBullets.Add(new Projectile(new Rectangle(Hitbox.X + (Hitbox.Width / 2) - (activeBullet.Width / 2), Hitbox.Y + (Hitbox.Height / 2) - (activeBullet.Height / 2), activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet.Clone(), vect * 10.0f, Color.Red));
         }
 
         /// <summary>

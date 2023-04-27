@@ -191,7 +191,8 @@ namespace Railgun.RailgunGame
                         FileManager.LoadMap(Content, "HourglassMap"),
                         FileManager.LoadMap(Content, "Longus"),
                         FileManager.LoadMap(Content, "SquareMapWithDoor"),
-                        FileManager.LoadMap(Content, "TShapeMap")
+                        FileManager.LoadMap(Content, "TShapeMap"),
+                        FileManager.LoadMap(Content, "LushHalls")
                     }
                 , FileManager.LoadMap(Content, "StartingRoom"));
         }
@@ -401,6 +402,7 @@ namespace Railgun.RailgunGame
                     if (InputManager.IsKeyDown(Keys.Enter))
                     {
                         mainPlayer.ResetPlayer();
+                        world.ResetWorld();
                         currentGameState = GameState.Game;
                     }
 
@@ -501,7 +503,7 @@ namespace Railgun.RailgunGame
                     _spriteBatch.End();
 
                     //DEBUG Draw world debug
-                    world.DrawDebug(_spriteBatch, GraphicsDevice);
+                    //world.DrawDebug(_spriteBatch, GraphicsDevice);
 
                     //Draw overlay
                     _spriteBatch.Begin(samplerState: SamplerState.PointClamp,
@@ -537,6 +539,8 @@ namespace Railgun.RailgunGame
                     _spriteBatch.Begin();
 
                     _spriteBatch.DrawString(font, "Game Over", new Vector2(_graphics.PreferredBackBufferWidth - 175, 20), Color.White);
+
+                    _spriteBatch.DrawString(font, "Rooms Passed: " + world.Score, Vector2.Zero, Color.Gold);
 
                     _spriteBatch.End();
 

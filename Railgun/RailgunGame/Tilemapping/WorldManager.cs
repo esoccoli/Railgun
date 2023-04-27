@@ -26,6 +26,7 @@ namespace Railgun.RailgunGame.Tilemapping
             PossibleMaps = new List<Map>();
             RNG = new Random();
             CurrentEnemies = new List<Enemy>();
+            lastMapIndex = -1;
         }
 
         /// <summary>
@@ -97,9 +98,24 @@ namespace Railgun.RailgunGame.Tilemapping
         public Camera CurrentCamera { get; set; }
 
         /// <summary>
+        /// The amount of rooms passed
+        /// </summary>
+        public int Score { get; private set; }
+
+        /// <summary>
+        /// The starting map
+        /// </summary>
+        private Map startingMap;
+
+        /// <summary>
         /// A white square used for debug drawing triggers
         /// </summary>
         private Texture2D whiteSquare;
+
+        /// <summary>
+        /// Stores the map index from the random map placement
+        /// </summary>
+        private int lastMapIndex;
 
         /// <summary>
         /// Draws all normal game parts of the world (the map)
@@ -180,7 +196,7 @@ namespace Railgun.RailgunGame.Tilemapping
             PreviousMap = CurrentMap;
             CurrentMap = NextMap;
             NextMap = RandomMap();
-
+            Score++;
             MakeCurrentRoom();
         }
 
@@ -218,7 +234,7 @@ namespace Railgun.RailgunGame.Tilemapping
         /// Sets up the world manager with the specified possible maps
         /// </summary>
         /// <param name="graphicsDevice">The graphics device to be used for the camera</param>
-        /// <param name="mapPossibilities"></param>
+        /// <param name="mapPossibilities">The possible maps</param>
         /// <param name="startingMap">The map to start in</param>
         public void SetupWorld(GraphicsDevice graphicsDevice, List<Map> mapPossibilities, Map startingMap)
         {
@@ -227,23 +243,28 @@ namespace Railgun.RailgunGame.Tilemapping
             whiteSquare.SetData(new Color[] { Color.White });
 
             PossibleMaps = mapPossibilities;
-
-            PreviousMap = Map.Empty();
-            CurrentMap = startingMap;
-            NextMap = RandomMap();
+            this.startingMap = startingMap;
 
             //Create cam
             CurrentCamera = new Camera(graphicsDevice, Rectangle.Empty);
-            MakeCurrentRoom();
+
+            ResetWorld();
         }
 
         /// <summary>
         /// Clones a random map out of the possible maps
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns a new random map clone</returns>
         private Map RandomMap()
         {
-            return PossibleMaps[RNG.Next(PossibleMaps.Count)].Clone();//Random map clone
+            //Make sure it is not the same map as last time
+            int index = RNG.Next(PossibleMaps.Count);
+            while(index == lastMapIndex)
+            {
+                index = RNG.Next(PossibleMaps.Count);
+            }
+            lastMapIndex = index;
+            return PossibleMaps[index].Clone();
         }
 
         /// <summary>
@@ -272,6 +293,26 @@ namespace Railgun.RailgunGame.Tilemapping
                 new Door(new Rectangle(CurrentMap.Entrence.ToPoint(), doorSize));
             ExitDoor =
                 new Door(new Rectangle(CurrentMap.Exit.ToPoint(), doorSize));
+        }
+
+        /// <summary>
+        /// Resets the game variables
+        /// </summary>
+        public void ResetWorld()
+        {
+            Score = 0;
+            PreviousMap = Map.Empty();
+            CurrentMap = startingMap;
+            NextMap = RandomMap();
+
+            //Set cam bounds to this room instantly (not eased)
+            CurrentCamera.CameraBounds = CurrentMap.Bounds;
+            CurrentCamera.Position = CurrentMap.Bounds.Center.ToVector2();
+
+            //Get rid of bullets
+            EnemyProjManager.Instance.Projectiles.Clear();
+
+            MakeCurrentRoom();
         }
     }
 }

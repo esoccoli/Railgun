@@ -43,7 +43,7 @@ namespace Railgun.Editor.App.Controls
             ////
 
             //Store the viewport
-            Rectangle viewRectangle = new Rectangle(0, 0, Width, Height);
+            Rectangle viewRectangle = new Rectangle(1, 1, Width - 1, Height - 1);
 
             //Draw the current tile to fill this control
             TileManager.Instance.CurrentTile.Draw(Editor.spriteBatch, viewRectangle);
@@ -52,17 +52,22 @@ namespace Railgun.Editor.App.Controls
             Editor.spriteBatch.End();
 
             //Draw hitbox if on and visable
-            if (TileManager.Instance.PlaceHitbox && TileManager.Instance.ViewHitboxes)
+            if (TileManager.Instance.PlaceHitbox)
             {
+                //If hitboxes are not visible, make it more transparent
+                Color color = Color.Red;
+                if(!TileManager.Instance.ViewHitboxes)
+                    color *= 0.3f;
+
                 //Begin shapebatch without depth (so that shapes are drawn to the top)
                 Editor.graphics.DepthStencilState = DepthStencilState.None;
                 //Begin
                 ShapeBatch.Begin(Editor.graphics);
                 //Draw box of bounds
-                ShapeBatch.BoxOutline(viewRectangle, Color.Red);
+                ShapeBatch.BoxOutline(viewRectangle, color);
                 //Draw x in the middle
-                ShapeBatch.Line(Vector2.Zero, new Vector2(Width, Height), 2f, Color.Red);
-                ShapeBatch.Line(new Vector2(Width, 0f), new Vector2(0f, Height), 2f, Color.Red);
+                ShapeBatch.Line(Vector2.Zero, new Vector2(Width, Height), 2f, color);
+                ShapeBatch.Line(new Vector2(Width, 0f), new Vector2(0f, Height), 2f, color);
                 ShapeBatch.End();
             }
         }
