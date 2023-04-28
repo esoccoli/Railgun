@@ -313,7 +313,7 @@ namespace Railgun.RailgunGame
                             if (mainPlayer.Dashing)
                             {
                                 mainPlayer.Dashing = false;
-                                mainPlayer.DashCooldown = 7.0;
+                                mainPlayer.DashCooldown = 2.0;
                             } // Colliding with an enemy stops the dash and hurts you.
                             mainPlayer.Damage(8);
                         }
@@ -344,18 +344,16 @@ namespace Railgun.RailgunGame
                     }
                     #endregion
 
-
                     //DEBUG, tp to mouse
-                    if (InputManager.IsKeyDown(Keys.T))
+                    if(InputManager.IsKeyDown(Keys.T))
                     {
                         Rectangle playerHitbox = mainPlayer.Hitbox;
                         playerHitbox.Location = world.GetMouseWorldPosition().ToPoint();
                         mainPlayer.Hitbox = playerHitbox;
                     }
 
-
                     //If alive, ease somewhat to mouse as well
-                    if (mainPlayer.Health > 0)
+                    if(mainPlayer.Health > 0)
                     {
                         //Update camera to ease to player and mouse pos in world space
                         world.CurrentCamera.EaseTo(mainPlayer.Hitbox.Center.ToVector2(), 1.1f, 0.2f);
@@ -364,7 +362,6 @@ namespace Railgun.RailgunGame
                     else//If dead, ease slowly to player
                     {
                         world.CurrentCamera.EaseTo(mainPlayer.Hitbox.Center.ToVector2(), 2f, 0.02f);
-
                     }
 
                     //If all enemies defeated, open door
