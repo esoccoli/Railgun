@@ -139,7 +139,7 @@ namespace Railgun.Editor.App.Objects
                         tint = Color.LightSeaGreen;
                         break;
                     case 2://Enemy3
-                        entityTexture = entityManager.Enemy3;
+                        entityTexture = entityManager.Ghost;
                         tint = Color.CornflowerBlue;
                         break;
                     default:
