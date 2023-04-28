@@ -167,11 +167,16 @@ namespace Railgun.RailgunGame
             // Skeleton tttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(700, 200, 100, 100));
             // Skeleton ttttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(1300, 200, 100, 100));
             // Skeleton tttttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(900, 900, 100, 100));
-             //world.CurrentEnemies.Add(testSkelley);
+            //world.CurrentEnemies.Add(testSkelley);
             // enemies.Add(ttestSkelley);
             // enemies.Add(tttestSkelley);
             // enemies.Add(ttttestSkelley);
             // enemies.Add(tttttestSkelley);
+
+            // Turret test
+            Turret testTurret = new Turret(visuals.GasManDeath, new Rectangle(1700, 200, 100, 100), visuals.GasManShoot, bulletTexture, visuals.BulletCollide);
+            world.CurrentEnemies.Add(testTurret);
+            //enemies.Add(testTurret);
 
             //Creates a UI object. Values to be updated later. 
             mainPlayer = new Player(new Rectangle(0, 0, 100, 100), bulletTexture);

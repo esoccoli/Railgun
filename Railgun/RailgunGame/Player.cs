@@ -97,8 +97,8 @@ namespace Railgun.RailgunGame
             // I'm only setting the health to 100 as a default value. We can come back and change this if we need to adjust it later.
             Health = 100;
             MaxHealth = Health;
-            speed = 5;
-            dashSpeed = 10;
+            speed = 6;
+            dashSpeed = 15;
             Ammo = 24;
             MaxAmmo = 24;
 

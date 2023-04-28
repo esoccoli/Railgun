@@ -386,10 +386,9 @@ namespace Railgun.RailgunGame.Tilemapping
                         break;
                     case 1://Enemy 2
                         enemies.Add(new GasMan(hitbox));
-
                         break;
                     case 2://Enemy 3
-
+                        enemies.Add(new Turret(hitbox));
                         break;
                 }
             }
