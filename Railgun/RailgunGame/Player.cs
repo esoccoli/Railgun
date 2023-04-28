@@ -187,6 +187,7 @@ namespace Railgun.RailgunGame
             Health = 100;
             Ammo = 24;
             ShootCooldown = 2.5;
+            playerDeath.CurrentFrame = 0;
 
             Hitbox = new Rectangle(0, 0, 100, 100);
         }
