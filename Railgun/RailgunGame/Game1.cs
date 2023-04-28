@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Railgun.RailgunGame.Tilemapping;
 using Railgun.RailgunGame.Util;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Railgun.RailgunGame
 {
@@ -17,6 +18,7 @@ namespace Railgun.RailgunGame
         private Texture2D foregroundHealthUI;
         private Texture2D bulletUI;
         private Texture2D howToPlay;
+        //private bool displayGameOver;
 
         private Player mainPlayer;
 
@@ -31,6 +33,7 @@ namespace Railgun.RailgunGame
         private Texture2D menuPlay;
         private Texture2D menuOpti;
         private Texture2D menuQuit;
+        private Texture2D menuRest;
 
         // Rectangles to make the Menu usable.
         private Rectangle logoRect;
@@ -97,6 +100,7 @@ namespace Railgun.RailgunGame
 
             currentGameState = GameState.Menu;
             font = this.Content.Load<SpriteFont>("Mynerve24");
+            //displayGameOver = true;
 
             GameTime gameTime = new GameTime();
 
@@ -125,6 +129,7 @@ namespace Railgun.RailgunGame
             //menuOpti = Content.Load<Texture2D>("menuOptions");
             menuOpti = Content.Load<Texture2D>("controls");
             menuQuit = Content.Load<Texture2D>("menuQuit");
+            menuRest = Content.Load<Texture2D>("reload");
 
             //Game Reticle
             gameReticle = Content.Load<Texture2D>("gameReticle");
@@ -140,7 +145,7 @@ namespace Railgun.RailgunGame
             gasManMove = Content.Load<Texture2D>("gasManMove");
             gasManDeath = Content.Load<Texture2D>("gasManDeath");
             gasManShoot = Content.Load<Texture2D>("gasManShoot");
-            
+
             #endregion
 
             //Instantiate singletons
@@ -154,7 +159,7 @@ namespace Railgun.RailgunGame
             visuals.BulletCollide = new Animation(bulletCollideTexture, 4, 1, 12.4f);
             visuals.SkeletonMove = new Animation(skeletonWalk, 1, 13, 12.0f);
             visuals.SkeletonDeath = new Animation(skeletonDeath, 1, 15, 12.0f);
-            visuals.DoorTexture = Content.Load<Texture2D>("Tiles/Tiles");;
+            visuals.DoorTexture = Content.Load<Texture2D>("Tiles/Tiles"); ;
             visuals.GasManMove = new Animation(gasManMove, 8, 1, 12.0f);
             visuals.GasManDeath = new Animation(gasManDeath, 6, 1, 12.0f);
             visuals.GasManShoot = new Animation(gasManShoot, 4, 1, 12.0f);
@@ -334,7 +339,7 @@ namespace Railgun.RailgunGame
                     //enemy bullets
                     EnemyProjManager.Instance.Update(gameTime);
 
-                    foreach(Projectile projectile in EnemyProjManager.Instance.Projectiles)
+                    foreach (Projectile projectile in EnemyProjManager.Instance.Projectiles)
                     {
                         if (projectile.Hitbox.Intersects(mainPlayer.Hitbox) && mainPlayer.DamageCooldown <= 0)
                         {
@@ -345,7 +350,7 @@ namespace Railgun.RailgunGame
                     #endregion
 
                     //DEBUG, tp to mouse
-                    if(InputManager.IsKeyDown(Keys.T))
+                    if (InputManager.IsKeyDown(Keys.T))
                     {
                         Rectangle playerHitbox = mainPlayer.Hitbox;
                         playerHitbox.Location = world.GetMouseWorldPosition().ToPoint();
@@ -353,8 +358,9 @@ namespace Railgun.RailgunGame
                     }
 
                     //If alive, ease somewhat to mouse as well
-                    if(mainPlayer.Health > 0)
+                    if (mainPlayer.Health > 0)
                     {
+
                         //Update camera to ease to player and mouse pos in world space
                         world.CurrentCamera.EaseTo(mainPlayer.Hitbox.Center.ToVector2(), 1.1f, 0.2f);
                         world.CurrentCamera.EaseTo(world.GetMouseWorldPosition(), 1.1f, 0.05f);
@@ -362,10 +368,18 @@ namespace Railgun.RailgunGame
                     else//If dead, ease slowly to player
                     {
                         world.CurrentCamera.EaseTo(mainPlayer.Hitbox.Center.ToVector2(), 2f, 0.02f);
+
+                        //if (displayGameOver)
+                        //{
+                        //Debug.WriteLine("Game Over Test 1");
+                        //displayGameOver = false;
+                        //DrawEnd(_spriteBatch);
+                        //}
+
                     }
 
                     //If all enemies defeated, open door
-                    if(world.CurrentEnemies.Count == 0)
+                    if (world.CurrentEnemies.Count == 0)
                     {
                         world.ExitDoor.IsClosed = false;
                         //Check if fully within next room trigger
@@ -400,6 +414,67 @@ namespace Railgun.RailgunGame
 
                 #region Game Over
                 case GameState.GameOver:
+
+                    xScale = _graphics.PreferredBackBufferWidth / 800.0;
+                    yScale = _graphics.PreferredBackBufferHeight / 480.0;
+
+                    if (xScale < 1)
+                    {
+                        xScale = 1;
+                    }
+                    if (yScale < 1)
+                    {
+                        yScale = 1;
+                    }
+
+                    //logoRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuLogo.Width * (int)xScale / 10) / 2), 20, (menuLogo.Width / 10) * (int)xScale, (menuLogo.Height / 10) * (int)yScale);
+                    //playRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuPlay.Width * (int)xScale / 20) / 2), 250, (menuPlay.Width / 5) / (int)xScale, (menuPlay.Height / 5) / (int)yScale);
+                    optiRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuOpti.Width * (int)xScale / 20) / 2), 425, (menuOpti.Width / 5) / (int)xScale, (menuOpti.Height / 5) / (int)yScale);
+                    quitRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuQuit.Width * (int)xScale / 20) / 2), 575, (menuQuit.Width / 5) / (int)xScale, (menuQuit.Height / 5) / (int)yScale);
+
+                    // The following code makes the play, option, or quit button expand in size and hitbox if you hover over them
+
+                    //if (InputManager.MouseHover(mState, playRect))
+                    //{
+                    //    playRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuPlay.Width * (int)xScale / 20) / 2) - 50, 200, (menuPlay.Width / 4) / (int)xScale, (menuPlay.Height / 4) / (int)yScale);
+                    //}
+                    if (InputManager.MouseHover(mState, optiRect))
+                    {
+                        optiRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuOpti.Width * (int)xScale / 20) / 2) - 50, 375, (menuOpti.Width / 4) / (int)xScale, (menuOpti.Height / 4) / (int)yScale);
+                    }
+                    else if (InputManager.MouseHover(mState, quitRect))
+                    {
+                        quitRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuQuit.Width * (int)xScale / 20) / 2) - 50, 525, (menuQuit.Width / 4) / (int)xScale, (menuQuit.Height / 4) / (int)yScale);
+                    }
+
+                    //if (InputManager.IsButtonDown(MouseButtons.Left)
+                    //    && mState.X > playRect.X
+                    //    && mState.X < playRect.X + playRect.Width
+                    //    && mState.Y > playRect.Y
+                    //    && mState.Y < playRect.Y + playRect.Height)
+                    //{
+                    //    currentGameState = GameState.Game;
+                    //}
+
+                    if (InputManager.IsButtonDown(MouseButtons.Left)
+                        && mState.X > optiRect.X
+                        && mState.X < optiRect.X + optiRect.Width
+                        && mState.Y > optiRect.Y
+                        && mState.Y < optiRect.Y + optiRect.Height)
+                    {
+                        mainPlayer.ResetPlayer();
+                        world.ResetWorld();
+                        currentGameState = GameState.Game;
+                    }
+
+                    if (InputManager.IsButtonDown(MouseButtons.Left)
+                        && mState.X > quitRect.X
+                        && mState.X < quitRect.X + quitRect.Width
+                        && mState.Y > quitRect.Y
+                        && mState.Y < quitRect.Y + quitRect.Height)
+                    {
+                        this.Exit();
+                    }
 
                     if (InputManager.IsKeyDown(Keys.Enter))
                     {
@@ -463,6 +538,7 @@ namespace Railgun.RailgunGame
 
                     MouseState mStateGame = Mouse.GetState();
                     List<Enemy> removalList = new List<Enemy>();
+
                     if (mainPlayer.Draw(_spriteBatch, gameTime))
                     {
                         currentGameState = GameState.GameOver;
@@ -527,7 +603,7 @@ namespace Railgun.RailgunGame
 
                     _spriteBatch.Begin();
 
-                    _spriteBatch.Draw(howToPlay, new Rectangle(0,0,1920,1080), Color.White);
+                    _spriteBatch.Draw(howToPlay, new Rectangle(0, 0, 1920, 1080), Color.White);
                     _spriteBatch.DrawString(font, "Pause", new Vector2(_graphics.PreferredBackBufferWidth - 100, 20), Color.White);
 
                     _spriteBatch.End();
@@ -539,6 +615,9 @@ namespace Railgun.RailgunGame
                 case GameState.GameOver:
 
                     _spriteBatch.Begin();
+
+                    _spriteBatch.Draw(menuRest, optiRect, Color.White);
+                    _spriteBatch.Draw(menuQuit, quitRect, Color.White);
 
                     _spriteBatch.DrawString(font, "Game Over", new Vector2(_graphics.PreferredBackBufferWidth - 175, 20), Color.White);
 
@@ -559,5 +638,83 @@ namespace Railgun.RailgunGame
 
             base.Draw(gameTime);
         }
+
+
+
+
+        // Abandon all hope, ye who travel. Below are only the wastelands. None dare venture here.
+
+
+
+
+
+        //public void DrawEnd(SpriteBatch _spriteBatch)
+        //{
+        //    Debug.WriteLine("Game Over Test 2");
+
+        //    _spriteBatch.Begin();
+
+        //    double xScale = _graphics.PreferredBackBufferWidth / 800.0;
+        //    double yScale = _graphics.PreferredBackBufferHeight / 480.0;
+
+        //    if (xScale < 1)
+        //    {
+        //        xScale = 1;
+        //    }
+        //    if (yScale < 1)
+        //    {
+        //        yScale = 1;
+        //    }
+
+        //    bool check = false;
+        //    int count = 0;
+
+        //    while (check == false)
+        //    {
+        //        optiRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuOpti.Width * (int)xScale / 20) / 2), 425, (menuOpti.Width / 5) / (int)xScale, (menuOpti.Height / 5) / (int)yScale);
+        //        quitRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuQuit.Width * (int)xScale / 20) / 2), 575, (menuQuit.Width / 5) / (int)xScale, (menuQuit.Height / 5) / (int)yScale);
+
+        //        Debug.WriteLine("Game Over Test 3: " + count);
+
+        //        MouseState mState = Mouse.GetState();
+
+        //        if (InputManager.MouseHover(mState, optiRect))
+        //        {
+        //            optiRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuOpti.Width * (int)xScale / 20) / 2) - 50, 375, (menuOpti.Width / 4) / (int)xScale, (menuOpti.Height / 4) / (int)yScale);
+        //        }
+        //        else if (InputManager.MouseHover(mState, quitRect))
+        //        {
+        //            quitRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuQuit.Width * (int)xScale / 20) / 2) - 50, 525, (menuQuit.Width / 4) / (int)xScale, (menuQuit.Height / 4) / (int)yScale);
+        //        }
+
+        //        _spriteBatch.Draw(menuPlay, optiRect, Color.White);
+        //        _spriteBatch.Draw(menuQuit, quitRect, Color.White);
+
+        //        if (InputManager.IsButtonDown(MouseButtons.Left)
+        //            && mState.X > optiRect.X
+        //            && mState.X < optiRect.X + optiRect.Width
+        //            && mState.Y > optiRect.Y
+        //            && mState.Y < optiRect.Y + optiRect.Height)
+        //        {
+        //            mainPlayer.ResetPlayer();
+        //            world.ResetWorld();
+        //            currentGameState = GameState.Game;
+        //            check = true;
+        //        }
+
+        //        if (InputManager.IsButtonDown(MouseButtons.Left)
+        //            && mState.X > quitRect.X
+        //            && mState.X < quitRect.X + quitRect.Width
+        //            && mState.Y > quitRect.Y
+        //            && mState.Y < quitRect.Y + quitRect.Height)
+        //        {
+        //            this.Exit();
+        //        }
+
+        //        count++;
+        //    }
+
+        //    _spriteBatch.End();
+        //}
     }
 }

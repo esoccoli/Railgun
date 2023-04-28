@@ -56,8 +56,8 @@ namespace Railgun.RailgunGame
         {
             Health = 40;
             Hitbox = hitbox;
-            SecondsPerState = 1;
-            TimeCounter = 0;
+            //SecondsPerState = 1;
+            //TimeCounter = 0;
 
             this.activeBullet = activeBullet;
             this.notActiveBullet = notActiveBullet;
@@ -97,7 +97,7 @@ namespace Railgun.RailgunGame
                         Shoot(playerPos);
                         timeSinceShot = 0;
                     }
-                    TimeCounter += gameTime.ElapsedGameTime.TotalSeconds;
+                    //TimeCounter += gameTime.ElapsedGameTime.TotalSeconds;
                     break;
 
                 case TurretState.Death:
@@ -122,11 +122,11 @@ namespace Railgun.RailgunGame
                 case TurretState.Shoot:
                     if (playerPos.X <= Hitbox.Center.X)
                     {
-                        Shooting.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.Red, SpriteEffects.FlipHorizontally);
+                        Shooting.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.Yellow, SpriteEffects.FlipHorizontally);;
                     }
                     else
                     {
-                        Shooting.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.Red, SpriteEffects.None);
+                        Shooting.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.Yellow, SpriteEffects.None);
                     }
                     return false;
 
