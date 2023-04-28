@@ -390,6 +390,9 @@ namespace Railgun.RailgunGame.Tilemapping
                     case 2://Enemy 3
                         enemies.Add(new Turret(hitbox));
                         break;
+                    case 3://Enemy 4
+                        
+                        break;
                 }
             }
 

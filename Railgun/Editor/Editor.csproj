@@ -201,7 +201,6 @@
     <Content Include="Content\Entities\Exit.png" />
     <Content Include="Content\Entities\Gas Man.png" />
     <Content Include="Content\Entities\Skeleton.png" />
-    <Content Include="Content\Entities\Unknown.png" />
     <Content Include="Content\Tiles\Grass hill tiles v.2.png" />
     <Content Include="Content\Tiles\Grass tiles v.2.png" />
     <Content Include="Content\Tiles\mainlevbuild.png" />
