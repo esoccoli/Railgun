@@ -141,8 +141,8 @@ namespace Railgun.Editor.App.Objects
                         tint = Color.Yellow;
                         break;
                     case 3://Enemy4
-                        entityTexture = entityManager.Ghost;
-                        tint = Color.CornflowerBlue;
+                        entityTexture = entityManager.Sniper;
+                        tint = Color.GreenYellow;
                         break;
                     default:
                         entityTexture = entityManager.UndefinedTexture;

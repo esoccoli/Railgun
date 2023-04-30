@@ -127,7 +127,7 @@ namespace Railgun.Editor.App.Controls
             EntityManager.Instance.Skeleton = Editor.Content.Load<Texture2D>("Entities/Skeleton");
             EntityManager.Instance.GasMan = Editor.Content.Load<Texture2D>("Entities/Gas Man");
             EntityManager.Instance.Turret = Editor.Content.Load<Texture2D>("Entities/Turret");
-            EntityManager.Instance.Ghost = Editor.Content.Load<Texture2D>("Entities/Ghost");
+            EntityManager.Instance.Sniper = Editor.Content.Load<Texture2D>("Entities/Sniper");
             EntityManager.Instance.Enterence = Editor.Content.Load<Texture2D>("Entities/Enter");
             EntityManager.Instance.Exit = Editor.Content.Load<Texture2D>("Entities/Exit");
             EntityManager.Instance.UndefinedTexture = Editor.Content.Load<Texture2D>("Entities/Unknown");
