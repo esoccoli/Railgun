@@ -104,6 +104,9 @@
 /processorParam:TextureFormat=Color
 /build:Entities/Unknown.png
 
+#begin ExampleMap.rgm
+/copy:ExampleMap.rgm
+
 #begin railgun editor logo.png
 /importer:TextureImporter
 /processor:TextureProcessor
