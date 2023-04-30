@@ -52,7 +52,7 @@ namespace Railgun.Editor.App.Controls
             Editor.spriteBatch.End();
 
             //Draw hitbox if on and visable
-            if (TileManager.Instance.PlaceHitbox)
+            if (TileManager.Instance.IsPlacingHitbox)
             {
                 //If hitboxes are not visible, make it more transparent
                 Color color = Color.Red;

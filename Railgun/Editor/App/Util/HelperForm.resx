@@ -122,13 +122,15 @@
 above the editor or through the "View" tab in the context menu.
 
 Different layers can be viewed through the combo box above as well.
-Currently, there are 3 layers: the tile layer, hitbox layer, and entity layer.
+Currently, there are 3 layers types: the tile layers, hitbox layer, and entity layer.
 
 The hitbox layer will only allow placing a hitbox or not placing at hitbox
 (which removes the current hitbox)
 
 To reset camera view and zoom, use the context menu or click on the zoom
-value in the status bar below.</value>
+value in the status bar below.
+
+The bottom tile layer appears below the top tile layer.</value>
   </data>
   <data name="label_CurrentTileDescription.Text" xml:space="preserve">
     <value>The current tile will appear within the edit panel.
@@ -168,12 +170,14 @@ The default directory can be found in the content folder in the
 RailgunGame project.
 
 Or if that is not available, you can open the example railgun map
-that can be found within the resources folder of this project
-.</value>
+that can be found within the content folder of this project called
+ExampleMap.rgm</value>
   </data>
   <data name="label_EntityDescription.Text" xml:space="preserve">
-    <value>Entity layer was rushed but is functional. Use the drop down menu to choose
+    <value>Use the list of entities to choose
 what entity you want to place or to remove an entity.
+
+The eraser will remove any entity besides the entrence and exit.
 
 The entrence and exit entity cannot be remove and there can only ever
 be one of each in a map.
@@ -181,6 +185,9 @@ be one of each in a map.
 The entrence specifies where the player will enter a map while the exit
 specifies where the player exits. In the game, the maps are then
 stitched together and door entities are added, blocking the way.
+
+Some entities may not be used in the game and will not spawn anything
+if placed in the map.
 </value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />

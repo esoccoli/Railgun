@@ -62,9 +62,9 @@ namespace Railgun.Editor.App.Objects
         public Texture2D Turret { get; set; }
         
         /// <summary>
-        /// The texture for enemy 4(?)
+        /// The texture for enemy 4
         /// </summary>
-        public Texture2D Ghost { get; set; }
+        public Texture2D Sniper { get; set; }
 
         /// <summary>
         /// The texture for the enterence marker

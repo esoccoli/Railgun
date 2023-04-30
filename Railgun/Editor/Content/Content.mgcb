@@ -56,18 +56,6 @@
 /processorParam:TextureFormat=Color
 /build:Entities/Gas Man.png
 
-#begin Entities/Ghost.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Entities/Ghost.png
-
 #begin Entities/Skeleton.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -79,6 +67,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Entities/Skeleton.png
+
+#begin Entities/Sniper.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Entities/Sniper.png
 
 #begin Entities/Turret.png
 /importer:TextureImporter
@@ -103,6 +103,9 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Entities/Unknown.png
+
+#begin ExampleMap.rgm
+/copy:ExampleMap.rgm
 
 #begin railgun editor logo.png
 /importer:TextureImporter

@@ -74,9 +74,9 @@
             // 
             this.label_ViewingDescription.AutoSize = true;
             this.label_ViewingDescription.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_ViewingDescription.Location = new System.Drawing.Point(110, 101);
+            this.label_ViewingDescription.Location = new System.Drawing.Point(99, 101);
             this.label_ViewingDescription.Name = "label_ViewingDescription";
-            this.label_ViewingDescription.Size = new System.Drawing.Size(662, 308);
+            this.label_ViewingDescription.Size = new System.Drawing.Size(685, 364);
             this.label_ViewingDescription.TabIndex = 7;
             this.label_ViewingDescription.Text = resources.GetString("label_ViewingDescription.Text");
             this.label_ViewingDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -276,9 +276,9 @@
             // 
             this.label_EntityDescription.AutoSize = true;
             this.label_EntityDescription.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_EntityDescription.Location = new System.Drawing.Point(103, 139);
+            this.label_EntityDescription.Location = new System.Drawing.Point(123, 105);
             this.label_EntityDescription.Name = "label_EntityDescription";
-            this.label_EntityDescription.Size = new System.Drawing.Size(676, 252);
+            this.label_EntityDescription.Size = new System.Drawing.Size(637, 392);
             this.label_EntityDescription.TabIndex = 9;
             this.label_EntityDescription.Text = resources.GetString("label_EntityDescription.Text");
             this.label_EntityDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;

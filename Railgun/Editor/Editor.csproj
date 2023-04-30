@@ -137,6 +137,36 @@
     <Compile Include="App\Controls\CurrentTileDisplay.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="App\Controls\EditPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="App\Controls\EditPanel.Designer.cs">
+      <DependentUpon>EditPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="App\Controls\EntityPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="App\Controls\EntityPanel.Designer.cs">
+      <DependentUpon>EntityPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="App\Controls\HitboxEditorPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="App\Controls\HitboxEditorPanel.Designer.cs">
+      <DependentUpon>HitboxEditorPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="App\Controls\MapPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="App\Controls\MapPanel.Designer.cs">
+      <DependentUpon>MapPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="App\Controls\TilePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="App\Controls\TilePanel.Designer.cs">
+      <DependentUpon>TilePanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="App\Controls\TilePicker.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -167,6 +197,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="App\Util\InputManager.cs" />
+    <EmbeddedResource Include="App\Controls\EditPanel.resx">
+      <DependentUpon>EditPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App\Controls\EntityPanel.resx">
+      <DependentUpon>EntityPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App\Controls\HitboxEditorPanel.resx">
+      <DependentUpon>HitboxEditorPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App\Controls\MapPanel.resx">
+      <DependentUpon>MapPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App\Controls\TilePanel.resx">
+      <DependentUpon>TilePanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="App\Util\HelperForm.resx">
       <DependentUpon>HelperForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -215,7 +260,6 @@
       <SubType>Form</SubType>
     </Content>
     <None Include="Resources\Exit.png" />
-    <None Include="Resources\ExampleMap.rgm" />
     <None Include="Resources\Maximize.png" />
     <None Include="Resources\Minimize.png" />
     <None Include="Resources\Normal.png" />

@@ -15,7 +15,7 @@ namespace Railgun.Editor.App.Controls
     /// <para>Author: Jonathan Jan</para>
     /// Date Created: 3/6/2023
     /// </summary>
-    internal class MapEditor : AbstractGridControl
+    public class MapEditor : AbstractGridControl
     {
         //DEBUG font
         private SpriteFont consolas20;
@@ -127,7 +127,7 @@ namespace Railgun.Editor.App.Controls
             EntityManager.Instance.Skeleton = Editor.Content.Load<Texture2D>("Entities/Skeleton");
             EntityManager.Instance.GasMan = Editor.Content.Load<Texture2D>("Entities/Gas Man");
             EntityManager.Instance.Turret = Editor.Content.Load<Texture2D>("Entities/Turret");
-            EntityManager.Instance.Ghost = Editor.Content.Load<Texture2D>("Entities/Ghost");
+            EntityManager.Instance.Sniper = Editor.Content.Load<Texture2D>("Entities/Sniper");
             EntityManager.Instance.Enterence = Editor.Content.Load<Texture2D>("Entities/Enter");
             EntityManager.Instance.Exit = Editor.Content.Load<Texture2D>("Entities/Exit");
             EntityManager.Instance.UndefinedTexture = Editor.Content.Load<Texture2D>("Entities/Unknown");
@@ -231,7 +231,7 @@ namespace Railgun.Editor.App.Controls
             ////
 
             //Draw placing preview if placing a hitbox and mouse is withing control
-            if(tileManager.ViewHitboxes && tileManager.PlaceHitbox
+            if(tileManager.ViewHitboxes && tileManager.IsPlacingHitbox
                 && IsMouseInsideControl && tileManager.CurrentLayer > -2)
             {
                 //The size of the hitbox
@@ -351,7 +351,7 @@ namespace Railgun.Editor.App.Controls
                 {
                     case -1://Hitbox layer
                         //If hitboxes enabled, place hitbox, else remove it
-                        CurrentMap.Hitboxes[gridPoint] = tileManager.PlaceHitbox;
+                        CurrentMap.Hitboxes[gridPoint] = tileManager.IsPlacingHitbox;
                         break;
                     case -2://Entity layer
                         PlaceEntity(gridPoint);
@@ -361,7 +361,7 @@ namespace Railgun.Editor.App.Controls
                         CurrentMap[gridPoint, tileManager.CurrentLayer] =
                             tileManager.CurrentTile;
                         //If hitboxes enabled, place hitbox, else remove it
-                        CurrentMap.Hitboxes[gridPoint] = tileManager.PlaceHitbox;
+                        CurrentMap.Hitboxes[gridPoint] = tileManager.IsPlacingHitbox;
                         break;
                 }
 
@@ -418,7 +418,7 @@ namespace Railgun.Editor.App.Controls
                 if(input.JustPressed(Keys.X))
                    tileManager.ViewHitboxes = !tileManager.ViewHitboxes;//Toggle view hitbox
                 if(input.JustPressed(Keys.C))
-                    tileManager.PlaceHitbox = !tileManager.PlaceHitbox;//Toggle place hitbox
+                    tileManager.IsPlacingHitbox = !tileManager.IsPlacingHitbox;//Toggle place hitbox
                 if(input.JustPressed(Keys.G))
                     tileManager.ShowGrid = !tileManager.ShowGrid;//Toggle view grid
             }
