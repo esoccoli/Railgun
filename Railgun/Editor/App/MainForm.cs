@@ -75,6 +75,10 @@ namespace Railgun.Editor.App
                 }
             }
             catch { }//If error, it will show the error landing page
+
+            //Initialize user controls
+            entityPanel = new EntityPanel();
+            entityPanel.Dock = DockStyle.Fill;
         }
 
         /// <summary>
@@ -102,9 +106,6 @@ namespace Railgun.Editor.App
 
             //Subscribe modify event
             FileManager.OnModifyInvalidate += ModifyTitle;
-
-            //Color the controls to a darker scheme
-            ColorControls(Controls);
 
             //Set maximized bounds to working area (not cover taskbar)
             //Inflate a bit to make the borders not show
@@ -145,11 +146,12 @@ namespace Railgun.Editor.App
             checkBox_Solid.Checked = true;
             checkBox_ShowGrid.Checked = true;
 
-            //Re-arrange temporary holder panels
-            panel_Entities.Visible = false;
-            tableLayoutPanel_MainEditor.Controls.Remove(panel_Big_Holder);
-            tableLayoutPanel_MainEditor.Controls.Add(mapEditor, 0, 1);
-            splitContainer_MainEditor.Panel1.Controls.Add(tableLayoutPanel_EntityPicker);
+            //Add user controls
+            splitContainer_MainEditor.Panel1.Controls.Add(entityPanel);
+
+
+            //Color the controls to a darker scheme
+            ColorControls(Controls);
         }
 
         /// <summary>
@@ -615,9 +617,9 @@ namespace Railgun.Editor.App
                     //Hide tile picker
                     splitContainer_LeftSideBar.Visible = true;
                     tableLayoutPanel_TilePicker.Visible = false;
-                    
+
                     //Hide entity picker
-                    tableLayoutPanel_EntityPicker.Visible = false;
+                    entityPanel.Visible = false;
                     tableLayoutPanel_Edit.Visible = true;
                 }
                 //If entity layer
@@ -626,7 +628,7 @@ namespace Railgun.Editor.App
                     //Hide tile and hitbox sidebar
                     splitContainer_LeftSideBar.Visible = false;
                     //Hide tile picker
-                    tableLayoutPanel_EntityPicker.Visible = true;
+                    entityPanel.Visible = true;
                     tableLayoutPanel_Edit.Visible = false;
                 }
 
@@ -637,7 +639,7 @@ namespace Railgun.Editor.App
             splitContainer_LeftSideBar.Visible = true;
             tableLayoutPanel_TilePicker.Visible = true;
             //Hide entity picker
-            tableLayoutPanel_EntityPicker.Visible = false;
+            entityPanel.Visible = false;
             tableLayoutPanel_Edit.Visible = true;
 
             
@@ -653,16 +655,6 @@ namespace Railgun.Editor.App
         {
             //Set current layer where the hitbox layer is -1
             tileManager.CurrentLayer = comboBox_Layers.SelectedIndex - 2;
-        }
-
-        /// <summary>
-        /// Called when the entity picker is changed
-        /// </summary>
-        private void ListBox_EntityPicker_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //If something is selected, set it to the current entity
-            if(listView_Entities.SelectedItems.Count > 0)
-                EntityManager.Instance.CurrentEntity = listView_Entities.SelectedIndices[0];
         }
 
         #endregion
