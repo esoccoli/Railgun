@@ -31,10 +31,14 @@ namespace Railgun.Editor.App
         private TileManager tileManager;
 
         /// <summary>
-        /// Returns the current tile picker control
+        /// The entity panel of the editor
         /// </summary>
-        public TilePicker CurrentTileset
-            => tabControl_Tileset.SelectedTab.Controls[0] as TilePicker;
+        private EntityPanel entityPanel;
+
+        /// <summary>
+        /// The hitbox editing panel of the editor
+        /// </summary>
+        private HitboxEditorPanel hitboxEditor;
 
         #endregion
 
@@ -66,12 +70,12 @@ namespace Railgun.Editor.App
                         };
 
                         //Add tileset to tab control
-                        tabControl_Tileset.TabPages.Add(tilesetName);
-                        tabControl_Tileset.TabPages[i + 1].Controls.Add(picker);
+                        tilePanel.tabControl_Tileset.TabPages.Add(tilesetName);
+                        tilePanel.tabControl_Tileset.TabPages[i + 1].Controls.Add(picker);
 
                     }
                     //Remove landing page
-                    tabControl_Tileset.TabPages.RemoveAt(0);
+                    tilePanel.tabControl_Tileset.TabPages.RemoveAt(0);
                 }
             }
             catch { }//If error, it will show the error landing page
@@ -79,6 +83,12 @@ namespace Railgun.Editor.App
             //Initialize user controls
             entityPanel = new EntityPanel();
             entityPanel.Dock = DockStyle.Fill;
+            entityPanel.Margin = new Padding(0);
+            entityPanel.Visible = false;
+            hitboxEditor = new HitboxEditorPanel();
+            hitboxEditor.Dock = DockStyle.Fill;
+            hitboxEditor.Margin = new Padding(0);
+            hitboxEditor.Visible = false;
         }
 
         /// <summary>
@@ -90,17 +100,20 @@ namespace Railgun.Editor.App
             tileManager = TileManager.Instance;
 
             //Subscribe input update to main editor update event
-            mapEditor.OnUpdate += InputManager.Instance.Update;
+            mapPanel.mapEditor.OnUpdate += InputManager.Instance.Update;
 
             //Subscribe update status to update event in main editor control
-            mapEditor.OnUpdate += UpdateStatus;
+            mapPanel.mapEditor.OnUpdate += UpdateStatus;
 
             //Subscribe invalidation events
-            tileManager.OnTileChange += currentTileDisplay.Update;
+            tileManager.OnTileChange += editPanel.currentTileDisplay.Update;
+            tileManager.OnTileChange += hitboxEditor.currentTileDisplay.Update;
             tileManager.OnHitboxChange += UpdateCurrentHitbox;
-            tileManager.OnHitboxChange += currentTileDisplay.Update;
+            tileManager.OnHitboxChange += editPanel.currentTileDisplay.Update;
+            tileManager.OnHitboxChange += hitboxEditor.currentTileDisplay.Update;
             tileManager.OnViewHitboxesChange += UpdateViewHitbox;
-            tileManager.OnViewHitboxesChange += currentTileDisplay.Update;
+            tileManager.OnViewHitboxesChange += editPanel.currentTileDisplay.Update;
+            tileManager.OnViewHitboxesChange += hitboxEditor.currentTileDisplay.Update;
             tileManager.OnViewGridChange += UpdateViewGrid;
             tileManager.OnLayerChange += UpdateLayerDisplay;
 
@@ -113,19 +126,22 @@ namespace Railgun.Editor.App
             WindowState = FormWindowState.Maximized;
 
             //Set tile size to 16 pixels
-            numericUpDown_TileSize.Value = 16;
+            tilePanel.numericUpDown_TileSize.Value = 16;
 
             //Resize square buttons since the designer doesn't understand how since
             //it sets the size before it changes the margin size. Also for the display
-            button_Edit_Up.Size = new Size(50, 50);
-            button_Edit_Down.Size = new Size(50, 50);
-            button_Edit_Left.Size = new Size(50, 50);
-            button_Edit_Right.Size = new Size(50, 50);
-            button_Edit_FlipHorizontal.Size = new Size(50, 50);
-            button_Edit_FlipVertical.Size = new Size(50, 50);
-            button_Edit_RotateCW.Size = new Size(50, 50);
-            button_Edit_RotateCCW.Size = new Size(50, 50);
-            currentTileDisplay.Size = new Size(150, 150);
+            Size buttonSize = new Size(50, 50);
+            Size displaySize = new Size(150, 150);
+            editPanel.button_Edit_Up.Size = buttonSize;
+            editPanel.button_Edit_Down.Size = buttonSize;
+            editPanel.button_Edit_Left.Size = buttonSize;
+            editPanel.button_Edit_Right.Size = buttonSize;
+            editPanel.button_Edit_FlipHorizontal.Size = buttonSize;
+            editPanel.button_Edit_FlipVertical.Size = buttonSize;
+            editPanel.button_Edit_RotateCW.Size = buttonSize;
+            editPanel.button_Edit_RotateCCW.Size = buttonSize;
+            editPanel.currentTileDisplay.Size = displaySize;
+            hitboxEditor.currentTileDisplay.Size = displaySize;
 
             //Add shortcut strings for single key presses
             toolStripMenuItem_Rotate90CW.ShortcutKeyDisplayString = "E";
@@ -139,16 +155,17 @@ namespace Railgun.Editor.App
             toolStripMenuItem_ShowGrid.ShortcutKeyDisplayString = "G";
 
             //Set selected layer to tiles
-            comboBox_Layers.SelectedIndex = comboBox_Layers.Items.Count - 2;
+            mapPanel.comboBox_Layers.SelectedIndex = mapPanel.comboBox_Layers.Items.Count - 2;
 
             //Set hitboxes to checked
-            checkBox_ShowHitboxes.Checked = true;
-            checkBox_Solid.Checked = true;
-            checkBox_ShowGrid.Checked = true;
+            mapPanel.checkBox_ShowHitboxes.Checked = true;
+            editPanel.checkBox_Solid.Checked = true;
+            hitboxEditor.checkBox_Solid.Checked = true;
+            mapPanel.checkBox_ShowGrid.Checked = true;
 
             //Add user controls
             splitContainer_MainEditor.Panel1.Controls.Add(entityPanel);
-
+            splitContainer_MainEditor.Panel1.Controls.Add(hitboxEditor);
 
             //Color the controls to a darker scheme
             ColorControls(Controls);
@@ -259,7 +276,7 @@ namespace Railgun.Editor.App
 
             //Set other colors manually
             BackColor = DarkTheme.Outline;
-            label_NoTilesets.BackColor = DarkTheme.Panel;
+            tilePanel.label_NoTilesets.BackColor = DarkTheme.Panel;
         }
 
         #endregion
@@ -304,10 +321,10 @@ namespace Railgun.Editor.App
         private void UpdateStatus()
         {
             //Set positions with these digits
-            toolStripStatusLabel_ValueX.Text = mapEditor.MouseGridPosition.X.ToString(" 000;-000");
-            toolStripStatusLabel_ValueY.Text = mapEditor.MouseGridPosition.Y.ToString(" 000;-000");
+            toolStripStatusLabel_ValueX.Text = mapPanel.mapEditor.MouseGridPosition.X.ToString(" 000;-000");
+            toolStripStatusLabel_ValueY.Text = mapPanel.mapEditor.MouseGridPosition.Y.ToString(" 000;-000");
             //Set zoom amount
-            toolStripStatusLabel_ValueZoom.Text = mapEditor.Editor.Cam.Zoom
+            toolStripStatusLabel_ValueZoom.Text = mapPanel.mapEditor.Editor.Cam.Zoom
                 .ToString("0.00");
             //Rotation of current tile in degrees
             toolStripStatusLabel_ValueRotation.Text = 
@@ -317,8 +334,8 @@ namespace Railgun.Editor.App
             toolStripStatusLabel_ValueFlip.Text =
                 tileManager.CurrentTile.SpriteEffect.ToString().PadRight(16);
             //Current fps
-            toolStripStatusLabel_ValueFPS.Text = 
-                mapEditor.Editor.GetFrameRate.ToString("#00");
+            toolStripStatusLabel_ValueFPS.Text =
+                mapPanel.mapEditor.Editor.GetFrameRate.ToString("#00");
         }
 
         /// <summary>
@@ -420,16 +437,9 @@ namespace Railgun.Editor.App
         /// </summary>
         private void UpdateCurrentHitbox()
         {
-            toolStripMenuItem_PlaceHitbox.Checked = tileManager.PlaceHitbox;
-            checkBox_Solid.Checked = tileManager.PlaceHitbox;
-        }
-
-        /// <summary>
-        /// Sets the current hitbox to the check
-        /// </summary>
-        private void CheckBox_Solid_CheckedChanged(object sender, EventArgs e)
-        {
-            tileManager.PlaceHitbox = (sender as CheckBox).Checked;
+            toolStripMenuItem_PlaceHitbox.Checked = tileManager.IsPlacingHitbox;
+            editPanel.checkBox_Solid.Checked = tileManager.IsPlacingHitbox;
+            hitboxEditor.checkBox_Solid.Checked = tileManager.IsPlacingHitbox;
         }
 
         /// <summary>
@@ -437,7 +447,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_Edit_Solid_CheckedChanged(object sender, EventArgs e)
         {
-            tileManager.PlaceHitbox = (sender as ToolStripMenuItem).Checked;
+            tileManager.IsPlacingHitbox = (sender as ToolStripMenuItem).Checked;
         }
 
         #endregion
@@ -449,7 +459,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_View_ResetCamera_Click(object sender, EventArgs e)
         {
-            mapEditor.ResetCamera();
+            mapPanel.mapEditor.ResetCamera();
         }
 
         /// <summary>
@@ -457,7 +467,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_View_ResetZoom_Click(object sender, EventArgs e)
         {
-            mapEditor.Editor.Cam.Zoom = 1f;
+            mapPanel.mapEditor.Editor.Cam.Zoom = 1f;
         }
 
         /// <summary>
@@ -466,15 +476,7 @@ namespace Railgun.Editor.App
         private void UpdateViewHitbox()
         {
             toolStripMenuItem_ShowHitboxes.Checked = tileManager.ViewHitboxes;
-            checkBox_ShowHitboxes.Checked = tileManager.ViewHitboxes;
-        }
-
-        /// <summary>
-        /// Sets showing the hitbox to the check
-        /// </summary>
-        private void CheckBox_ShowHitboxes_CheckedChanged(object sender, EventArgs e)
-        {
-            tileManager.ViewHitboxes = (sender as CheckBox).Checked;
+            mapPanel.checkBox_ShowHitboxes.Checked = tileManager.ViewHitboxes;
         }
 
         /// <summary>
@@ -491,15 +493,7 @@ namespace Railgun.Editor.App
         private void UpdateViewGrid()
         {
             toolStripMenuItem_ShowGrid.Checked = tileManager.ShowGrid;
-            checkBox_ShowGrid.Checked = tileManager.ShowGrid;
-        }
-
-        /// <summary>
-        /// Sets showing the grid to the check
-        /// </summary>
-        private void CheckBox_ShowGrid_CheckedChanged(object sender, EventArgs e)
-        {
-            tileManager.ShowGrid = (sender as CheckBox).Checked;
+            mapPanel.checkBox_ShowGrid.Checked = tileManager.ShowGrid;
         }
 
         /// <summary>
@@ -589,16 +583,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void TileSize_TextChanged(object sender, EventArgs e)
         {
-            CurrentTileset.GridSize = (float)(sender as NumericUpDown).Value;
-        }
-
-        /// <summary>
-        /// Called when the tileset tab is changed
-        /// </summary>
-        private void TabControl_Tileset_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //Set tile size to current tileset's tile size
-            numericUpDown_TileSize.Value = (decimal)CurrentTileset.GridSize;
+            tilePanel.CurrentTileset.GridSize = (float)(sender as NumericUpDown).Value;
         }
 
         /// <summary>
@@ -606,55 +591,41 @@ namespace Railgun.Editor.App
         /// </summary>
         private void UpdateLayerDisplay()
         {
-            //Set current tile to nothing if on a non-tile layer
-            if(tileManager.CurrentLayer < 0)
+            switch(tileManager.CurrentLayer)
             {
-                tileManager.CurrentTile = Tile.Empty;
+                case -2://Entity layer
 
-                //If hitbox layer
-                if(tileManager.CurrentLayer == -1)
-                {
-                    //Hide tile picker
-                    splitContainer_LeftSideBar.Visible = true;
-                    tableLayoutPanel_TilePicker.Visible = false;
-
-                    //Hide entity picker
-                    entityPanel.Visible = false;
-                    tableLayoutPanel_Edit.Visible = true;
-                }
-                //If entity layer
-                else if(tileManager.CurrentLayer == -2)
-                {
-                    //Hide tile and hitbox sidebar
-                    splitContainer_LeftSideBar.Visible = false;
-                    //Hide tile picker
+                    //Show entity picker, hide everything else
+                    splitContainer_TileEditing.Visible = false;
                     entityPanel.Visible = true;
-                    tableLayoutPanel_Edit.Visible = false;
-                }
+                    hitboxEditor.Visible = false;
 
-                return;
+                    //Set current tile to none
+                    tileManager.CurrentTile = Tile.Empty;
+
+                    break;
+                case -1://Hitbox layer
+
+                    //Show hitbox editor, hide everything else
+                    splitContainer_TileEditing.Visible = false;
+                    entityPanel.Visible = false;
+                    hitboxEditor.Visible = true;
+
+                    //Set current tile to none
+                    tileManager.CurrentTile = Tile.Empty;
+
+                    break;
+                default://Tile layer
+
+                    //Show tile picker and edit, hide everything else
+                    splitContainer_TileEditing.Visible = true;
+                    entityPanel.Visible = false;
+                    hitboxEditor.Visible = false;
+
+                    //Set current selection
+                    tilePanel.CurrentTileset.CreateTileSelection();
+                    break;
             }
-
-            //Show tile picker
-            splitContainer_LeftSideBar.Visible = true;
-            tableLayoutPanel_TilePicker.Visible = true;
-            //Hide entity picker
-            entityPanel.Visible = false;
-            tableLayoutPanel_Edit.Visible = true;
-
-            
-
-            //Else set to current selection
-            CurrentTileset.CreateTileSelection();
-        }
-
-        /// <summary>
-        /// Called when the layer is changed
-        /// </summary>
-        private void ComboBox_Layers_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //Set current layer where the hitbox layer is -1
-            tileManager.CurrentLayer = comboBox_Layers.SelectedIndex - 2;
         }
 
         #endregion
@@ -694,7 +665,7 @@ namespace Railgun.Editor.App
                 return;
 
             //If they do save, set Set current map to new map
-            mapEditor.CurrentMap = newMap;
+            mapPanel.mapEditor.CurrentMap = newMap;
         }
 
         /// <summary>
@@ -702,7 +673,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_Save_Click(object sender, EventArgs e)
         {
-            FileManager.SaveMap(mapEditor.CurrentMap);
+            FileManager.SaveMap(mapPanel.mapEditor.CurrentMap);
         }
 
         /// <summary>
@@ -710,7 +681,7 @@ namespace Railgun.Editor.App
         /// </summary>
         private void Menu_SaveAs_Click(object sender, EventArgs e)
         {
-            FileManager.SaveMapAs(mapEditor.CurrentMap);
+            FileManager.SaveMapAs(mapPanel.mapEditor.CurrentMap);
         }
 
         /// <summary>
@@ -719,12 +690,12 @@ namespace Railgun.Editor.App
         private void Menu_Open_Click(object sender, EventArgs e)
         {
             //Save current map just in case nothing is loaded, get map path
-            Map loadedMap = FileManager.LoadMap(mapEditor.Editor.Content);
+            Map loadedMap = FileManager.LoadMap(mapPanel.mapEditor.Editor.Content);
 
             //If a map was loaded, set current map to that map
             if(loadedMap != null)
             {
-                mapEditor.CurrentMap = loadedMap;
+                mapPanel.mapEditor.CurrentMap = loadedMap;
 
                 //Set current map name on the title
                 toolStripMenuItem_Title.Text =

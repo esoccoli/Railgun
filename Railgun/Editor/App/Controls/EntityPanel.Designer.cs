@@ -29,20 +29,20 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Eraser", 0);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Entrence", 1);
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Exit", 2);
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("Skeleton", 3);
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("Gas Man", 4);
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("Turret", 5);
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("Ghost", 6);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EntityPanel));
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("Eraser", 0);
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("Entrence", 1);
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("Exit", 2);
+            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("Skeleton", 3);
+            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("Gas Man", 4);
+            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("Turret", 5);
+            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("Ghost", 6);
             this.tableLayoutPanel_EntityPicker = new System.Windows.Forms.TableLayoutPanel();
+            this.imageList_Entities = new System.Windows.Forms.ImageList(this.components);
+            this.label_EntityPicker = new System.Windows.Forms.Label();
             this.tableLayoutPanel_EntitySettings = new System.Windows.Forms.TableLayoutPanel();
             this.panel_EntityPicker = new System.Windows.Forms.Panel();
             this.listView_Entities = new System.Windows.Forms.ListView();
-            this.label_EntityPicker = new System.Windows.Forms.Label();
-            this.imageList_Entities = new System.Windows.Forms.ImageList(this.components);
             this.tableLayoutPanel_EntityPicker.SuspendLayout();
             this.panel_EntityPicker.SuspendLayout();
             this.SuspendLayout();
@@ -67,6 +67,31 @@
             this.tableLayoutPanel_EntityPicker.Size = new System.Drawing.Size(570, 449);
             this.tableLayoutPanel_EntityPicker.TabIndex = 2;
             // 
+            // imageList_Entities
+            // 
+            this.imageList_Entities.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList_Entities.ImageStream")));
+            this.imageList_Entities.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList_Entities.Images.SetKeyName(0, "Eraser.png");
+            this.imageList_Entities.Images.SetKeyName(1, "Entrence.png");
+            this.imageList_Entities.Images.SetKeyName(2, "Exit.png");
+            this.imageList_Entities.Images.SetKeyName(3, "Skeleton.png");
+            this.imageList_Entities.Images.SetKeyName(4, "Gas Man.png");
+            this.imageList_Entities.Images.SetKeyName(5, "Turret.png");
+            this.imageList_Entities.Images.SetKeyName(6, "Ghost.png");
+            // 
+            // label_EntityPicker
+            // 
+            this.label_EntityPicker.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label_EntityPicker.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label_EntityPicker.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label_EntityPicker.Location = new System.Drawing.Point(0, 0);
+            this.label_EntityPicker.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
+            this.label_EntityPicker.Name = "label_EntityPicker";
+            this.label_EntityPicker.Size = new System.Drawing.Size(570, 16);
+            this.label_EntityPicker.TabIndex = 4;
+            this.label_EntityPicker.Text = "Entity Picker";
+            this.label_EntityPicker.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // tableLayoutPanel_EntitySettings
             // 
             this.tableLayoutPanel_EntitySettings.BackColor = System.Drawing.Color.Transparent;
@@ -86,10 +111,10 @@
             // 
             this.panel_EntityPicker.Controls.Add(this.listView_Entities);
             this.panel_EntityPicker.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_EntityPicker.Location = new System.Drawing.Point(3, 72);
-            this.panel_EntityPicker.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel_EntityPicker.Location = new System.Drawing.Point(0, 70);
+            this.panel_EntityPicker.Margin = new System.Windows.Forms.Padding(0);
             this.panel_EntityPicker.Name = "panel_EntityPicker";
-            this.panel_EntityPicker.Size = new System.Drawing.Size(564, 375);
+            this.panel_EntityPicker.Size = new System.Drawing.Size(570, 379);
             this.panel_EntityPicker.TabIndex = 3;
             // 
             // listView_Entities
@@ -98,55 +123,30 @@
             this.listView_Entities.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listView_Entities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView_Entities.HideSelection = false;
-            listViewItem1.StateImageIndex = 0;
-            listViewItem2.StateImageIndex = 0;
-            listViewItem3.StateImageIndex = 0;
-            listViewItem4.StateImageIndex = 0;
-            listViewItem5.StateImageIndex = 0;
-            listViewItem7.StateImageIndex = 0;
+            listViewItem8.StateImageIndex = 0;
+            listViewItem9.StateImageIndex = 0;
+            listViewItem10.StateImageIndex = 0;
+            listViewItem11.StateImageIndex = 0;
+            listViewItem12.StateImageIndex = 0;
+            listViewItem14.StateImageIndex = 0;
             this.listView_Entities.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4,
-            listViewItem5,
-            listViewItem6,
-            listViewItem7});
+            listViewItem8,
+            listViewItem9,
+            listViewItem10,
+            listViewItem11,
+            listViewItem12,
+            listViewItem13,
+            listViewItem14});
             this.listView_Entities.LargeImageList = this.imageList_Entities;
             this.listView_Entities.Location = new System.Drawing.Point(0, 0);
-            this.listView_Entities.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.listView_Entities.Margin = new System.Windows.Forms.Padding(0);
             this.listView_Entities.MultiSelect = false;
             this.listView_Entities.Name = "listView_Entities";
-            this.listView_Entities.Size = new System.Drawing.Size(564, 375);
+            this.listView_Entities.Size = new System.Drawing.Size(570, 379);
             this.listView_Entities.TabIndex = 8;
             this.listView_Entities.TileSize = new System.Drawing.Size(20, 20);
             this.listView_Entities.UseCompatibleStateImageBehavior = false;
             this.listView_Entities.SelectedIndexChanged += new System.EventHandler(this.ListBox_EntityPicker_SelectedIndexChanged);
-            // 
-            // label_EntityPicker
-            // 
-            this.label_EntityPicker.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_EntityPicker.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.label_EntityPicker.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label_EntityPicker.Location = new System.Drawing.Point(0, 0);
-            this.label_EntityPicker.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
-            this.label_EntityPicker.Name = "label_EntityPicker";
-            this.label_EntityPicker.Size = new System.Drawing.Size(570, 16);
-            this.label_EntityPicker.TabIndex = 4;
-            this.label_EntityPicker.Text = "Entity Picker";
-            this.label_EntityPicker.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // imageList_Entities
-            // 
-            this.imageList_Entities.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList_Entities.ImageStream")));
-            this.imageList_Entities.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList_Entities.Images.SetKeyName(0, "Eraser.png");
-            this.imageList_Entities.Images.SetKeyName(1, "Entrence.png");
-            this.imageList_Entities.Images.SetKeyName(2, "Exit.png");
-            this.imageList_Entities.Images.SetKeyName(3, "Skeleton.png");
-            this.imageList_Entities.Images.SetKeyName(4, "Gas Man.png");
-            this.imageList_Entities.Images.SetKeyName(5, "Turret.png");
-            this.imageList_Entities.Images.SetKeyName(6, "Ghost.png");
             // 
             // EntityPanel
             // 
@@ -164,10 +164,10 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_EntityPicker;
+        private System.Windows.Forms.Label label_EntityPicker;
+        private System.Windows.Forms.ImageList imageList_Entities;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_EntitySettings;
         private System.Windows.Forms.Panel panel_EntityPicker;
         private System.Windows.Forms.ListView listView_Entities;
-        private System.Windows.Forms.Label label_EntityPicker;
-        private System.Windows.Forms.ImageList imageList_Entities;
     }
 }

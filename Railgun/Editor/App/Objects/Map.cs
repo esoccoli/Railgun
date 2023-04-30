@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Railgun.Editor.App.Util;
-using SharpDX.Direct2D1.Effects;
-using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +14,7 @@ namespace Railgun.Editor.App.Objects
     /// <para>Author: Jonathan Jan</para>
     /// Date Created: 3/9/2023
     /// </summary>
-    internal class Map
+    public class Map
     {
         /// <summary>
         /// The map grid size
