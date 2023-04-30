@@ -10,23 +10,24 @@ using Railgun.RailgunGame.Util;
 using Railgun.RailgunGame.Tilemapping;
 using System.Linq.Expressions;
 
-//Copied GasMan, modified by Igor to be a stationary enemy 
+//Cloned from GasMan enemy. Fires fast single bullets, but walks slow
 //Enemy that walks away from the player
 namespace Railgun.RailgunGame
 {
-    internal class Turret : Enemy
+    internal class Sniper : Enemy
     {
-        public enum TurretState
+        public enum GasState
         {
+            Walk,
             Shoot,
             Death
         }
 
-        //private Vector2 velocity;
+        private Vector2 velocity;
         private Texture2D activeBullet;
         private Animation notActiveBullet;
-        //private double SecondsPerState;
-        //private double TimeCounter;
+        private double SecondsPerState;
+        private double TimeCounter;
         private double bulletCooldown;
         private double timeSinceShot;
 
@@ -38,7 +39,7 @@ namespace Railgun.RailgunGame
         /// <summary>
         /// current state of the enemy
         /// </summary>
-        public TurretState CurrentState { get; private set; }
+        public GasState CurrentState { get; private set; }
 
         /// <summary>
         /// list of all projectiles fired by the enemy
@@ -52,24 +53,24 @@ namespace Railgun.RailgunGame
         /// <param name="death">death animation</param>
         /// <param name="hitbox">hitbox</param>
         /// <param name="shoot">shooting animation</param>
-        public Turret(Animation death, Rectangle hitbox, Animation shoot, Texture2D activeBullet, Animation notActiveBullet) : base(shoot, death, hitbox)
+        public Sniper(Animation move, Animation death, Rectangle hitbox, Animation shoot, Texture2D activeBullet, Animation notActiveBullet) : base(move, death, hitbox)
         {
-            Health = 40;
+            Health = 20;
             Hitbox = hitbox;
-            //SecondsPerState = 1;
-            //TimeCounter = 0;
+            SecondsPerState = 2;
+            TimeCounter = 0;
 
             this.activeBullet = activeBullet;
             this.notActiveBullet = notActiveBullet;
-            CurrentState = TurretState.Shoot;
+            CurrentState = GasState.Walk;
             Shooting = shoot;
-            bulletCooldown = .5;
+            bulletCooldown = .15;
             timeSinceShot = 0;
             EnemyBullets = new List<Projectile>();
         }
 
-        public Turret(Rectangle hitbox)
-            : this(
+        public Sniper(Rectangle hitbox)
+            : this(VisualManager.Instance.GasManMove.Clone(),
                  VisualManager.Instance.GasManDeath.Clone(),
                  hitbox,
                  VisualManager.Instance.GasManShoot.Clone(),
@@ -86,21 +87,43 @@ namespace Railgun.RailgunGame
         {
             if (Health <= 0)
             {
-                CurrentState = TurretState.Death;
+                CurrentState = GasState.Death;
             }
             switch (CurrentState)
             {
-                case TurretState.Shoot:
-                    timeSinceShot += gameTime.ElapsedGameTime.TotalSeconds;
-                    if (timeSinceShot >= bulletCooldown)
+                case GasState.Walk:
+                    Walk(playerPos);
+                    TimeCounter += gameTime.ElapsedGameTime.TotalSeconds;
+                    if (TimeCounter >= SecondsPerState)
                     {
-                        Shoot(playerPos);
-                        timeSinceShot = 0;
+                        CurrentState = GasState.Shoot;
+                        TimeCounter = 0;
                     }
-                    //TimeCounter += gameTime.ElapsedGameTime.TotalSeconds;
                     break;
 
-                case TurretState.Death:
+                case GasState.Shoot:
+                    //timeSinceShot += gameTime.ElapsedGameTime.TotalSeconds;
+                    //if (timeSinceShot >= bulletCooldown)
+                    //{
+                    //    Shoot(playerPos);
+                    //    timeSinceShot = 0;
+                    //}
+                    //TimeCounter += gameTime.ElapsedGameTime.TotalSeconds;
+                    //if (TimeCounter >= SecondsPerState)
+                    //{
+                    //    CurrentState = GasState.Walk;
+                    //    TimeCounter = 0;
+                    //}
+
+
+                    Shoot(playerPos);
+                    CurrentState = GasState.Walk;
+                    timeSinceShot = 0;
+
+
+                    break;
+
+                case GasState.Death:
                     break;
             }
         }
@@ -119,20 +142,32 @@ namespace Railgun.RailgunGame
 
             switch (CurrentState)
             {
-                case TurretState.Shoot:
+                case GasState.Walk:
                     if (playerPos.X <= Hitbox.Center.X)
                     {
-                        Shooting.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.Yellow, SpriteEffects.FlipHorizontally);;
+                        Move.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.Green, SpriteEffects.FlipHorizontally);
                     }
                     else
                     {
-                        Shooting.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.Yellow, SpriteEffects.None);
+                        Move.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.Green, SpriteEffects.None);
                     }
                     return false;
 
 
-                case TurretState.Death:
-                    return Death.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.Yellow, SpriteEffects.None);
+                case GasState.Shoot:
+                    if (playerPos.X <= Hitbox.Center.X)
+                    {
+                        Shooting.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.Green, SpriteEffects.FlipHorizontally);
+                    }
+                    else
+                    {
+                        Shooting.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.Green, SpriteEffects.None);
+                    }
+                    return false;
+
+
+                case GasState.Death:
+                    return Death.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.Green, SpriteEffects.None);
             }
             return false;
         }
@@ -147,11 +182,7 @@ namespace Railgun.RailgunGame
 
             Vector2 vect = (playerPos - Hitbox.Center).ToVector2() / Vector2.Distance(playerPos.ToVector2(), Hitbox.Center.ToVector2());
             EnemyProjManager.Instance.Projectiles.Add(new Projectile(new Rectangle(Hitbox.X + (Hitbox.Width / 2) - (activeBullet.Width / 2), Hitbox.Y + (Hitbox.Height / 2) - (activeBullet.Height / 2),
-                activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet.Clone(), vect * 6.0f, Color.Yellow));
-            EnemyProjManager.Instance.Projectiles.Add(new Projectile(new Rectangle(Hitbox.X + (Hitbox.Width / 2) - (activeBullet.Width / 2), Hitbox.Y + (Hitbox.Height / 2) - (activeBullet.Height / 2),
-                activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet.Clone(), vect * 4.0f, Color.Yellow));
-            EnemyProjManager.Instance.Projectiles.Add(new Projectile(new Rectangle(Hitbox.X + (Hitbox.Width / 2) - (activeBullet.Width / 2), Hitbox.Y + (Hitbox.Height / 2) - (activeBullet.Height / 2),
-                activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet.Clone(), vect * 2.0f, Color.Yellow));
+                activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet.Clone(), vect * 40.0f, Color.Green));
 
         }
 
@@ -161,7 +192,23 @@ namespace Railgun.RailgunGame
         /// <param name="playerPos">current position of the player</param>
         public override void Walk(Point playerPos)
         {
+            Rectangle hitboxTemp = Hitbox;
+            float distance = Vector2.Distance(playerPos.ToVector2(), Hitbox.Center.ToVector2());
 
+            //prevents "telepotration"
+            if (distance == 0)
+            {
+                distance = 1;
+            }
+
+            velocity = (playerPos - Hitbox.Center).ToVector2() / distance * 4;
+
+            hitboxTemp.X -= (int)velocity.X / 3;
+            hitboxTemp.Y -= (int)velocity.Y / 3;
+
+            hitboxTemp = WorldManager.Instance.ResolveCollisions(hitboxTemp);
+            Hitbox = hitboxTemp;
         }
     }
 }
+
