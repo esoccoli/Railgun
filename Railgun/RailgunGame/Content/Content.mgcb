@@ -246,6 +246,18 @@
 /processorParam:TextureFormat=Compressed
 /build:Mynerve24.spritefont
 
+#begin New ControlsV3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:New ControlsV3.png
+
 #begin RedHealthSquare.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -269,6 +281,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:reload.png
+
+#begin reticle106.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:reticle106.png
 
 #begin Skeleton Dead.png
 /importer:TextureImporter

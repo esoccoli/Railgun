@@ -40,6 +40,9 @@ namespace Railgun.RailgunGame
         private Rectangle playRect;
         private Rectangle optiRect;
         private Rectangle quitRect;
+
+        // Makes Pause menu work
+        private GameState previous;
         #endregion
 
         #region Player, Enemy, Proj. Textures
@@ -120,7 +123,7 @@ namespace Railgun.RailgunGame
             backgroundHealthUI = Content.Load<Texture2D>("WhiteHealthSquare");
             foregroundHealthUI = Content.Load<Texture2D>("RedHealthSquare");
             bulletUI = Content.Load<Texture2D>("uiBullet");
-            howToPlay = Content.Load<Texture2D>("Intro");
+            howToPlay = Content.Load<Texture2D>("New ControlsV3");
 
 
             //Game Menu Stuff
@@ -131,8 +134,10 @@ namespace Railgun.RailgunGame
             menuQuit = Content.Load<Texture2D>("menuQuit");
             menuRest = Content.Load<Texture2D>("reload");
 
+            previous = GameState.Menu;
+
             //Game Reticle
-            gameReticle = Content.Load<Texture2D>("gameReticle");
+            gameReticle = Content.Load<Texture2D>("reticle106");
 
             // Player, bullets, and enemies.
             playerIdle = Content.Load<Texture2D>("mainCharIdle");
@@ -266,6 +271,7 @@ namespace Railgun.RailgunGame
                         && mState.Y > optiRect.Y
                         && mState.Y < optiRect.Y + optiRect.Height)
                     {
+                        previous = GameState.Menu;
                         currentGameState = GameState.Pause;
                     }
 
@@ -287,12 +293,13 @@ namespace Railgun.RailgunGame
 
                     userInterface.Update(mainPlayer.Health, mainPlayer.Ammo, mainPlayer.DashCooldown, mainPlayer.Hitbox); //Updates the UI. Values to be updated later
 
-                    if (InputManager.IsKeyDown(Keys.R))
+                    //if (InputManager.IsKeyDown(Keys.R))
+                    //{
+                    //    currentGameState = GameState.GameOver;
+                    //} // A temporary way to instantly lose the game. Or maybe an unintentional feature!!!
+                    if (InputManager.IsKeyReleased(Keys.Escape))
                     {
-                        currentGameState = GameState.GameOver;
-                    } // A temporary way to instantly lose the game. Or maybe an unintentional feature!!!
-                    if (InputManager.IsKeyDown(Keys.P))
-                    {
+                        previous = GameState.Game;
                         currentGameState = GameState.Pause;
                     } // A way to pause the game.
 
@@ -350,12 +357,12 @@ namespace Railgun.RailgunGame
                     #endregion
 
                     //DEBUG, tp to mouse
-                    if (InputManager.IsKeyDown(Keys.T))
-                    {
-                        Rectangle playerHitbox = mainPlayer.Hitbox;
-                        playerHitbox.Location = world.GetMouseWorldPosition().ToPoint();
-                        mainPlayer.Hitbox = playerHitbox;
-                    }
+                    //if (InputManager.IsKeyDown(Keys.T))
+                    //{
+                    //    Rectangle playerHitbox = mainPlayer.Hitbox;
+                    //    playerHitbox.Location = world.GetMouseWorldPosition().ToPoint();
+                    //    mainPlayer.Hitbox = playerHitbox;
+                    //}
 
                     //If alive, ease somewhat to mouse as well
                     if (mainPlayer.Health > 0)
@@ -368,6 +375,7 @@ namespace Railgun.RailgunGame
                     else//If dead, ease slowly to player
                     {
                         world.CurrentCamera.EaseTo(mainPlayer.Hitbox.Center.ToVector2(), 2f, 0.02f);
+                        IsMouseVisible = true;
 
                         //if (displayGameOver)
                         //{
@@ -399,12 +407,12 @@ namespace Railgun.RailgunGame
                 #region Pause
                 case GameState.Pause:
 
-                    if (InputManager.IsKeyDown(Keys.Enter))
+                    if (InputManager.IsKeyReleased(Keys.Escape))
                     {
-                        currentGameState = GameState.Menu;
+                        currentGameState = previous;
                     }
 
-                    if (InputManager.IsKeyDown(Keys.Escape))
+                    if (InputManager.IsKeyDown(Keys.Q))
                     {
                         this.Exit();
                     }
@@ -462,6 +470,7 @@ namespace Railgun.RailgunGame
                         && mState.Y > optiRect.Y
                         && mState.Y < optiRect.Y + optiRect.Height)
                     {
+                        IsMouseVisible = false;
                         mainPlayer.ResetPlayer();
                         world.ResetWorld();
                         currentGameState = GameState.Game;
@@ -478,6 +487,7 @@ namespace Railgun.RailgunGame
 
                     if (InputManager.IsKeyDown(Keys.Enter))
                     {
+                        IsMouseVisible = false;
                         mainPlayer.ResetPlayer();
                         world.ResetWorld();
                         currentGameState = GameState.Game;

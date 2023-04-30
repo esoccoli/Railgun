@@ -215,10 +215,10 @@ namespace Railgun.RailgunGame
             Rectangle hitbox = Hitbox;
 
             // This is NOT user input, this is what the directional input of the user was back when they initially started dashing.
-            if (preDash.IsKeyDown(Keys.W)) { hitbox.Y -= dashSpeed; }
-            if (preDash.IsKeyDown(Keys.A)) { hitbox.X -= dashSpeed; }
-            if (preDash.IsKeyDown(Keys.S)) { hitbox.Y += dashSpeed; }
-            if (preDash.IsKeyDown(Keys.D)) { hitbox.X += dashSpeed; }
+            if (preDash.IsKeyDown(Keys.W) || preDash.IsKeyDown(Keys.Up)) { hitbox.Y -= dashSpeed; }
+            if (preDash.IsKeyDown(Keys.A) || preDash.IsKeyDown(Keys.Left)) { hitbox.X -= dashSpeed; }
+            if (preDash.IsKeyDown(Keys.S) || preDash.IsKeyDown(Keys.Down)) { hitbox.Y += dashSpeed; }
+            if (preDash.IsKeyDown(Keys.D) || preDash.IsKeyDown(Keys.Right)) { hitbox.X += dashSpeed; }
 
             hitbox = WorldManager.Instance.ResolveCollisions(hitbox);
 
