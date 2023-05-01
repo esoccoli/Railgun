@@ -86,7 +86,7 @@ namespace Railgun.RailgunGame.Util
                 }
 
                 //Read entrance and exit
-                map.Entrence = ReadVector(reader);
+                map.Entrance = ReadVector(reader);
                 map.Exit = ReadVector(reader);
 
                 //Populate hitbox list
@@ -94,7 +94,6 @@ namespace Railgun.RailgunGame.Util
 
                 return map;
             }
-            
             catch (Exception e)
             {
                 //Show error log
@@ -106,7 +105,6 @@ namespace Railgun.RailgunGame.Util
 
                 return null;
             }
-            
             finally
             {
                 //Close reader if opened

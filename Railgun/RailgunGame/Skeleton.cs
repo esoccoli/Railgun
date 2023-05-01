@@ -70,8 +70,6 @@ namespace Railgun.RailgunGame
             hitboxTemp = WorldManager.Instance.ResolveCollisions(hitboxTemp);
 
             Hitbox = hitboxTemp;
-
-            DebugLog.Instance.LogFrame($"X: {Hitbox.X}  Y: {Hitbox.Y}");
         }
         
         // TODO: fill in returns tag in method header

@@ -5,7 +5,11 @@ using Microsoft.Xna.Framework.Graphics;
 //Class that holds all tiles in the game
 namespace Railgun.RailgunGame.Tilemapping
 {
-    // TODO: add XML header
+    /// <summary>
+    /// A struct that represents a tile used in a tilemap
+    /// <para>Author: Nathan McAndrew, Jonathan Jan</para>
+    /// 
+    /// </summary>
     internal struct Tile
     {
         /// <summary>
@@ -55,7 +59,11 @@ namespace Railgun.RailgunGame.Tilemapping
             Flip = flip;
         }
         
-        // TODO: make XML header
+        /// <summary>
+        /// Draws this tile to the specified sprite batch at the specified destination
+        /// </summary>
+        /// <param name="sb">Sprite batch to draw to</param>
+        /// <param name="destination">Destination rectangle to draw to</param>
         public void Draw(SpriteBatch sb, Rectangle destination)
         {
             //Only draw if not null
@@ -67,7 +75,7 @@ namespace Railgun.RailgunGame.Tilemapping
                 Vector2 origin = Texture.Bounds.Size.ToVector2() / 2f;
 
                 //If source is specified, create origin from source rectangle size
-                if (SourceRectangle != null)
+                if(SourceRectangle != null)
                     origin = SourceRectangle.Value.Size.ToVector2() / 2f;
 
 

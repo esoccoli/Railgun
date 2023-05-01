@@ -117,8 +117,6 @@ namespace Railgun.RailgunGame
 
             bulletRemovalList = new List<Projectile>();
 
-            DebugLog.Instance.LogPersistant("?????", Color.White, 3);
-
             base.Initialize();
         }
 
@@ -429,23 +427,6 @@ namespace Railgun.RailgunGame
                     }
                     #endregion
 
-                    //DEBUG, tp to mouse
-                    //if (InputManager.IsKeyDown(Keys.T))
-                    //{
-                    //    Rectangle playerHitbox = mainPlayer.Hitbox;
-                    //    playerHitbox.Location = world.GetMouseWorldPosition().ToPoint();
-                    //    mainPlayer.Hitbox = playerHitbox;
-                    //}
-
-                    /*// TODO: THIS IS THE CODE THAT WAS HERE BEFORE MERGING CHANGES, IF ANYTHING BREAKS, CHECK THIS FIRST
-                    // Keybind to teleport the player to the current mouse position
-                    // Intended for debug purposes
-                    if (InputManager.IsKeyDown(Keys.T))
-                    {
-                        Rectangle playerHitbox = mainPlayer.Hitbox;
-                        playerHitbox.Location = world.GetMouseWorldPosition().ToPoint();
-                        mainPlayer.Hitbox = playerHitbox;
-                    }*/
 
                     // If alive, camera slowly moves towards the mouse position
                     if (mainPlayer.Health > 0)
@@ -699,10 +680,6 @@ namespace Railgun.RailgunGame
 
                     _spriteBatch.End();
                     
-                    // TODO: unused code should be removed
-                    //DEBUG Draw world debug
-                    //world.DrawDebug(_spriteBatch, GraphicsDevice);
-
                     // Draw overlay
                     _spriteBatch.Begin(samplerState: SamplerState.PointClamp,
                         blendState: BlendState.AlphaBlend);

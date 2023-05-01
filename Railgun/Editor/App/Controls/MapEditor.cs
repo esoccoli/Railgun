@@ -384,7 +384,7 @@ namespace Railgun.Editor.App.Controls
                         CurrentMap.Entities.Remove(gridPoint);
                     break;
                 case 1://Enter
-                    CurrentMap.Entrence = gridPoint;
+                    CurrentMap.Entrance = gridPoint;
                     break;
                 case 2://Exit
                     CurrentMap.Exit = gridPoint;

@@ -32,15 +32,15 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <summary>
         /// A list of tilemaps where each list is a layer. Tilemaps are dictionaries
         /// where the key is the point on the map and the value is the tile at that point
-        /// <para>Note: layers with larger indecies will appear above layers
-        /// with smaller indecies</para>
+        /// <para>Note: layers with larger indices will appear above layers
+        /// with smaller indices</para>
         /// </summary>
-        public List<Dictionary<Vector2, Tile>> Layers { get; private set; } // TODO: can this be made get only
+        public List<Dictionary<Vector2, Tile>> Layers { get; }
 
         /// <summary>
         /// A boolean dictionary that maps position to boolean of whether a tile is solid or not
         /// </summary>
-        public Dictionary<Vector2, bool> Hitboxes { get; private set; } // TODO: can this be made get only
+        public Dictionary<Vector2, bool> Hitboxes { get; }
 
         /// <summary>
         /// The list of active solid hitboxes for debug drawing
@@ -50,12 +50,12 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <summary>
         /// A dictionary of entity ids that this map contains
         /// </summary>
-        public Dictionary<Vector2, int> EntitiesDictionary { get; private set; } // TODO: can this be made get only
+        public Dictionary<Vector2, int> EntitiesDictionary { get; }
 
         /// <summary>
-        /// The entrence point of this map
+        /// The entrance point of this map
         /// </summary>
-        public Vector2 Entrence { get; set; }
+        public Vector2 Entrance { get; set; }
 
         /// <summary>
         /// The exit point of this map
@@ -80,7 +80,7 @@ namespace Railgun.RailgunGame.Tilemapping
                 Rectangle bounds = Bounds;
                 bounds.Location += changeInPosition.ToPoint();
                 Bounds = bounds;
-                Entrence += changeInPosition;
+                Entrance += changeInPosition;
                 Exit += changeInPosition;
             }
         }
@@ -110,7 +110,7 @@ namespace Railgun.RailgunGame.Tilemapping
             Hitboxes = new Dictionary<Vector2, bool>();
             activeHitboxes = new List<Vector2>();
             EntitiesDictionary = new Dictionary<Vector2, int>();
-            Entrence = Vector2.Zero;
+            Entrance = Vector2.Zero;
             Exit = Vector2.Zero;
         }
 
@@ -126,7 +126,7 @@ namespace Railgun.RailgunGame.Tilemapping
                 Rectangle bounds = Rectangle.Empty;
                 Point bottomRightTile = Point.Zero;
 
-                // Create bounds of map
+                //Create bounds of map
                 foreach(KeyValuePair<Vector2, bool> hitboxPair in Hitboxes)
                 {
                     //If solid, create a hitbox and compare
@@ -134,15 +134,15 @@ namespace Railgun.RailgunGame.Tilemapping
                     {
                         Rectangle hitbox = GetSolidTile(hitboxPair.Key);
 
-                        // Find top most left tile
-                        if (hitbox.X < bounds.X) bounds.X = hitbox.X;
-                        if (hitbox.Y < bounds.Y) bounds.Y = hitbox.Y;
-                        // Find bottom most right tile
-                        if (hitbox.X > bottomRightTile.X) bottomRightTile.X = hitbox.X;
-                        if (hitbox.Y > bottomRightTile.Y) bottomRightTile.Y = hitbox.Y;
+                        //Find top most left tile
+                        if(hitbox.X < bounds.X) bounds.X = hitbox.X;
+                        if(hitbox.Y < bounds.Y) bounds.Y = hitbox.Y;
+                        //Find bottom most right tile
+                        if(hitbox.X > bottomRightTile.X) bottomRightTile.X = hitbox.X;
+                        if(hitbox.Y > bottomRightTile.Y) bottomRightTile.Y = hitbox.Y;
                     }
                 }
-                // Create final rectangle size
+                //Create final rectangle size
                 bottomRightTile += new Point(tileSize);
                 bounds.Size = new Point(
                         bottomRightTile.X - bounds.X,
@@ -151,8 +151,8 @@ namespace Railgun.RailgunGame.Tilemapping
                 Bounds = bounds;
             }
 
-            // Calculate entrence and exit positions
-            Entrence *= TileSize;
+            //Calculate entrence and exit positions
+            Entrance *= TileSize;
             Exit *= TileSize;
         }
 
@@ -164,13 +164,13 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <param name="spriteBatch">THe sprite batch to draw to</param>
         public void DrawTiles(SpriteBatch spriteBatch)
         {
-            // Draw each layer
+            //Draw each layer
             foreach (Dictionary<Vector2, Tile> layer in Layers)
             {
-                // Draw each tile in this layer
+                //Draw each tile in this layer
                 foreach (KeyValuePair<Vector2, Tile> tile in layer)
                 {
-                    // Draw the tile to rectangle corresponding to its grid location
+                    //Draw the tile to rectangle corresponding to its grid location
                     tile.Value.Draw(spriteBatch, GetSolidTile(tile.Key));
                 }
             }
@@ -186,7 +186,7 @@ namespace Railgun.RailgunGame.Tilemapping
         {
             foreach (KeyValuePair<Vector2, bool> hitbox in Hitboxes)
             {
-                // If hitbox placed
+                //If hitbox placed
                 if (hitbox.Value)
                 {
                     DrawSingleHitbox(
@@ -195,14 +195,14 @@ namespace Railgun.RailgunGame.Tilemapping
                 }
             }
 
-            // Draw active hitboxes
+            //Draw active hitboxes
             foreach(Vector2 hitboxPoint in activeHitboxes)
             {
                 DrawSingleHitbox(
                     cameraOffset, cameraZoom,
                     hitboxPoint * TileSize, Color.Red);
             }
-            // Reset active hitboxes
+            //Reset active hitboxes
             activeHitboxes.Clear();
 
         }

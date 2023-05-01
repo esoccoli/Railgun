@@ -52,9 +52,9 @@ namespace Railgun.Editor.App.Objects
         public Dictionary<Vector2, int> Entities { get; protected set; }
 
         /// <summary>
-        /// The entrence point of this map
+        /// The entrance point of this map
         /// </summary>
-        public Vector2 Entrence { get; set; }
+        public Vector2 Entrance { get; set; }
 
         /// <summary>
         /// The exit point of this map
@@ -83,7 +83,7 @@ namespace Railgun.Editor.App.Objects
             Layers = new List<Dictionary<Vector2, Tile>>();
             Hitboxes = new Dictionary<Vector2, bool>();
             Entities = new Dictionary<Vector2, int>();
-            Entrence = Vector2.Zero;
+            Entrance = Vector2.Zero;
             Exit = new Vector2(2f, 2f);
         }
 
@@ -155,10 +155,10 @@ namespace Railgun.Editor.App.Objects
                     tint);
             }
 
-            //Draw entrence
+            //Draw entrance
             spriteBatch.Draw(
                 entityManager.Enterence,
-                new Rectangle((Entrence * TileSize).ToPoint(), new Point(TileSize)),
+                new Rectangle((Entrance * TileSize).ToPoint(), new Point(TileSize)),
                 Color.LawnGreen);
 
             //Draw exit

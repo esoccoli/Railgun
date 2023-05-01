@@ -133,7 +133,7 @@ namespace Railgun.RailgunGame.Util
             Position = Vector2.Zero;
             Rotation = 0f;
             
-            // Create an initial matrix
+            //Create an initial matrix
             CreateMatrix();
         }
 
@@ -176,7 +176,7 @@ namespace Railgun.RailgunGame.Util
         public void EaseTo(Vector2 targetPosition, float targetZoom,
             float easingFactor)
         {
-            // Ease pan and zoom
+            //Ease pan and zoom
             PanBy((targetPosition - Position) * easingFactor);
             ZoomBy((targetZoom - Zoom) * easingFactor);
         }
@@ -248,7 +248,6 @@ namespace Railgun.RailgunGame.Util
 
                 //Resolve position
                 Position = Vector2.Floor(newPosition);
-                DebugLog.Instance.LogFrame(Position);
 
                 //Update view matrix with resolved (I know, this is terrible, I'll
                 //Change it later if I have time) Reason I'm doing this is to
@@ -266,12 +265,12 @@ namespace Railgun.RailgunGame.Util
         {
             //Update view matrix raw
             TransformationMatrix =
-                Matrix.CreateTranslation(new Vector3(-Position, 0f)) // Translate
-                * Matrix.CreateRotationZ(Rotation) // Rotate
-                * Matrix.CreateScale(Zoom, Zoom, 1f) // Zoom
+                Matrix.CreateTranslation(new Vector3(-Position, 0f))//Translate
+                * Matrix.CreateRotationZ(Rotation)//Rotate
+                * Matrix.CreateScale(Zoom, Zoom, 1f)//Zoom
                 * Matrix.CreateTranslation(new Vector3(
                         graphics.Viewport.Width * 0.5f,
-                        graphics.Viewport.Height * 0.5f, 0f)); // Translate to center of screen
+                        graphics.Viewport.Height * 0.5f, 0f));//Translate to center of screen
         }
 
         /// <summary>

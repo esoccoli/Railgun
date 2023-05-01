@@ -33,10 +33,8 @@ namespace Railgun.RailgunGame.Tilemapping
         {
             get
             {
-                if (instance == null)
-                {
+                if(instance == null)
                     instance = new WorldManager();
-                }
                 return instance;
             }
         }
@@ -47,7 +45,7 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <summary>
         /// A random object for anything that needs a bit of non-deterministic magic
         /// </summary>
-        public Random RNG { get; private set; } // TODO: can this be made get only
+        public Random RNG { get; }
 
         /// <summary>
         /// The current map of the world
@@ -132,43 +130,48 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <summary>
         /// Draws all debug parts (solid collision, triggers)
         /// </summary>
-        /// <param name="spriteBatch">Spritebatch object</param>
-        /// <param name="graphicsDevice">Graphics device object</param>
+        /// <param name="spriteBatch">The spritebatch to draw to</param>
+        /// <param name="graphicsDevice">The graphics device to draw to</param>
         public void DrawDebug(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
-            // TODO: PLEASE ADD LINE SPACING, I HAVE NO CLUE WHAT IS GOING ON AND I CANT READ THE CODE
-            // TODO: ALSO PLEASE PUT BRACKETS AROUND THE IF STATEMENTS
             //Draw hitboxes
             graphicsDevice.DepthStencilState = DepthStencilState.None;
             ShapeBatch.Begin(graphicsDevice);
             Vector2 cameraOffset = new Vector2(
                 CurrentCamera.TransformationMatrix.Translation.X,
                 CurrentCamera.TransformationMatrix.Translation.Y);
+            
             //Draw map hitboxes
             CurrentMap.DrawHitboxes(cameraOffset, CurrentCamera.Zoom);
+
             //Draw door hitboxes
-            if (EntrenceDoor.IsClosed)
+            if(EntrenceDoor.IsClosed)
+            {
                 Map.DrawSingleHitbox(
                     cameraOffset, CurrentCamera.Zoom,
                     EntrenceDoor.Hitbox.Location.ToVector2(),
                     EntrenceDoor.Hitbox.Size.ToVector2(),
                     Vector2.Zero, Color.Blue);
-            if (ExitDoor.IsClosed)
+            }
+            if(ExitDoor.IsClosed)
+            {
                 Map.DrawSingleHitbox(
                     cameraOffset, CurrentCamera.Zoom,
                     ExitDoor.Hitbox.Location.ToVector2(),
                     ExitDoor.Hitbox.Size.ToVector2(),
                     Vector2.Zero, Color.Blue);
+            }
             ShapeBatch.End();
 
-            // If door is open, draw
+            //If door is open, draw
             if(!ExitDoor.IsClosed)
             {
-                // Draw next room trigger
+                //Draw next room trigger
                 spriteBatch.Begin(
                     blendState: BlendState.AlphaBlend,
                     samplerState: SamplerState.PointClamp,
                     transformMatrix: CurrentCamera.TransformationMatrix);
+                
                 spriteBatch.Draw(whiteSquare, CurrentExitTrigger, Color.Red * 0.2f);
 
                 spriteBatch.End();
@@ -238,14 +241,14 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <param name="startingMap">The map to start in</param>
         public void SetupWorld(GraphicsDevice graphicsDevice, List<Map> mapPossibilities, Map startingMap)
         {
-            // Create white square
+            //Create white square
             whiteSquare = new Texture2D(graphicsDevice, 1, 1);
             whiteSquare.SetData(new Color[] { Color.White });
 
             PossibleMaps = mapPossibilities;
             this.startingMap = startingMap;
 
-            // Create cam
+            //Create cam
             CurrentCamera = new Camera(graphicsDevice, Rectangle.Empty);
 
             ResetWorld();
@@ -275,7 +278,7 @@ namespace Railgun.RailgunGame.Tilemapping
             //Set cam bounds
             CurrentCamera.TargetBounds = CurrentMap.Bounds;
             //Position entrence of this map at the exit of the map before it
-            NextMap.Position = CurrentMap.Exit - NextMap.Entrence;
+            NextMap.Position = CurrentMap.Exit - NextMap.Entrance;
             //Populate enemy list
             CurrentEnemies = CurrentMap.GenerateEnemyList();
 
@@ -290,7 +293,7 @@ namespace Railgun.RailgunGame.Tilemapping
             Point doorSize = new Point(CurrentMap.TileSize * 2);
             //Create solid doors
             EntrenceDoor =
-                new Door(new Rectangle(CurrentMap.Entrence.ToPoint(), doorSize));
+                new Door(new Rectangle(CurrentMap.Entrance.ToPoint(), doorSize));
             ExitDoor =
                 new Door(new Rectangle(CurrentMap.Exit.ToPoint(), doorSize));
         }

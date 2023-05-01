@@ -97,7 +97,7 @@ namespace Railgun.RailgunGame.Util
         /// <summary>
         /// The spacing between each message line
         /// </summary>
-        public float Spacing { get; set; } // TODO: Can this be made get only?
+        public float Spacing { get; set; }
 
         /// <summary>
         /// The scaling of the messages

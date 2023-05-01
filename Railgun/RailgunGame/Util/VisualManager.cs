@@ -14,10 +14,7 @@ namespace Railgun.RailgunGame.Util
         /// <summary>
         /// Creates a new animation manager
         /// </summary>
-        private VisualManager()
-        {
-
-        }
+        private VisualManager() { }
 
         /// <summary>
         /// The singleton instance of this animation manager
@@ -26,10 +23,8 @@ namespace Railgun.RailgunGame.Util
         {
             get
             {
-                if (instance == null)
-                {
+                if(instance == null)
                     instance = new VisualManager();
-                }
                 return instance;
             }
         }
