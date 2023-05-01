@@ -114,7 +114,7 @@ namespace Railgun.RailgunGame
             currentGameState = GameState.Menu;
             canHeal = true;
             font = this.Content.Load<SpriteFont>("Mynerve24");
-            bigFont = this.Content.Load<SpriteFont>("Mynerve24Big");
+            //bigFont = this.Content.Load<SpriteFont>("Mynerve24Big");
 
             // TODO: can this field be removed?
             //displayGameOver = true;
@@ -742,7 +742,9 @@ namespace Railgun.RailgunGame
 
                     //_spriteBatch.DrawString(font, "Game Over", new Vector2(_graphics.PreferredBackBufferWidth - 175, 20), Color.White);
 
-                    _spriteBatch.DrawString(font, "Rooms Passed: " + (world.Score - 1), Vector2.Zero, Color.Gold);
+                    _spriteBatch.DrawString(font, "Rooms Cleared: " + (world.Score - 1), new Vector2(_graphics.PreferredBackBufferWidth / 2 - 350, _graphics.PreferredBackBufferHeight / 2 - 350), Color.Red, 0.0f, Vector2.Zero, 3.0f, SpriteEffects.None, 0.0f);
+
+                    //_spriteBatch.DrawString(font, "Rooms Passed: " + (world.Score - 1), Vector2.Zero, Color.Gold);
 
                     _spriteBatch.End();
                     break;

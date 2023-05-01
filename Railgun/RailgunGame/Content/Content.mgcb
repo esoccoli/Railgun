@@ -167,6 +167,9 @@
 #begin Maps/CrescentMap.rgm
 /copy:Maps/CrescentMap.rgm
 
+#begin Maps/DiceRoom.rgm
+/copy:Maps/DiceRoom.rgm
+
 #begin Maps/DonutRoom.rgm
 /copy:Maps/DonutRoom.rgm
 
