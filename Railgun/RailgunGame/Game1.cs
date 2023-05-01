@@ -13,6 +13,7 @@ namespace Railgun.RailgunGame
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private SpriteFont font;
+        private SpriteFont bigFont;
 
         private Texture2D backgroundHealthUI;
         private Texture2D foregroundHealthUI;
@@ -113,6 +114,7 @@ namespace Railgun.RailgunGame
             currentGameState = GameState.Menu;
             canHeal = true;
             font = this.Content.Load<SpriteFont>("Mynerve24");
+            bigFont = this.Content.Load<SpriteFont>("Mynerve24Big");
 
             // TODO: can this field be removed?
             //displayGameOver = true;
@@ -188,7 +190,7 @@ namespace Railgun.RailgunGame
             // TODO: all the code that is for testing stuff needs to be removed
 
             // This next line is just to test skeletons.
-            Skeleton testSkelley = new Skeleton(new Rectangle(1700, 200, 100, 100));
+            //Skeleton testSkelley = new Skeleton(new Rectangle(1700, 200, 100, 100));
 
             // Skeleton ttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(200, 200, 100, 100));
             // Skeleton tttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(700, 200, 100, 100));
@@ -201,8 +203,8 @@ namespace Railgun.RailgunGame
             // enemies.Add(tttttestSkelley);
 
             // Turret test
-            Turret testTurret = new Turret(visuals.GasManDeath, new Rectangle(1700, 200, 100, 100), visuals.GasManShoot, bulletTexture, visuals.BulletCollide);
-            world.CurrentEnemies.Add(testTurret);
+            //Turret testTurret = new Turret(visuals.GasManDeath, new Rectangle(1700, 200, 100, 100), visuals.GasManShoot, bulletTexture, visuals.BulletCollide);
+            //world.CurrentEnemies.Add(testTurret);
             //enemies.Add(testTurret);
 
             // Creates a UI object. Values to be updated later. 
@@ -225,6 +227,7 @@ namespace Railgun.RailgunGame
                         FileManager.LoadMap(Content, "SquareMapWithDoor"),
                         FileManager.LoadMap(Content, "TShapeMap"),
                         FileManager.LoadMap(Content, "LushHalls")
+                        //FileManager.LoadMap(Content, "DiceRoom")
                     },
                 FileManager.LoadMap(Content, "StartingRoom"));
         }
