@@ -56,28 +56,6 @@ namespace Railgun.RailgunGame
 
         #endregion
 
-        #region Sounds & Sound Effects
-
-        private Song mainTheme;
-        private Song pauseTheme;
-        private Song gameTheme;
-        private Song gameOverTheme;
-
-        private Song sfxBulletExplosion;
-        private Song sfxDash;
-        private Song sfxEnemyDie;
-        private Song sfxEnemyHurt;
-        private Song sfxHeal;
-        private Song sfxMenuBack;
-        private Song sfxMenuSelect;
-        private Song sfxOutOfAmmo;
-        private Song sfxPlayerHurt;
-        private Song sfxPlayerWalk;
-        private Song sfxReload;
-        private Song sfxShoot;
-
-        #endregion
-
         #region Player, Enemy, Proj. Textures
 
         // Player, enemy, and projectile textures
@@ -195,25 +173,27 @@ namespace Railgun.RailgunGame
 
             #endregion
 
-            #region Sounds
+            #region Sound
 
-            mainTheme = Content.Load<Song>("Tension Rail");
-            pauseTheme = Content.Load<Song>("Endless Express");
-            gameTheme = Content.Load<Song>("battlemusic");
-            gameOverTheme = Content.Load<Song>("gameover");
+            SoundManager.MainTheme = Content.Load<Song>("Tension Rail");
+            SoundManager.PauseTheme = Content.Load<Song>("Endless Express");
+            SoundManager.GameTheme = Content.Load<Song>("battlemusic");
+            SoundManager.GameOverTheme = Content.Load<Song>("gameover");
+            
+            SoundManager.SfxBulletExplosion = Content.Load<SoundEffect>("SFX/Bullet Explosion");
+            SoundManager.SfxDash = Content.Load<SoundEffect>("SFX/Dash");
+            SoundManager.SfxEnemyDie = Content.Load<SoundEffect>("SFX/Enemy Die");
+            SoundManager.SfxEnemyHurt = Content.Load<SoundEffect>("SFX/Enemy Hurt");
+            SoundManager.SfxHeal = Content.Load<SoundEffect>("SFX/Heal");
+            SoundManager.SfxMenuBack = Content.Load<SoundEffect>("SFX/Menu Back");
+            SoundManager.SfxMenuSelect = Content.Load<SoundEffect>("SFX/Menu Select");
+            SoundManager.SfxOutOfAmmo = Content.Load<SoundEffect>("SFX/Out of Ammo");
+            SoundManager.SfxPlayerHurt = Content.Load<SoundEffect>("SFX/Player Hurt");
+            SoundManager.SfxPlayerWalk = Content.Load<SoundEffect>("SFX/Player Walk");
+            SoundManager.SfxReload = Content.Load<SoundEffect>("SFX/Reload");
+            SoundManager.SfxShoot = Content.Load<SoundEffect>("SFX/Shoot");
 
-            sfxBulletExplosion = Content.Load<Song>("Bullet Explosion");
-            sfxDash = Content.Load<Song>("Dash");
-            sfxEnemyDie = Content.Load<Song>("Enemy Die");
-            sfxEnemyHurt = Content.Load<Song>("Enemy Hurt");
-            sfxHeal = Content.Load<Song>("Heal");
-            sfxMenuBack = Content.Load<Song>("Menu Back");
-            sfxMenuSelect = Content.Load<Song>("Menu Select");
-            sfxOutOfAmmo = Content.Load<Song>("Out of Ammo");
-            sfxPlayerHurt = Content.Load<Song>("Player Hurt");
-            sfxPlayerWalk = Content.Load<Song>("Player Walk");
-            sfxReload = Content.Load<Song>("Reload");
-            sfxShoot = Content.Load<Song>("Shoot");
+            MediaPlayer.IsRepeating = true;
 
             #endregion
 
@@ -273,10 +253,12 @@ namespace Railgun.RailgunGame
                         FileManager.LoadMap(Content, "Longus"),
                         FileManager.LoadMap(Content, "SquareMapWithDoor"),
                         FileManager.LoadMap(Content, "TShapeMap"),
-                        FileManager.LoadMap(Content, "LushHalls")
-                        //FileManager.LoadMap(Content, "DiceRoom")
+                        FileManager.LoadMap(Content, "LushHalls"),
+                        FileManager.LoadMap(Content, "DiceRoom")
                     },
                 FileManager.LoadMap(Content, "StartingRoom"));
+
+            MediaPlayer.Play(SoundManager.PauseTheme);
         }
 
         protected override void Update(GameTime gameTime)
@@ -362,6 +344,8 @@ namespace Railgun.RailgunGame
                         && mState.Y > playRect.Y
                         && mState.Y < playRect.Y + playRect.Height)
                     {
+                        MediaPlayer.Stop();
+                        MediaPlayer.Play(SoundManager.MainTheme);
                         currentGameState = GameState.Game;
                     }
 
@@ -512,6 +496,9 @@ namespace Railgun.RailgunGame
 
                         IsMouseVisible = true;
 
+                        MediaPlayer.Stop();
+                        MediaPlayer.Play(SoundManager.GameOverTheme);
+
                         //if (displayGameOver)
                         //{
                         //Debug.WriteLine("Game Over Test 1");
@@ -631,6 +618,10 @@ namespace Railgun.RailgunGame
                         IsMouseVisible = false;
                         mainPlayer.ResetPlayer();
                         world.ResetWorld();
+
+                        MediaPlayer.Stop();
+                        MediaPlayer.Play(SoundManager.MainTheme);
+
                         currentGameState = GameState.Game;
                     }
 
