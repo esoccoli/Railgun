@@ -208,7 +208,7 @@ namespace Railgun.RailgunGame
 
             if (canHeal == false && ammoAmount == 0)
             {
-                _spriteBatch.DrawString(font, "Not enough health to heal!", new Vector2(10, 90), Color.White);
+                _spriteBatch.DrawString(font, "Not enough health to reload!", new Vector2(10, 90), Color.White);
             }
 
             // TODO: unused code should be removed

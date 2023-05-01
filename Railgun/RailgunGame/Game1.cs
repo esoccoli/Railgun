@@ -1,9 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using Railgun.RailgunGame.Tilemapping;
 using Railgun.RailgunGame.Util;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Transactions;
 
 namespace Railgun.RailgunGame
@@ -50,6 +53,28 @@ namespace Railgun.RailgunGame
 
         // Makes it so you can't heal if it will kill you
         private bool canHeal;
+
+        #endregion
+
+        #region Sounds & Sound Effects
+
+        private Song mainTheme;
+        private Song pauseTheme;
+        private Song gameTheme;
+        private Song gameOverTheme;
+
+        private Song sfxBulletExplosion;
+        private Song sfxDash;
+        private Song sfxEnemyDie;
+        private Song sfxEnemyHurt;
+        private Song sfxHeal;
+        private Song sfxMenuBack;
+        private Song sfxMenuSelect;
+        private Song sfxOutOfAmmo;
+        private Song sfxPlayerHurt;
+        private Song sfxPlayerWalk;
+        private Song sfxReload;
+        private Song sfxShoot;
 
         #endregion
 
@@ -167,6 +192,28 @@ namespace Railgun.RailgunGame
             gasManMove = Content.Load<Texture2D>("gasManMove");
             gasManDeath = Content.Load<Texture2D>("gasManDeath");
             gasManShoot = Content.Load<Texture2D>("gasManShoot");
+
+            #endregion
+
+            #region Sounds
+
+            mainTheme = Content.Load<Song>("Tension Rail");
+            pauseTheme = Content.Load<Song>("Endless Express");
+            gameTheme = Content.Load<Song>("battlemusic");
+            gameOverTheme = Content.Load<Song>("gameover");
+
+            sfxBulletExplosion = Content.Load<Song>("Bullet Explosion");
+            sfxDash = Content.Load<Song>("Dash");
+            sfxEnemyDie = Content.Load<Song>("Enemy Die");
+            sfxEnemyHurt = Content.Load<Song>("Enemy Hurt");
+            sfxHeal = Content.Load<Song>("Heal");
+            sfxMenuBack = Content.Load<Song>("Menu Back");
+            sfxMenuSelect = Content.Load<Song>("Menu Select");
+            sfxOutOfAmmo = Content.Load<Song>("Out of Ammo");
+            sfxPlayerHurt = Content.Load<Song>("Player Hurt");
+            sfxPlayerWalk = Content.Load<Song>("Player Walk");
+            sfxReload = Content.Load<Song>("Reload");
+            sfxShoot = Content.Load<Song>("Shoot");
 
             #endregion
 

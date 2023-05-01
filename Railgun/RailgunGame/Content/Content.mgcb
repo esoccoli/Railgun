@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin battlemusic.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:battlemusic.mp3
+
 #begin BulletBoom.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -56,6 +62,12 @@
 /processorParam:TextureFormat=Color
 /build:controls.png
 
+#begin Endless Express.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Endless Express.mp3
+
 #begin Fireball_68x9.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -67,6 +79,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Fireball_68x9.png
+
+#begin gameover.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:gameover.mp3
 
 #begin gameReticle.png
 /importer:TextureImporter
@@ -297,6 +315,78 @@
 /processorParam:TextureFormat=Color
 /build:reticle106.png
 
+#begin SFX/Bullet Explosion.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Bullet Explosion.wav
+
+#begin SFX/Dash.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Dash.wav
+
+#begin SFX/Enemy Die.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Enemy Die.wav
+
+#begin SFX/Enemy Hurt.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Enemy Hurt.wav
+
+#begin SFX/Heal.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Heal.wav
+
+#begin SFX/Menu Back.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Menu Back.wav
+
+#begin SFX/Menu Select.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Menu Select.wav
+
+#begin SFX/Out of Ammo.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Out of Ammo.wav
+
+#begin SFX/Player Hurt.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player Hurt.wav
+
+#begin SFX/Player Walk.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Player Walk.wav
+
+#begin SFX/Reload.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Reload.wav
+
+#begin SFX/Shoot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/Shoot.wav
+
 #begin Skeleton Dead.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -320,6 +410,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Skeleton Walk.png
+
+#begin Tension Rail.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Tension Rail.mp3
 
 #begin Tiles/Grass hill tiles v.2.png
 /importer:TextureImporter
