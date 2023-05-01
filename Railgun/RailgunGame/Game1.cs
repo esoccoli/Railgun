@@ -381,7 +381,7 @@ namespace Railgun.RailgunGame
 
                     // This checks to see if the player can heal. If they don't have enough health, a message
                     // will appear above the player, and they won't be able to heal
-                    canHeal = true; 
+                    canHeal = true;
 
                     // Updates the bullets the player shoots
                     for (int i = 0; i < mainPlayer.PlayerBullets.Count; i++)
@@ -431,13 +431,15 @@ namespace Railgun.RailgunGame
 
                     foreach (Projectile projectile in EnemyProjManager.Instance.Projectiles)
                     {
-                        if (projectile.Hitbox.Intersects(mainPlayer.Hitbox) && mainPlayer.DamageCooldown <= 0)
+                        if (projectile.Hitbox.Intersects(mainPlayer.Hitbox))
                         {
-                            mainPlayer.Damage(10);
                             projectile.CurrentState = Projectile.ProjectileStates.HasCollided;
+
+                            if (mainPlayer.DamageCooldown <= 0)
+                            {
+                                mainPlayer.Damage(10);
+                            }
                         }
-
-
                     }
                     #endregion
 

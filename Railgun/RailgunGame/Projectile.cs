@@ -20,6 +20,9 @@ namespace Railgun.RailgunGame
             HasCollided
         }
 
+        private int halfWidth;
+        private int halfHeight;
+
         /// <summary>
         /// Projectile's X and Y velocities
         /// </summary>
@@ -71,6 +74,8 @@ namespace Railgun.RailgunGame
             ActiveTexture = isActiveTexture;
             HasCollided = hasCollidedAnimation;
             Position = Hitbox.Center.ToVector2();
+            halfWidth = hitbox.Width / 2;
+            halfHeight = hitbox.Height / 2;
             this.color = color;
         }
 
@@ -98,7 +103,7 @@ namespace Railgun.RailgunGame
             {
                 case ProjectileStates.IsActive:
                     Position += Velocity;
-                    Hitbox = new Rectangle((int)(Hitbox.X + Velocity.X), (int)(Hitbox.Y + Velocity.Y), Hitbox.Width, Hitbox.Height);
+                    Hitbox = new Rectangle((int)(Position.X + Velocity.X) - halfWidth, (int)(Position.Y + Velocity.Y) - halfHeight, Hitbox.Width, Hitbox.Height);
                     break;
 
                 case ProjectileStates.HasCollided:
