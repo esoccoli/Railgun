@@ -27,5 +27,12 @@ namespace Railgun.RailgunGame
         /// </summary>
         /// <param name="gameTime">Time of the game</param>
         public virtual void Update(GameTime gameTime) { }
+
+        /// <summary>
+        /// Updates the status of the entity. Literally only used for Player.Update
+        /// </summary>
+        /// <param name="gameTime">Time of the game</param>
+        /// <param name="canHeal">Whether the main player can heal</param>
+        public virtual void Update(GameTime gameTime, bool canHeal) { }
     }
 }

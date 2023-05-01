@@ -186,7 +186,7 @@ namespace Railgun.RailgunGame
         /// Draws the updated health and ammo, alongside debug if active
         /// </summary>
         /// <param name="_spriteBatch">SpriteBatch used for drawing</param>
-        public void Draw(SpriteBatch _spriteBatch)
+        public void Draw(SpriteBatch _spriteBatch, bool canHeal)
         {
             _spriteBatch.DrawString(font, "Health: ", new Vector2(10, 0), Color.White);
             _spriteBatch.Draw(backgroundHealthTexture, backgroundHealth, Color.AntiqueWhite);
@@ -205,7 +205,12 @@ namespace Railgun.RailgunGame
             {
                 _spriteBatch.Draw(bulletUITexture, new Rectangle(10 + (i * 20), 90, 15, 26), Color.White);
             }
-            
+
+            if (canHeal == false && ammoAmount == 0)
+            {
+                _spriteBatch.DrawString(font, "Not enough health to heal!", new Vector2(10, 90), Color.White);
+            }
+
             // TODO: unused code should be removed
             // Dash cooldown
             // _spriteBatch.DrawString(font, "Dash: ", new Vector2(10, 130), Color.White);

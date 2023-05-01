@@ -144,7 +144,7 @@ namespace Railgun.RailgunGame
         /// This gets called every frame. It's used to see when other methods should be called.
         /// </summary>
         /// <param name="gameTime"> The amount of time spent in the game. </param>
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, bool canHeal)
         {
             // Adjusts the cooldown on dashing accordingly.
             if (DashCooldown > 0.0)
@@ -184,7 +184,7 @@ namespace Railgun.RailgunGame
                 Hitbox = hitbox;
 
                 if (InputManager.IsButtonDown(MouseButtons.Left) && ShootCooldown <= 0.0 && Ammo > 0) { Shoot(); }
-                if (InputManager.IsButtonDown(MouseButtons.Right) && Ammo <= 0) { Reload(); }
+                if (InputManager.IsButtonDown(MouseButtons.Right) && Ammo <= 0 && canHeal) { Reload(); }
 
                 if ((InputManager.IsKeyDown(Keys.LeftShift) 
                     || InputManager.IsKeyDown(Keys.Space)) &&
