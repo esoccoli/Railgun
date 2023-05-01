@@ -25,8 +25,8 @@ namespace Railgun.RailgunGame
         //private Vector2 velocity;
         private Texture2D activeBullet;
         private Animation notActiveBullet;
-        //private double SecondsPerState;
-        //private double TimeCounter;
+        private double SecondsPerState;
+        private double TimeCounter;
         private double bulletCooldown;
         private double timeSinceShot;
 
