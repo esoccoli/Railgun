@@ -295,14 +295,14 @@ namespace Railgun.RailgunGame.Tilemapping
         public static Rectangle ResolveCollisions(Rectangle hitbox, List<Rectangle> intersections)
         {
             //Check and move x
-            foreach (Rectangle obstical in intersections)
+            foreach (Rectangle obstacle in intersections)
             {
-                Rectangle intersection = Rectangle.Intersect(hitbox, obstical);
+                Rectangle intersection = Rectangle.Intersect(hitbox, obstacle);
                 // Check if valid and for width
                 if (intersection.Height > intersection.Width)
                 {
                     // Calculate side
-                    if (hitbox.X < obstical.X)
+                    if (hitbox.X < obstacle.X)
                     {
                         hitbox.X -= intersection.Width;
                     }
@@ -315,15 +315,15 @@ namespace Railgun.RailgunGame.Tilemapping
             }
 
             // Check and move y
-            foreach (Rectangle obstical in intersections)
+            foreach (Rectangle obstacle in intersections)
             {
-                Rectangle intersection = Rectangle.Intersect(hitbox, obstical);
+                Rectangle intersection = Rectangle.Intersect(hitbox, obstacle);
 
                 // Check if valid and for width
                 if (intersection.Width >= intersection.Height)
                 {
                     //Calculate side
-                    if (hitbox.Y < obstical.Y)
+                    if (hitbox.Y < obstacle.Y)
                     {
                         hitbox.Y -= intersection.Height;
                     }
