@@ -146,7 +146,7 @@ namespace Railgun.Editor.App.Util
             }
 
             //Write entrence and exit
-            WriteVector(writer, map.Entrence);
+            WriteVector(writer, map.Entrance);
             WriteVector(writer, map.Exit);
 
             //Close the writer
@@ -426,7 +426,7 @@ namespace Railgun.Editor.App.Util
             }
 
             //Read enterence and exit
-            map.Entrence = ReadVector(reader);
+            map.Entrance = ReadVector(reader);
             map.Exit = ReadVector(reader);
 
             return map;

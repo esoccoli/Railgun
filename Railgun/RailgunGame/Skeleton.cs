@@ -1,11 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Railgun.RailgunGame.Util;
 using Railgun.RailgunGame.Tilemapping;
 
@@ -27,7 +21,6 @@ namespace Railgun.RailgunGame
         /// The constructor for a Skeleton.
         /// </summary>
         /// <param name="move"> The animation a Skeleton undergoes while walking. </param>
-        /// <param name="idle"> This is null. Skeletons should never be idle. They will always walk towards the player. </param>
         /// <param name="death"> This is the death animation for a Skeleton. </param>
         /// <param name="hitbox"> The rectangle you should be aiming your gun at. </param>
         public Skeleton(Animation move, Animation death, Rectangle hitbox) : base(move, death, hitbox)
@@ -42,13 +35,13 @@ namespace Railgun.RailgunGame
         /// <param name="hitbox">The hitbox of the enemy</param>
         public Skeleton(Rectangle hitbox)
             : this(VisualManager.Instance.SkeletonMove.Clone(),
-                  VisualManager.Instance.SkeletonDeath.Clone(), hitbox) { }
+                VisualManager.Instance.SkeletonDeath.Clone(), hitbox) { }
 
         /// <summary>
         /// This is called every frame for a Skeleton. It enables them to move.
         /// </summary>
         /// <param name="playerPos"> The position of the player. </param>
-        public override void Update(Point playerPos)
+        protected override void Update(Point playerPos)
         {
             if(Health > 0)
             {
@@ -77,16 +70,15 @@ namespace Railgun.RailgunGame
             hitboxTemp = WorldManager.Instance.ResolveCollisions(hitboxTemp);
 
             Hitbox = hitboxTemp;
-
-            DebugLog.Instance.LogFrame($"X: {Hitbox.X}  Y: {Hitbox.Y}");
         }
-
+        
+        // TODO: fill in returns tag in method header
         /// <summary>
         /// Draws the skeleton to the screen based 
         /// </summary>
-        /// <param name="sb"></param>
-        /// <param name="gameTime"></param>
-        /// <param name="playerPos"></param>
+        /// <param name="sb">Spritebatch object</param>
+        /// <param name="gameTime">Gametime object</param>
+        /// <param name="playerPos">Player's current position</param>
         /// <returns></returns>
         public override bool Draw(SpriteBatch sb, GameTime gameTime, Point playerPos)
         {
@@ -96,7 +88,7 @@ namespace Railgun.RailgunGame
             }
             else
             {
-                if(playerPos.X <= Hitbox.Center.X)
+                if (playerPos.X <= Hitbox.Center.X)
                 {
                     Move.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.White, SpriteEffects.FlipHorizontally);
                 }

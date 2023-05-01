@@ -1,10 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Railgun.RailgunGame.Tilemapping;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Railgun.RailgunGame.Util
 {
@@ -20,10 +14,7 @@ namespace Railgun.RailgunGame.Util
         /// <summary>
         /// Creates a new animation manager
         /// </summary>
-        private VisualManager()
-        {
-
-        }
+        private VisualManager() { }
 
         /// <summary>
         /// The singleton instance of this animation manager
@@ -32,10 +23,8 @@ namespace Railgun.RailgunGame.Util
         {
             get
             {
-                if (instance == null)
-                {
+                if(instance == null)
                     instance = new VisualManager();
-                }
                 return instance;
             }
         }
@@ -103,6 +92,7 @@ namespace Railgun.RailgunGame.Util
         /// texture for active bullets
         /// </summary>
         public Texture2D BulletTexture { get; set; }
+        
         #endregion
 
     }

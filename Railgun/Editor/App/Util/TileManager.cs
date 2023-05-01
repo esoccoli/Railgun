@@ -100,7 +100,7 @@ namespace Railgun.Editor.App.Util
         /// <summary>
         /// Whether or not a hitbox is being placed or removed
         /// </summary>
-        public bool PlaceHitbox
+        public bool IsPlacingHitbox
         {
             get => currentHitbox;
             set

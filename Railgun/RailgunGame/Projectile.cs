@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Railgun.RailgunGame.Tilemapping;
-using Railgun.RailgunGame.Util;
 
-//Nathan McAndrew
-//Class for all projectiles in the game
+// Nathan McAndrew
+// Class for all projectiles in the game
 namespace Railgun.RailgunGame
 {
+    /// <summary>
+    /// Manages all of the projectiles in the game
+    /// </summary>
     internal class Projectile : Entity
     {
         /// <summary>
@@ -27,7 +23,7 @@ namespace Railgun.RailgunGame
         /// <summary>
         /// Projectile's X and Y velocities
         /// </summary>
-        public Vector2 Velocity { get; set; }
+        public Vector2 Velocity { get; set; } // TODO: can this be made get only
 
         /// <summary>
         /// The current position of the bullet. BOY this has a story behind it...
@@ -43,28 +39,33 @@ namespace Railgun.RailgunGame
         /// <summary>
         /// animation to play when projectile is active
         /// </summary>
-        public Texture2D ActiveTexture { get; set; }
+        public Texture2D ActiveTexture { get; set; } // TODO: can this be made get only
 
         /// <summary>
         /// animation to play when projectile collides
         /// </summary>
-        public Animation HasCollided { get; set; }
+        public Animation HasCollided { get; set; } // TODO: can this be made get only
 
         /// <summary>
         /// The color of the bullet.
         /// </summary>
-        public Color color { get; set; }
+        public Color color { get; set; } // TODO: can this be made get only
 
         /// <summary>
         /// instantiates a projectile
         /// </summary>
         /// <param name="hitbox">hitbox of projectile</param>
-        /// <param name="texture">texture of projectile</param>
-        public Projectile(Rectangle hitbox,
-                          Texture2D isActiveTexture,
-                          Animation hasCollidedAnimation,
-                          Vector2 Velocity,
-                          Color color) : base(hitbox)
+        /// <param name="isActiveTexture">Texture of the projectile while it is active</param>
+        /// <param name="hasCollidedAnimation">Animation of the projectile right after it collides with something</param>
+        /// <param name="Velocity">Velocity of the projectile</param>
+        /// <param name="color">Color of the projectile texture</param>
+        public Projectile(
+            Rectangle hitbox, 
+            Texture2D isActiveTexture,
+            Animation hasCollidedAnimation,
+            Vector2 Velocity,
+            Color color) 
+            : base(hitbox)
         {
             this.Velocity = Velocity;
             ActiveTexture = isActiveTexture;
@@ -115,19 +116,35 @@ namespace Railgun.RailgunGame
         /// the specified properties
         /// </summary>
         /// <param name="sb">_spritebatch</param>
+        /// <param name="gameTime">Gametime object</param>
         public bool Draw(SpriteBatch sb, GameTime gameTime)
         {
             switch(CurrentState)
             {
                 case ProjectileStates.IsActive:
-                    sb.Draw(ActiveTexture, new Rectangle((int)(Position.X - (ActiveTexture.Width / 2)), (int)(Position.Y - (ActiveTexture.Height / 2)), ActiveTexture.Width, ActiveTexture.Height), color);
+                    sb.Draw(
+                        ActiveTexture, 
+                        new Rectangle(
+                            (int)(Position.X - ActiveTexture.Width / 2), 
+                            (int)(Position.Y - ActiveTexture.Height / 2), 
+                            ActiveTexture.Width, 
+                            ActiveTexture.Height), 
+                        color);
+                    
                     break;
 
                 case ProjectileStates.HasCollided:
                     if (HasCollided.CurrentFrame != HasCollided.TotalFrames)
                     {
                         // We need to subtract from Position half the width of the animation rectangle and bullet texture.
-                        return HasCollided.Draw(sb, gameTime, new Vector2(Position.X - (50 - (ActiveTexture.Width /2)), Position.Y - (50 - (ActiveTexture.Height / 2))), Color.White, SpriteEffects.None);
+                        return HasCollided.Draw(
+                            sb, 
+                            gameTime, 
+                            new Vector2(
+                                Position.X - (50 - ActiveTexture.Width /2), 
+                                Position.Y - (50 - ActiveTexture.Height / 2)), 
+                            Color.White, 
+                            SpriteEffects.None);
                     }
                     break;
             }

@@ -168,14 +168,15 @@ namespace Railgun.RailgunGame.Util
         /// <returns>True if the mouse is hovering over a rectangle area, false otherwise</returns>
         public static bool MouseHover(MouseState mState, Rectangle rect)
         {
-            if (mState.X > rect.X && mState.X < rect.X + rect.Width
-             && mState.Y > rect.Y && mState.Y < rect.Y + rect.Height)
+            if (mState.X > rect.X 
+                && mState.X < rect.X + rect.Width 
+                && mState.Y > rect.Y 
+                && mState.Y < rect.Y + rect.Height)
             {
                 return true;
             }
 
             return false;
         }
-
     }
 }

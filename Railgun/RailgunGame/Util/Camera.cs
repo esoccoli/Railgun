@@ -1,10 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Railgun.RailgunGame.Util
 {
@@ -137,7 +132,9 @@ namespace Railgun.RailgunGame.Util
             Zoom = 1f;
             Position = Vector2.Zero;
             Rotation = 0f;
-            CreateMatrix();//Create an initial matrix
+            
+            //Create an initial matrix
+            CreateMatrix();
         }
 
         /// <summary>
@@ -251,7 +248,6 @@ namespace Railgun.RailgunGame.Util
 
                 //Resolve position
                 Position = Vector2.Floor(newPosition);
-                DebugLog.Instance.LogFrame(Position);
 
                 //Update view matrix with resolved (I know, this is terrible, I'll
                 //Change it later if I have time) Reason I'm doing this is to

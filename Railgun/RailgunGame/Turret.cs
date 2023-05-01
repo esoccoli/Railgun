@@ -1,14 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Railgun.RailgunGame.Util;
-using Railgun.RailgunGame.Tilemapping;
-using System.Linq.Expressions;
 
 //Copied GasMan, modified by Igor to be a stationary enemy 
 //Enemy that walks away from the player
@@ -21,7 +14,8 @@ namespace Railgun.RailgunGame
             Shoot,
             Death
         }
-
+        
+        // TODO: unused code should be removed
         //private Vector2 velocity;
         private Texture2D activeBullet;
         private Animation notActiveBullet;
@@ -33,7 +27,7 @@ namespace Railgun.RailgunGame
         /// <summary>
         /// animation to play when enemy is shooting
         /// </summary>
-        public Animation Shooting { get; set; }
+        public Animation Shooting { get; set; } // TODO: can this be made get only
 
         /// <summary>
         /// current state of the enemy
@@ -48,16 +42,25 @@ namespace Railgun.RailgunGame
         /// <summary>
         /// creates an instance of an enemy that shoots at the player and runs away
         /// </summary>
-        /// <param name="move">walk animation</param>
         /// <param name="death">death animation</param>
         /// <param name="hitbox">hitbox</param>
         /// <param name="shoot">shooting animation</param>
-        public Turret(Animation death, Rectangle hitbox, Animation shoot, Texture2D activeBullet, Animation notActiveBullet) : base(shoot, death, hitbox)
+        /// <param name="activeBullet">Texture of the bullet while it is active</param>
+        /// <param name="notActiveBullet">Animation that plays right after the bullet collides with something</param>
+        public Turret(
+            Animation death, 
+            Rectangle hitbox, 
+            Animation shoot, 
+            Texture2D activeBullet, 
+            Animation notActiveBullet) 
+            : base(shoot, death, hitbox)
         {
             Health = 40;
             Hitbox = hitbox;
-            SecondsPerState = 1;
-            TimeCounter = 0;
+            
+            // TODO: unused code should be removed
+            //SecondsPerState = 1;
+            //TimeCounter = 0;
 
             this.activeBullet = activeBullet;
             this.notActiveBullet = notActiveBullet;
@@ -67,14 +70,18 @@ namespace Railgun.RailgunGame
             timeSinceShot = 0;
             EnemyBullets = new List<Projectile>();
         }
-
+        
+        /// <summary>
+        /// Creates an instance of an enemy that shoots at the player and runs away
+        /// </summary>
+        /// <param name="hitbox">Hitbox of the enemy</param>
         public Turret(Rectangle hitbox)
             : this(
-                 VisualManager.Instance.GasManDeath.Clone(),
-                 hitbox,
-                 VisualManager.Instance.GasManShoot.Clone(),
-                 VisualManager.Instance.BulletTexture,
-                 VisualManager.Instance.BulletCollide.Clone())
+                VisualManager.Instance.GasManDeath.Clone(),
+                hitbox,
+                VisualManager.Instance.GasManShoot.Clone(),
+                VisualManager.Instance.BulletTexture,
+                VisualManager.Instance.BulletCollide.Clone())
         { }
 
         /// <summary>
@@ -97,7 +104,9 @@ namespace Railgun.RailgunGame
                         Shoot(playerPos);
                         timeSinceShot = 0;
                     }
-                    TimeCounter += gameTime.ElapsedGameTime.TotalSeconds;
+                    
+                    // TODO: unused code should be removed
+                    //TimeCounter += gameTime.ElapsedGameTime.TotalSeconds;
                     break;
 
                 case TurretState.Death:
@@ -106,7 +115,7 @@ namespace Railgun.RailgunGame
         }
 
         /// <summary>
-        /// draws thre enemy in the proper state after update
+        /// Draws the enemy in the proper state after update
         /// </summary>
         /// <param name="sb">_spritebatch</param>
         /// <param name="gameTime">gameTime</param>
@@ -122,17 +131,17 @@ namespace Railgun.RailgunGame
                 case TurretState.Shoot:
                     if (playerPos.X <= Hitbox.Center.X)
                     {
-                        Shooting.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.Red, SpriteEffects.FlipHorizontally);
+                        Shooting.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.Yellow, SpriteEffects.FlipHorizontally);;
                     }
                     else
                     {
-                        Shooting.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.Red, SpriteEffects.None);
+                        Shooting.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.Yellow, SpriteEffects.None);
                     }
                     return false;
 
 
                 case TurretState.Death:
-                    return Death.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.PeachPuff, SpriteEffects.None);
+                    return Death.Draw(sb, gameTime, Hitbox.Location.ToVector2(), Color.Yellow, SpriteEffects.None);
             }
             return false;
         }
@@ -142,16 +151,16 @@ namespace Railgun.RailgunGame
         /// Shoots a bullet at the player's position
         /// </summary>
         /// <param name="playerPos">player's position</param>
-        public override void Shoot(Point playerPos)
+        public virtual void Shoot(Point playerPos)
         {
 
             Vector2 vect = (playerPos - Hitbox.Center).ToVector2() / Vector2.Distance(playerPos.ToVector2(), Hitbox.Center.ToVector2());
             EnemyProjManager.Instance.Projectiles.Add(new Projectile(new Rectangle(Hitbox.X + (Hitbox.Width / 2) - (activeBullet.Width / 2), Hitbox.Y + (Hitbox.Height / 2) - (activeBullet.Height / 2),
-                activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet.Clone(), vect * 10.0f, Color.Yellow));
-            EnemyProjManager.Instance.Projectiles.Add(new Projectile(new Rectangle(Hitbox.X + (Hitbox.Width / 2) - (activeBullet.Width / 2), Hitbox.Y + (Hitbox.Height / 2) - (activeBullet.Height / 2),
-                activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet.Clone(), vect * 8.0f, Color.Yellow));
-            EnemyProjManager.Instance.Projectiles.Add(new Projectile(new Rectangle(Hitbox.X + (Hitbox.Width / 2) - (activeBullet.Width / 2), Hitbox.Y + (Hitbox.Height / 2) - (activeBullet.Height / 2),
                 activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet.Clone(), vect * 6.0f, Color.Yellow));
+            EnemyProjManager.Instance.Projectiles.Add(new Projectile(new Rectangle(Hitbox.X + (Hitbox.Width / 2) - (activeBullet.Width / 2), Hitbox.Y + (Hitbox.Height / 2) - (activeBullet.Height / 2),
+                activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet.Clone(), vect * 4.0f, Color.Yellow));
+            EnemyProjManager.Instance.Projectiles.Add(new Projectile(new Rectangle(Hitbox.X + (Hitbox.Width / 2) - (activeBullet.Width / 2), Hitbox.Y + (Hitbox.Height / 2) - (activeBullet.Height / 2),
+                activeBullet.Width, activeBullet.Height), activeBullet, notActiveBullet.Clone(), vect * 2.0f, Color.Yellow));
 
         }
 

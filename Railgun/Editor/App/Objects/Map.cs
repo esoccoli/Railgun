@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Railgun.Editor.App.Util;
-using SharpDX.Direct2D1.Effects;
-using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +14,7 @@ namespace Railgun.Editor.App.Objects
     /// <para>Author: Jonathan Jan</para>
     /// Date Created: 3/9/2023
     /// </summary>
-    internal class Map
+    public class Map
     {
         /// <summary>
         /// The map grid size
@@ -54,9 +52,9 @@ namespace Railgun.Editor.App.Objects
         public Dictionary<Vector2, int> Entities { get; protected set; }
 
         /// <summary>
-        /// The entrence point of this map
+        /// The entrance point of this map
         /// </summary>
-        public Vector2 Entrence { get; set; }
+        public Vector2 Entrance { get; set; }
 
         /// <summary>
         /// The exit point of this map
@@ -85,7 +83,7 @@ namespace Railgun.Editor.App.Objects
             Layers = new List<Dictionary<Vector2, Tile>>();
             Hitboxes = new Dictionary<Vector2, bool>();
             Entities = new Dictionary<Vector2, int>();
-            Entrence = Vector2.Zero;
+            Entrance = Vector2.Zero;
             Exit = new Vector2(2f, 2f);
         }
 
@@ -139,8 +137,12 @@ namespace Railgun.Editor.App.Objects
                         tint = Color.LightSeaGreen;
                         break;
                     case 2://Enemy3
-                        entityTexture = entityManager.Ghost;
-                        tint = Color.CornflowerBlue;
+                        entityTexture = entityManager.Turret;
+                        tint = Color.Yellow;
+                        break;
+                    case 3://Enemy4
+                        entityTexture = entityManager.Sniper;
+                        tint = Color.GreenYellow;
                         break;
                     default:
                         entityTexture = entityManager.UndefinedTexture;
@@ -153,10 +155,10 @@ namespace Railgun.Editor.App.Objects
                     tint);
             }
 
-            //Draw entrence
+            //Draw entrance
             spriteBatch.Draw(
                 entityManager.Enterence,
-                new Rectangle((Entrence * TileSize).ToPoint(), new Point(TileSize)),
+                new Rectangle((Entrance * TileSize).ToPoint(), new Point(TileSize)),
                 Color.LawnGreen);
 
             //Draw exit
