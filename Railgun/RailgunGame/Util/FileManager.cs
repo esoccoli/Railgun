@@ -5,9 +5,6 @@ using Railgun.RailgunGame.Tilemapping;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Railgun.RailgunGame.Util
 {
@@ -88,7 +85,7 @@ namespace Railgun.RailgunGame.Util
                     map.EntitiesDictionary[ReadVector(reader)] = reader.ReadInt32();
                 }
 
-                //Read enterence and exit
+                //Read entrance and exit
                 map.Entrence = ReadVector(reader);
                 map.Exit = ReadVector(reader);
 
@@ -97,6 +94,7 @@ namespace Railgun.RailgunGame.Util
 
                 return map;
             }
+            
             catch (Exception e)
             {
                 //Show error log
@@ -108,6 +106,7 @@ namespace Railgun.RailgunGame.Util
 
                 return null;
             }
+            
             finally
             {
                 //Close reader if opened

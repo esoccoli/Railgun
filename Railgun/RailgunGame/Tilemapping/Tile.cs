@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 //Nathan McAndrew, Jonathan Jan
 //Class that holds all tiles in the game
 namespace Railgun.RailgunGame.Tilemapping
 {
+    // TODO: add XML header
     internal struct Tile
     {
         /// <summary>
@@ -59,7 +54,8 @@ namespace Railgun.RailgunGame.Tilemapping
             Tint = tint;
             Flip = flip;
         }
-
+        
+        // TODO: make XML header
         public void Draw(SpriteBatch sb, Rectangle destination)
         {
             //Only draw if not null

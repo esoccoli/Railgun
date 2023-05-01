@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -12,16 +7,18 @@ using Microsoft.Xna.Framework.Input;
 // Last Updated: 3/6/23
 // Purpose: To display and update the health bar and ammo amount
 // Restrictions: Have to pass all information (obviously)
-
 namespace Railgun.RailgunGame
 {
+    /// <summary>
+    /// Manages the game's UI and everything that gets displayed on screen
+    /// </summary>
     internal class UI
     {
         /// <summary>
         /// Controls whether debug mode is on or not.
         /// When it is on, displays extra info on screen
         /// </summary>
-        public bool DebugMode { get; set; }
+        public bool DebugMode { get; set; } // TODO: can this be made get only
 
         /// <summary>
         /// Current amount of health the player has
@@ -82,7 +79,8 @@ namespace Railgun.RailgunGame
         /// Rectangle used to show the dash cooldown
         /// </summary>
         private Rectangle dashCooldownBackground;
-
+        
+        // TODO: can you add an XML comment explaining what this is for
         private bool drawDash;
 
 
@@ -98,14 +96,25 @@ namespace Railgun.RailgunGame
         /// </summary>
         /// <param name="background">Background texture of the health bar</param>
         /// <param name="foreground">Foreground texture of the health bar</param>
+        /// <param name="bulletUI"></param>
         /// <param name="debugInitial">Sets the initial state of debug mode</param>
         /// <param name="healthAmount">Player's starting health</param>
         /// <param name="maxHealth">Maximum health of the player</param>
         /// <param name="font">Font used for UI</param>
         /// <param name="ammoAmount">Current ammo amount of the player. Should start equal to max</param>
         /// <param name="maxAmmo">Maximum ammo of the player</param>
-        public UI(Texture2D background, Texture2D foreground, Texture2D bulletUI, bool debugInitial, int healthAmount, int maxHealth, SpriteFont font, int ammoAmount, int maxAmmo)
+        public UI(
+            Texture2D background, 
+            Texture2D foreground, 
+            Texture2D bulletUI, 
+            bool debugInitial, 
+            int healthAmount, 
+            int maxHealth, 
+            SpriteFont font, 
+            int ammoAmount, 
+            int maxAmmo)
         {
+            // TODO: unused code should be removed
             //debugMode = debugInitial;
             this.healthAmount = healthAmount;
             this.maxHealth = maxHealth;
@@ -131,10 +140,11 @@ namespace Railgun.RailgunGame
         /// <param name="health">Player's current health</param>
         /// <param name="ammo">Amount of ammo the player currently has</param>
         /// <param name="dashTimeLeft">Time remaining until the player can dash again</param>
+        /// <param name="playerPosition">Player's current position</param>
         public void Update(int health, int ammo, double dashTimeLeft, Rectangle playerPosition)
         {
             healthAmount = health;
-            ammoAmount = ammo; //comment
+            ammoAmount = ammo;
 
             if (healthAmount > maxHealth)
             {
@@ -195,7 +205,8 @@ namespace Railgun.RailgunGame
             {
                 _spriteBatch.Draw(bulletUITexture, new Rectangle(10 + (i * 20), 90, 15, 26), Color.White);
             }
-
+            
+            // TODO: unused code should be removed
             // Dash cooldown
             // _spriteBatch.DrawString(font, "Dash: ", new Vector2(10, 130), Color.White);
 
@@ -214,7 +225,8 @@ namespace Railgun.RailgunGame
                 _spriteBatch.DrawString(font, "Y: " + mState.Y, new Vector2(10, 440), Color.White);
             }
         }
-
+        
+        // TODO: add XML method header
         public void DrawToWorldspace(SpriteBatch _spriteBatch)
         {
             if (drawDash)

@@ -1,36 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
 
-//Nathan McAndrew
-//Generic entity with a hitbox and texture
+// Nathan McAndrew
+// Generic entity with a hitbox and texture
 namespace Railgun.RailgunGame
 {
+    /// <summary>
+    /// Base class that stores data that all entities in the game will have (ie: hitbox, texture)
+    /// </summary>
     internal abstract class Entity
     {
         /// <summary>
-        /// entity's location and hitbox
+        /// Entity's location and hitbox
         /// </summary>
         public Rectangle Hitbox { get; set; }
 
         /// <summary>
-        /// intatntiates a geenric entity with a 
-        /// location, hitbox, and sprite
+        /// Instantiates a generic entity with a location, hitbox, and sprite
         /// </summary>
-        public Entity(Rectangle hitbox)
+        protected Entity(Rectangle hitbox)
         {
             Hitbox = hitbox;
         }
 
         /// <summary>
-        /// updates the status of the entity
+        /// Updates the status of the entity
         /// </summary>
-        /// <param name="gameTime">time of the game</param>
+        /// <param name="gameTime">Time of the game</param>
         public virtual void Update(GameTime gameTime) { }
     }
 }

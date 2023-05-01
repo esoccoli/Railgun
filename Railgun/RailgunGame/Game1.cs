@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Input;
 using Railgun.RailgunGame.Tilemapping;
 using Railgun.RailgunGame.Util;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Railgun.RailgunGame
 {
@@ -18,6 +17,8 @@ namespace Railgun.RailgunGame
         private Texture2D foregroundHealthUI;
         private Texture2D bulletUI;
         private Texture2D howToPlay;
+        
+        // TODO: can this field be removed?
         //private bool displayGameOver;
 
         private Player mainPlayer;
@@ -28,6 +29,7 @@ namespace Railgun.RailgunGame
         private VisualManager visuals;
 
         #region Menu Elements
+        
         // Textures used to display the Menu.
         private Texture2D menuLogo;
         private Texture2D menuPlay;
@@ -43,9 +45,11 @@ namespace Railgun.RailgunGame
 
         // Makes Pause menu work
         private GameState previous;
+        
         #endregion
 
         #region Player, Enemy, Proj. Textures
+        
         // Player, enemy, and projectile textures
         private Texture2D playerIdle;
 
@@ -63,6 +67,7 @@ namespace Railgun.RailgunGame
         private Texture2D gasManMove;
         private Texture2D gasManDeath;
         private Texture2D gasManShoot;
+        
         #endregion
 
         // Reticle
@@ -103,8 +108,11 @@ namespace Railgun.RailgunGame
 
             currentGameState = GameState.Menu;
             font = this.Content.Load<SpriteFont>("Mynerve24");
+            
+            // TODO: can this field be removed?
             //displayGameOver = true;
-
+            
+            // TODO: unused variable should be removed
             GameTime gameTime = new GameTime();
 
             bulletRemovalList = new List<Projectile>();
@@ -119,6 +127,7 @@ namespace Railgun.RailgunGame
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             #region Texture Loading
+            
             //UI Stuff
             backgroundHealthUI = Content.Load<Texture2D>("WhiteHealthSquare");
             foregroundHealthUI = Content.Load<Texture2D>("RedHealthSquare");
@@ -129,7 +138,10 @@ namespace Railgun.RailgunGame
             //Game Menu Stuff
             menuLogo = Content.Load<Texture2D>("menuLogo");
             menuPlay = Content.Load<Texture2D>("menuPlay");
+            
+            // TODO: if this code not going to be used, it should be removed
             //menuOpti = Content.Load<Texture2D>("menuOptions");
+            
             menuOpti = Content.Load<Texture2D>("controls");
             menuQuit = Content.Load<Texture2D>("menuQuit");
             menuRest = Content.Load<Texture2D>("reload");
@@ -153,26 +165,28 @@ namespace Railgun.RailgunGame
 
             #endregion
 
-            //Instantiate singletons
+            // Instantiate singletons
             visuals = VisualManager.Instance;
             world = WorldManager.Instance;
 
-            //Add animations to manager
+            // Add animations to manager
             visuals.PlayerIdle = new Animation(playerIdle, 1, 6, 11.0f);
             visuals.PlayerMove = new Animation(playerRun, 1, 8, 13.0f);
             visuals.PlayerDeath = new Animation(playerDeath, 1, 8, 4.0f);
             visuals.BulletCollide = new Animation(bulletCollideTexture, 4, 1, 12.4f);
             visuals.SkeletonMove = new Animation(skeletonWalk, 1, 13, 12.0f);
             visuals.SkeletonDeath = new Animation(skeletonDeath, 1, 15, 12.0f);
-            visuals.DoorTexture = Content.Load<Texture2D>("Tiles/Tiles"); ;
+            visuals.DoorTexture = Content.Load<Texture2D>("Tiles/Tiles");
             visuals.GasManMove = new Animation(gasManMove, 8, 1, 12.0f);
             visuals.GasManDeath = new Animation(gasManDeath, 6, 1, 12.0f);
             visuals.GasManShoot = new Animation(gasManShoot, 4, 1, 12.0f);
             visuals.BulletTexture = bulletTexture;
-
+            
+            // TODO: all the code that is for testing stuff needs to be removed
+            
             // This next line is just to test skeletons.
             Skeleton testSkelley = new Skeleton(new Rectangle(1700, 200, 100, 100));
-
+            
             // Skeleton ttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(200, 200, 100, 100));
             // Skeleton tttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(700, 200, 100, 100));
             // Skeleton ttttestSkelley = new Skeleton(skeletonWalkAnim.Clone(), skeletonDeathAnim.Clone(), new Rectangle(1300, 200, 100, 100));
@@ -188,15 +202,15 @@ namespace Railgun.RailgunGame
             world.CurrentEnemies.Add(testTurret);
             //enemies.Add(testTurret);
 
-            //Creates a UI object. Values to be updated later. 
+            // Creates a UI object. Values to be updated later. 
             mainPlayer = new Player(new Rectangle(0, 0, 100, 100), bulletTexture);
             userInterface = new UI(backgroundHealthUI, foregroundHealthUI, bulletUI, false, mainPlayer.Health, mainPlayer.MaxHealth, font, mainPlayer.Ammo, mainPlayer.MaxAmmo);
 
-            //Set debug logger
+            // Set debug logger
             DebugLog.Instance.Font = Content.Load<SpriteFont>("Consolas20");
             DebugLog.Instance.Scale = 2f;
 
-            //Load maps and create camera
+            // Load maps and create camera
             world.SetupWorld(
                 GraphicsDevice,
                 new List<Map>
@@ -208,12 +222,13 @@ namespace Railgun.RailgunGame
                         FileManager.LoadMap(Content, "SquareMapWithDoor"),
                         FileManager.LoadMap(Content, "TShapeMap"),
                         FileManager.LoadMap(Content, "LushHalls")
-                    }
-                , FileManager.LoadMap(Content, "StartingRoom"));
+                    },
+                FileManager.LoadMap(Content, "StartingRoom"));
         }
 
         protected override void Update(GameTime gameTime)
         {
+            // Updates the currently stored keyboard and mouse states
             InputManager.UpdateInputState();
             MouseState mState = Mouse.GetState();
 
@@ -235,25 +250,57 @@ namespace Railgun.RailgunGame
                     {
                         yScale = 1;
                     }
-
-                    logoRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuLogo.Width * (int)xScale / 10) / 2), 20, (menuLogo.Width / 10) * (int)xScale, (menuLogo.Height / 10) * (int)yScale);
-                    playRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuPlay.Width * (int)xScale / 20) / 2), 250, (menuPlay.Width / 5) / (int)xScale, (menuPlay.Height / 5) / (int)yScale);
-                    optiRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuOpti.Width * (int)xScale / 20) / 2), 425, (menuOpti.Width / 5) / (int)xScale, (menuOpti.Height / 5) / (int)yScale);
-                    quitRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuQuit.Width * (int)xScale / 20) / 2), 575, (menuQuit.Width / 5) / (int)xScale, (menuQuit.Height / 5) / (int)yScale);
+                    
+                    // TODO: why are we dividing twice in a row? Can it be condensed into one division?
+                    logoRect = new Rectangle(
+                        _graphics.PreferredBackBufferWidth / 2 - menuLogo.Width * (int)xScale / 10 / 2, 
+                        20, 
+                        menuLogo.Width / 10 * (int)xScale, 
+                        menuLogo.Height / 10 * (int)yScale);
+                    
+                    playRect = new Rectangle(
+                        _graphics.PreferredBackBufferWidth / 2 - menuPlay.Width * (int)xScale / 20 / 2, 
+                        250, 
+                        menuPlay.Width / 5 / (int)xScale, 
+                        menuPlay.Height / 5 / (int)yScale);
+                    
+                    optiRect = new Rectangle(
+                        _graphics.PreferredBackBufferWidth / 2 - menuOpti.Width * (int)xScale / 20 / 2, 
+                        425, 
+                        menuOpti.Width / 5 / (int)xScale, 
+                        menuOpti.Height / 5 / (int)yScale);
+                    
+                    quitRect = new Rectangle(
+                        _graphics.PreferredBackBufferWidth / 2 - menuQuit.Width * (int)xScale / 20 / 2, 
+                        575,
+                        menuQuit.Width / 5 / (int)xScale, 
+                        menuQuit.Height / 5 / (int)yScale);
 
                     // The following code makes the play, option, or quit button expand in size and hitbox if you hover over them
 
                     if (InputManager.MouseHover(mState, playRect))
                     {
-                        playRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuPlay.Width * (int)xScale / 20) / 2) - 50, 200, (menuPlay.Width / 4) / (int)xScale, (menuPlay.Height / 4) / (int)yScale);
+                        playRect = new Rectangle(
+                            _graphics.PreferredBackBufferWidth / 2 - menuPlay.Width * (int)xScale / 20 / 2 - 50, 
+                            200,
+                            menuPlay.Width / 4 / (int)xScale, 
+                            menuPlay.Height / 4 / (int)yScale);
                     }
                     else if (InputManager.MouseHover(mState, optiRect))
                     {
-                        optiRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuOpti.Width * (int)xScale / 20) / 2) - 50, 375, (menuOpti.Width / 4) / (int)xScale, (menuOpti.Height / 4) / (int)yScale);
+                        optiRect = new Rectangle(
+                            _graphics.PreferredBackBufferWidth / 2 - menuOpti.Width * (int)xScale / 20 / 2 - 50,
+                            375, 
+                            menuOpti.Width / 4 / (int)xScale, 
+                            menuOpti.Height / 4 / (int)yScale);
                     }
                     else if (InputManager.MouseHover(mState, quitRect))
                     {
-                        quitRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuQuit.Width * (int)xScale / 20) / 2) - 50, 525, (menuQuit.Width / 4) / (int)xScale, (menuQuit.Height / 4) / (int)yScale);
+                        quitRect = new Rectangle(
+                            _graphics.PreferredBackBufferWidth / 2 - menuQuit.Width * (int)xScale / 20 / 2 - 50, 
+                            525, 
+                            menuQuit.Width / 4 / (int)xScale, 
+                            menuQuit.Height / 4 / (int)yScale);
                     }
 
                     if (InputManager.IsButtonDown(MouseButtons.Left)
@@ -281,14 +328,14 @@ namespace Railgun.RailgunGame
                         && mState.Y > quitRect.Y
                         && mState.Y < quitRect.Y + quitRect.Height)
                     {
-                        this.Exit();
+                        Exit();
                     }
-
-
                     break;
+                
                 #endregion
 
                 #region Game
+                
                 case GameState.Game:
 
                     userInterface.Update(mainPlayer.Health, mainPlayer.Ammo, mainPlayer.DashCooldown, mainPlayer.Hitbox); //Updates the UI. Values to be updated later
@@ -298,35 +345,59 @@ namespace Railgun.RailgunGame
                     //    currentGameState = GameState.GameOver;
                     //} // A temporary way to instantly lose the game. Or maybe an unintentional feature!!!
                     if (InputManager.IsKeyReleased(Keys.Escape))
+                        
+                        // TODO: THIS IS THE CODE THAT WAS HERE BEFORE MERGING CHANGES, IF ANYTHING BREAKS, CHECK THIS FIRST
+                        /*// Updates the UI
+                        userInterface.Update(
+                            mainPlayer.Health, 
+                            mainPlayer.Ammo, 
+                            mainPlayer.DashCooldown, 
+                            mainPlayer.Hitbox);
+                        
+                        // Keybind to instantly bring you from the game to the game over screen/state
+                        if (InputManager.IsKeyDown(Keys.R))
+                        {
+                            currentGameState = GameState.GameOver;
+                        }
+                        
+                        // Keybind to pause the game
+                        if (InputManager.IsKeyDown(Keys.P))*/
+                    
                     {
                         previous = GameState.Game;
                         currentGameState = GameState.Pause;
-                    } // A way to pause the game.
-
+                    }
+                    
                     if (mainPlayer.Health > 0)
                     {
                         mainPlayer.Update(gameTime);
                     }
-
+                    
+                    // Updates the bullets the player shoots
                     for (int i = 0; i < mainPlayer.PlayerBullets.Count; i++)
                     {
                         mainPlayer.PlayerBullets[i].Update(gameTime);
-                    } // Update player bullets!
+                    }
+                    
+                    // Updates all the enemies that currently exist
                     for (int i = 0; i < world.CurrentEnemies.Count; i++)
                     {
                         world.CurrentEnemies[i].Update(gameTime, mainPlayer.Hitbox.Center);
-                    } // Update enemies!
+                    }
 
                     #region COLLISIONS!!!
+                    
                     for (int e = 0; e < world.CurrentEnemies.Count; e++)
                     {
                         if (world.CurrentEnemies[e].Hitbox.Intersects(mainPlayer.Hitbox) && mainPlayer.DamageCooldown <= 0.0)
                         {
+                            // Colliding with an enemy stops the dash and hurts you.
                             if (mainPlayer.Dashing)
                             {
                                 mainPlayer.Dashing = false;
                                 mainPlayer.DashCooldown = 2.0;
-                            } // Colliding with an enemy stops the dash and hurts you.
+                            }
+                            
                             mainPlayer.Damage(8);
                         }
                     }
@@ -335,7 +406,9 @@ namespace Railgun.RailgunGame
                     {
                         for (int e = 0; e < world.CurrentEnemies.Count; e++)
                         {
-                            if (world.CurrentEnemies[e].Hitbox.Intersects(mainPlayer.PlayerBullets[b].Hitbox) && mainPlayer.PlayerBullets[b].CurrentState != Projectile.ProjectileStates.HasCollided && world.CurrentEnemies[e].Health > 0)
+                            if (world.CurrentEnemies[e].Hitbox.Intersects(mainPlayer.PlayerBullets[b].Hitbox) && 
+                                mainPlayer.PlayerBullets[b].CurrentState != Projectile.ProjectileStates.HasCollided && 
+                                world.CurrentEnemies[e].Health > 0)
                             {
                                 world.CurrentEnemies[e].TakeDamage(5);
                                 mainPlayer.PlayerBullets[b].CurrentState = Projectile.ProjectileStates.HasCollided;
@@ -343,7 +416,7 @@ namespace Railgun.RailgunGame
                         }
                     }
 
-                    //enemy bullets
+                    // Updates enemy bullets
                     EnemyProjManager.Instance.Update(gameTime);
 
                     foreach (Projectile projectile in EnemyProjManager.Instance.Projectiles)
@@ -364,19 +437,31 @@ namespace Railgun.RailgunGame
                     //    mainPlayer.Hitbox = playerHitbox;
                     //}
 
-                    //If alive, ease somewhat to mouse as well
+                    /*// TODO: THIS IS THE CODE THAT WAS HERE BEFORE MERGING CHANGES, IF ANYTHING BREAKS, CHECK THIS FIRST
+                    // Keybind to teleport the player to the current mouse position
+                    // Intended for debug purposes
+                    if (InputManager.IsKeyDown(Keys.T))
+                    {
+                        Rectangle playerHitbox = mainPlayer.Hitbox;
+                        playerHitbox.Location = world.GetMouseWorldPosition().ToPoint();
+                        mainPlayer.Hitbox = playerHitbox;
+                    }*/
+
+                    // If alive, camera slowly moves towards the mouse position
                     if (mainPlayer.Health > 0)
                     {
-
-                        //Update camera to ease to player and mouse pos in world space
+                        // Update camera to ease to player and mouse pos in world space
                         world.CurrentCamera.EaseTo(mainPlayer.Hitbox.Center.ToVector2(), 1.1f, 0.2f);
                         world.CurrentCamera.EaseTo(world.GetMouseWorldPosition(), 1.1f, 0.05f);
                     }
-                    else//If dead, ease slowly to player
+                    
+                    // If dead, the camera slowly zooms in to the player
+                    else 
                     {
                         world.CurrentCamera.EaseTo(mainPlayer.Hitbox.Center.ToVector2(), 2f, 0.02f);
+                        
                         IsMouseVisible = true;
-
+                        
                         //if (displayGameOver)
                         //{
                         //Debug.WriteLine("Game Over Test 1");
@@ -386,25 +471,25 @@ namespace Railgun.RailgunGame
 
                     }
 
-                    //If all enemies defeated, open door
+                    // If all enemies defeated, open door to the next room
                     if (world.CurrentEnemies.Count == 0)
                     {
                         world.ExitDoor.IsClosed = false;
-                        //Check if fully within next room trigger
+                        
+                        // Check if fully within next room trigger
                         if (world.CurrentExitTrigger.Contains(mainPlayer.Hitbox))
                         {
                             world.IncrementMap();
                         }
                     }
-
-
-
+                    
                     world.CurrentCamera.Update(gameTime);
-
                     break;
+                
                 #endregion
 
                 #region Pause
+                
                 case GameState.Pause:
 
                     if (InputManager.IsKeyReleased(Keys.Escape))
@@ -414,13 +499,14 @@ namespace Railgun.RailgunGame
 
                     if (InputManager.IsKeyDown(Keys.Q))
                     {
-                        this.Exit();
+                        Exit();
                     }
-
                     break;
+                
                 #endregion
 
                 #region Game Over
+                
                 case GameState.GameOver:
 
                     xScale = _graphics.PreferredBackBufferWidth / 800.0;
@@ -434,27 +520,49 @@ namespace Railgun.RailgunGame
                     {
                         yScale = 1;
                     }
-
+                    
+                    // TODO: unused code should be removed
                     //logoRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuLogo.Width * (int)xScale / 10) / 2), 20, (menuLogo.Width / 10) * (int)xScale, (menuLogo.Height / 10) * (int)yScale);
                     //playRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuPlay.Width * (int)xScale / 20) / 2), 250, (menuPlay.Width / 5) / (int)xScale, (menuPlay.Height / 5) / (int)yScale);
-                    optiRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuOpti.Width * (int)xScale / 20) / 2), 425, (menuOpti.Width / 5) / (int)xScale, (menuOpti.Height / 5) / (int)yScale);
-                    quitRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuQuit.Width * (int)xScale / 20) / 2), 575, (menuQuit.Width / 5) / (int)xScale, (menuQuit.Height / 5) / (int)yScale);
-
+                    
+                    optiRect = new Rectangle(
+                        _graphics.PreferredBackBufferWidth / 2 - menuOpti.Width * (int)xScale / 20 / 2, 
+                        425, 
+                        menuOpti.Width / 5 / (int)xScale, 
+                        menuOpti.Height / 5 / (int)yScale);
+                    
+                    quitRect = new Rectangle(
+                        _graphics.PreferredBackBufferWidth / 2 - menuQuit.Width * (int)xScale / 20 / 2, 
+                        575, 
+                        menuQuit.Width / 5 / (int)xScale, 
+                        menuQuit.Height / 5 / (int)yScale);
+                    
                     // The following code makes the play, option, or quit button expand in size and hitbox if you hover over them
-
+                    
+                    // TODO: unused code should be removed
                     //if (InputManager.MouseHover(mState, playRect))
                     //{
                     //    playRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuPlay.Width * (int)xScale / 20) / 2) - 50, 200, (menuPlay.Width / 4) / (int)xScale, (menuPlay.Height / 4) / (int)yScale);
                     //}
+                    
                     if (InputManager.MouseHover(mState, optiRect))
                     {
-                        optiRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuOpti.Width * (int)xScale / 20) / 2) - 50, 375, (menuOpti.Width / 4) / (int)xScale, (menuOpti.Height / 4) / (int)yScale);
+                        optiRect = new Rectangle(
+                            _graphics.PreferredBackBufferWidth / 2 - menuOpti.Width * (int)xScale / 20 / 2 - 50, 
+                            375, 
+                            menuOpti.Width / 4 / (int)xScale, 
+                            menuOpti.Height / 4 / (int)yScale);
                     }
                     else if (InputManager.MouseHover(mState, quitRect))
                     {
-                        quitRect = new Rectangle((_graphics.PreferredBackBufferWidth / 2) - ((menuQuit.Width * (int)xScale / 20) / 2) - 50, 525, (menuQuit.Width / 4) / (int)xScale, (menuQuit.Height / 4) / (int)yScale);
+                        quitRect = new Rectangle(
+                            _graphics.PreferredBackBufferWidth / 2 - menuQuit.Width * (int)xScale / 20 / 2 - 50, 
+                            525, 
+                            menuQuit.Width / 4 / (int)xScale, 
+                            menuQuit.Height / 4 / (int)yScale);
                     }
-
+                    
+                    // TODO: unused code should be removed
                     //if (InputManager.IsButtonDown(MouseButtons.Left)
                     //    && mState.X > playRect.X
                     //    && mState.X < playRect.X + playRect.Width
@@ -492,8 +600,8 @@ namespace Railgun.RailgunGame
                         world.ResetWorld();
                         currentGameState = GameState.Game;
                     }
-
                     break;
+                
                     #endregion
             }
 
@@ -519,33 +627,33 @@ namespace Railgun.RailgunGame
                     MouseState mState = Mouse.GetState();
 
                     _spriteBatch.DrawString(font, "Menu", new Vector2(_graphics.PreferredBackBufferWidth - 180, 20), Color.White);
-
+                    
+                    // TODO: unused code should be removed
                     //_spriteBatch.DrawString(font, "xScale: " + xScale, new Vector2(_graphics.PreferredBackBufferWidth - 180, 50), Color.White);
                     //_spriteBatch.DrawString(font, "yScale: " + yScale, new Vector2(_graphics.PreferredBackBufferWidth - 180, 80), Color.White);
 
                     _spriteBatch.DrawString(font, "X: " + mState.X, new Vector2(_graphics.PreferredBackBufferWidth - 180, 110), Color.White);
                     _spriteBatch.DrawString(font, "Y: " + mState.Y, new Vector2(_graphics.PreferredBackBufferWidth - 180, 140), Color.White);
 
-                    //Draws reticle
+                    // Draws reticle
                     _spriteBatch.Draw(gameReticle, new Rectangle(mState.X - 25, mState.Y - 25, 50, 50), Color.White);
 
                     _spriteBatch.End();
-
                     break;
+                
                 #endregion
 
                 #region Game
                 case GameState.Game:
 
-                    //Begin with pixel percision, opacity, and cam matrix
+                    // Begin with pixel precision, opacity, and camera matrix
                     _spriteBatch.Begin(samplerState: SamplerState.PointClamp,
                         blendState: BlendState.AlphaBlend,
                         transformMatrix: world.CurrentCamera.TransformationMatrix);
 
-                    //Draw world on bottom
+                    // Draw world on bottom
                     world.Draw(_spriteBatch);
-
-
+                    
                     MouseState mStateGame = Mouse.GetState();
                     List<Enemy> removalList = new List<Enemy>();
 
@@ -555,6 +663,7 @@ namespace Railgun.RailgunGame
                     }
 
                     #region Enemies/Bullets
+                    
                     // This will draw the enemies and bullets, and remove them if they have finished their death animation.
                     for (int i = 0; i < mainPlayer.PlayerBullets.Count; i++)
                     {
@@ -581,7 +690,7 @@ namespace Railgun.RailgunGame
                         mainPlayer.PlayerBullets.Remove(bullet);
                     }
 
-                    //enemy bullets gets drawn/removed
+                    // Enemy bullets gets drawn/removed
                     EnemyProjManager.Instance.Draw(_spriteBatch, gameTime);
 
                     userInterface.DrawToWorldspace(_spriteBatch);
@@ -589,26 +698,30 @@ namespace Railgun.RailgunGame
                     #endregion
 
                     _spriteBatch.End();
-
+                    
+                    // TODO: unused code should be removed
                     //DEBUG Draw world debug
                     //world.DrawDebug(_spriteBatch, GraphicsDevice);
 
-                    //Draw overlay
+                    // Draw overlay
                     _spriteBatch.Begin(samplerState: SamplerState.PointClamp,
                         blendState: BlendState.AlphaBlend);
 
                     _spriteBatch.DrawString(font, "Game", new Vector2(_graphics.PreferredBackBufferWidth - 100, 20), Color.White);
-                    userInterface.Draw(_spriteBatch); //Draws UI
+                    
+                    // Draws game UI
+                    userInterface.Draw(_spriteBatch);
 
-                    //Draws reticle
+                    // Draws reticle
                     _spriteBatch.Draw(gameReticle, new Rectangle(mStateGame.X - 25, mStateGame.Y - 25, 50, 50), Color.White);
 
                     _spriteBatch.End();
-
                     break;
+                
                 #endregion
 
                 #region Pause
+                
                 case GameState.Pause:
 
                     _spriteBatch.Begin();
@@ -617,11 +730,12 @@ namespace Railgun.RailgunGame
                     _spriteBatch.DrawString(font, "Pause", new Vector2(_graphics.PreferredBackBufferWidth - 100, 20), Color.White);
 
                     _spriteBatch.End();
-
                     break;
+                
                 #endregion
 
                 #region Game Over
+                
                 case GameState.GameOver:
 
                     _spriteBatch.Begin();
@@ -634,30 +748,24 @@ namespace Railgun.RailgunGame
                     _spriteBatch.DrawString(font, "Rooms Passed: " + world.Score, Vector2.Zero, Color.Gold);
 
                     _spriteBatch.End();
-
                     break;
-                    #endregion
+                
+                #endregion
             }
 
 
-            //Draw debug logger with fading
+            // Draw debug logger with fading
             _spriteBatch.Begin(blendState: BlendState.AlphaBlend);
+            
             DebugLog.Instance.Draw(_spriteBatch,
                 _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
             _spriteBatch.End();
 
             base.Draw(gameTime);
         }
-
-
-
-
+        
+        // TODO: unused code should be removed
         // Abandon all hope, ye who travel. Below are only the wastelands. None dare venture here.
-
-
-
-
-
         //public void DrawEnd(SpriteBatch _spriteBatch)
         //{
         //    Debug.WriteLine("Game Over Test 2");

@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 //Nathan McAndrew
 //Class responsible for animating all objects
@@ -25,7 +18,7 @@ namespace Railgun.RailgunGame
         /// <summary>
         /// time one frame lasts for
         /// </summary>
-        public double SecondsPerFrame { get; set; }
+        public double SecondsPerFrame { get; }
 
         /// <summary>
         /// time since image was changed
@@ -36,17 +29,17 @@ namespace Railgun.RailgunGame
         /// <summary>
         /// total numeber of frames for animation
         /// </summary>
-        public int TotalFrames { get; set; }
+        public int TotalFrames { get; }
 
         /// <summary>
         /// number of columns on the spritesheet
         /// </summary>
-        public int NumColumns { get; set; }
+        public int NumColumns { get; }
 
         /// <summary>
         /// number of rows on the spritesheet
         /// </summary>
-        public int NumRows { get; set; }
+        public int NumRows { get; }
         
         // This overload of Draw needs:
         // texture, position, source rectangle,
@@ -56,7 +49,7 @@ namespace Railgun.RailgunGame
         /// <summary>
         /// Textrure for the animation
         /// </summary>
-        public Texture2D SpriteSheet { get; set; }
+        public Texture2D SpriteSheet { get; }
 
         /// <summary>
         /// source rectangle on sprite sheet
@@ -66,12 +59,14 @@ namespace Railgun.RailgunGame
         /// <summary>
         /// color of sprite
         /// </summary>
-        public Color Color { get; set; }
+        public Color Color { get; }
 
+/*
         /// <summary>
         /// origin of the source rectangle
         /// </summary>
         public Vector2 SourceOrigin { get; set; }
+*/
 
         /// <summary>
         /// scale of the sprite obtained from rectangle
@@ -92,22 +87,22 @@ namespace Railgun.RailgunGame
         /// <summary>
         /// width of each frame (on spritesheet)
         /// </summary>
-        public int FrameWidth { get; set; }
+        public int FrameWidth { get; }
 
         /// <summary>
         /// height of each frame (on spritesheet)
         /// </summary>
-        public int FrameHeight { get; set; }
+        public int FrameHeight { get; }
 
         /// <summary>
         /// Instantiates an animation object with the specified
         /// texture, rows, columns, framerate, and color
         /// </summary>
-        /// <param name="spriteSheet">texture to animate</param>
-        /// <param name="rows">number of rows</param>
-        /// <param name="columns">number of columns</param>
-        /// <param name="framesPerSecond"></param>
-        /// <param name="color"></param>
+        /// <param name="spriteSheet">Texture to animate</param>
+        /// <param name="rows">Number of rows</param>
+        /// <param name="columns">Number of columns</param>
+        /// <param name="framesPerSecond">Number of frames per second in the animation</param>
+        /// <param name="color">Tint color for the texture being drawn</param>
         public Animation(Texture2D spriteSheet, int rows, int columns, float framesPerSecond, Color color) 
         {
             SpriteSheet = spriteSheet;
@@ -132,17 +127,21 @@ namespace Railgun.RailgunGame
         /// Instantiates an animation object with the specified
         /// texture, rows, columns, framerate, and a default white color
         /// </summary>
-        /// <param name="spriteSheet"></param>
-        /// <param name="rows"></param>
-        /// <param name="columns"></param>
-        /// <param name="framesPerSecond"></param>
+        /// <param name="spriteSheet">Sprite sheet file for the animation</param>
+        /// <param name="rows">Number of rows in the spritesheet</param>
+        /// <param name="columns">Number of columns in the spritesheet</param>
+        /// <param name="framesPerSecond">Speed of the animation</param>
         public Animation(Texture2D spriteSheet, int rows, int columns, float framesPerSecond) 
         :this(spriteSheet, rows, columns, framesPerSecond, Color.White){ }
 
         /// <summary>
         /// draws the sprite with specified properties
         /// </summary>
-        /// <param name="sb">_spritebatch</param>
+        /// <param name="sb">Spritebatch object</param>
+        /// <param name="gameTime">Gametime object</param>
+        /// <param name="position">Position of the texture</param>
+        /// <param name="tint">Tint color of the texture when drawn</param>
+        /// <param name="effect">Direction the texture is flipped in</param>
         /// <returns> Whether or not the animation has reached its final frame.</returns>
         public bool Draw(SpriteBatch sb, GameTime gameTime, Vector2 position, Color tint, SpriteEffects effect)
         {
@@ -153,16 +152,16 @@ namespace Railgun.RailgunGame
 
             SourceRectangle = new Rectangle(FrameWidth * col, FrameHeight * row, FrameWidth, FrameHeight);
 
-            //rectangle on screen to be drawn to
+            // Rectangle on screen to be drawn to
             Rectangle destination = new Rectangle((int)position.X, (int)position.Y, 100, 100);
 
             sb.Draw(SpriteSheet, destination, SourceRectangle, tint, 0.0f, Vector2.Zero, effect, 0.0f);
-
+            
             return CurrentFrame == TotalFrames -1;
         }
 
         /// <summary>
-        /// draws the sprite with the specified properties, as well as the color stored by the animation
+        /// Draws the sprite with the specified properties, as well as the color stored by the animation
         /// </summary>
         /// <param name="sb">_spritebatch</param>
         /// <param name="gameTime">gameRime</param>

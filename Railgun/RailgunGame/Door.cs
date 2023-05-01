@@ -1,11 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Railgun.RailgunGame.Util;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Railgun.RailgunGame
 {
@@ -30,12 +25,11 @@ namespace Railgun.RailgunGame
         /// If the door is closed or not
         /// </summary>
         public bool IsClosed { get; set; }
-        
+
         /// <summary>
         /// Creates a new door
         /// </summary>
-        /// <param name="texture">The texture of the door</param>
-        /// <param name="hitbox"></param>
+        /// <param name="hitbox">Hitbox of the door</param>
         public Door(Rectangle hitbox) : base(hitbox)
         {
             texture = VisualManager.Instance.DoorTexture;

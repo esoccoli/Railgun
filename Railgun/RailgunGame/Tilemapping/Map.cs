@@ -1,11 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Railgun.RailgunGame.Util;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Railgun.RailgunGame.Tilemapping
 {
@@ -39,12 +35,12 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <para>Note: layers with larger indecies will appear above layers
         /// with smaller indecies</para>
         /// </summary>
-        public List<Dictionary<Vector2, Tile>> Layers { get; private set; }
+        public List<Dictionary<Vector2, Tile>> Layers { get; private set; } // TODO: can this be made get only
 
         /// <summary>
         /// A boolean dictionary that maps position to boolean of whether a tile is solid or not
         /// </summary>
-        public Dictionary<Vector2, bool> Hitboxes { get; private set; }
+        public Dictionary<Vector2, bool> Hitboxes { get; private set; } // TODO: can this be made get only
 
         /// <summary>
         /// The list of active solid hitboxes for debug drawing
@@ -54,7 +50,7 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <summary>
         /// A dictionary of entity ids that this map contains
         /// </summary>
-        public Dictionary<Vector2, int> EntitiesDictionary { get; private set; }
+        public Dictionary<Vector2, int> EntitiesDictionary { get; private set; } // TODO: can this be made get only
 
         /// <summary>
         /// The entrence point of this map
@@ -88,6 +84,7 @@ namespace Railgun.RailgunGame.Tilemapping
                 Exit += changeInPosition;
             }
         }
+        
         private Vector2 position;
 
         /// <summary>
@@ -129,7 +126,7 @@ namespace Railgun.RailgunGame.Tilemapping
                 Rectangle bounds = Rectangle.Empty;
                 Point bottomRightTile = Point.Zero;
 
-                //Create bounds of map
+                // Create bounds of map
                 foreach(KeyValuePair<Vector2, bool> hitboxPair in Hitboxes)
                 {
                     //If solid, create a hitbox and compare
@@ -137,15 +134,15 @@ namespace Railgun.RailgunGame.Tilemapping
                     {
                         Rectangle hitbox = GetSolidTile(hitboxPair.Key);
 
-                        //Find top most left tile
+                        // Find top most left tile
                         if (hitbox.X < bounds.X) bounds.X = hitbox.X;
                         if (hitbox.Y < bounds.Y) bounds.Y = hitbox.Y;
-                        //Find bottom most right tile
+                        // Find bottom most right tile
                         if (hitbox.X > bottomRightTile.X) bottomRightTile.X = hitbox.X;
                         if (hitbox.Y > bottomRightTile.Y) bottomRightTile.Y = hitbox.Y;
                     }
                 }
-                //Create final rectangle size
+                // Create final rectangle size
                 bottomRightTile += new Point(tileSize);
                 bounds.Size = new Point(
                         bottomRightTile.X - bounds.X,
@@ -154,7 +151,7 @@ namespace Railgun.RailgunGame.Tilemapping
                 Bounds = bounds;
             }
 
-            //Calculate entrence and exit positions
+            // Calculate entrence and exit positions
             Entrence *= TileSize;
             Exit *= TileSize;
         }
@@ -167,13 +164,13 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <param name="spriteBatch">THe sprite batch to draw to</param>
         public void DrawTiles(SpriteBatch spriteBatch)
         {
-            //Draw each layer
+            // Draw each layer
             foreach (Dictionary<Vector2, Tile> layer in Layers)
             {
-                //Draw each tile in this layer
+                // Draw each tile in this layer
                 foreach (KeyValuePair<Vector2, Tile> tile in layer)
                 {
-                    //Draw the tile to rectangle corresponding to its grid location
+                    // Draw the tile to rectangle corresponding to its grid location
                     tile.Value.Draw(spriteBatch, GetSolidTile(tile.Key));
                 }
             }
@@ -189,7 +186,7 @@ namespace Railgun.RailgunGame.Tilemapping
         {
             foreach (KeyValuePair<Vector2, bool> hitbox in Hitboxes)
             {
-                //If hitbox placed
+                // If hitbox placed
                 if (hitbox.Value)
                 {
                     DrawSingleHitbox(
@@ -198,14 +195,14 @@ namespace Railgun.RailgunGame.Tilemapping
                 }
             }
 
-            //Draw active hitboxes
+            // Draw active hitboxes
             foreach(Vector2 hitboxPoint in activeHitboxes)
             {
                 DrawSingleHitbox(
                     cameraOffset, cameraZoom,
                     hitboxPoint * TileSize, Color.Red);
             }
-            //Reset active hitboxes
+            // Reset active hitboxes
             activeHitboxes.Clear();
 
         }
@@ -217,8 +214,11 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <param name="cameraZoom">Zoom of camera</param>
         /// <param name="position">Position of hitbox</param>
         /// <param name="tint">The color to draw it</param>
-        private void DrawSingleHitbox(Vector2 cameraOffset, float cameraZoom,
-            Vector2 position, Color tint)
+        private void DrawSingleHitbox(
+            Vector2 cameraOffset, 
+            float cameraZoom,
+            Vector2 position, 
+            Color tint)
         {
             DrawSingleHitbox(cameraOffset, cameraZoom, position, new Vector2(TileSize), Position, tint);
         }
@@ -298,10 +298,10 @@ namespace Railgun.RailgunGame.Tilemapping
             foreach (Rectangle obstical in intersections)
             {
                 Rectangle intersection = Rectangle.Intersect(hitbox, obstical);
-                //Check if valid and for width
+                // Check if valid and for width
                 if (intersection.Height > intersection.Width)
                 {
-                    //Calculate side
+                    // Calculate side
                     if (hitbox.X < obstical.X)
                     {
                         hitbox.X -= intersection.Width;
@@ -314,12 +314,12 @@ namespace Railgun.RailgunGame.Tilemapping
                 }
             }
 
-            //Check and move y
+            // Check and move y
             foreach (Rectangle obstical in intersections)
             {
                 Rectangle intersection = Rectangle.Intersect(hitbox, obstical);
 
-                //Check if valid and for width
+                // Check if valid and for width
                 if (intersection.Width >= intersection.Height)
                 {
                     //Calculate side
@@ -334,10 +334,11 @@ namespace Railgun.RailgunGame.Tilemapping
                 }
             }
 
-            //Return new hitbox
+            // Return new hitbox
             return hitbox;
         }
-
+        
+        // TODO: fill in XML tags
         /// <summary>
         /// Returns whether the tile grid point specified is solid
         /// </summary>
@@ -431,16 +432,16 @@ namespace Railgun.RailgunGame.Tilemapping
         {
             Vector2 sizeVector = size * cameraZoom;
 
-            //Compute position to draw
+            // Compute position to draw
             Vector2 topLeftCorner = (position + offset) * cameraZoom + cameraOffset;
             Vector2 bottomRightCorner = topLeftCorner + sizeVector;
 
-            //Draw box of bounds
+            // Draw box of bounds
             ShapeBatch.BoxOutline(
                 new Rectangle(
                     topLeftCorner.ToPoint(),
                     sizeVector.ToPoint()), tint);
-            //Draw x in the middle
+            // Draw x in the middle
             ShapeBatch.Line(topLeftCorner, bottomRightCorner, 2f, tint);
             ShapeBatch.Line(
                 new Vector2(topLeftCorner.X, bottomRightCorner.Y),

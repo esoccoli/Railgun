@@ -1,10 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Railgun.RailgunGame.Tilemapping;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Railgun.RailgunGame.Util
 {
@@ -103,6 +97,7 @@ namespace Railgun.RailgunGame.Util
         /// texture for active bullets
         /// </summary>
         public Texture2D BulletTexture { get; set; }
+        
         #endregion
 
     }

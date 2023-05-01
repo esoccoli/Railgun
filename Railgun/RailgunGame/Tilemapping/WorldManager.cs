@@ -3,9 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Railgun.RailgunGame.Util;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Railgun.RailgunGame.Tilemapping
 {
@@ -50,7 +47,7 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <summary>
         /// A random object for anything that needs a bit of non-deterministic magic
         /// </summary>
-        public Random RNG { get; private set; }
+        public Random RNG { get; private set; } // TODO: can this be made get only
 
         /// <summary>
         /// The current map of the world
@@ -135,9 +132,12 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <summary>
         /// Draws all debug parts (solid collision, triggers)
         /// </summary>
-        /// <param name="spriteBatch"></param>
+        /// <param name="spriteBatch">Spritebatch object</param>
+        /// <param name="graphicsDevice">Graphics device object</param>
         public void DrawDebug(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
+            // TODO: PLEASE ADD LINE SPACING, I HAVE NO CLUE WHAT IS GOING ON AND I CANT READ THE CODE
+            // TODO: ALSO PLEASE PUT BRACKETS AROUND THE IF STATEMENTS
             //Draw hitboxes
             graphicsDevice.DepthStencilState = DepthStencilState.None;
             ShapeBatch.Begin(graphicsDevice);
@@ -147,13 +147,13 @@ namespace Railgun.RailgunGame.Tilemapping
             //Draw map hitboxes
             CurrentMap.DrawHitboxes(cameraOffset, CurrentCamera.Zoom);
             //Draw door hitboxes
-            if(EntrenceDoor.IsClosed)
+            if (EntrenceDoor.IsClosed)
                 Map.DrawSingleHitbox(
                     cameraOffset, CurrentCamera.Zoom,
                     EntrenceDoor.Hitbox.Location.ToVector2(),
                     EntrenceDoor.Hitbox.Size.ToVector2(),
                     Vector2.Zero, Color.Blue);
-            if(ExitDoor.IsClosed)
+            if (ExitDoor.IsClosed)
                 Map.DrawSingleHitbox(
                     cameraOffset, CurrentCamera.Zoom,
                     ExitDoor.Hitbox.Location.ToVector2(),
@@ -161,10 +161,10 @@ namespace Railgun.RailgunGame.Tilemapping
                     Vector2.Zero, Color.Blue);
             ShapeBatch.End();
 
-            //If door is open, draw
+            // If door is open, draw
             if(!ExitDoor.IsClosed)
             {
-                //Draw next room trigger
+                // Draw next room trigger
                 spriteBatch.Begin(
                     blendState: BlendState.AlphaBlend,
                     samplerState: SamplerState.PointClamp,
@@ -238,14 +238,14 @@ namespace Railgun.RailgunGame.Tilemapping
         /// <param name="startingMap">The map to start in</param>
         public void SetupWorld(GraphicsDevice graphicsDevice, List<Map> mapPossibilities, Map startingMap)
         {
-            //Create white square
+            // Create white square
             whiteSquare = new Texture2D(graphicsDevice, 1, 1);
             whiteSquare.SetData(new Color[] { Color.White });
 
             PossibleMaps = mapPossibilities;
             this.startingMap = startingMap;
 
-            //Create cam
+            // Create cam
             CurrentCamera = new Camera(graphicsDevice, Rectangle.Empty);
 
             ResetWorld();

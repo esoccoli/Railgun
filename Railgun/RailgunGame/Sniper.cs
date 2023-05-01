@@ -1,21 +1,19 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Railgun.RailgunGame.Util;
 using Railgun.RailgunGame.Tilemapping;
-using System.Linq.Expressions;
 
 //Cloned from GasMan enemy. Fires fast single bullets, but walks slow
 //Enemy that walks away from the player
 namespace Railgun.RailgunGame
 {
+    /// <summary>
+    /// Manages the sniper enemy and related data
+    /// </summary>
     internal class Sniper : Enemy
     {
+        // TODO: why do we have the same enum as the gas man? this should be removed or renamed
         public enum GasState
         {
             Walk,
@@ -34,7 +32,7 @@ namespace Railgun.RailgunGame
         /// <summary>
         /// animation to play when enemy is shooting
         /// </summary>
-        public Animation Shooting { get; set; }
+        public Animation Shooting { get; set; } // TODO: can this be made get only
 
         /// <summary>
         /// current state of the enemy
@@ -53,7 +51,16 @@ namespace Railgun.RailgunGame
         /// <param name="death">death animation</param>
         /// <param name="hitbox">hitbox</param>
         /// <param name="shoot">shooting animation</param>
-        public Sniper(Animation move, Animation death, Rectangle hitbox, Animation shoot, Texture2D activeBullet, Animation notActiveBullet) : base(move, death, hitbox)
+        /// <param name="activeBullet">Texture of the bullet while it is active</param>
+        /// <param name="notActiveBullet">Animation the bullet plays right after it collides with something</param>
+        public Sniper(
+            Animation move, 
+            Animation death, 
+            Rectangle hitbox, 
+            Animation shoot, 
+            Texture2D activeBullet, 
+            Animation notActiveBullet) : 
+            base(move, death, hitbox)
         {
             Health = 20;
             Hitbox = hitbox;
@@ -68,7 +75,11 @@ namespace Railgun.RailgunGame
             timeSinceShot = 0;
             EnemyBullets = new List<Projectile>();
         }
-
+        
+        /// <summary>
+        /// Creates an instance of an enemy that shoots at the player and runs away
+        /// </summary>
+        /// <param name="hitbox">Hitbox of the enemy</param>
         public Sniper(Rectangle hitbox)
             : this(VisualManager.Instance.GasManMove.Clone(),
                  VisualManager.Instance.GasManDeath.Clone(),
@@ -102,6 +113,8 @@ namespace Railgun.RailgunGame
                     break;
 
                 case GasState.Shoot:
+                    
+                    // TODO: unused code should be removed
                     //timeSinceShot += gameTime.ElapsedGameTime.TotalSeconds;
                     //if (timeSinceShot >= bulletCooldown)
                     //{
@@ -177,7 +190,7 @@ namespace Railgun.RailgunGame
         /// Shoots a bullet at the player's position
         /// </summary>
         /// <param name="playerPos">player's position</param>
-        public override void Shoot(Point playerPos)
+        public virtual void Shoot(Point playerPos)
         {
 
             Vector2 vect = (playerPos - Hitbox.Center).ToVector2() / Vector2.Distance(playerPos.ToVector2(), Hitbox.Center.ToVector2());

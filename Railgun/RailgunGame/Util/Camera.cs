@@ -1,10 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Railgun.RailgunGame.Util
 {
@@ -137,7 +132,9 @@ namespace Railgun.RailgunGame.Util
             Zoom = 1f;
             Position = Vector2.Zero;
             Rotation = 0f;
-            CreateMatrix();//Create an initial matrix
+            
+            // Create an initial matrix
+            CreateMatrix();
         }
 
         /// <summary>
@@ -179,7 +176,7 @@ namespace Railgun.RailgunGame.Util
         public void EaseTo(Vector2 targetPosition, float targetZoom,
             float easingFactor)
         {
-            //Ease pan and zoom
+            // Ease pan and zoom
             PanBy((targetPosition - Position) * easingFactor);
             ZoomBy((targetZoom - Zoom) * easingFactor);
         }
@@ -269,12 +266,12 @@ namespace Railgun.RailgunGame.Util
         {
             //Update view matrix raw
             TransformationMatrix =
-                Matrix.CreateTranslation(new Vector3(-Position, 0f))//Translate
-                * Matrix.CreateRotationZ(Rotation)//Rotate
-                * Matrix.CreateScale(Zoom, Zoom, 1f)//Zoom
+                Matrix.CreateTranslation(new Vector3(-Position, 0f)) // Translate
+                * Matrix.CreateRotationZ(Rotation) // Rotate
+                * Matrix.CreateScale(Zoom, Zoom, 1f) // Zoom
                 * Matrix.CreateTranslation(new Vector3(
                         graphics.Viewport.Width * 0.5f,
-                        graphics.Viewport.Height * 0.5f, 0f));//Translate to center of screen
+                        graphics.Viewport.Height * 0.5f, 0f)); // Translate to center of screen
         }
 
         /// <summary>

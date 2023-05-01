@@ -2,9 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Railgun.RailgunGame.Util
 {
@@ -40,7 +37,7 @@ namespace Railgun.RailgunGame.Util
             /// Creates a new message with the specified text and color
             /// </summary>
             /// <param name="text">Text of this message</param>
-            /// <param name="color">Color of this message</param
+            /// <param name="color">Color of this message</param>
             /// <param name="messageDuration">The duration that this message should be displayed in seconds</param>
             public Message(string text, Color color, float messageDuration = 9999f)
             {
@@ -100,7 +97,7 @@ namespace Railgun.RailgunGame.Util
         /// <summary>
         /// The spacing between each message line
         /// </summary>
-        public float Spacing { get; set; }
+        public float Spacing { get; set; } // TODO: Can this be made get only?
 
         /// <summary>
         /// The scaling of the messages

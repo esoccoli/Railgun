@@ -1,13 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Railgun.RailgunGame.Util
 {
+    // TODO: add XML header
     internal class EnemyProjManager
     {
         /// <summary>
@@ -33,13 +30,14 @@ namespace Railgun.RailgunGame.Util
             }
 
         }
-
+        
+        // TODO: add XML comment to explain what this does
         private static EnemyProjManager instance;
 
         /// <summary>
         /// enemy projectiles to be kept track of
         /// </summary>
-        public List<Projectile> Projectiles { get; set; }
+        public List<Projectile> Projectiles { get; set; } // TODO: can this be made get only
 
         /// <summary>
         /// updates the position of each projectile in the manager
