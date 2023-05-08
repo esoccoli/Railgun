@@ -1,7 +1,8 @@
 # Railgun
 
 ## Group Members
-Game made by Nathan McAndrew, Jonathan Jan, Joshua Smith, Igor Polotai, and Ella Soccoli.\n
+Game made by Nathan McAndrew, Jonathan Jan, Joshua Smith, Igor Polotai, and Ella Soccoli.
+
 Level Editor made primarily by Jonathan Jan
 
 ## Game Concept
